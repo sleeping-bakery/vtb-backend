@@ -7,7 +7,7 @@ public interface IRepository<T> where T : class, IEntity
 {
     void Create(T entity);
 
-    ICollection<T> Read(Func<IQueryable<T>, IQueryable<T>> query);
+    IQueryable<T> Read();
 
     void Update(T entity);
 

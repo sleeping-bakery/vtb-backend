@@ -10,10 +10,9 @@ public abstract class Repository<T>(MultibankingDbContext dbContext) : IReposito
         dbContext.Add(entity);
     }
 
-    public ICollection<T> Read(Func<IQueryable<T>, IQueryable<T>> query)
+    public IQueryable<T> Read()
     {
-        var result = query.Invoke(dbContext.Set<T>());
-        return result.ToList();
+        return dbContext.Set<T>();
     }
 
     public void Update(T entity)

@@ -10,23 +10,23 @@ public interface IUserService
 {
     UserDto GetUserFromHttpContext();
     void CrateUserIfNotExist();
-
 }
 
-public class UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : IUserService
+public class UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+    : IUserService
 {
     public UserDto GetUserFromHttpContext()
     {
-        var user = userRepository.Read(users => users.Where(user =>
-                httpContextAccessor.GetLogin().ToLower() == user.Login.ToLower()))
-            .SingleOrDefault() ?? throw new ArgumentException("Пользователя с данным логином не существует");
+        var user = userRepository.Read()
+                       .SingleOrDefault(user => httpContextAccessor.GetLogin().ToLower() == user.Login.ToLower()) ??
+                   throw new ArgumentException("Пользователя с данным логином не существует");
         return mapper.Map<UserDto>(user);
     }
 
     public void CrateUserIfNotExist()
     {
-        // if (userRepository.Exist(user => user.Login.ToLower() == httpContextAccessor.GetLogin().ToLower()))
-        //     return;
+        if (userRepository.Exist(user => user.Login.ToLower() == httpContextAccessor.GetLogin().ToLower()))
+            return;
         CreateUserFromHttpContext();
     }
 
