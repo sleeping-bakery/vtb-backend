@@ -190,8 +190,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
                 if (options.HeaderParameters != null)
                 {
                     var contentTypes = options.HeaderParameters["Content-Type"];
-                    if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json")))
-                        request.RequestFormat = DataFormat.Json;
+                    if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json"))) request.RequestFormat = DataFormat.Json;
                     // TODO: Generated client user should add additional handlers. RestSharp only supports XML and JSON, with XML as default.
                 }
                 else
@@ -357,8 +356,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
         return result;
     }
 
-    private async Task<ApiResponse<T>> ExecAsync<T>(RestRequest req, RequestOptions options,
-        IReadableConfiguration configuration, CancellationToken cancellationToken = default)
+    private async Task<ApiResponse<T>> ExecAsync<T>(RestRequest req, RequestOptions options, IReadableConfiguration configuration, CancellationToken cancellationToken = default)
     {
         var baseUrl = configuration.GetOperationServerUrl(options.Operation, options.OperationIndex) ?? _baseUrl;
 
@@ -391,8 +389,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
         if (RetryConfiguration.AsyncRetryPolicy != null)
         {
             var policy = RetryConfiguration.AsyncRetryPolicy;
-            var policyResult = await policy
-                .ExecuteAndCaptureAsync(ct => client.ExecuteAsync(req, ct), cancellationToken).ConfigureAwait(false);
+            var policyResult = await policy.ExecuteAndCaptureAsync(ct => client.ExecuteAsync(req, ct), cancellationToken).ConfigureAwait(false);
             response = policyResult.Outcome == OutcomeType.Successful
                 ? client.Deserialize<T>(policyResult.Result)
                 : new RestResponse<T>
@@ -462,8 +459,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Get, path, options, config), options, config, cancellationToken);
@@ -480,8 +476,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Post, path, options, config), options, config, cancellationToken);
@@ -498,8 +493,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Put, path, options, config), options, config, cancellationToken);
@@ -516,8 +510,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Delete, path, options, config), options, config, cancellationToken);
@@ -534,8 +527,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Head, path, options, config), options, config, cancellationToken);
@@ -552,8 +544,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Options, path, options, config), options, config, cancellationToken);
@@ -570,8 +561,7 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
     /// </param>
     /// <param name="cancellationToken">Token that enables callers to cancel the request.</param>
     /// <returns>A Task containing ApiResponse</returns>
-    public Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options,
-        IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
+    public Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, CancellationToken cancellationToken = default)
     {
         var config = configuration ?? GlobalConfiguration.Instance;
         return ExecAsync<T>(NewRequest(HttpMethod.Patch, path, options, config), options, config, cancellationToken);

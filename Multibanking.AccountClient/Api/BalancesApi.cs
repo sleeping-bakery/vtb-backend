@@ -124,108 +124,90 @@ public class BalancesApi : IBalancesApi
     }
 
     /// <summary>
-    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с
-    ///     идентификатором accountId.
+    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с идентификатором accountId.
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="accountId">Идентификатор счета</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BalanceResponse</returns>
-    public BalanceResponse GetAccountsaccountIdBalances(string accountId, string xFapiAuthDate = default,
-        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0)
+    public BalanceResponse GetAccountsaccountIdBalances(string accountId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
     {
-        var localVarResponse = GetAccountsaccountIdBalancesWithHttpInfo(accountId, xFapiAuthDate,
-            xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
+        var localVarResponse = GetAccountsaccountIdBalancesWithHttpInfo(accountId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
         return localVarResponse.Data;
     }
 
     /// <summary>
-    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с
-    ///     идентификатором accountId.
+    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с идентификатором accountId.
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="accountId">Идентификатор счета</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BalanceResponse</returns>
-    public ApiResponse<BalanceResponse> GetAccountsaccountIdBalancesWithHttpInfo(string accountId,
-        string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0)
+    public ApiResponse<BalanceResponse> GetAccountsaccountIdBalancesWithHttpInfo(string accountId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
     {
         // verify the required parameter 'accountId' is set
-        if (accountId == null)
-            throw new ApiException(400,
-                "Missing required parameter 'accountId' when calling BalancesApi->GetAccountsaccountIdBalances");
+        if (accountId == null) throw new ApiException(400, "Missing required parameter 'accountId' when calling BalancesApi->GetAccountsaccountIdBalances");
 
         var localVarRequestOptions = new RequestOptions();
 
-        var _contentTypes = new string[]
+        string[] _contentTypes =
         {
         };
 
         // to determine the Accept header
-        var _accepts = new[]
+        string[] _accepts =
         {
             "application/json"
         };
 
         var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-        if (localVarContentType != null)
-            localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
         var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
         if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-        localVarRequestOptions.PathParameters.Add("accountId",
-            ClientUtils.ParameterToString(accountId)); // path parameter
-        if (xFapiAuthDate != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date",
-                ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        localVarRequestOptions.PathParameters.Add("accountId", ClientUtils.ParameterToString(accountId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
         if (xFapiCustomerIpAddress != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address",
-                ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-        if (xFapiInteractionId != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id",
-                ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-        if (xCustomerUserAgent != null)
-            localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent",
-                ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
 
         localVarRequestOptions.Operation = "BalancesApi.GetAccountsaccountIdBalances";
         localVarRequestOptions.OperationIndex = operationIndex;
@@ -244,8 +226,7 @@ public class BalancesApi : IBalancesApi
         }
 
         // make the HTTP request
-        var localVarResponse =
-            Client.Get<BalanceResponse>("/accounts/{accountId}/balance", localVarRequestOptions, Configuration);
+        var localVarResponse = Client.Get<BalanceResponse>("/accounts/{accountId}/balance", localVarRequestOptions, Configuration);
         if (ExceptionFactory != null)
         {
             var _exception = ExceptionFactory("GetAccountsaccountIdBalances", localVarResponse);
@@ -256,115 +237,96 @@ public class BalancesApi : IBalancesApi
     }
 
     /// <summary>
-    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с
-    ///     идентификатором accountId.
+    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с идентификатором accountId.
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="accountId">Идентификатор счета</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of BalanceResponse</returns>
-    public async Task<BalanceResponse> GetAccountsaccountIdBalancesAsync(string accountId,
-        string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0,
-        CancellationToken cancellationToken = default)
+    public async Task<BalanceResponse> GetAccountsaccountIdBalancesAsync(string accountId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
     {
-        var localVarResponse = await GetAccountsaccountIdBalancesWithHttpInfoAsync(accountId, xFapiAuthDate,
-                xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex, cancellationToken)
-            .ConfigureAwait(false);
+        var localVarResponse =
+            await GetAccountsaccountIdBalancesWithHttpInfoAsync(accountId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex,
+                cancellationToken).ConfigureAwait(false);
         return localVarResponse.Data;
     }
 
     /// <summary>
-    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с
-    ///     идентификатором accountId.
+    ///     Баланс банковского счета Конечная точка используется для получения информации о балансе банковского счета с идентификатором accountId.
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="accountId">Идентификатор счета</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (BalanceResponse)</returns>
-    public async Task<ApiResponse<BalanceResponse>>
-        GetAccountsaccountIdBalancesWithHttpInfoAsync(string accountId, string xFapiAuthDate = default,
-            string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-            string xCustomerUserAgent = default, int operationIndex = 0,
-            CancellationToken cancellationToken = default)
+    public async Task<ApiResponse<BalanceResponse>> GetAccountsaccountIdBalancesWithHttpInfoAsync(string accountId, string xFapiAuthDate = default,
+        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
     {
         // verify the required parameter 'accountId' is set
-        if (accountId == null)
-            throw new ApiException(400,
-                "Missing required parameter 'accountId' when calling BalancesApi->GetAccountsaccountIdBalances");
+        if (accountId == null) throw new ApiException(400, "Missing required parameter 'accountId' when calling BalancesApi->GetAccountsaccountIdBalances");
 
 
         var localVarRequestOptions = new RequestOptions();
 
-        var _contentTypes = new string[]
+        string[] _contentTypes =
         {
         };
 
         // to determine the Accept header
-        var _accepts = new[]
+        string[] _accepts =
         {
             "application/json"
         };
 
         var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-        if (localVarContentType != null)
-            localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
         var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
         if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-        localVarRequestOptions.PathParameters.Add("accountId",
-            ClientUtils.ParameterToString(accountId)); // path parameter
-        if (xFapiAuthDate != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date",
-                ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        localVarRequestOptions.PathParameters.Add("accountId", ClientUtils.ParameterToString(accountId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
         if (xFapiCustomerIpAddress != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address",
-                ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-        if (xFapiInteractionId != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id",
-                ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-        if (xCustomerUserAgent != null)
-            localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent",
-                ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
 
         localVarRequestOptions.Operation = "BalancesApi.GetAccountsaccountIdBalances";
         localVarRequestOptions.OperationIndex = operationIndex;
@@ -383,8 +345,8 @@ public class BalancesApi : IBalancesApi
         }
 
         // make the HTTP request
-        var localVarResponse = await AsynchronousClient.GetAsync<BalanceResponse>("/accounts/{accountId}/balance",
-            localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
+        var localVarResponse = await AsynchronousClient.GetAsync<BalanceResponse>("/accounts/{accountId}/balance", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
 
         if (ExceptionFactory != null)
         {
@@ -396,102 +358,87 @@ public class BalancesApi : IBalancesApi
     }
 
     /// <summary>
-    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью
-    ///     согласия с балансовыми разрешениями (permissions).
+    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Номер страницы (optional, default to 0)</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BalanceResponse</returns>
-    public BalanceResponse GetBalances(int? page = default, string xFapiAuthDate = default,
-        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
+    public BalanceResponse GetBalances(int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
         string xCustomerUserAgent = default, int operationIndex = 0)
     {
-        var localVarResponse = GetBalancesWithHttpInfo(page, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId,
-            xCustomerUserAgent);
+        var localVarResponse = GetBalancesWithHttpInfo(page, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
         return localVarResponse.Data;
     }
 
     /// <summary>
-    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью
-    ///     согласия с балансовыми разрешениями (permissions).
+    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Номер страницы (optional, default to 0)</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BalanceResponse</returns>
-    public ApiResponse<BalanceResponse> GetBalancesWithHttpInfo(int? page = default, string xFapiAuthDate = default,
-        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0)
+    public ApiResponse<BalanceResponse> GetBalancesWithHttpInfo(int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
     {
         var localVarRequestOptions = new RequestOptions();
 
-        var _contentTypes = new string[]
+        string[] _contentTypes =
         {
         };
 
         // to determine the Accept header
-        var _accepts = new[]
+        string[] _accepts =
         {
             "application/json"
         };
 
         var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-        if (localVarContentType != null)
-            localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
         var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
         if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
         if (page != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "page", page));
-        if (xFapiAuthDate != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date",
-                ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
         if (xFapiCustomerIpAddress != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address",
-                ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-        if (xFapiInteractionId != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id",
-                ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-        if (xCustomerUserAgent != null)
-            localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent",
-                ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
 
         localVarRequestOptions.Operation = "BalancesApi.GetBalances";
         localVarRequestOptions.OperationIndex = operationIndex;
@@ -521,106 +468,91 @@ public class BalancesApi : IBalancesApi
     }
 
     /// <summary>
-    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью
-    ///     согласия с балансовыми разрешениями (permissions).
+    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Номер страницы (optional, default to 0)</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of BalanceResponse</returns>
-    public async Task<BalanceResponse> GetBalancesAsync(int? page = default,
-        string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0,
-        CancellationToken cancellationToken = default)
+    public async Task<BalanceResponse> GetBalancesAsync(int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
     {
-        var localVarResponse = await GetBalancesWithHttpInfoAsync(page, xFapiAuthDate, xFapiCustomerIpAddress,
-            xFapiInteractionId, xCustomerUserAgent, operationIndex, cancellationToken).ConfigureAwait(false);
+        var localVarResponse =
+            await GetBalancesWithHttpInfoAsync(page, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex, cancellationToken)
+                .ConfigureAwait(false);
         return localVarResponse.Data;
     }
 
     /// <summary>
-    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью
-    ///     согласия с балансовыми разрешениями (permissions).
+    ///     Баланс банковского счета Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).
     /// </summary>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Номер страницы (optional, default to 0)</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
     /// <returns>Task of ApiResponse (BalanceResponse)</returns>
-    public async Task<ApiResponse<BalanceResponse>> GetBalancesWithHttpInfoAsync(
-        int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
-        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0,
-        CancellationToken cancellationToken = default)
+    public async Task<ApiResponse<BalanceResponse>> GetBalancesWithHttpInfoAsync(int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
     {
         var localVarRequestOptions = new RequestOptions();
 
-        var _contentTypes = new string[]
+        string[] _contentTypes =
         {
         };
 
         // to determine the Accept header
-        var _accepts = new[]
+        string[] _accepts =
         {
             "application/json"
         };
 
         var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
-        if (localVarContentType != null)
-            localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
         var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
         if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
         if (page != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "page", page));
-        if (xFapiAuthDate != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date",
-                ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
         if (xFapiCustomerIpAddress != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address",
-                ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-        if (xFapiInteractionId != null)
-            localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id",
-                ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-        if (xCustomerUserAgent != null)
-            localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent",
-                ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
 
         localVarRequestOptions.Operation = "BalancesApi.GetBalances";
         localVarRequestOptions.OperationIndex = operationIndex;
@@ -639,9 +571,7 @@ public class BalancesApi : IBalancesApi
         }
 
         // make the HTTP request
-        var localVarResponse = await AsynchronousClient
-            .GetAsync<BalanceResponse>("/balances", localVarRequestOptions, Configuration, cancellationToken)
-            .ConfigureAwait(false);
+        var localVarResponse = await AsynchronousClient.GetAsync<BalanceResponse>("/balances", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
 
         if (ExceptionFactory != null)
         {

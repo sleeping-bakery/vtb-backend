@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Контейнер для данных
 /// </summary>
 [DataContract(Name = "DataStatementInitResponseComplexType")]
-public class DataStatementInitResponseComplexType : IEquatable<DataStatementInitResponseComplexType>,
-    IValidatableObject
+public class DataStatementInitResponseComplexType : IEquatable<DataStatementInitResponseComplexType>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="DataStatementInitResponseComplexType" /> class.
@@ -39,9 +38,7 @@ public class DataStatementInitResponseComplexType : IEquatable<DataStatementInit
     public DataStatementInitResponseComplexType(StatementInitRespComplex statement = default)
     {
         // to ensure "statement" is required (not null)
-        if (statement == null)
-            throw new ArgumentNullException(
-                "statement is a required property for DataStatementInitResponseComplexType and cannot be null");
+        if (statement == null) throw new ArgumentNullException("statement is a required property for DataStatementInitResponseComplexType and cannot be null");
         Statement = statement;
     }
 

@@ -74,8 +74,7 @@ public static class ClientUtils
     }
 
     /// <summary>
-    ///     If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with
-    ///     Configuration.DateTime.
+    ///     If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
     ///     If parameter is a list, join the list with ",".
     ///     Otherwise just return the string.
     /// </summary>

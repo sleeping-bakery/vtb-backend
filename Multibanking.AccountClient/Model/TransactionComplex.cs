@@ -34,27 +34,21 @@ public class TransactionComplex : IEquatable<TransactionComplex>, IValidatableOb
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplex" /> class.
     /// </summary>
-    /// <param name="accountId">
-    ///     Уникальный и неизменный идентификатор, используемый для идентификации ресурса accounts
-    ///     (required).
-    /// </param>
+    /// <param name="accountId">Уникальный и неизменный идентификатор, используемый для идентификации ресурса accounts (required).</param>
     /// <param name="transactionId">Уникальный и неизменный идентификатор, используемый для идентификации ресурса transactions.</param>
     /// <param name="transactionReference">Уникальная ссылка на сделку.</param>
     /// <param name="creditDebitIndicator">Определяет является баланс кредитовым или дебетовым (required).</param>
     /// <param name="status">Статус транзакции (required).</param>
     /// <param name="bookingDateTime">
-    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге
-    ///     обслуживающей организации. Используется стандарт ISO8601 (required).
+    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601
+    ///     (required).
     /// </param>
     /// <param name="valueDateTime">
-    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или
-    ///     перестают быть доступными владельцу счета в случае ввода дебетовой транзакции..
+    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода
+    ///     дебетовой транзакции..
     /// </param>
     /// <param name="transactionInformation">Детали транзакции.</param>
-    /// <param name="addressLine">
-    ///     Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который
-    ///     представлен в тексте в произвольном формате..
-    /// </param>
+    /// <param name="addressLine">Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который представлен в тексте в произвольном формате..</param>
     /// <param name="amount">amount (required).</param>
     /// <param name="chargeAmount">chargeAmount.</param>
     /// <param name="currencyExchange">currencyExchange.</param>
@@ -67,32 +61,23 @@ public class TransactionComplex : IEquatable<TransactionComplex>, IValidatableOb
     /// <param name="debtorAgent">debtorAgent.</param>
     /// <param name="debtorAccount">debtorAccount.</param>
     /// <param name="cardInstrument">cardInstrument.</param>
-    public TransactionComplex(string accountId = default, string transactionId = default,
-        string transactionReference = default, CreditDebitIndicatorStaticType creditDebitIndicator = default,
-        TransactionStatusStaticType status = default, DateTime bookingDateTime = default,
-        DateTime valueDateTime = default, string transactionInformation = default, string addressLine = default,
-        TransactionComplexTypeAmount amount = default, TransactionComplexChargeAmount chargeAmount = default,
-        TransactionComplexCurrencyExchange currencyExchange = default,
-        TransactionComplexBankTransactionCode bankTransactionCode = default,
-        TransactionComplexProprietaryBankTransactionCode proprietaryBankTransactionCode = default,
-        TransactionComplexBalance balance = default, TransactionComplexMerchantDetails merchantDetails = default,
-        TransactionComplexCreditorAgent creditorAgent = default,
-        TransactionComplexCreditorAccount creditorAccount = default,
-        TransactionComplexTypeDebtorAgent debtorAgent = default,
-        TransactionComplexDebtorAccount debtorAccount = default,
-        TransactionComplexCardInstrument cardInstrument = default)
+    public TransactionComplex(string accountId = default, string transactionId = default, string transactionReference = default,
+        CreditDebitIndicatorStaticType creditDebitIndicator = default, TransactionStatusStaticType status = default, DateTime bookingDateTime = default,
+        DateTime valueDateTime = default, string transactionInformation = default, string addressLine = default, TransactionComplexTypeAmount amount = default,
+        TransactionComplexChargeAmount chargeAmount = default, TransactionComplexCurrencyExchange currencyExchange = default,
+        TransactionComplexBankTransactionCode bankTransactionCode = default, TransactionComplexProprietaryBankTransactionCode proprietaryBankTransactionCode = default,
+        TransactionComplexBalance balance = default, TransactionComplexMerchantDetails merchantDetails = default, TransactionComplexCreditorAgent creditorAgent = default,
+        TransactionComplexCreditorAccount creditorAccount = default, TransactionComplexTypeDebtorAgent debtorAgent = default,
+        TransactionComplexDebtorAccount debtorAccount = default, TransactionComplexCardInstrument cardInstrument = default)
     {
         // to ensure "accountId" is required (not null)
-        if (accountId == null)
-            throw new ArgumentNullException(
-                "accountId is a required property for TransactionComplex and cannot be null");
+        if (accountId == null) throw new ArgumentNullException("accountId is a required property for TransactionComplex and cannot be null");
         AccountId = accountId;
         CreditDebitIndicator = creditDebitIndicator;
         Status = status;
         BookingDateTime = bookingDateTime;
         // to ensure "amount" is required (not null)
-        if (amount == null)
-            throw new ArgumentNullException("amount is a required property for TransactionComplex and cannot be null");
+        if (amount == null) throw new ArgumentNullException("amount is a required property for TransactionComplex and cannot be null");
         Amount = amount;
         TransactionId = transactionId;
         TransactionReference = transactionReference;
@@ -148,24 +133,16 @@ public class TransactionComplex : IEquatable<TransactionComplex>, IValidatableOb
     public string TransactionReference { get; set; }
 
     /// <summary>
-    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации.
-    ///     Используется стандарт ISO8601
+    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601
     /// </summary>
-    /// <value>
-    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации.
-    ///     Используется стандарт ISO8601
-    /// </value>
+    /// <value>Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601</value>
     [DataMember(Name = "bookingDateTime", IsRequired = true, EmitDefaultValue = true)]
     public DateTime BookingDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть
-    ///     доступными владельцу счета в случае ввода дебетовой транзакции.
+    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода дебетовой транзакции.
     /// </summary>
-    /// <value>
-    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть
-    ///     доступными владельцу счета в случае ввода дебетовой транзакции.
-    /// </value>
+    /// <value>Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода дебетовой транзакции.</value>
     [DataMember(Name = "valueDateTime", EmitDefaultValue = false)]
     public DateTime ValueDateTime { get; set; }
 
@@ -177,13 +154,9 @@ public class TransactionComplex : IEquatable<TransactionComplex>, IValidatableOb
     public string TransactionInformation { get; set; }
 
     /// <summary>
-    ///     Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который представлен в тексте в
-    ///     произвольном формате.
+    ///     Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который представлен в тексте в произвольном формате.
     /// </summary>
-    /// <value>
-    ///     Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который представлен в
-    ///     тексте в произвольном формате.
-    /// </value>
+    /// <value>Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который представлен в тексте в произвольном формате.</value>
     [DataMember(Name = "addressLine", EmitDefaultValue = false)]
     public string AddressLine { get; set; }
 
@@ -382,18 +355,15 @@ public class TransactionComplex : IEquatable<TransactionComplex>, IValidatableOb
     {
         // TransactionReference (string) maxLength
         if (TransactionReference != null && TransactionReference.Length > 35)
-            yield return new ValidationResult("Invalid value for TransactionReference, length must be less than 35.",
-                new[] { "TransactionReference" });
+            yield return new ValidationResult("Invalid value for TransactionReference, length must be less than 35.", new[] { "TransactionReference" });
 
         // TransactionInformation (string) maxLength
         if (TransactionInformation != null && TransactionInformation.Length > 500)
-            yield return new ValidationResult("Invalid value for TransactionInformation, length must be less than 500.",
-                new[] { "TransactionInformation" });
+            yield return new ValidationResult("Invalid value for TransactionInformation, length must be less than 500.", new[] { "TransactionInformation" });
 
         // AddressLine (string) maxLength
         if (AddressLine != null && AddressLine.Length > 70)
-            yield return new ValidationResult("Invalid value for AddressLine, length must be less than 70.",
-                new[] { "AddressLine" });
+            yield return new ValidationResult("Invalid value for AddressLine, length must be less than 70.", new[] { "AddressLine" });
     }
 
     /// <summary>
@@ -470,8 +440,7 @@ public class TransactionComplex : IEquatable<TransactionComplex>, IValidatableOb
             if (ChargeAmount != null) hashCode = hashCode * 59 + ChargeAmount.GetHashCode();
             if (CurrencyExchange != null) hashCode = hashCode * 59 + CurrencyExchange.GetHashCode();
             if (BankTransactionCode != null) hashCode = hashCode * 59 + BankTransactionCode.GetHashCode();
-            if (ProprietaryBankTransactionCode != null)
-                hashCode = hashCode * 59 + ProprietaryBankTransactionCode.GetHashCode();
+            if (ProprietaryBankTransactionCode != null) hashCode = hashCode * 59 + ProprietaryBankTransactionCode.GetHashCode();
             if (Balance != null) hashCode = hashCode * 59 + Balance.GetHashCode();
             if (MerchantDetails != null) hashCode = hashCode * 59 + MerchantDetails.GetHashCode();
             if (CreditorAgent != null) hashCode = hashCode * 59 + CreditorAgent.GetHashCode();

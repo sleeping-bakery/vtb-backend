@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Подробная информация для полной идентификации транзакции
 /// </summary>
 [DataContract(Name = "BankTransactionCodeStructureComplexType")]
-public class BankTransactionCodeStructureComplexType : IEquatable<BankTransactionCodeStructureComplexType>,
-    IValidatableObject
+public class BankTransactionCodeStructureComplexType : IEquatable<BankTransactionCodeStructureComplexType>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="BankTransactionCodeStructureComplexType" /> class.
@@ -40,14 +39,10 @@ public class BankTransactionCodeStructureComplexType : IEquatable<BankTransactio
     public BankTransactionCodeStructureComplexType(string code = default, string subCode = default)
     {
         // to ensure "code" is required (not null)
-        if (code == null)
-            throw new ArgumentNullException(
-                "code is a required property for BankTransactionCodeStructureComplexType and cannot be null");
+        if (code == null) throw new ArgumentNullException("code is a required property for BankTransactionCodeStructureComplexType and cannot be null");
         Code = code;
         // to ensure "subCode" is required (not null)
-        if (subCode == null)
-            throw new ArgumentNullException(
-                "subCode is a required property for BankTransactionCodeStructureComplexType and cannot be null");
+        if (subCode == null) throw new ArgumentNullException("subCode is a required property for BankTransactionCodeStructureComplexType and cannot be null");
         SubCode = subCode;
     }
 

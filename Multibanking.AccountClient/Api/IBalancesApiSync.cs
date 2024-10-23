@@ -19,27 +19,25 @@ public interface IBalancesApiSync : IApiAccessor
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="accountId">Идентификатор счета</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BalanceResponse</returns>
-    BalanceResponse GetAccountsaccountIdBalances(string accountId, string xFapiAuthDate = default,
-        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
+    BalanceResponse GetAccountsaccountIdBalances(string accountId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
         string xCustomerUserAgent = default, int operationIndex = 0);
 
     /// <summary>
@@ -51,94 +49,86 @@ public interface IBalancesApiSync : IApiAccessor
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="accountId">Идентификатор счета</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BalanceResponse</returns>
-    ApiResponse<BalanceResponse> GetAccountsaccountIdBalancesWithHttpInfo(string accountId,
-        string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0);
+    ApiResponse<BalanceResponse> GetAccountsaccountIdBalancesWithHttpInfo(string accountId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0);
 
     /// <summary>
     ///     Баланс банковского счета
     /// </summary>
     /// <remarks>
-    ///     Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми
-    ///     разрешениями (permissions).
+    ///     Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).
     /// </remarks>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Номер страницы (optional, default to 0)</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>BalanceResponse</returns>
-    BalanceResponse GetBalances(int? page = default, string xFapiAuthDate = default,
-        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
+    BalanceResponse GetBalances(int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
         string xCustomerUserAgent = default, int operationIndex = 0);
 
     /// <summary>
     ///     Баланс банковского счета
     /// </summary>
     /// <remarks>
-    ///     Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми
-    ///     разрешениями (permissions).
+    ///     Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).
     /// </remarks>
     /// <exception cref="Multibanking.AccountClient.Client.ApiException">Thrown when fails to make API call</exception>
     /// <param name="page">Номер страницы (optional, default to 0)</param>
     /// <param name="xFapiAuthDate">
-    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде
-    ///     HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
     /// </param>
     /// <param name="xFapiCustomerIpAddress">
-    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему
-    ///     Поставщику (залогинен в приложении Стороннего Поставщика). (optional)
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
     /// </param>
     /// <param name="xFapiInteractionId">
-    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то
-    ///     ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
     /// </param>
     /// <param name="xCustomerUserAgent">
-    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь.
-    ///     Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если
-    ///     Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
     ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
     /// </param>
     /// <param name="operationIndex">Index associated with the operation.</param>
     /// <returns>ApiResponse of BalanceResponse</returns>
-    ApiResponse<BalanceResponse> GetBalancesWithHttpInfo(int? page = default, string xFapiAuthDate = default,
-        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
-        string xCustomerUserAgent = default, int operationIndex = 0);
+    ApiResponse<BalanceResponse> GetBalancesWithHttpInfo(int? page = default, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0);
 
     #endregion Synchronous Operations
 }

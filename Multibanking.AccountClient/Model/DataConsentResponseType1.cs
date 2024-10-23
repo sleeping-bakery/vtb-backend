@@ -35,36 +35,22 @@ public class DataConsentResponseType1 : IEquatable<DataConsentResponseType1>, IV
     ///     Initializes a new instance of the <see cref="DataConsentResponseType1" /> class.
     /// </summary>
     /// <param name="consentId">Уникальный идентификатор, предназначенный для идентификации ресурса согласия на доступ к счету.</param>
-    /// <param name="retrievalGrantId">
-    ///     Уникальный идентификатор, предназначенный для идентификации ресурса поручения на доступ
-    ///     к счету. (required).
-    /// </param>
-    /// <param name="documentType">
-    ///     Тип документа. Пока передается фиксированное значение &#39;Поручение на извлечение&#39;.
-    ///     (required).
-    /// </param>
-    /// <param name="oGRN">
-    ///     ОГРН Стороннего поставщика. Поле может не передаваться, поскольку у Стороннему поставщику известен
-    ///     его ОГРН..
-    /// </param>
+    /// <param name="retrievalGrantId">Уникальный идентификатор, предназначенный для идентификации ресурса поручения на доступ к счету. (required).</param>
+    /// <param name="documentType">Тип документа. Пока передается фиксированное значение &#39;Поручение на извлечение&#39;. (required).</param>
+    /// <param name="oGRN">ОГРН Стороннего поставщика. Поле может не передаваться, поскольку у Стороннему поставщику известен его ОГРН..</param>
     /// <param name="creationDateTime">Дата и время создания ресурса. (required).</param>
     /// <param name="expirationDateTime">
-    ///     Дата и время истечения срока действия поручения на извлечение информации о счете. Дата
-    ///     и время совпадают с датой и временем для согласия на получение информации о счете..
+    ///     Дата и время истечения срока действия поручения на извлечение информации о счете. Дата и время совпадают с датой и временем для согласия на
+    ///     получение информации о счете..
     /// </param>
-    public DataConsentResponseType1(string consentId = default, string retrievalGrantId = default,
-        string documentType = default, string oGRN = default, DateTime creationDateTime = default,
-        DateTime expirationDateTime = default)
+    public DataConsentResponseType1(string consentId = default, string retrievalGrantId = default, string documentType = default, string oGRN = default,
+        DateTime creationDateTime = default, DateTime expirationDateTime = default)
     {
         // to ensure "retrievalGrantId" is required (not null)
-        if (retrievalGrantId == null)
-            throw new ArgumentNullException(
-                "retrievalGrantId is a required property for DataConsentResponseType1 and cannot be null");
+        if (retrievalGrantId == null) throw new ArgumentNullException("retrievalGrantId is a required property for DataConsentResponseType1 and cannot be null");
         RetrievalGrantId = retrievalGrantId;
         // to ensure "documentType" is required (not null)
-        if (documentType == null)
-            throw new ArgumentNullException(
-                "documentType is a required property for DataConsentResponseType1 and cannot be null");
+        if (documentType == null) throw new ArgumentNullException("documentType is a required property for DataConsentResponseType1 and cannot be null");
         DocumentType = documentType;
         CreationDateTime = creationDateTime;
         ConsentId = consentId;
@@ -108,13 +94,9 @@ public class DataConsentResponseType1 : IEquatable<DataConsentResponseType1>, IV
     public DateTime CreationDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время истечения срока действия поручения на извлечение информации о счете. Дата и время совпадают с датой и
-    ///     временем для согласия на получение информации о счете.
+    ///     Дата и время истечения срока действия поручения на извлечение информации о счете. Дата и время совпадают с датой и временем для согласия на получение информации о счете.
     /// </summary>
-    /// <value>
-    ///     Дата и время истечения срока действия поручения на извлечение информации о счете. Дата и время совпадают с датой
-    ///     и временем для согласия на получение информации о счете.
-    /// </value>
+    /// <value>Дата и время истечения срока действия поручения на извлечение информации о счете. Дата и время совпадают с датой и временем для согласия на получение информации о счете.</value>
     [DataMember(Name = "expirationDateTime", EmitDefaultValue = false)]
     public DateTime ExpirationDateTime { get; set; }
 
@@ -168,18 +150,14 @@ public class DataConsentResponseType1 : IEquatable<DataConsentResponseType1>, IV
     {
         // RetrievalGrantId (string) maxLength
         if (RetrievalGrantId != null && RetrievalGrantId.Length > 128)
-            yield return new ValidationResult("Invalid value for RetrievalGrantId, length must be less than 128.",
-                new[] { "RetrievalGrantId" });
+            yield return new ValidationResult("Invalid value for RetrievalGrantId, length must be less than 128.", new[] { "RetrievalGrantId" });
 
         // DocumentType (string) maxLength
         if (DocumentType != null && DocumentType.Length > 128)
-            yield return new ValidationResult("Invalid value for DocumentType, length must be less than 128.",
-                new[] { "DocumentType" });
+            yield return new ValidationResult("Invalid value for DocumentType, length must be less than 128.", new[] { "DocumentType" });
 
         // OGRN (string) maxLength
-        if (OGRN != null && OGRN.Length > 128)
-            yield return new ValidationResult("Invalid value for OGRN, length must be less than 128.",
-                new[] { "OGRN" });
+        if (OGRN != null && OGRN.Length > 128) yield return new ValidationResult("Invalid value for OGRN, length must be less than 128.", new[] { "OGRN" });
     }
 
     /// <summary>

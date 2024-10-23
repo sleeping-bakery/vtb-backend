@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -29,7 +28,7 @@ public class DataBalanceResponseComplexType : IEquatable<DataBalanceResponseComp
     ///     Initializes a new instance of the <see cref="DataBalanceResponseComplexType" /> class.
     /// </summary>
     /// <param name="balance">balance.</param>
-    public DataBalanceResponseComplexType(Collection<BalanceComplexType> balance = default)
+    public DataBalanceResponseComplexType(List<BalanceComplexType> balance = default)
     {
         Balance = balance;
     }
@@ -38,7 +37,7 @@ public class DataBalanceResponseComplexType : IEquatable<DataBalanceResponseComp
     ///     Gets or Sets Balance
     /// </summary>
     [DataMember(Name = "Balance", EmitDefaultValue = false)]
-    public Collection<BalanceComplexType> Balance { get; set; }
+    public List<BalanceComplexType> Balance { get; set; }
 
     /// <summary>
     ///     Returns true if DataBalanceResponseComplexType instances are equal

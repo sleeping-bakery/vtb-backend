@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Multibanking.Services.User;
+namespace Multibanking.Services.User.Middlewares;
 
 public class CreateUserMiddleware(IUserService userService) : IMiddleware
 {

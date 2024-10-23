@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -37,29 +36,19 @@ public class OBRUErrorResponse : IEquatable<OBRUErrorResponse>, IValidatableObje
     ///     Initializes a new instance of the <see cref="OBRUErrorResponse" /> class.
     /// </summary>
     /// <param name="code">Высокоуровневый текстовый код ошибки, необходимый для классификации (required).</param>
-    /// <param name="id">
-    ///     Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных
-    ///     ошибок..
-    /// </param>
-    /// <param name="message">
-    ///     Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса».
-    ///     (required).
-    /// </param>
+    /// <param name="id">Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок..</param>
+    /// <param name="message">Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса». (required).</param>
     /// <param name="errors">errors (required).</param>
-    public OBRUErrorResponse(string code = default, string id = default, string message = default,
-        Collection<OBRUError> errors = default)
+    public OBRUErrorResponse(string code = default, string id = default, string message = default, List<OBRUError> errors = default)
     {
         // to ensure "code" is required (not null)
-        if (code == null)
-            throw new ArgumentNullException("code is a required property for OBRUErrorResponse and cannot be null");
+        if (code == null) throw new ArgumentNullException("code is a required property for OBRUErrorResponse and cannot be null");
         Code = code;
         // to ensure "message" is required (not null)
-        if (message == null)
-            throw new ArgumentNullException("message is a required property for OBRUErrorResponse and cannot be null");
+        if (message == null) throw new ArgumentNullException("message is a required property for OBRUErrorResponse and cannot be null");
         Message = message;
         // to ensure "errors" is required (not null)
-        if (errors == null)
-            throw new ArgumentNullException("errors is a required property for OBRUErrorResponse and cannot be null");
+        if (errors == null) throw new ArgumentNullException("errors is a required property for OBRUErrorResponse and cannot be null");
         Errors = errors;
         Id = id;
     }
@@ -89,7 +78,7 @@ public class OBRUErrorResponse : IEquatable<OBRUErrorResponse>, IValidatableObje
     ///     Gets or Sets Errors
     /// </summary>
     [DataMember(Name = "Errors", IsRequired = true, EmitDefaultValue = true)]
-    public Collection<OBRUError> Errors { get; set; }
+    public List<OBRUError> Errors { get; set; }
 
     /// <summary>
     ///     Returns true if OBRUErrorResponse instances are equal
@@ -131,17 +120,13 @@ public class OBRUErrorResponse : IEquatable<OBRUErrorResponse>, IValidatableObje
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Code (string) maxLength
-        if (Code != null && Code.Length > 40)
-            yield return new ValidationResult("Invalid value for Code, length must be less than 40.", new[] { "Code" });
+        if (Code != null && Code.Length > 40) yield return new ValidationResult("Invalid value for Code, length must be less than 40.", new[] { "Code" });
 
         // Id (string) maxLength
-        if (Id != null && Id.Length > 40)
-            yield return new ValidationResult("Invalid value for Id, length must be less than 40.", new[] { "Id" });
+        if (Id != null && Id.Length > 40) yield return new ValidationResult("Invalid value for Id, length must be less than 40.", new[] { "Id" });
 
         // Message (string) maxLength
-        if (Message != null && Message.Length > 500)
-            yield return new ValidationResult("Invalid value for Message, length must be less than 500.",
-                new[] { "Message" });
+        if (Message != null && Message.Length > 500) yield return new ValidationResult("Invalid value for Message, length must be less than 500.", new[] { "Message" });
     }
 
     /// <summary>

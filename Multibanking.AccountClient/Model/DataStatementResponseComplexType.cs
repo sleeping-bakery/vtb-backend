@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -37,12 +36,10 @@ public class DataStatementResponseComplexType : IEquatable<DataStatementResponse
     ///     Initializes a new instance of the <see cref="DataStatementResponseComplexType" /> class.
     /// </summary>
     /// <param name="statement">statement (required).</param>
-    public DataStatementResponseComplexType(Collection<StatementComplexType> statement = default)
+    public DataStatementResponseComplexType(List<StatementComplexType> statement = default)
     {
         // to ensure "statement" is required (not null)
-        if (statement == null)
-            throw new ArgumentNullException(
-                "statement is a required property for DataStatementResponseComplexType and cannot be null");
+        if (statement == null) throw new ArgumentNullException("statement is a required property for DataStatementResponseComplexType and cannot be null");
         Statement = statement;
     }
 
@@ -50,7 +47,7 @@ public class DataStatementResponseComplexType : IEquatable<DataStatementResponse
     ///     Gets or Sets Statement
     /// </summary>
     [DataMember(Name = "Statement", IsRequired = true, EmitDefaultValue = true)]
-    public Collection<StatementComplexType> Statement { get; set; }
+    public List<StatementComplexType> Statement { get; set; }
 
     /// <summary>
     ///     Returns true if DataStatementResponseComplexType instances are equal

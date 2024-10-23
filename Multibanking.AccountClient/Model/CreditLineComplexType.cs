@@ -37,8 +37,7 @@ public class CreditLineComplexType : IEquatable<CreditLineComplexType>, IValidat
     /// <param name="included">included (required).</param>
     /// <param name="type">type.</param>
     /// <param name="amount">amount.</param>
-    public CreditLineComplexType(bool included = default, CreditLineStaticType? type = default,
-        AmountComplexType amount = default)
+    public CreditLineComplexType(bool included = default, CreditLineStaticType? type = default, AmountComplexType amount = default)
     {
         Included = included;
         Type = type;

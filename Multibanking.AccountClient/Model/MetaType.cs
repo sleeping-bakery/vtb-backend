@@ -18,8 +18,8 @@ using Newtonsoft.Json;
 namespace Multibanking.AccountClient.Model;
 
 /// <summary>
-///     Раздел Meta обязателен, но может быть пустым. Необязательный элемент - «TotalPages», указывает на количество
-///     передаваемых страниц. Если передается более одной страницы, то элемент «TotalPages» обязательно присутствует.
+///     Раздел Meta обязателен, но может быть пустым. Необязательный элемент - «TotalPages», указывает на количество передаваемых страниц. Если передается более одной страницы, то
+///     элемент «TotalPages» обязательно присутствует.
 /// </summary>
 [DataContract(Name = "MetaType")]
 public class MetaType : IEquatable<MetaType>, IValidatableObject

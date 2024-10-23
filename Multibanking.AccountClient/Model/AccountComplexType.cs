@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -36,10 +35,7 @@ public class AccountComplexType : IEquatable<AccountComplexType>, IValidatableOb
     /// <summary>
     ///     Initializes a new instance of the <see cref="AccountComplexType" /> class.
     /// </summary>
-    /// <param name="accountId">
-    ///     Уникальный и неизменный идентификатор, используемый для идентификации ресурса &#39;accounts
-    ///     &#39; (required).
-    /// </param>
+    /// <param name="accountId">Уникальный и неизменный идентификатор, используемый для идентификации ресурса &#39;accounts&#39; (required).</param>
     /// <param name="status">Статус счета в форме кода.</param>
     /// <param name="statusUpdateDateTime">Дата и время изменения статуса счета. Используется стандарт ISO8601.</param>
     /// <param name="currency">Валюта ведения счета. Используется стандарт ISO 4217 (required).</param>
@@ -49,21 +45,15 @@ public class AccountComplexType : IEquatable<AccountComplexType>, IValidatableOb
     /// <param name="accountDetails">Подробная информация для идентификации счета.</param>
     /// <param name="owner">owner.</param>
     /// <param name="serviceProvider">serviceProvider.</param>
-    public AccountComplexType(string accountId = default, AccountStatusStaticType? status = default,
-        DateTime statusUpdateDateTime = default, string currency = default, AccountTypeStaticType accountType = default,
-        AccountSubTypeStaticType accountSubType = default, string accountDescription = default,
-        Collection<AccountDetailsComplexType> accountDetails = default, Party owner = default,
-        ServiceProviderComplexType serviceProvider = default)
+    public AccountComplexType(string accountId = default, AccountStatusStaticType? status = default, DateTime statusUpdateDateTime = default, string currency = default,
+        AccountTypeStaticType accountType = default, AccountSubTypeStaticType accountSubType = default, string accountDescription = default,
+        List<AccountDetailsComplexType> accountDetails = default, Party owner = default, ServiceProviderComplexType serviceProvider = default)
     {
         // to ensure "accountId" is required (not null)
-        if (accountId == null)
-            throw new ArgumentNullException(
-                "accountId is a required property for AccountComplexType and cannot be null");
+        if (accountId == null) throw new ArgumentNullException("accountId is a required property for AccountComplexType and cannot be null");
         AccountId = accountId;
         // to ensure "currency" is required (not null)
-        if (currency == null)
-            throw new ArgumentNullException(
-                "currency is a required property for AccountComplexType and cannot be null");
+        if (currency == null) throw new ArgumentNullException("currency is a required property for AccountComplexType and cannot be null");
         Currency = currency;
         AccountType = accountType;
         AccountSubType = accountSubType;
@@ -129,7 +119,7 @@ public class AccountComplexType : IEquatable<AccountComplexType>, IValidatableOb
     /// </summary>
     /// <value>Подробная информация для идентификации счета</value>
     [DataMember(Name = "AccountDetails", EmitDefaultValue = false)]
-    public Collection<AccountDetailsComplexType> AccountDetails { get; set; }
+    public List<AccountDetailsComplexType> AccountDetails { get; set; }
 
     /// <summary>
     ///     Gets or Sets Owner
@@ -211,8 +201,7 @@ public class AccountComplexType : IEquatable<AccountComplexType>, IValidatableOb
     {
         // AccountDescription (string) maxLength
         if (AccountDescription != null && AccountDescription.Length > 35)
-            yield return new ValidationResult("Invalid value for AccountDescription, length must be less than 35.",
-                new[] { "AccountDescription" });
+            yield return new ValidationResult("Invalid value for AccountDescription, length must be less than 35.", new[] { "AccountDescription" });
     }
 
     /// <summary>

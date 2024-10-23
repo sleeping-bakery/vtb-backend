@@ -21,9 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Подробная информация для полной идентификации собственного банковского кода транзакции
 /// </summary>
 [DataContract(Name = "TransactionComplex_ProprietaryBankTransactionCode")]
-public class
-    TransactionComplexProprietaryBankTransactionCode : IEquatable<TransactionComplexProprietaryBankTransactionCode>,
-    IValidatableObject
+public class TransactionComplexProprietaryBankTransactionCode : IEquatable<TransactionComplexProprietaryBankTransactionCode>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexProprietaryBankTransactionCode" /> class.
@@ -41,9 +39,7 @@ public class
     public TransactionComplexProprietaryBankTransactionCode(string code = default, string issuer = default)
     {
         // to ensure "code" is required (not null)
-        if (code == null)
-            throw new ArgumentNullException(
-                "code is a required property for TransactionComplexProprietaryBankTransactionCode and cannot be null");
+        if (code == null) throw new ArgumentNullException("code is a required property for TransactionComplexProprietaryBankTransactionCode and cannot be null");
         Code = code;
         Issuer = issuer;
     }
@@ -91,13 +87,10 @@ public class
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Code (string) maxLength
-        if (Code != null && Code.Length > 35)
-            yield return new ValidationResult("Invalid value for Code, length must be less than 35.", new[] { "Code" });
+        if (Code != null && Code.Length > 35) yield return new ValidationResult("Invalid value for Code, length must be less than 35.", new[] { "Code" });
 
         // Issuer (string) maxLength
-        if (Issuer != null && Issuer.Length > 35)
-            yield return new ValidationResult("Invalid value for Issuer, length must be less than 35.",
-                new[] { "Issuer" });
+        if (Issuer != null && Issuer.Length > 35) yield return new ValidationResult("Invalid value for Issuer, length must be less than 35.", new[] { "Issuer" });
     }
 
     /// <summary>

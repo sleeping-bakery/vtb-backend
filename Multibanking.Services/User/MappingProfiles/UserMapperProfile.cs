@@ -1,7 +1,7 @@
 using AutoMapper;
 using Multibanking.Contracts.User;
 
-namespace Multibanking.Services.User;
+namespace Multibanking.Services.User.MappingProfiles;
 
 public class UserMapperProfile : Profile
 {

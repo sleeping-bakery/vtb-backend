@@ -21,9 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Финансовая организация, обслуживающая счет получателя средств
 /// </summary>
 [DataContract(Name = "BranchAndFinancialInstitutionIdentificationComplexType")]
-public class
-    BranchAndFinancialInstitutionIdentificationComplexType :
-    IEquatable<BranchAndFinancialInstitutionIdentificationComplexType>, IValidatableObject
+public class BranchAndFinancialInstitutionIdentificationComplexType : IEquatable<BranchAndFinancialInstitutionIdentificationComplexType>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="BranchAndFinancialInstitutionIdentificationComplexType" /> class.
@@ -32,8 +30,7 @@ public class
     /// <param name="identification">Идентификатор.</param>
     /// <param name="name">Название.</param>
     /// <param name="address">address.</param>
-    public BranchAndFinancialInstitutionIdentificationComplexType(
-        FinancialInstitutionIdentificationDynamicType? schemeName = default, string identification = default,
+    public BranchAndFinancialInstitutionIdentificationComplexType(FinancialInstitutionIdentificationDynamicType? schemeName = default, string identification = default,
         string name = default, BranchAndFinancialInstitutionIdentificationComplexTypeAddress address = default)
     {
         SchemeName = schemeName;
@@ -108,13 +105,10 @@ public class
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 35)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.", new[] { "Identification" });
 
         // Name (string) maxLength
-        if (Name != null && Name.Length > 140)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 140.",
-                new[] { "Name" });
+        if (Name != null && Name.Length > 140) yield return new ValidationResult("Invalid value for Name, length must be less than 140.", new[] { "Name" });
     }
 
     /// <summary>

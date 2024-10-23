@@ -109,9 +109,7 @@ internal class CustomJsonCodec : IRestSerializer, ISerializer, IDeserializer
                     var match = regex.Match(header.ToString());
                     if (match.Success)
                     {
-                        var fileName = filePath +
-                                       ClientUtils.SanitizeFilename(match.Groups[1].Value.Replace("\"", "")
-                                           .Replace("'", ""));
+                        var fileName = filePath + ClientUtils.SanitizeFilename(match.Groups[1].Value.Replace("\"", "").Replace("'", ""));
                         File.WriteAllBytes(fileName, bytes);
                         return new FileStream(fileName, FileMode.Open);
                     }

@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -37,27 +36,23 @@ public class DataType : IEquatable<DataType>, IValidatableObject
     ///     Initializes a new instance of the <see cref="DataType" /> class.
     /// </summary>
     /// <param name="permissions">
-    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были
-    ///     одобрены Пользователем и запрошены для авторизации на стороне ППУ. (required).
+    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на
+    ///     стороне ППУ. (required).
     /// </param>
-    /// <param name="expirationDateTime">
-    ///     Дата и время истечения срока действия разрешений.Если он не заполнен, разрешения будет
-    ///     с открытой датой..
-    /// </param>
+    /// <param name="expirationDateTime">Дата и время истечения срока действия разрешений.Если он не заполнен, разрешения будет с открытой датой..</param>
     /// <param name="transactionFromDateTime">
-    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала
-    ///     будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций..
+    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой
+    ///     ранней из доступных транзакций..
     /// </param>
     /// <param name="transactionToDateTime">
-    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата
-    ///     окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию..
+    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую
+    ///     последнюю доступную транзакцию..
     /// </param>
-    public DataType(Collection<PermissionsType> permissions = default, DateTime expirationDateTime = default,
-        DateTime transactionFromDateTime = default, DateTime transactionToDateTime = default)
+    public DataType(List<PermissionsType> permissions = default, DateTime expirationDateTime = default, DateTime transactionFromDateTime = default,
+        DateTime transactionToDateTime = default)
     {
         // to ensure "permissions" is required (not null)
-        if (permissions == null)
-            throw new ArgumentNullException("permissions is a required property for DataType and cannot be null");
+        if (permissions == null) throw new ArgumentNullException("permissions is a required property for DataType and cannot be null");
         Permissions = permissions;
         ExpirationDateTime = expirationDateTime;
         TransactionFromDateTime = transactionFromDateTime;
@@ -65,15 +60,11 @@ public class DataType : IEquatable<DataType>, IValidatableObject
     }
 
     /// <summary>
-    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем
-    ///     и запрошены для авторизации на стороне ППУ.
+    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на стороне ППУ.
     /// </summary>
-    /// <value>
-    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены
-    ///     Пользователем и запрошены для авторизации на стороне ППУ.
-    /// </value>
+    /// <value>Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на стороне ППУ.</value>
     [DataMember(Name = "permissions", IsRequired = true, EmitDefaultValue = true)]
-    public Collection<PermissionsType> Permissions { get; set; }
+    public List<PermissionsType> Permissions { get; set; }
 
     /// <summary>
     ///     Дата и время истечения срока действия разрешений.Если он не заполнен, разрешения будет с открытой датой.
@@ -83,24 +74,16 @@ public class DataType : IEquatable<DataType>, IValidatableObject
     public DateTime ExpirationDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные
-    ///     будутвозвращены с самой ранней из доступных транзакций.
+    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций.
     /// </summary>
-    /// <value>
-    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные
-    ///     будутвозвращены с самой ранней из доступных транзакций.
-    /// </value>
+    /// <value>Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций.</value>
     [DataMember(Name = "transactionFromDateTime", EmitDefaultValue = false)]
     public DateTime TransactionFromDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные
-    ///     будутвозвращены в самую последнюю доступную транзакцию.
+    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию.
     /// </summary>
-    /// <value>
-    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные
-    ///     будутвозвращены в самую последнюю доступную транзакцию.
-    /// </value>
+    /// <value>Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию.</value>
     [DataMember(Name = "transactionToDateTime", EmitDefaultValue = false)]
     public DateTime TransactionToDateTime { get; set; }
 

@@ -38,13 +38,11 @@ public class OBRUError : IEquatable<OBRUError>, IValidatableObject
     /// <param name="message">Описание ошибки. Например, &#39;Обязательное поле не указано&#39;. (required).</param>
     /// <param name="path">Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле..</param>
     /// <param name="url">URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию..</param>
-    public OBRUError(OBRUErrorResponseErrorCode errorCode = default, string message = default, string path = default,
-        string url = default)
+    public OBRUError(OBRUErrorResponseErrorCode errorCode = default, string message = default, string path = default, string url = default)
     {
         ErrorCode = errorCode;
         // to ensure "message" is required (not null)
-        if (message == null)
-            throw new ArgumentNullException("message is a required property for OBRUError and cannot be null");
+        if (message == null) throw new ArgumentNullException("message is a required property for OBRUError and cannot be null");
         Message = message;
         Path = path;
         Url = url;
@@ -115,14 +113,10 @@ public class OBRUError : IEquatable<OBRUError>, IValidatableObject
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Message (string) maxLength
-        if (Message != null && Message.Length > 500)
-            yield return new ValidationResult("Invalid value for Message, length must be less than 500.",
-                new[] { "Message" });
+        if (Message != null && Message.Length > 500) yield return new ValidationResult("Invalid value for Message, length must be less than 500.", new[] { "Message" });
 
         // Path (string) maxLength
-        if (Path != null && Path.Length > 500)
-            yield return new ValidationResult("Invalid value for Path, length must be less than 500.",
-                new[] { "Path" });
+        if (Path != null && Path.Length > 500) yield return new ValidationResult("Invalid value for Path, length must be less than 500.", new[] { "Path" });
     }
 
     /// <summary>

@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Информация о контрагенте в случае кредитной операции
 /// </summary>
 [DataContract(Name = "TransactionComplexType_DebtorParty")]
-public class TransactionComplexTypeDebtorParty : IEquatable<TransactionComplexTypeDebtorParty>,
-    IValidatableObject
+public class TransactionComplexTypeDebtorParty : IEquatable<TransactionComplexTypeDebtorParty>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexTypeDebtorParty" /> class.
@@ -41,9 +40,7 @@ public class TransactionComplexTypeDebtorParty : IEquatable<TransactionComplexTy
     public TransactionComplexTypeDebtorParty(string inn = default, string name = default, string kpp = default)
     {
         // to ensure "inn" is required (not null)
-        if (inn == null)
-            throw new ArgumentNullException(
-                "inn is a required property for TransactionComplexTypeDebtorParty and cannot be null");
+        if (inn == null) throw new ArgumentNullException("inn is a required property for TransactionComplexTypeDebtorParty and cannot be null");
         Inn = inn;
         Name = name;
         Kpp = kpp;
@@ -104,17 +101,13 @@ public class TransactionComplexTypeDebtorParty : IEquatable<TransactionComplexTy
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Inn (string) maxLength
-        if (Inn != null && Inn.Length > 12)
-            yield return new ValidationResult("Invalid value for Inn, length must be less than 12.", new[] { "Inn" });
+        if (Inn != null && Inn.Length > 12) yield return new ValidationResult("Invalid value for Inn, length must be less than 12.", new[] { "Inn" });
 
         // Name (string) maxLength
-        if (Name != null && Name.Length > 160)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 160.",
-                new[] { "Name" });
+        if (Name != null && Name.Length > 160) yield return new ValidationResult("Invalid value for Name, length must be less than 160.", new[] { "Name" });
 
         // Kpp (string) maxLength
-        if (Kpp != null && Kpp.Length > 9)
-            yield return new ValidationResult("Invalid value for Kpp, length must be less than 9.", new[] { "Kpp" });
+        if (Kpp != null && Kpp.Length > 9) yield return new ValidationResult("Invalid value for Kpp, length must be less than 9.", new[] { "Kpp" });
     }
 
     /// <summary>

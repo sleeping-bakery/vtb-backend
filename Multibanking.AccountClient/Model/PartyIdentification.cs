@@ -35,17 +35,12 @@ public class PartyIdentification : IEquatable<PartyIdentification>, IValidatable
     ///     Initializes a new instance of the <see cref="PartyIdentification" /> class.
     /// </summary>
     /// <param name="schemeName">schemeName (required).</param>
-    /// <param name="identification">
-    ///     Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей
-    ///     организацией. (required).
-    /// </param>
+    /// <param name="identification">Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией. (required).</param>
     public PartyIdentification(PartyIdentificationCode schemeName = default, string identification = default)
     {
         SchemeName = schemeName;
         // to ensure "identification" is required (not null)
-        if (identification == null)
-            throw new ArgumentNullException(
-                "identification is a required property for PartyIdentification and cannot be null");
+        if (identification == null) throw new ArgumentNullException("identification is a required property for PartyIdentification and cannot be null");
         Identification = identification;
     }
 
@@ -91,8 +86,7 @@ public class PartyIdentification : IEquatable<PartyIdentification>, IValidatable
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 35)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.", new[] { "Identification" });
     }
 
     /// <summary>

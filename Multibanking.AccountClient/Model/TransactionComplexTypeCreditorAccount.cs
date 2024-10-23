@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Идентификация счета получателя средств, в случае дебетовой транзакции
 /// </summary>
 [DataContract(Name = "TransactionComplexType_CreditorAccount")]
-public class TransactionComplexTypeCreditorAccount : IEquatable<TransactionComplexTypeCreditorAccount>,
-    IValidatableObject
+public class TransactionComplexTypeCreditorAccount : IEquatable<TransactionComplexTypeCreditorAccount>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexTypeCreditorAccount" /> class.
@@ -37,14 +36,11 @@ public class TransactionComplexTypeCreditorAccount : IEquatable<TransactionCompl
     /// </summary>
     /// <param name="schemeName">Название схемы (required).</param>
     /// <param name="identification">Идентификатор счета (required).</param>
-    public TransactionComplexTypeCreditorAccount(AccountIdentificationDynamicType schemeName = default,
-        string identification = default)
+    public TransactionComplexTypeCreditorAccount(AccountIdentificationDynamicType schemeName = default, string identification = default)
     {
         SchemeName = schemeName;
         // to ensure "identification" is required (not null)
-        if (identification == null)
-            throw new ArgumentNullException(
-                "identification is a required property for TransactionComplexTypeCreditorAccount and cannot be null");
+        if (identification == null) throw new ArgumentNullException("identification is a required property for TransactionComplexTypeCreditorAccount and cannot be null");
         Identification = identification;
     }
 
@@ -91,8 +87,7 @@ public class TransactionComplexTypeCreditorAccount : IEquatable<TransactionCompl
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 256)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
     }
 
     /// <summary>

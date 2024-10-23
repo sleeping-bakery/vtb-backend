@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -38,10 +37,9 @@ public class PostalAddressComplexType : IEquatable<PostalAddressComplexType>, IV
     /// <param name="countrySubDivision">countrySubDivision.</param>
     /// <param name="country">Страна. Справочник кодов ISO3166, Alpha-3 code..</param>
     /// <param name="addressLine">addressLine.</param>
-    public PostalAddressComplexType(AddressTypeStaticType? addressType = default, string department = default,
-        string subDepartment = default, string streetName = default, string buildingNumber = default,
-        string postCode = default, string townName = default, string countrySubDivision = default,
-        string country = default, Collection<string> addressLine = default)
+    public PostalAddressComplexType(AddressTypeStaticType? addressType = default, string department = default, string subDepartment = default, string streetName = default,
+        string buildingNumber = default, string postCode = default, string townName = default, string countrySubDivision = default, string country = default,
+        List<string> addressLine = default)
     {
         AddressType = addressType;
         Department = department;
@@ -115,7 +113,7 @@ public class PostalAddressComplexType : IEquatable<PostalAddressComplexType>, IV
     ///     Gets or Sets AddressLine
     /// </summary>
     [DataMember(Name = "addressLine", EmitDefaultValue = false)]
-    public Collection<string> AddressLine { get; set; }
+    public List<string> AddressLine { get; set; }
 
     /// <summary>
     ///     Returns true if PostalAddressComplexType instances are equal
@@ -186,39 +184,28 @@ public class PostalAddressComplexType : IEquatable<PostalAddressComplexType>, IV
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Department (string) maxLength
-        if (Department != null && Department.Length > 70)
-            yield return new ValidationResult("Invalid value for Department, length must be less than 70.",
-                new[] { "Department" });
+        if (Department != null && Department.Length > 70) yield return new ValidationResult("Invalid value for Department, length must be less than 70.", new[] { "Department" });
 
         // SubDepartment (string) maxLength
         if (SubDepartment != null && SubDepartment.Length > 70)
-            yield return new ValidationResult("Invalid value for SubDepartment, length must be less than 70.",
-                new[] { "SubDepartment" });
+            yield return new ValidationResult("Invalid value for SubDepartment, length must be less than 70.", new[] { "SubDepartment" });
 
         // StreetName (string) maxLength
-        if (StreetName != null && StreetName.Length > 70)
-            yield return new ValidationResult("Invalid value for StreetName, length must be less than 70.",
-                new[] { "StreetName" });
+        if (StreetName != null && StreetName.Length > 70) yield return new ValidationResult("Invalid value for StreetName, length must be less than 70.", new[] { "StreetName" });
 
         // BuildingNumber (string) maxLength
         if (BuildingNumber != null && BuildingNumber.Length > 16)
-            yield return new ValidationResult("Invalid value for BuildingNumber, length must be less than 16.",
-                new[] { "BuildingNumber" });
+            yield return new ValidationResult("Invalid value for BuildingNumber, length must be less than 16.", new[] { "BuildingNumber" });
 
         // PostCode (string) maxLength
-        if (PostCode != null && PostCode.Length > 16)
-            yield return new ValidationResult("Invalid value for PostCode, length must be less than 16.",
-                new[] { "PostCode" });
+        if (PostCode != null && PostCode.Length > 16) yield return new ValidationResult("Invalid value for PostCode, length must be less than 16.", new[] { "PostCode" });
 
         // TownName (string) maxLength
-        if (TownName != null && TownName.Length > 35)
-            yield return new ValidationResult("Invalid value for TownName, length must be less than 35.",
-                new[] { "TownName" });
+        if (TownName != null && TownName.Length > 35) yield return new ValidationResult("Invalid value for TownName, length must be less than 35.", new[] { "TownName" });
 
         // CountrySubDivision (string) maxLength
         if (CountrySubDivision != null && CountrySubDivision.Length > 35)
-            yield return new ValidationResult("Invalid value for CountrySubDivision, length must be less than 35.",
-                new[] { "CountrySubDivision" });
+            yield return new ValidationResult("Invalid value for CountrySubDivision, length must be less than 35.", new[] { "CountrySubDivision" });
     }
 
     /// <summary>

@@ -29,8 +29,7 @@ public class TransactionComplexDebtorAccount : IEquatable<TransactionComplexDebt
     /// <param name="schemeName">Название схемы.</param>
     /// <param name="identification">Идентификатор.</param>
     /// <param name="name">Название.</param>
-    public TransactionComplexDebtorAccount(AccountIdentificationDynamicType? schemeName = default,
-        string identification = default, string name = default)
+    public TransactionComplexDebtorAccount(AccountIdentificationDynamicType? schemeName = default, string identification = default, string name = default)
     {
         SchemeName = schemeName;
         Identification = identification;
@@ -92,12 +91,10 @@ public class TransactionComplexDebtorAccount : IEquatable<TransactionComplexDebt
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 256)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
 
         // Name (string) maxLength
-        if (Name != null && Name.Length > 70)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
     }
 
     /// <summary>

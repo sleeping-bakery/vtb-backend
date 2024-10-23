@@ -78,8 +78,7 @@ public class MerchantDetailsComplexType : IEquatable<MerchantDetailsComplexType>
     {
         // MerchantName (string) maxLength
         if (MerchantName != null && MerchantName.Length > 350)
-            yield return new ValidationResult("Invalid value for MerchantName, length must be less than 350.",
-                new[] { "MerchantName" });
+            yield return new ValidationResult("Invalid value for MerchantName, length must be less than 350.", new[] { "MerchantName" });
     }
 
     /// <summary>

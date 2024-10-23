@@ -38,13 +38,10 @@ public class StatementInitRespComplex : IEquatable<StatementInitRespComplex>, IV
     /// <param name="statementId">Идентификатор ресурса выписки (required).</param>
     /// <param name="fromBookingDateTime">Дата и время начала выписки (required).</param>
     /// <param name="toBookingDateTime">Дата и время окончания выписки (required).</param>
-    public StatementInitRespComplex(string accountId = default, string statementId = default,
-        DateTime fromBookingDateTime = default, DateTime toBookingDateTime = default)
+    public StatementInitRespComplex(string accountId = default, string statementId = default, DateTime fromBookingDateTime = default, DateTime toBookingDateTime = default)
     {
         // to ensure "statementId" is required (not null)
-        if (statementId == null)
-            throw new ArgumentNullException(
-                "statementId is a required property for StatementInitRespComplex and cannot be null");
+        if (statementId == null) throw new ArgumentNullException("statementId is a required property for StatementInitRespComplex and cannot be null");
         StatementId = statementId;
         FromBookingDateTime = fromBookingDateTime;
         ToBookingDateTime = toBookingDateTime;

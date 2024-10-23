@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -36,46 +35,34 @@ public class DataConsentResponseType : IEquatable<DataConsentResponseType>, IVal
     /// <summary>
     ///     Initializes a new instance of the <see cref="DataConsentResponseType" /> class.
     /// </summary>
-    /// <param name="consentId">
-    ///     Уникальный идентификатор, предназначенный для идентификации ресурса согласия на доступ к счету
-    ///     (required).
-    /// </param>
+    /// <param name="consentId">Уникальный идентификатор, предназначенный для идентификации ресурса согласия на доступ к счету (required).</param>
     /// <param name="creationDateTime">Дата и время создания ресурса (required).</param>
     /// <param name="status">Статус согласия (required).</param>
     /// <param name="statusUpdateDateTime">Дата и время обновления статуса ресурса (required).</param>
     /// <param name="permissions">
-    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были
-    ///     одобрены Пользователем и запрошены для авторизации на стороне ППУ. (required).
+    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на
+    ///     стороне ППУ. (required).
     /// </param>
-    /// <param name="expirationDateTime">
-    ///     Дата и время истечения срока действия разрешений. Если он не заполнен, разрешения
-    ///     будет с открытой датой..
-    /// </param>
+    /// <param name="expirationDateTime">Дата и время истечения срока действия разрешений. Если он не заполнен, разрешения будет с открытой датой..</param>
     /// <param name="transactionFromDateTime">
-    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала
-    ///     будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций..
+    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой
+    ///     ранней из доступных транзакций..
     /// </param>
     /// <param name="transactionToDateTime">
-    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата
-    ///     окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию..
+    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую
+    ///     последнюю доступную транзакцию..
     /// </param>
-    public DataConsentResponseType(string consentId = default, DateTime creationDateTime = default,
-        ConsentStatusType status = default, DateTime statusUpdateDateTime = default,
-        Collection<PermissionsType> permissions = default, DateTime expirationDateTime = default,
-        DateTime transactionFromDateTime = default, DateTime transactionToDateTime = default)
+    public DataConsentResponseType(string consentId = default, DateTime creationDateTime = default, ConsentStatusType status = default, DateTime statusUpdateDateTime = default,
+        List<PermissionsType> permissions = default, DateTime expirationDateTime = default, DateTime transactionFromDateTime = default, DateTime transactionToDateTime = default)
     {
         // to ensure "consentId" is required (not null)
-        if (consentId == null)
-            throw new ArgumentNullException(
-                "consentId is a required property for DataConsentResponseType and cannot be null");
+        if (consentId == null) throw new ArgumentNullException("consentId is a required property for DataConsentResponseType and cannot be null");
         ConsentId = consentId;
         CreationDateTime = creationDateTime;
         Status = status;
         StatusUpdateDateTime = statusUpdateDateTime;
         // to ensure "permissions" is required (not null)
-        if (permissions == null)
-            throw new ArgumentNullException(
-                "permissions is a required property for DataConsentResponseType and cannot be null");
+        if (permissions == null) throw new ArgumentNullException("permissions is a required property for DataConsentResponseType and cannot be null");
         Permissions = permissions;
         ExpirationDateTime = expirationDateTime;
         TransactionFromDateTime = transactionFromDateTime;
@@ -111,15 +98,11 @@ public class DataConsentResponseType : IEquatable<DataConsentResponseType>, IVal
     public DateTime StatusUpdateDateTime { get; set; }
 
     /// <summary>
-    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем
-    ///     и запрошены для авторизации на стороне ППУ.
+    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на стороне ППУ.
     /// </summary>
-    /// <value>
-    ///     Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены
-    ///     Пользователем и запрошены для авторизации на стороне ППУ.
-    /// </value>
+    /// <value>Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на стороне ППУ.</value>
     [DataMember(Name = "permissions", IsRequired = true, EmitDefaultValue = true)]
-    public Collection<PermissionsType> Permissions { get; set; }
+    public List<PermissionsType> Permissions { get; set; }
 
     /// <summary>
     ///     Дата и время истечения срока действия разрешений. Если он не заполнен, разрешения будет с открытой датой.
@@ -129,24 +112,16 @@ public class DataConsentResponseType : IEquatable<DataConsentResponseType>, IVal
     public DateTime ExpirationDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные
-    ///     будутвозвращены с самой ранней из доступных транзакций.
+    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций.
     /// </summary>
-    /// <value>
-    ///     Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные
-    ///     будутвозвращены с самой ранней из доступных транзакций.
-    /// </value>
+    /// <value>Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций.</value>
     [DataMember(Name = "transactionFromDateTime", EmitDefaultValue = false)]
     public DateTime TransactionFromDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные
-    ///     будутвозвращены в самую последнюю доступную транзакцию.
+    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию.
     /// </summary>
-    /// <value>
-    ///     Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные
-    ///     будутвозвращены в самую последнюю доступную транзакцию.
-    /// </value>
+    /// <value>Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию.</value>
     [DataMember(Name = "transactionToDateTime", EmitDefaultValue = false)]
     public DateTime TransactionToDateTime { get; set; }
 

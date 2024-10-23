@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Подробная информация об обмене валюты
 /// </summary>
 [DataContract(Name = "TransactionComplex_CurrencyExchange")]
-public class TransactionComplexCurrencyExchange : IEquatable<TransactionComplexCurrencyExchange>,
-    IValidatableObject
+public class TransactionComplexCurrencyExchange : IEquatable<TransactionComplexCurrencyExchange>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexCurrencyExchange" /> class.
@@ -35,27 +34,21 @@ public class TransactionComplexCurrencyExchange : IEquatable<TransactionComplexC
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexCurrencyExchange" /> class.
     /// </summary>
-    /// <param name="sourceCurrency">
-    ///     Валюта, из которой необходимо конвертировать сумму. Используется стандарт ISO 4217
-    ///     (required).
-    /// </param>
+    /// <param name="sourceCurrency">Валюта, из которой необходимо конвертировать сумму. Используется стандарт ISO 4217 (required).</param>
     /// <param name="targetCurrency">Валюта, в которую необходимо конвертировать сумму. Используется стандарт ISO 4217.</param>
     /// <param name="unitCurrency">Валюта, в которой обменный курс выражен. Используется стандарт ISO 4217.</param>
     /// <param name="exchangeRate">
-    ///     Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по
-    ///     которой одна валюта была куплена за другую валюту. (required).
+    ///     Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по которой одна валюта была куплена за другую валюту.
+    ///     (required).
     /// </param>
     /// <param name="contractIdentification">Идентификатор для однозначного определения валютного контракта..</param>
     /// <param name="quotationDate">Дата и время обменного курса. Используется стандарт ISO8601.</param>
     /// <param name="instructedAmount">instructedAmount.</param>
-    public TransactionComplexCurrencyExchange(string sourceCurrency = default, string targetCurrency = default,
-        string unitCurrency = default, BaseOneRate exchangeRate = default, string contractIdentification = default,
-        DateTime quotationDate = default, CurrencyExchangeComplexTypeInstructedAmount instructedAmount = default)
+    public TransactionComplexCurrencyExchange(string sourceCurrency = default, string targetCurrency = default, string unitCurrency = default, BaseOneRate exchangeRate = default,
+        string contractIdentification = default, DateTime quotationDate = default, CurrencyExchangeComplexTypeInstructedAmount instructedAmount = default)
     {
         // to ensure "sourceCurrency" is required (not null)
-        if (sourceCurrency == null)
-            throw new ArgumentNullException(
-                "sourceCurrency is a required property for TransactionComplexCurrencyExchange and cannot be null");
+        if (sourceCurrency == null) throw new ArgumentNullException("sourceCurrency is a required property for TransactionComplexCurrencyExchange and cannot be null");
         SourceCurrency = sourceCurrency;
         ExchangeRate = exchangeRate;
         TargetCurrency = targetCurrency;
@@ -66,13 +59,9 @@ public class TransactionComplexCurrencyExchange : IEquatable<TransactionComplexC
     }
 
     /// <summary>
-    ///     Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по которой одна валюта
-    ///     была куплена за другую валюту.
+    ///     Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по которой одна валюта была куплена за другую валюту.
     /// </summary>
-    /// <value>
-    ///     Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по которой одна валюта
-    ///     была куплена за другую валюту.
-    /// </value>
+    /// <value>Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по которой одна валюта была куплена за другую валюту.</value>
     [DataMember(Name = "exchangeRate", IsRequired = true, EmitDefaultValue = true)]
     public BaseOneRate ExchangeRate { get; set; }
 
@@ -171,8 +160,7 @@ public class TransactionComplexCurrencyExchange : IEquatable<TransactionComplexC
     {
         // ContractIdentification (string) maxLength
         if (ContractIdentification != null && ContractIdentification.Length > 35)
-            yield return new ValidationResult("Invalid value for ContractIdentification, length must be less than 35.",
-                new[] { "ContractIdentification" });
+            yield return new ValidationResult("Invalid value for ContractIdentification, length must be less than 35.", new[] { "ContractIdentification" });
     }
 
     /// <summary>

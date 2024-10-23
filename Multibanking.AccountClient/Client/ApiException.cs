@@ -41,8 +41,7 @@ public class ApiException : Exception
     /// <param name="message">Error message.</param>
     /// <param name="errorContent">Error content.</param>
     /// <param name="headers">HTTP Headers.</param>
-    public ApiException(int errorCode, string message, object errorContent = null,
-        Multimap<string, string> headers = null) : base(message)
+    public ApiException(int errorCode, string message, object errorContent = null, Multimap<string, string> headers = null) : base(message)
     {
         ErrorCode = errorCode;
         ErrorContent = errorContent;

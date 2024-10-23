@@ -35,30 +35,22 @@ public class ConsentResponse : IEquatable<ConsentResponse>, IValidatableObject
     ///     Initializes a new instance of the <see cref="ConsentResponse" /> class.
     /// </summary>
     /// <param name="data">data (required).</param>
-    /// <param name="risk">
-    ///     Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной
-    ///     информации для скоринга рисков (required).
-    /// </param>
+    /// <param name="risk">Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной информации для скоринга рисков (required).</param>
     /// <param name="links">links (required).</param>
     /// <param name="meta">meta (required).</param>
-    public ConsentResponse(DataConsentResponseType data = default, object risk = default, LinksType links = default,
-        MetaType meta = default)
+    public ConsentResponse(DataConsentResponseType data = default, object risk = default, LinksType links = default, MetaType meta = default)
     {
         // to ensure "data" is required (not null)
-        if (data == null)
-            throw new ArgumentNullException("data is a required property for ConsentResponse and cannot be null");
+        if (data == null) throw new ArgumentNullException("data is a required property for ConsentResponse and cannot be null");
         Data = data;
         // to ensure "risk" is required (not null)
-        if (risk == null)
-            throw new ArgumentNullException("risk is a required property for ConsentResponse and cannot be null");
+        if (risk == null) throw new ArgumentNullException("risk is a required property for ConsentResponse and cannot be null");
         Risk = risk;
         // to ensure "links" is required (not null)
-        if (links == null)
-            throw new ArgumentNullException("links is a required property for ConsentResponse and cannot be null");
+        if (links == null) throw new ArgumentNullException("links is a required property for ConsentResponse and cannot be null");
         Links = links;
         // to ensure "meta" is required (not null)
-        if (meta == null)
-            throw new ArgumentNullException("meta is a required property for ConsentResponse and cannot be null");
+        if (meta == null) throw new ArgumentNullException("meta is a required property for ConsentResponse and cannot be null");
         Meta = meta;
     }
 
@@ -69,13 +61,9 @@ public class ConsentResponse : IEquatable<ConsentResponse>, IValidatableObject
     public DataConsentResponseType Data { get; set; }
 
     /// <summary>
-    ///     Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной информации для
-    ///     скоринга рисков
+    ///     Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной информации для скоринга рисков
     /// </summary>
-    /// <value>
-    ///     Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной информации для
-    ///     скоринга рисков
-    /// </value>
+    /// <value>Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной информации для скоринга рисков</value>
     [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
     public object Risk { get; set; }
 

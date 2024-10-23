@@ -35,19 +35,13 @@ public class AccountDetailsComplexType : IEquatable<AccountDetailsComplexType>, 
     ///     Initializes a new instance of the <see cref="AccountDetailsComplexType" /> class.
     /// </summary>
     /// <param name="schemeName">Наименование схемы идентификации счета (required).</param>
-    /// <param name="identification">
-    ///     Номер счета, присваивается организацией для идентификации счета. Эта идентификация
-    ///     известна владельцу счета (required).
-    /// </param>
+    /// <param name="identification">Номер счета, присваивается организацией для идентификации счета. Эта идентификация известна владельцу счета (required).</param>
     /// <param name="name">Название идентификатора счета.</param>
-    public AccountDetailsComplexType(AccountIdentificationDynamicType schemeName = default,
-        string identification = default, string name = default)
+    public AccountDetailsComplexType(AccountIdentificationDynamicType schemeName = default, string identification = default, string name = default)
     {
         SchemeName = schemeName;
         // to ensure "identification" is required (not null)
-        if (identification == null)
-            throw new ArgumentNullException(
-                "identification is a required property for AccountDetailsComplexType and cannot be null");
+        if (identification == null) throw new ArgumentNullException("identification is a required property for AccountDetailsComplexType and cannot be null");
         Identification = identification;
         Name = name;
     }
@@ -107,12 +101,10 @@ public class AccountDetailsComplexType : IEquatable<AccountDetailsComplexType>, 
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 256)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
 
         // Name (string) maxLength
-        if (Name != null && Name.Length > 70)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
     }
 
     /// <summary>

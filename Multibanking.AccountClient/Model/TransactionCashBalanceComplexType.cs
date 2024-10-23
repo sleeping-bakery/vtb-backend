@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     TransactionCashBalanceComplexType
 /// </summary>
 [DataContract(Name = "TransactionCashBalanceComplexType")]
-public class TransactionCashBalanceComplexType : IEquatable<TransactionCashBalanceComplexType>,
-    IValidatableObject
+public class TransactionCashBalanceComplexType : IEquatable<TransactionCashBalanceComplexType>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionCashBalanceComplexType" /> class.
@@ -38,15 +37,13 @@ public class TransactionCashBalanceComplexType : IEquatable<TransactionCashBalan
     /// <param name="creditDebitIndicator">Определяет является баланс кредитовым или дебетовым (required).</param>
     /// <param name="type">Тип баланса (required).</param>
     /// <param name="amount">amount (required).</param>
-    public TransactionCashBalanceComplexType(CreditDebitIndicatorStaticType creditDebitIndicator = default,
-        BalanceTypeStaticType type = default, TransactionCashBalanceComplexTypeAmount amount = default)
+    public TransactionCashBalanceComplexType(CreditDebitIndicatorStaticType creditDebitIndicator = default, BalanceTypeStaticType type = default,
+        TransactionCashBalanceComplexTypeAmount amount = default)
     {
         CreditDebitIndicator = creditDebitIndicator;
         Type = type;
         // to ensure "amount" is required (not null)
-        if (amount == null)
-            throw new ArgumentNullException(
-                "amount is a required property for TransactionCashBalanceComplexType and cannot be null");
+        if (amount == null) throw new ArgumentNullException("amount is a required property for TransactionCashBalanceComplexType and cannot be null");
         Amount = amount;
     }
 

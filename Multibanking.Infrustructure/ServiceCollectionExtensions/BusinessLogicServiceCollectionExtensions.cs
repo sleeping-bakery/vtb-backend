@@ -1,5 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using Multibanking.Services.Account;
+using Multibanking.Services.Account.Implementations;
 using Multibanking.Services.User;
+using Multibanking.Services.User.Implementations;
+using Multibanking.Services.User.MappingProfiles;
+using Multibanking.Services.User.Middlewares;
 
 namespace Multibanking.Infrustructure.ServiceCollectionExtensions;
 
@@ -20,7 +25,8 @@ public static class BusinessLogicServiceCollectionExtensions
 
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddScoped<IUserService, UserService>();
+        return serviceCollection.AddScoped<IUserService, UserService>()
+            .AddScoped<IAccountConsentsService, AccountConsentsService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)

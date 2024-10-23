@@ -39,12 +39,10 @@ public class LinksType : IEquatable<LinksType>, IValidatableObject
     /// <param name="prev">prev.</param>
     /// <param name="next">next.</param>
     /// <param name="last">last.</param>
-    public LinksType(string self = default, string first = default, string prev = default, string next = default,
-        string last = default)
+    public LinksType(string self = default, string first = default, string prev = default, string next = default, string last = default)
     {
         // to ensure "self" is required (not null)
-        if (self == null)
-            throw new ArgumentNullException("self is a required property for LinksType and cannot be null");
+        if (self == null) throw new ArgumentNullException("self is a required property for LinksType and cannot be null");
         Self = self;
         First = first;
         Prev = prev;

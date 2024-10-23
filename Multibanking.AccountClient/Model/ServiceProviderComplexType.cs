@@ -18,8 +18,8 @@ using Newtonsoft.Json;
 namespace Multibanking.AccountClient.Model;
 
 /// <summary>
-///     Организация, которая управляет счетом от имени владельца счета, то есть управляет регистрацией и бронированием
-///     записей на счете, рассчитывает остатки на счете и предоставляет информацию о счете
+///     Организация, которая управляет счетом от имени владельца счета, то есть управляет регистрацией и бронированием записей на счете, рассчитывает остатки на счете и предоставляет
+///     информацию о счете
 /// </summary>
 [DataContract(Name = "ServiceProviderComplexType")]
 public class ServiceProviderComplexType : IEquatable<ServiceProviderComplexType>, IValidatableObject
@@ -37,14 +37,11 @@ public class ServiceProviderComplexType : IEquatable<ServiceProviderComplexType>
     /// </summary>
     /// <param name="schemeName">Наименование схемы организации (required).</param>
     /// <param name="identification">Идентификатор организации (required).</param>
-    public ServiceProviderComplexType(FinancialInstitutionIdentificationDynamicType schemeName = default,
-        string identification = default)
+    public ServiceProviderComplexType(FinancialInstitutionIdentificationDynamicType schemeName = default, string identification = default)
     {
         SchemeName = schemeName;
         // to ensure "identification" is required (not null)
-        if (identification == null)
-            throw new ArgumentNullException(
-                "identification is a required property for ServiceProviderComplexType and cannot be null");
+        if (identification == null) throw new ArgumentNullException("identification is a required property for ServiceProviderComplexType and cannot be null");
         Identification = identification;
     }
 
@@ -91,8 +88,7 @@ public class ServiceProviderComplexType : IEquatable<ServiceProviderComplexType>
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 35)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.", new[] { "Identification" });
     }
 
     /// <summary>

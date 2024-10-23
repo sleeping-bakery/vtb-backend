@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Идентификация счета получателя средств, в случае дебетовой транзакции
 /// </summary>
 [DataContract(Name = "TransactionComplex_CreditorAccount")]
-public class TransactionComplexCreditorAccount : IEquatable<TransactionComplexCreditorAccount>,
-    IValidatableObject
+public class TransactionComplexCreditorAccount : IEquatable<TransactionComplexCreditorAccount>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexCreditorAccount" /> class.
@@ -30,8 +29,7 @@ public class TransactionComplexCreditorAccount : IEquatable<TransactionComplexCr
     /// <param name="schemeName">Название схемы.</param>
     /// <param name="identification">Идентификатор.</param>
     /// <param name="name">Название.</param>
-    public TransactionComplexCreditorAccount(AccountIdentificationDynamicType? schemeName = default,
-        string identification = default, string name = default)
+    public TransactionComplexCreditorAccount(AccountIdentificationDynamicType? schemeName = default, string identification = default, string name = default)
     {
         SchemeName = schemeName;
         Identification = identification;
@@ -93,12 +91,10 @@ public class TransactionComplexCreditorAccount : IEquatable<TransactionComplexCr
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 256)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
 
         // Name (string) maxLength
-        if (Name != null && Name.Length > 70)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
     }
 
     /// <summary>

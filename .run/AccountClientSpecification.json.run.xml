@@ -18,11 +18,11 @@
         </CliArgumentViewModel>
         <CliArgumentViewModel>
           <option name="name" value="useCollection" />
-          <option name="value" value="true" />
+          <option name="value" value="false" />
         </CliArgumentViewModel>
         <CliArgumentViewModel>
           <option name="name" value="returnICollection" />
-          <option name="value" value="true" />
+          <option name="value" value="false" />
         </CliArgumentViewModel>
         <CliArgumentViewModel>
           <option name="name" value="netCoreProjectFile" />

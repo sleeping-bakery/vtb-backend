@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -23,14 +22,13 @@ namespace Multibanking.AccountClient.Model;
 ///     DataTransactionResponseComplexType
 /// </summary>
 [DataContract(Name = "DataTransactionResponseComplexType")]
-public class DataTransactionResponseComplexType : IEquatable<DataTransactionResponseComplexType>,
-    IValidatableObject
+public class DataTransactionResponseComplexType : IEquatable<DataTransactionResponseComplexType>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="DataTransactionResponseComplexType" /> class.
     /// </summary>
     /// <param name="transaction">transaction.</param>
-    public DataTransactionResponseComplexType(Collection<TransactionComplex> transaction = default)
+    public DataTransactionResponseComplexType(List<TransactionComplex> transaction = default)
     {
         Transaction = transaction;
     }
@@ -39,7 +37,7 @@ public class DataTransactionResponseComplexType : IEquatable<DataTransactionResp
     ///     Gets or Sets Transaction
     /// </summary>
     [DataMember(Name = "Transaction", EmitDefaultValue = false)]
-    public Collection<TransactionComplex> Transaction { get; set; }
+    public List<TransactionComplex> Transaction { get; set; }
 
     /// <summary>
     ///     Returns true if DataTransactionResponseComplexType instances are equal

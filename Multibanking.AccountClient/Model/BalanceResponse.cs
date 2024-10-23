@@ -35,30 +35,22 @@ public class BalanceResponse : IEquatable<BalanceResponse>, IValidatableObject
     ///     Initializes a new instance of the <see cref="BalanceResponse" /> class.
     /// </summary>
     /// <param name="data">data (required).</param>
-    /// <param name="risk">
-    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного
-    ///     Сторонним Поставщиком. (required).
-    /// </param>
+    /// <param name="risk">Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком. (required).</param>
     /// <param name="links">links (required).</param>
     /// <param name="meta">meta (required).</param>
-    public BalanceResponse(DataBalanceResponseComplexType data = default, object risk = default,
-        LinksType links = default, MetaType meta = default)
+    public BalanceResponse(DataBalanceResponseComplexType data = default, object risk = default, LinksType links = default, MetaType meta = default)
     {
         // to ensure "data" is required (not null)
-        if (data == null)
-            throw new ArgumentNullException("data is a required property for BalanceResponse and cannot be null");
+        if (data == null) throw new ArgumentNullException("data is a required property for BalanceResponse and cannot be null");
         Data = data;
         // to ensure "risk" is required (not null)
-        if (risk == null)
-            throw new ArgumentNullException("risk is a required property for BalanceResponse and cannot be null");
+        if (risk == null) throw new ArgumentNullException("risk is a required property for BalanceResponse and cannot be null");
         Risk = risk;
         // to ensure "links" is required (not null)
-        if (links == null)
-            throw new ArgumentNullException("links is a required property for BalanceResponse and cannot be null");
+        if (links == null) throw new ArgumentNullException("links is a required property for BalanceResponse and cannot be null");
         Links = links;
         // to ensure "meta" is required (not null)
-        if (meta == null)
-            throw new ArgumentNullException("meta is a required property for BalanceResponse and cannot be null");
+        if (meta == null) throw new ArgumentNullException("meta is a required property for BalanceResponse and cannot be null");
         Meta = meta;
     }
 
@@ -69,13 +61,9 @@ public class BalanceResponse : IEquatable<BalanceResponse>, IValidatableObject
     public DataBalanceResponseComplexType Data { get; set; }
 
     /// <summary>
-    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним
-    ///     Поставщиком.
+    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком.
     /// </summary>
-    /// <value>
-    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним
-    ///     Поставщиком.
-    /// </value>
+    /// <value>Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком.</value>
     [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
     public object Risk { get; set; }
 

@@ -89,8 +89,7 @@ public class ApiResponse<T> : IApiResponse
     /// <param name="statusCode">HTTP status code.</param>
     /// <param name="headers">HTTP headers.</param>
     /// <param name="data">Data (parsed HTTP body)</param>
-    public ApiResponse(HttpStatusCode statusCode, Multimap<string, string> headers, T data) : this(statusCode, headers,
-        data, null)
+    public ApiResponse(HttpStatusCode statusCode, Multimap<string, string> headers, T data) : this(statusCode, headers, data, null)
     {
     }
 

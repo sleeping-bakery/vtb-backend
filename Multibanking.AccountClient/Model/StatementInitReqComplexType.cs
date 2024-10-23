@@ -37,13 +37,10 @@ public class StatementInitReqComplexType : IEquatable<StatementInitReqComplexTyp
     /// <param name="accountId">Идентификатор ресурса счета (required).</param>
     /// <param name="fromBookingDateTime">Дата и время начала выписки (required).</param>
     /// <param name="toBookingDateTime">Дата и время окончания выписки (required).</param>
-    public StatementInitReqComplexType(string accountId = default, DateTime fromBookingDateTime = default,
-        DateTime toBookingDateTime = default)
+    public StatementInitReqComplexType(string accountId = default, DateTime fromBookingDateTime = default, DateTime toBookingDateTime = default)
     {
         // to ensure "accountId" is required (not null)
-        if (accountId == null)
-            throw new ArgumentNullException(
-                "accountId is a required property for StatementInitReqComplexType and cannot be null");
+        if (accountId == null) throw new ArgumentNullException("accountId is a required property for StatementInitReqComplexType and cannot be null");
         AccountId = accountId;
         FromBookingDateTime = fromBookingDateTime;
         ToBookingDateTime = toBookingDateTime;

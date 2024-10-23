@@ -18,13 +18,10 @@ using Newtonsoft.Json;
 namespace Multibanking.AccountClient.Model;
 
 /// <summary>
-///     Сумма денег, подлежащая переводу между плательщиком и получателем средств до вычета расходов, выраженная в валюте
-///     обозначенной инициирующей стороной
+///     Сумма денег, подлежащая переводу между плательщиком и получателем средств до вычета расходов, выраженная в валюте обозначенной инициирующей стороной
 /// </summary>
 [DataContract(Name = "CurrencyExchangeComplexType_InstructedAmount")]
-public class
-    CurrencyExchangeComplexTypeInstructedAmount : IEquatable<CurrencyExchangeComplexTypeInstructedAmount>,
-    IValidatableObject
+public class CurrencyExchangeComplexTypeInstructedAmount : IEquatable<CurrencyExchangeComplexTypeInstructedAmount>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="CurrencyExchangeComplexTypeInstructedAmount" /> class.
@@ -42,14 +39,10 @@ public class
     public CurrencyExchangeComplexTypeInstructedAmount(string amount = default, string currency = default)
     {
         // to ensure "amount" is required (not null)
-        if (amount == null)
-            throw new ArgumentNullException(
-                "amount is a required property for CurrencyExchangeComplexTypeInstructedAmount and cannot be null");
+        if (amount == null) throw new ArgumentNullException("amount is a required property for CurrencyExchangeComplexTypeInstructedAmount and cannot be null");
         Amount = amount;
         // to ensure "currency" is required (not null)
-        if (currency == null)
-            throw new ArgumentNullException(
-                "currency is a required property for CurrencyExchangeComplexTypeInstructedAmount and cannot be null");
+        if (currency == null) throw new ArgumentNullException("currency is a required property for CurrencyExchangeComplexTypeInstructedAmount and cannot be null");
         Currency = currency;
     }
 

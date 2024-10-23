@@ -15,5 +15,6 @@ namespace Multibanking.AccountClient.Client.Auth;
 internal class TokenResponse
 {
     [JsonProperty("token_type")] public string TokenType { get; set; }
+
     [JsonProperty("access_token")] public string AccessToken { get; set; }
 }

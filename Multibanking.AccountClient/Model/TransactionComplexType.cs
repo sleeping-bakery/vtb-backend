@@ -39,12 +39,12 @@ public class TransactionComplexType : IEquatable<TransactionComplexType>, IValid
     /// <param name="status">Статус транзакции (required).</param>
     /// <param name="documentNumber">Номер платежного документа.</param>
     /// <param name="bookingDateTime">
-    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге
-    ///     обслуживающей организации. Используется стандарт ISO8601 (required).
+    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601
+    ///     (required).
     /// </param>
     /// <param name="valueDateTime">
-    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или
-    ///     перестают быть доступными владельцу счета в случае ввода дебетовой транзакции. Используется стандарт ISO8601.
+    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода
+    ///     дебетовой транзакции. Используется стандарт ISO8601.
     /// </param>
     /// <param name="description">Назначение перевода денежных средств.</param>
     /// <param name="amount">amount (required).</param>
@@ -54,24 +54,17 @@ public class TransactionComplexType : IEquatable<TransactionComplexType>, IValid
     /// <param name="creditorParty">creditorParty.</param>
     /// <param name="creditorAccount">creditorAccount.</param>
     /// <param name="creditorAgent">creditorAgent.</param>
-    public TransactionComplexType(string transactionId = default,
-        CreditDebitIndicatorStaticType creditDebitIndicator = default, TransactionStatusStaticType status = default,
-        string documentNumber = default, DateTime bookingDateTime = default, DateTime valueDateTime = default,
-        string description = default, TransactionComplexTypeAmount amount = default,
-        TransactionComplexTypeDebtorParty debtorParty = default,
-        TransactionComplexTypeDebtorAccount debtorAccount = default,
-        TransactionComplexTypeDebtorAgent debtorAgent = default,
-        TransactionComplexTypeCreditorParty creditorParty = default,
-        TransactionComplexTypeCreditorAccount creditorAccount = default,
-        TransactionComplexTypeCreditorAgent creditorAgent = default)
+    public TransactionComplexType(string transactionId = default, CreditDebitIndicatorStaticType creditDebitIndicator = default, TransactionStatusStaticType status = default,
+        string documentNumber = default, DateTime bookingDateTime = default, DateTime valueDateTime = default, string description = default,
+        TransactionComplexTypeAmount amount = default, TransactionComplexTypeDebtorParty debtorParty = default, TransactionComplexTypeDebtorAccount debtorAccount = default,
+        TransactionComplexTypeDebtorAgent debtorAgent = default, TransactionComplexTypeCreditorParty creditorParty = default,
+        TransactionComplexTypeCreditorAccount creditorAccount = default, TransactionComplexTypeCreditorAgent creditorAgent = default)
     {
         CreditDebitIndicator = creditDebitIndicator;
         Status = status;
         BookingDateTime = bookingDateTime;
         // to ensure "amount" is required (not null)
-        if (amount == null)
-            throw new ArgumentNullException(
-                "amount is a required property for TransactionComplexType and cannot be null");
+        if (amount == null) throw new ArgumentNullException("amount is a required property for TransactionComplexType and cannot be null");
         Amount = amount;
         TransactionId = transactionId;
         DocumentNumber = documentNumber;
@@ -114,23 +107,19 @@ public class TransactionComplexType : IEquatable<TransactionComplexType>, IValid
     public string DocumentNumber { get; set; }
 
     /// <summary>
-    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации.
-    ///     Используется стандарт ISO8601
+    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601
     /// </summary>
-    /// <value>
-    ///     Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации.
-    ///     Используется стандарт ISO8601
-    /// </value>
+    /// <value>Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601</value>
     [DataMember(Name = "bookingDateTime", IsRequired = true, EmitDefaultValue = true)]
     public DateTime BookingDateTime { get; set; }
 
     /// <summary>
-    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть
-    ///     доступными владельцу счета в случае ввода дебетовой транзакции. Используется стандарт ISO8601
+    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода дебетовой транзакции.
+    ///     Используется стандарт ISO8601
     /// </summary>
     /// <value>
-    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть
-    ///     доступными владельцу счета в случае ввода дебетовой транзакции. Используется стандарт ISO8601
+    ///     Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода дебетовой транзакции.
+    ///     Используется стандарт ISO8601
     /// </value>
     [DataMember(Name = "valueDateTime", EmitDefaultValue = false)]
     public DateTime ValueDateTime { get; set; }
@@ -272,13 +261,11 @@ public class TransactionComplexType : IEquatable<TransactionComplexType>, IValid
     {
         // DocumentNumber (string) maxLength
         if (DocumentNumber != null && DocumentNumber.Length > 6)
-            yield return new ValidationResult("Invalid value for DocumentNumber, length must be less than 6.",
-                new[] { "DocumentNumber" });
+            yield return new ValidationResult("Invalid value for DocumentNumber, length must be less than 6.", new[] { "DocumentNumber" });
 
         // Description (string) maxLength
         if (Description != null && Description.Length > 300)
-            yield return new ValidationResult("Invalid value for Description, length must be less than 300.",
-                new[] { "Description" });
+            yield return new ValidationResult("Invalid value for Description, length must be less than 300.", new[] { "Description" });
     }
 
     /// <summary>

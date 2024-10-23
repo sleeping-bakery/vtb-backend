@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -29,7 +28,7 @@ public class DataAccountResponseComplexType : IEquatable<DataAccountResponseComp
     ///     Initializes a new instance of the <see cref="DataAccountResponseComplexType" /> class.
     /// </summary>
     /// <param name="account">account.</param>
-    public DataAccountResponseComplexType(Collection<AccountComplexType> account = default)
+    public DataAccountResponseComplexType(List<AccountComplexType> account = default)
     {
         Account = account;
     }
@@ -38,7 +37,7 @@ public class DataAccountResponseComplexType : IEquatable<DataAccountResponseComp
     ///     Gets or Sets Account
     /// </summary>
     [DataMember(Name = "Account", EmitDefaultValue = false)]
-    public Collection<AccountComplexType> Account { get; set; }
+    public List<AccountComplexType> Account { get; set; }
 
     /// <summary>
     ///     Returns true if DataAccountResponseComplexType instances are equal

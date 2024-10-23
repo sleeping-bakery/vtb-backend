@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Детальное описание карточного инструмента, использованного в транзакции
 /// </summary>
 [DataContract(Name = "TransactionCardInstrumentComplexType")]
-public class TransactionCardInstrumentComplexType : IEquatable<TransactionCardInstrumentComplexType>,
-    IValidatableObject
+public class TransactionCardInstrumentComplexType : IEquatable<TransactionCardInstrumentComplexType>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionCardInstrumentComplexType" /> class.
@@ -39,9 +38,8 @@ public class TransactionCardInstrumentComplexType : IEquatable<TransactionCardIn
     /// <param name="authorisationType">Тип авторизации.</param>
     /// <param name="name">Имя владельца.</param>
     /// <param name="identification">Идентификационный номер.</param>
-    public TransactionCardInstrumentComplexType(CardSchemeNameStaticType cardSchemeName = default,
-        CardAuthorisationTypeStaticType? authorisationType = default, string name = default,
-        string identification = default)
+    public TransactionCardInstrumentComplexType(CardSchemeNameStaticType cardSchemeName = default, CardAuthorisationTypeStaticType? authorisationType = default,
+        string name = default, string identification = default)
     {
         CardSchemeName = cardSchemeName;
         AuthorisationType = authorisationType;
@@ -114,13 +112,11 @@ public class TransactionCardInstrumentComplexType : IEquatable<TransactionCardIn
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Name (string) maxLength
-        if (Name != null && Name.Length > 70)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
 
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 34)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 34.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 34.", new[] { "Identification" });
     }
 
     /// <summary>

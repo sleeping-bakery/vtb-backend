@@ -35,19 +35,14 @@ public class StatementInitRequest : IEquatable<StatementInitRequest>, IValidatab
     ///     Initializes a new instance of the <see cref="StatementInitRequest" /> class.
     /// </summary>
     /// <param name="data">data (required).</param>
-    /// <param name="risk">
-    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного
-    ///     Сторонним Поставщиком. (required).
-    /// </param>
+    /// <param name="risk">Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком. (required).</param>
     public StatementInitRequest(DataStatementInitRequestComplexType data = default, object risk = default)
     {
         // to ensure "data" is required (not null)
-        if (data == null)
-            throw new ArgumentNullException("data is a required property for StatementInitRequest and cannot be null");
+        if (data == null) throw new ArgumentNullException("data is a required property for StatementInitRequest and cannot be null");
         Data = data;
         // to ensure "risk" is required (not null)
-        if (risk == null)
-            throw new ArgumentNullException("risk is a required property for StatementInitRequest and cannot be null");
+        if (risk == null) throw new ArgumentNullException("risk is a required property for StatementInitRequest and cannot be null");
         Risk = risk;
     }
 
@@ -58,13 +53,9 @@ public class StatementInitRequest : IEquatable<StatementInitRequest>, IValidatab
     public DataStatementInitRequestComplexType Data { get; set; }
 
     /// <summary>
-    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним
-    ///     Поставщиком.
+    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком.
     /// </summary>
-    /// <value>
-    ///     Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним
-    ///     Поставщиком.
-    /// </value>
+    /// <value>Раздел &#39;Risk&#39; содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком.</value>
     [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
     public object Risk { get; set; }
 

@@ -35,10 +35,7 @@ public class Consent : IEquatable<Consent>, IValidatableObject
     ///     Initializes a new instance of the <see cref="Consent" /> class.
     /// </summary>
     /// <param name="data">data (required).</param>
-    /// <param name="risk">
-    ///     Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации
-    ///     для скоринга рисков (required).
-    /// </param>
+    /// <param name="risk">Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации для скоринга рисков (required).</param>
     public Consent(DataType data = default, object risk = default)
     {
         // to ensure "data" is required (not null)
@@ -56,13 +53,9 @@ public class Consent : IEquatable<Consent>, IValidatableObject
     public DataType Data { get; set; }
 
     /// <summary>
-    ///     Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации для скоринга
-    ///     рисков
+    ///     Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации для скоринга рисков
     /// </summary>
-    /// <value>
-    ///     Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации для скоринга
-    ///     рисков
-    /// </value>
+    /// <value>Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации для скоринга рисков</value>
     [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
     public object Risk { get; set; }
 

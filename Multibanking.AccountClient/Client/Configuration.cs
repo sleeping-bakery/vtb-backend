@@ -50,8 +50,7 @@ public class Configuration : IReadableConfiguration
     /// <param name="first">First configuration.</param>
     /// <param name="second">Second configuration.</param>
     /// <return>Merged configuration.</return>
-    public static IReadableConfiguration MergeConfigurations(IReadableConfiguration first,
-        IReadableConfiguration second)
+    public static IReadableConfiguration MergeConfigurations(IReadableConfiguration first, IReadableConfiguration second)
     {
         if (second == null) return first ?? GlobalConfiguration.Instance;
 
@@ -468,8 +467,7 @@ public class Configuration : IReadableConfiguration
     /// <return>The operation server URL.</return>
     public string GetOperationServerUrl(string operation, int index, Dictionary<string, string> inputVariables)
     {
-        if (OperationServers.TryGetValue(operation, out var operationServer))
-            return GetServerUrl(operationServer, index, inputVariables);
+        if (OperationServers.TryGetValue(operation, out var operationServer)) return GetServerUrl(operationServer, index, inputVariables);
 
         return null;
     }
@@ -481,12 +479,9 @@ public class Configuration : IReadableConfiguration
     /// <param name="index">Array index of the server settings.</param>
     /// <param name="inputVariables">Dictionary of the variables and the corresponding values.</param>
     /// <return>The server URL.</return>
-    private string GetServerUrl(IList<IReadOnlyDictionary<string, object>> servers, int index,
-        Dictionary<string, string> inputVariables)
+    private string GetServerUrl(IList<IReadOnlyDictionary<string, object>> servers, int index, Dictionary<string, string> inputVariables)
     {
-        if (index < 0 || index >= servers.Count)
-            throw new InvalidOperationException(
-                $"Invalid index {index} when selecting the server. Must be less than {servers.Count}.");
+        if (index < 0 || index >= servers.Count) throw new InvalidOperationException($"Invalid index {index} when selecting the server. Must be less than {servers.Count}.");
 
         if (inputVariables == null) inputVariables = new Dictionary<string, string>();
 

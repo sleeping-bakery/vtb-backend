@@ -53,9 +53,8 @@ public class GlobalConfiguration : Configuration
     }
 
     /// <inheritdoc />
-    public GlobalConfiguration(IDictionary<string, string> defaultHeader, IDictionary<string, string> apiKey,
-        IDictionary<string, string> apiKeyPrefix, string basePath = "http://localhost:3000/api") : base(defaultHeader,
-        apiKey, apiKeyPrefix, basePath)
+    public GlobalConfiguration(IDictionary<string, string> defaultHeader, IDictionary<string, string> apiKey, IDictionary<string, string> apiKeyPrefix,
+        string basePath = "http://localhost:3000/api") : base(defaultHeader, apiKey, apiKeyPrefix, basePath)
     {
     }
 

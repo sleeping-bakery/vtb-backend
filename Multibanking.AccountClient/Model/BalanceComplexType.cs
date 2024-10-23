@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -36,31 +35,23 @@ public class BalanceComplexType : IEquatable<BalanceComplexType>, IValidatableOb
     /// <summary>
     ///     Initializes a new instance of the <see cref="BalanceComplexType" /> class.
     /// </summary>
-    /// <param name="accountId">
-    ///     Уникальный и неизменный идентификатор, используемый для идентификации ресурса &#39;accounts
-    ///     &#39; (required).
-    /// </param>
+    /// <param name="accountId">Уникальный и неизменный идентификатор, используемый для идентификации ресурса &#39;accounts&#39; (required).</param>
     /// <param name="creditDebitIndicator">Определяет является баланс кредитовым или дебетовым (required).</param>
     /// <param name="type">Тип баланса, заполняется согласно ISO 20022 (required).</param>
     /// <param name="dateTime">Дата и время построения отчета. Используется стандарт ISO8601 (required).</param>
     /// <param name="amount">amount (required).</param>
     /// <param name="creditLine">Подробная информация о кредитной линии.</param>
-    public BalanceComplexType(string accountId = default, CreditDebitIndicatorStaticType creditDebitIndicator = default,
-        BalanceTypeStaticType type = default, DateTime dateTime = default,
-        TransactionCashBalanceComplexTypeAmount amount = default,
-        Collection<CreditLineComplexType> creditLine = default)
+    public BalanceComplexType(string accountId = default, CreditDebitIndicatorStaticType creditDebitIndicator = default, BalanceTypeStaticType type = default,
+        DateTime dateTime = default, TransactionCashBalanceComplexTypeAmount amount = default, List<CreditLineComplexType> creditLine = default)
     {
         // to ensure "accountId" is required (not null)
-        if (accountId == null)
-            throw new ArgumentNullException(
-                "accountId is a required property for BalanceComplexType and cannot be null");
+        if (accountId == null) throw new ArgumentNullException("accountId is a required property for BalanceComplexType and cannot be null");
         AccountId = accountId;
         CreditDebitIndicator = creditDebitIndicator;
         Type = type;
         DateTime = dateTime;
         // to ensure "amount" is required (not null)
-        if (amount == null)
-            throw new ArgumentNullException("amount is a required property for BalanceComplexType and cannot be null");
+        if (amount == null) throw new ArgumentNullException("amount is a required property for BalanceComplexType and cannot be null");
         Amount = amount;
         CreditLine = creditLine;
     }
@@ -104,7 +95,7 @@ public class BalanceComplexType : IEquatable<BalanceComplexType>, IValidatableOb
     /// </summary>
     /// <value>Подробная информация о кредитной линии</value>
     [DataMember(Name = "CreditLine", EmitDefaultValue = false)]
-    public Collection<CreditLineComplexType> CreditLine { get; set; }
+    public List<CreditLineComplexType> CreditLine { get; set; }
 
     /// <summary>
     ///     Returns true if BalanceComplexType instances are equal

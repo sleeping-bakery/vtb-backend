@@ -38,8 +38,7 @@ public class TransactionComplexCardInstrument : IEquatable<TransactionComplexCar
     /// <param name="authorisationType">Тип авторизации.</param>
     /// <param name="name">Имя владельца.</param>
     /// <param name="identification">Идентификационный номер.</param>
-    public TransactionComplexCardInstrument(CardSchemeNameStaticType cardSchemeName = default,
-        CardAuthorisationTypeStaticType? authorisationType = default, string name = default,
+    public TransactionComplexCardInstrument(CardSchemeNameStaticType cardSchemeName = default, CardAuthorisationTypeStaticType? authorisationType = default, string name = default,
         string identification = default)
     {
         CardSchemeName = cardSchemeName;
@@ -113,13 +112,11 @@ public class TransactionComplexCardInstrument : IEquatable<TransactionComplexCar
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         // Name (string) maxLength
-        if (Name != null && Name.Length > 70)
-            yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
 
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 34)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 34.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 34.", new[] { "Identification" });
     }
 
     /// <summary>

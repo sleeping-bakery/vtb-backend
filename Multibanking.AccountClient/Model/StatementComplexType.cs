@@ -10,7 +10,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -42,14 +41,11 @@ public class StatementComplexType : IEquatable<StatementComplexType>, IValidatab
     /// <param name="toBookingDateTime">Дата и время окончания выписки (required).</param>
     /// <param name="creationDateTime">Дата и время создания ресурса (required).</param>
     /// <param name="transaction">transaction.</param>
-    public StatementComplexType(string accountId = default, string statementId = default,
-        DateTime fromBookingDateTime = default, DateTime toBookingDateTime = default,
-        DateTime creationDateTime = default, Collection<TransactionComplexType> transaction = default)
+    public StatementComplexType(string accountId = default, string statementId = default, DateTime fromBookingDateTime = default, DateTime toBookingDateTime = default,
+        DateTime creationDateTime = default, List<TransactionComplexType> transaction = default)
     {
         // to ensure "statementId" is required (not null)
-        if (statementId == null)
-            throw new ArgumentNullException(
-                "statementId is a required property for StatementComplexType and cannot be null");
+        if (statementId == null) throw new ArgumentNullException("statementId is a required property for StatementComplexType and cannot be null");
         StatementId = statementId;
         FromBookingDateTime = fromBookingDateTime;
         ToBookingDateTime = toBookingDateTime;
@@ -97,7 +93,7 @@ public class StatementComplexType : IEquatable<StatementComplexType>, IValidatab
     ///     Gets or Sets Transaction
     /// </summary>
     [DataMember(Name = "Transaction", EmitDefaultValue = false)]
-    public Collection<TransactionComplexType> Transaction { get; set; }
+    public List<TransactionComplexType> Transaction { get; set; }
 
     /// <summary>
     ///     Returns true if StatementComplexType instances are equal

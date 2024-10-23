@@ -59,7 +59,7 @@ public static class InfrastructureServiceCollectionExtensions
         IConfiguration configuration)
     {
         var keycloakSettings = configuration.GetRequiredSection(nameof(KeycloakSettings)).Get<KeycloakSettings>()!;
-        Console.WriteLine($"cert {keycloakSettings.CertificateUrl}");
+
         return serviceCollection.AddKeycloakSettings(keycloakSettings)
             .AddAuthentication(keycloakSettings)
             .AddAuthorization();
@@ -69,8 +69,11 @@ public static class InfrastructureServiceCollectionExtensions
         KeycloakSettings keycloakSettings)
     {
         // ReSharper disable once RedundantAssignment
-        // ReSharper disable once RedundantAssignment
-        return serviceCollection.Configure<KeycloakSettings>(options => options = keycloakSettings);
+        return serviceCollection.Configure<KeycloakSettings>(options =>
+        {
+            // ReSharper disable once RedundantAssignment
+            options = keycloakSettings;
+        });
     }
 
     private static IServiceCollection AddAuthentication(this IServiceCollection serviceCollection,

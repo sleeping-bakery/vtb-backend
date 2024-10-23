@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Multibanking.Entities.Database;
 using Multibanking.Infrustructure.ServiceCollectionExtensions;
-using Multibanking.Services.User;
+using Multibanking.Services.User.Middlewares;
 
 namespace Multibanking.API;
 
@@ -29,9 +29,6 @@ public class Program
         //TODO: Перенос app'а
         app.UseSwagger();
         app.UseSwaggerUI();
-
-        Console.WriteLine($"IsDevelopment {app.Environment.IsDevelopment()}");
-
 
         using var scope = app.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<MultibankingDbContext>();

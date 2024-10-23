@@ -21,8 +21,7 @@ namespace Multibanking.AccountClient.Model;
 ///     Детали продавца участвующего в сделке
 /// </summary>
 [DataContract(Name = "TransactionComplex_MerchantDetails")]
-public class TransactionComplexMerchantDetails : IEquatable<TransactionComplexMerchantDetails>,
-    IValidatableObject
+public class TransactionComplexMerchantDetails : IEquatable<TransactionComplexMerchantDetails>, IValidatableObject
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="TransactionComplexMerchantDetails" /> class.
@@ -79,8 +78,7 @@ public class TransactionComplexMerchantDetails : IEquatable<TransactionComplexMe
     {
         // MerchantName (string) maxLength
         if (MerchantName != null && MerchantName.Length > 350)
-            yield return new ValidationResult("Invalid value for MerchantName, length must be less than 350.",
-                new[] { "MerchantName" });
+            yield return new ValidationResult("Invalid value for MerchantName, length must be less than 350.", new[] { "MerchantName" });
     }
 
     /// <summary>

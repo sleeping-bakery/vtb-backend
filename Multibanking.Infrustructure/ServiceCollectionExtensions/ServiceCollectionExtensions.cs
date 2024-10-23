@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection
             .AddInfrastructure(configuration)
-            .AddData()
+            .AddData(configuration)
             .AddBusinessLogic();
     }
 }

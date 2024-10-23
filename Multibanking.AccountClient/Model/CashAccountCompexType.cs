@@ -40,9 +40,7 @@ public class CashAccountCompexType : IEquatable<CashAccountCompexType>, IValidat
     {
         SchemeName = schemeName;
         // to ensure "identification" is required (not null)
-        if (identification == null)
-            throw new ArgumentNullException(
-                "identification is a required property for CashAccountCompexType and cannot be null");
+        if (identification == null) throw new ArgumentNullException("identification is a required property for CashAccountCompexType and cannot be null");
         Identification = identification;
     }
 
@@ -89,8 +87,7 @@ public class CashAccountCompexType : IEquatable<CashAccountCompexType>, IValidat
     {
         // Identification (string) maxLength
         if (Identification != null && Identification.Length > 256)
-            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.",
-                new[] { "Identification" });
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
     }
 
     /// <summary>
