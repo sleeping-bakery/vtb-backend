@@ -9,7 +9,7 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection
             .AddInfrastructure(configuration)
-            .AddRepositories()
+            .AddData()
             .AddBusinessLogic();
     }
 }

@@ -12,20 +12,19 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddServices()
             .AddMiddlewares();
     }
-    
+
     private static IServiceCollection AddMapping(this IServiceCollection serviceCollection)
     {
         return serviceCollection.AddAutoMapper([typeof(UserMapperProfile)]);
     }
-    
+
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
     {
         return serviceCollection.AddScoped<IUserService, UserService>();
     }
+
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)
     {
         return serviceCollection.AddTransient<CreateUserMiddleware>();
     }
-    
-
 }

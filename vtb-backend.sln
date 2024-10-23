@@ -6,11 +6,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Contracts", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Entities", "Multibanking.Entities\Multibanking.Entities.csproj", "{09A29366-1ADC-4FA3-AAA0-833604A34F78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Repositories", "Multibanking.Repositories\Multibanking.Repositories.csproj", "{543834B7-949D-44B4-983C-CDE6520ABBE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Data", "Multibanking.Data\Multibanking.Data.csproj", "{543834B7-949D-44B4-983C-CDE6520ABBE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Services", "Multibanking.Services\Multibanking.Services.csproj", "{ADE60351-D331-4CB0-BA95-D6CC6F3A16B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Infrustructure", "Multibanking.Infrustructure\Multibanking.Infrustructure.csproj", "{5A264647-5F97-4ACE-A2F2-42021CB9EE14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.AccountClient", "Multibanking.AccountClient\Multibanking.AccountClient.csproj", "{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Multibanking.Devops", "Multibanking.Devops", "{099A1A21-EEA9-4C60-9606-A9265B93327B}"
 EndProject
@@ -44,5 +46,9 @@ Global
 		{5A264647-5F97-4ACE-A2F2-42021CB9EE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A264647-5F97-4ACE-A2F2-42021CB9EE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A264647-5F97-4ACE-A2F2-42021CB9EE14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

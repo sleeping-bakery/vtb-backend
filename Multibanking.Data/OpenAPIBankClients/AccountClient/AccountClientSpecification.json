@@ -1,0 +1,3736 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Получение информации о счете клиента третьей стороной",
+    "description": "Содержит описываются API для Открытых банковских интерфейсов по счетам и транзакциям.",
+    "version": "1.2.1"
+  },
+  "servers": [
+    {
+      "url": "https://hackaton.bankingapi.ru/extapi/aft/clientInfo/hackathon/v1",
+      "description": "Адрес API в песочнице хакатона"
+    }
+  ],
+  "paths": {
+    "/account-consents": {
+      "post": {
+        "operationId": "CreateAccountAccessConsents",
+        "tags": [
+          "AccountConsents"
+        ],
+        "summary": "Создание ресурса согласия на доступ к счету.",
+        "description": "Запрос создает ресурс согласия account-consent на доступ к счету и возвращает consentId, которая идентифицирует созданный ресурс согласия.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-idempotency-key"
+          }
+        ],
+        "requestBody": {
+          "description": "Запрос на создание ресурса согласия account-consent",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Consent"
+              },
+              "examples": {
+                "example": {
+                  "$ref": "#/components/examples/ConsentExample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201AccountAccessConsentsCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "415": {
+            "$ref": "#/components/responses/415Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/account-consents/{consentId}": {
+      "get": {
+        "operationId": "GetAccountAccessConsentsConsentId",
+        "tags": [
+          "AccountConsents"
+        ],
+        "summary": "Получение ресурса согласия",
+        "description": "Получение созданного ресурса согласия на доступ к счету по идентификатору consentId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/consentId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200AccountAccessConsentsConsentIdRead"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "account"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteAccountAccessConsentsConsentId",
+        "tags": [
+          "AccountConsents"
+        ],
+        "summary": "Отзыв согласия на доступ к счету",
+        "description": "Если Пользователь отзывает согласие на доступ к данным для СПИУ, СПИУ удаляет ресурс account-consents на стороне ППУ.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/consentId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/204Deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/account-consents/{consentId}/retrieval-grant": {
+      "get": {
+        "operationId": "GetAccountAccessRetrievalGrant",
+        "tags": [
+          "AccountConsents"
+        ],
+        "summary": "Поручение на извлечение ресурса согласия",
+        "description": "Данный ресурс создается на ресурсном сервере ППУ после авторизации согласия на получение информации о счете Пользователем (после авторизации ресурса account-consents). Период действия поручения на извлечение (ресурса retrieval-grant) совпадает с периодом действия согласия на получение информации о счете (ресурс account-consents).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/consentId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetAccountAccessRetrievalGrant"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/accounts": {
+      "get": {
+        "operationId": "GetAccounts",
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Получение списка счетов",
+        "description": "СПИУ предоставляется полный список счетов (с идентификаторами accountId), которые были авторизованы пользователем на стороне ППУ.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetAccounts"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}": {
+      "get": {
+        "operationId": "GetAccountsaccountId",
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Получение детальной информации о счете",
+        "description": "СПИУ получает детальную информацию о счете по идентификатору accountId (который был получен при вызове конечной точке списка счетов GET /accounts).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accountId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetAccountsaccountId"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/balance": {
+      "get": {
+        "operationId": "GetAccountsaccountIdBalances",
+        "tags": [
+          "Balances"
+        ],
+        "summary": "Баланс банковского счета",
+        "description": "Конечная точка используется для получения информации о балансе банковского счета с идентификатором accountId.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accountId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetAccountsaccountIdBalances"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/balances": {
+      "get": {
+        "operationId": "GetBalances",
+        "tags": [
+          "Balances"
+        ],
+        "summary": "Баланс банковского счета",
+        "description": "Баланс передается по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями (permissions).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetBalances"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/404Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/transaction": {
+      "get": {
+        "operationId": "GetAccountsaccountIdTransactions",
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Ресурс транзакции с идентификатором accountId",
+        "description": "Конечная точка извлекает ресурс транзакции с идентификатором accountId, который получается с помощью вызова конечной точки GET /accounts.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accountId"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/fromBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/toBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetAccountsaccountIdTransactions"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/transactions": {
+      "get": {
+        "operationId": "GetTransactions",
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Список транзакций по всем счетам",
+        "description": "Конечная точка позволяет получить список транзакций по всем счетам, которые авторизованы пользователем с помощью согласия.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/fromBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/toBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetTransactions"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/404Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/statements/{accountId}": {
+      "post": {
+        "operationId": "GetStatementsaccountId",
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Получения идентификатора выписки statementId по идентификатору счета accountId",
+        "description": "ППУ предоставляет конечную точку СПИУ для получения идентификатора выписки statementId по идентификатору счета accountId, который предоставляется при вызове конечной точки GET /accounts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accountId"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-idempotency-key_mandatory"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatementInitRequest"
+              },
+              "example": {
+                "Data": {
+                  "Statement": {
+                    "accountId": 1234,
+                    "fromBookingDateTime": "2019-09-03T00:00:00+00:00",
+                    "toBookingDateTime": "2019-12-03T00:00:00+00:00"
+                  }
+                },
+                "Risk": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetStatementsaccountId"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "415": {
+            "$ref": "#/components/responses/415Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/accounts/{accountId}/statements/{statementId}": {
+      "get": {
+        "operationId": "GetAccountsaccountIdStatementsStatementId",
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Получения выписки по идентификатору счета и идентификатору выписки",
+        "description": "ППУ предоставляет конечную точку СПИУ для получения выписки по идентификатору счета и идентификатору выписки.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accountId"
+          },
+          {
+            "$ref": "#/components/parameters/statementId"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/fromBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/toBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetAccountsaccountIdStatementsStatementId"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/404Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    },
+    "/statements": {
+      "get": {
+        "operationId": "GetStatements",
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Выписки по всем авторизованным счетам",
+        "description": "ППУ предоставляет конечную точку СПИУ для получения выписок по всем авторизованным Пользователем счетам.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/fromBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/toBookingDateTime"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetStatements"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/404Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "account"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "consentId": {
+        "name": "consentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/consentId"
+        },
+        "description": "Идентификатор ресурса согласия account-consent"
+      },
+      "accountId": {
+        "name": "accountId",
+        "in": "path",
+        "required": true,
+        "description": "Идентификатор счета",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "statementId": {
+        "name": "statementId",
+        "in": "path",
+        "required": true,
+        "description": "Идентификатор выписки",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Номер страницы",
+        "schema": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "fromBookingDateTime": {
+        "name": "fromBookingDateTime",
+        "in": "query",
+        "required": false,
+        "description": "Дата и время начала фильтрации списка транзакций.",
+        "schema": {
+          "$ref": "#/components/schemas/ISODateTime"
+        }
+      },
+      "toBookingDateTime": {
+        "name": "toBookingDateTime",
+        "in": "query",
+        "required": false,
+        "description": "Дата и время окончания фильтрации списка транзакций.",
+        "schema": {
+          "$ref": "#/components/schemas/ISODateTime"
+        }
+      },
+      "Authorization": {
+        "in": "header",
+        "name": "Authorization",
+        "required": true,
+        "description": "Токен авторизации согласно https://tools.ietf.org/html/rfc6750",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "x-customer-user-agent": {
+        "in": "header",
+        "name": "x-customer-user-agent",
+        "schema": {
+          "type": "string"
+        },
+        "description": "В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера.",
+        "required": false,
+        "example": ""
+      },
+      "x-fapi-customer-ip-address": {
+        "in": "header",
+        "name": "x-fapi-customer-ip-address",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика)."
+      },
+      "x-fapi-auth-date": {
+        "in": "header",
+        "name": "x-fapi-auth-date",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT"
+      },
+      "x-fapi-interaction-id": {
+        "in": "header",
+        "name": "x-fapi-interaction-id",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id."
+      },
+      "x-idempotency-key": {
+        "name": "x-idempotency-key",
+        "in": "header",
+        "description": "Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается.",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "^(?!\\s)(.*)(\\S)$",
+          "maxLength": 40
+        }
+      },
+      "x-idempotency-key_mandatory": {
+        "name": "x-idempotency-key",
+        "in": "header",
+        "description": "Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^(?!\\s)(.*)(\\S)$",
+          "maxLength": 40
+        }
+      },
+      "x-jws-signature": {
+        "name": "x-jws-signature",
+        "in": "header",
+        "required": false,
+        "description": "Указывает, что тело запроса подписано. В документации на ресурсы отдельно определяется, когда это поле в заголовке указывается.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "retry-after": {
+        "in": "header",
+        "name": "retry-after",
+        "schema": {
+          "type": "integer"
+        },
+        "required": false,
+        "description": "Параметр заголовка, указывающий время (в секундах), в течение которого Сторонний Поставщик ожидает перед повторением операции.ППУ следует включать этот заголовок вместе с ответами с кодом состояния HTTP 429 (Too Many Requests)."
+      },
+      "permissions": {
+        "name": "permissions",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/PermissionsType"
+        },
+        "description": "Типы разрешений на доступ к счету"
+      },
+      "expirationDateTime": {
+        "name": "expirationDateTime",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/ISODateTime"
+        },
+        "description": "Дата и время истечения срока действия разрешений.Если он не заполнен, разрешения будет с открытой датой."
+      },
+      "transactionFromDateTime": {
+        "name": "transactionFromDateTime",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/ISODateTime"
+        },
+        "description": "Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций."
+      },
+      "transactionToDateTime": {
+        "name": "transactionToDateTime",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/ISODateTime"
+        },
+        "description": "Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию."
+      }
+    },
+    "responses": {
+      "201AccountAccessConsentsCreated": {
+        "description": "Ресурс согласия создан.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id."
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConsentResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/ConsentResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "200AccountAccessConsentsConsentIdRead": {
+        "description": "Информация о ресурсе согласия.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConsentResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/ConsentResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "200GetAccountAccessRetrievalGrant": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RetrievalGrantResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/RetrievalGrantResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "200GetAccounts": {
+        "description": "Полный список счетов (с идентификаторами accountId), которые были авторизованы пользователем на стороне ППУ.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountResponse"
+            }
+          }
+        }
+      },
+      "200GetAccountsaccountId": {
+        "description": "Полный список счетов (с идентификаторами accountId), которые были авторизованы пользователем на стороне ППУ.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AccountResponse"
+            }
+          }
+        }
+      },
+      "200GetAccountsaccountIdBalances": {
+        "description": "Получение информации о балансе банковского счета с идентификаторов accountId",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BalanceResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/BalanceResponseExample1"
+              }
+            }
+          }
+        }
+      },
+      "200GetBalances": {
+        "description": "Получение информации о балансе по всем банковским счетам, которые пользователь авторизовал с помощью согласия с балансовыми разрешениями ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BalanceResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/BalanceResponseExample2"
+              }
+            }
+          }
+        }
+      },
+      "200GetAccountsaccountIdTransactions": {
+        "description": "Конечная точка извлекает ресурс транзакции с идентификатором accountId.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/TransactionResponseExample1"
+              }
+            }
+          }
+        }
+      },
+      "200GetTransactions": {
+        "description": "Конечная точка позволяет получить список транзакций по всем счетам, которые авторизованы пользователем с помощью согласия.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/TransactionResponseExample2"
+              }
+            }
+          }
+        }
+      },
+      "200GetStatementsaccountId": {
+        "description": "Индентификатор выписки",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StatementInitResponse"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/StatementInitResponseExample"
+              }
+            }
+          }
+        }
+      },
+      "200GetAccountsaccountIdStatementsStatementId": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StatementResponse"
+            }
+          }
+        }
+      },
+      "200GetStatements": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StatementResponse"
+            }
+          }
+        }
+      },
+      "204Deleted": {
+        "description": "Ресурс удален",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "400Error": {
+        "description": "Запрос имеет неверные, отсутствующее или несовместимое тело JSON, параметры URL или поля заголовка.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      },
+      "401Error": {
+        "description": "Заголовок авторизации отсутствует или неверный токен.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "403Error": {
+        "description": "Токен имеет неверную область действия или была нарушена политика безопасности.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      },
+      "404Error": {
+        "description": "1.  Сторонний Поставщик пытается получить ресурс, который указан в спецификации, но не реализован на строне ППУ (например, ППУ решил не реализовывать конечную точку API статуса для внутренних запланированных платежей). 2.  Сторонний Поставщик пытается получить ресурс, который не определен",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "405Error": {
+        "description": "Сторонний Поставщик попытался получить доступ к ресурсу с помощью метода, который не поддерживается.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "406Error": {
+        "description": "Запрос содержал параметр заголовка Accept, отличный от разрешенных media types, и набор символов, отличный от UTF-8.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "415Error": {
+        "description": "Операция была отклонена, поскольку полезная нагрузка находится в формате, не поддерживаемом этим методом на целевом ресурсе.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "429Error": {
+        "description": "Операция была отклонена, так как слишком много запросов было сделано в течение определенного периода времени.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          "Retry-After": {
+            "$ref": "#/components/parameters/retry-after"
+          }
+        }
+      },
+      "500Error": {
+        "description": "Что-то пошло не так на стороне ППУ.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      },
+      "503Error": {
+        "description": "Устаревшая версия сервиса.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "ConsentRequestBody": {
+        "description": "Запрос на создание ресурса согласия account-consent",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Consent"
+            },
+            "examples": {
+              "example": {
+                "$ref": "#/components/examples/ConsentExample"
+              }
+            }
+          }
+        }
+      },
+      "StatementInitRequestRequestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StatementInitRequest"
+            },
+            "example": {
+              "Data": {
+                "Statement": {
+                  "accountId": 1234,
+                  "fromBookingDateTime": "2019-09-03T00:00:00+00:00",
+                  "toBookingDateTime": "2019-12-03T00:00:00+00:00"
+                }
+              },
+              "Risk": {}
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "ConsentResponseExample": {
+        "value": {
+          "Data": {
+            "consentId": "urn-alphabank-intent-88379",
+            "status": "AwaitingAuthorisation",
+            "statusUpdateDateTime": "2019-05-02T00:00:00+00:00",
+            "creationDateTime": "2019-05-02T00:00:00+00:00",
+            "permissions": [
+              "ReadAccountsBasic",
+              "ReadTransactionsDebits",
+              "ReadBalances"
+            ],
+            "expirationDateTime": "2019-09-03T00:00:00+00:00",
+            "transactionFromDateTime": "2019-09-03T00:00:00+00:00",
+            "transactionToDateTime": "2019-09-03T00:00:00+00:00"
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v1.0/aisp/account-consents/bank-consent-88379"
+          },
+          "Meta": {
+            "totalPages": "1"
+          }
+        }
+      },
+      "RetrievalGrantResponseExample": {
+        "value": {
+          "Data": {
+            "consentId": "urn-alphabank-intent-88379",
+            "retrievalGrantId": "urn-alphabank-intent-88379",
+            "documentType": "Поручение на извлечение",
+            "OGRN": "1234567890123",
+            "creationDateTime": "2019-09-03T00:00:00+00:00",
+            "expirationDateTime": "2019-09-03T00:00:00+00:00"
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v1.0/aisp/account-consents/bank-consent-88379"
+          },
+          "Meta": {
+            "totalPages": "1"
+          }
+        }
+      },
+      "AccountResponseExample": {
+        "value": {
+          "Data": {
+            "Account": [
+              {
+                "accountId": "23489",
+                "status": "Enabled",
+                "statusUpdateDateTime": "2019-01-01T06:06:06+00:00",
+                "currency": "RUB",
+                "accountType": "Personal",
+                "accountSubType": "CurrentAccount",
+                "accountDetails": {
+                  "schemeName": "RU.CBR.AccountNumber",
+                  "identification": "40817810621234567890",
+                  "name": "Основной текущий счет"
+                }
+              },
+              {
+                "accountId": "31820",
+                "status": "Enabled",
+                "statusUpdateDateTime": "2019-01-01T06:06:06+00:00",
+                "currency": "RUB",
+                "accountType": "Personal",
+                "accountSubType": "CurrentAccount",
+                "accountDetails": {
+                  "schemeName": "RU.CBR.AccountNumber",
+                  "identification": "40817810621234562345",
+                  "name": "Дополнительный  текущий счет"
+                }
+              }
+            ]
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v3.1/aisp/accounts/"
+          },
+          "Meta": {
+            "totalPages": "1"
+          }
+        }
+      },
+      "BalanceResponseExample1": {
+        "value": {
+          "Data": {
+            "Balance": {
+              "accountId": "11139",
+              "Amount": {
+                "amount": "13430.00",
+                "currency": "RUB"
+              },
+              "CreditDebitIndicator": "Credit",
+              "Type": "OpeningAvailable",
+              "DateTime": "2019-09-15T14:33:07+00:00",
+              "CreditLine": {
+                "Included": "true",
+                "Amount": {
+                  "Amount": "4000.00",
+                  "currency": "RUB"
+                },
+                "Type": "Pre-Agreed"
+              }
+            }
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://api.alphabank.com/open-banking/v3.1/aisp/accounts/22289/balances/"
+          },
+          "Meta": {
+            "totalPages": "1"
+          }
+        }
+      },
+      "BalanceResponseExample2": {
+        "value": {
+          "Data": {
+            "Balance": [
+              {
+                "accountId": "11139",
+                "Amount": {
+                  "amount": "13430.00",
+                  "currency": "RUB"
+                },
+                "CreditDebitIndicator": "Credit",
+                "Type": "OpeningAvailable",
+                "DateTime": "2019-09-15T14:33:07+00:00",
+                "CreditLine": {
+                  "Included": "true",
+                  "Amount": {
+                    "Amount": "4000.00",
+                    "currency": "RUB"
+                  },
+                  "Type": "Pre-Agreed"
+                }
+              },
+              {
+                "accountId": "76533",
+                "Amount": {
+                  "amount": "257.00",
+                  "currency": "GBP"
+                },
+                "CreditDebitIndicator": "Debit",
+                "Type": "OpeningAvailable",
+                "DateTime": "2019-09-15T14:33:07+00:00"
+              }
+            ]
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v3.1/aisp/accounts/"
+          },
+          "Meta": {
+            "totalPages": "1"
+          }
+        }
+      },
+      "TransactionResponseExample1": {
+        "value": {
+          "Data": {
+            "Transaction": [
+              {
+                "accountId": "87659",
+                "transactionId": "234",
+                "transactionReference": "Ref 1",
+                "Amount": {
+                  "amount": "1000.00",
+                  "currency": "RUB"
+                },
+                "creditDebitIndicator": "Credit",
+                "status": "Booked",
+                "bookingDateTime": "2019-09-15T7:33:07+00:00",
+                "valueDateTime": "2019-09-15T7:35:07+00:00",
+                "transactionInformation": "Деньги от Льва",
+                "BankTransactionCode": {
+                  "code": "ReceivedCreditTransfer",
+                  "subCode": "DomesticCreditTransfer"
+                },
+                "ProprietaryBankTransactionCode": {
+                  "code": "Transfer",
+                  "issuer": "AlphaBank"
+                },
+                "Balance": {
+                  "Amount": {
+                    "amount": "1000.00",
+                    "currency": "RUB"
+                  },
+                  "CreditDebitIndicator": "Credit",
+                  "Type": "OpeningAvailable"
+                }
+              }
+            ]
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v3.1/aisp/accounts/87659/transactions/"
+          },
+          "Meta": {
+            "totalPages": "1",
+            "FirstAvailableDateTime": "2019-09-15T00:00:00+00:00",
+            "LastAvailableDateTime": "2019-09-15T21:00:00+00:00"
+          }
+        }
+      },
+      "ConsentExample": {
+        "value": {
+          "Data": {
+            "permissions": [
+              "ReadAccountsBasic",
+              "ReadTransactionsDebits",
+              "ReadBalances"
+            ],
+            "expirationDateTime": "2019-09-03T00:00:00+00:00",
+            "transactionFromDateTime": "2019-09-03T00:00:00+00:00",
+            "transactionToDateTime": "2019-09-03T00:00:00+00:00"
+          },
+          "Risk": {}
+        }
+      },
+      "TransactionResponseExample2": {
+        "value": {
+          "Data": {
+            "Transaction": [
+              {
+                "accountId": "87659",
+                "transactionId": "234",
+                "transactionReference": "Ref 1",
+                "Amount": {
+                  "amount": "1000.00",
+                  "currency": "RUB"
+                },
+                "creditDebitIndicator": "Credit",
+                "status": "Booked",
+                "bookingDateTime": "2019-09-15T7:33:07+00:00",
+                "valueDateTime": "2019-09-15T7:35:07+00:00",
+                "transactionInformation": "Деньги от Льва",
+                "BankTransactionCode": {
+                  "code": "ReceivedCreditTransfer",
+                  "subCode": "DomesticCreditTransfer"
+                },
+                "ProprietaryBankTransactionCode": {
+                  "code": "Transfer",
+                  "issuer": "AlphaBank"
+                },
+                "Balance": {
+                  "Amount": {
+                    "amount": "1000.00",
+                    "currency": "RUB"
+                  },
+                  "CreditDebitIndicator": "Credit",
+                  "Type": "OpeningAvailable"
+                }
+              },
+              {
+                "accountId": "98765",
+                "transactionId": "345",
+                "transactionReference": "Ref 124",
+                "Amount": {
+                  "amount": "100.00",
+                  "currency": "GBP"
+                },
+                "creditDebitIndicator": "Debit",
+                "status": "Booked",
+                "bookingDateTime": "2019-09-15T7:33:07+00:00",
+                "valueDateTime": "2019-09-15T7:35:07+00:00",
+                "transactionInformation": "Оплата коммунальных услуг",
+                "AddressLine": "Шлюзовая",
+                "BankTransactionCode": {
+                  "code": "IssuedCreditTransfer",
+                  "subCode": "AutomaticTransfer"
+                },
+                "ProprietaryBankTransactionCode": {
+                  "code": "DirectDebit",
+                  "issuer": "Bank"
+                },
+                "Balance": {
+                  "Amount": {
+                    "amount": "1001.00",
+                    "currency": "GBP"
+                  },
+                  "CreditDebitIndicator": "Debit",
+                  "Type": "OpeningAvailable"
+                }
+              }
+            ]
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v3.1/aisp/transactions/"
+          },
+          "Meta": {
+            "totalPages": "1",
+            "FirstAvailableDateTime": "2019-09-15T00:00:00+00:00",
+            "LastAvailableDateTime": "2019-09-15T21:00:00+00:00"
+          }
+        }
+      },
+      "StatementInitResponseExample": {
+        "value": {
+          "Data": {
+            "Statement": {
+              "accountId": "1234",
+              "statementId": "234",
+              "fromBookingDateTime": "2019-09-03T00:00:00+00:00",
+              "toBookingDateTime": "2019-12-03T00:00:00+00:00"
+            }
+          },
+          "Risk": {},
+          "Links": {
+            "self": "https://bank.ru/open-banking/v3.1/aisp/statements/1234/"
+          },
+          "Meta": {
+            "totalPages": "1"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "PreAuthorization": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://bank.ru/oapi-channel/tokenUrl",
+            "scopes": {
+              "account": "Доступ к информации о счете"
+            }
+          }
+        }
+      },
+      "Authorization": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://bank.ru/oapi-channel/authorize",
+            "tokenUrl": "https://bank.ru/oapi-channel/token",
+            "scopes": {
+              "account": "Доступ к информации о счете"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Consent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataType"
+          },
+          "Risk": {
+            "description": "Risk направляется инициирующей стороной в ППУ. Используется для указания дополнительной информации для скоринга рисков",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "Data",
+          "Risk"
+        ],
+        "minProperties": 2,
+        "maxProperties": 2
+      },
+      "ConsentResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataConsentResponseType"
+          },
+          "Risk": {
+            "description": "Risk направляется инициирующей стороной на сторону ППУ. Используется для указания дополнительной информации для скоринга рисков",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskType"
+              }
+            ]
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "RetrievalGrantResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataConsentResponseType1"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "AccountResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataAccountResponseComplexType"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "BalanceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataBalanceResponseComplexType"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "TransactionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataTransactionResponseComplexType"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "StatementInitRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataStatementInitRequestComplexType"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk"
+        ],
+        "minProperties": 2,
+        "maxProperties": 2
+      },
+      "StatementInitResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataStatementInitResponseComplexType"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "StatementResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "$ref": "#/components/schemas/DataStatementResponseComplexType"
+          },
+          "Risk": {
+            "$ref": "#/components/schemas/RiskType"
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ],
+        "minProperties": 4,
+        "maxProperties": 4
+      },
+      "DataStatementInitRequestComplexType": {
+        "description": "Контейнер для данных",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Statement": {
+            "$ref": "#/components/schemas/StatementInitReqComplexType"
+          }
+        },
+        "required": [
+          "Statement"
+        ]
+      },
+      "StatementInitReqComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "description": "Идентификатор ресурса счета",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/accountId"
+              }
+            ]
+          },
+          "fromBookingDateTime": {
+            "description": "Дата и время начала выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "toBookingDateTime": {
+            "description": "Дата и время окончания выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "accountId",
+          "fromBookingDateTime",
+          "toBookingDateTime"
+        ]
+      },
+      "DataStatementResponseComplexType": {
+        "description": "Контейнер для данных",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Statement": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatementComplexType"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "Statement"
+        ]
+      },
+      "StatementComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "description": "Идентификатор ресурса счета",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/accountId"
+              }
+            ]
+          },
+          "statementId": {
+            "description": "Идентификатор ресурса выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/statementId"
+              }
+            ]
+          },
+          "fromBookingDateTime": {
+            "description": "Дата и время начала выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "toBookingDateTime": {
+            "description": "Дата и время окончания выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "creationDateTime": {
+            "description": "Дата и время создания ресурса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "Transaction": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionComplexType"
+            },
+            "minItems": 0,
+            "description": ""
+          }
+        },
+        "required": [
+          "statementId",
+          "fromBookingDateTime",
+          "toBookingDateTime",
+          "creationDateTime"
+        ]
+      },
+      "TransactionComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "transactionId": {
+            "description": "Уникальный идентификатор транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/transactionId"
+              }
+            ]
+          },
+          "creditDebitIndicator": {
+            "description": "Приход/Уход",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreditDebitIndicatorStaticType"
+              }
+            ]
+          },
+          "status": {
+            "description": "Статус транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionStatusStaticType"
+              }
+            ]
+          },
+          "documentNumber": {
+            "type": "string",
+            "maxLength": 6,
+            "description": "Номер платежного документа"
+          },
+          "bookingDateTime": {
+            "description": "Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "valueDateTime": {
+            "description": "Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода дебетовой транзакции. Используется стандарт ISO8601",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Назначение перевода денежных средств"
+          },
+          "Amount": {
+            "description": "Информация о сумме и валюте транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          },
+          "DebtorParty": {
+            "description": "Информация о контрагенте в случае кредитной операции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PartyIdentificationComplexType"
+              }
+            ]
+          },
+          "DebtorAccount": {
+            "description": "Идентификация счета плательщика, в случае кредитной операции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CashAccountCompexType"
+              }
+            ]
+          },
+          "DebtorAgent": {
+            "description": "Финансовое организация, обслуживающая счет плательщика",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BranchAndFinancialInstitutionIdentificationComplexType"
+              }
+            ]
+          },
+          "CreditorParty": {
+            "description": "Информация о контрагенте в случае дебетовой транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PartyIdentificationComplexType"
+              }
+            ]
+          },
+          "CreditorAccount": {
+            "description": "Идентификация счета получателя средств, в случае дебетовой транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CashAccountCompexType"
+              }
+            ]
+          },
+          "CreditorAgent": {
+            "description": "Финансовое организация, обслуживающая счет получателя средств",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BranchAndFinancialInstitutionIdentificationComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "creditDebitIndicator",
+          "status",
+          "bookingDateTime",
+          "Amount"
+        ]
+      },
+      "CashAccountCompexType": {
+        "description": "Идентификация счета плательщика в случае кредитной операции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Название схемы",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Идентификатор счета"
+          }
+        },
+        "required": [
+          "schemeName",
+          "identification"
+        ]
+      },
+      "PartyIdentificationComplexType": {
+        "description": "Информация о контрагенте в случае кредитной операции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "inn": {
+            "type": "string",
+            "maxLength": 12,
+            "description": "ИНН контрагента"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Наименование контрагента"
+          },
+          "kpp": {
+            "type": "string",
+            "maxLength": 9,
+            "description": "КПП контрагента"
+          }
+        },
+        "required": [
+          "inn"
+        ]
+      },
+      "DataStatementInitResponseComplexType": {
+        "description": "Контейнер для данных",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Statement": {
+            "$ref": "#/components/schemas/StatementInitRespComplex"
+          }
+        },
+        "required": [
+          "Statement"
+        ]
+      },
+      "StatementInitRespComplex": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "description": "Идентификатор ресурса счета",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/accountId"
+              }
+            ]
+          },
+          "statementId": {
+            "description": "Идентификатор ресурса выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/statementId"
+              }
+            ]
+          },
+          "fromBookingDateTime": {
+            "description": "Дата и время начала выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "toBookingDateTime": {
+            "description": "Дата и время окончания выписки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "statementId",
+          "fromBookingDateTime",
+          "toBookingDateTime"
+        ]
+      },
+      "DataType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionsType"
+            },
+            "minItems": 1,
+            "description": "Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на стороне ППУ."
+          },
+          "expirationDateTime": {
+            "description": "Дата и время истечения срока действия разрешений.Если он не заполнен, разрешения будет с открытой датой.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "transactionFromDateTime": {
+            "description": "Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "transactionToDateTime": {
+            "description": "Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "permissions"
+        ]
+      },
+      "DataConsentResponseType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consentId": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/consentId"
+              }
+            ],
+            "description": "Уникальный идентификатор, предназначенный для идентификации ресурса согласия на доступ к счету"
+          },
+          "creationDateTime": {
+            "description": "Дата и время создания ресурса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "status": {
+            "description": "Статус согласия",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConsentStatusType"
+              }
+            ]
+          },
+          "statusUpdateDateTime": {
+            "description": "Дата и время обновления статуса ресурса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionsType"
+            },
+            "minItems": 1,
+            "description": "Указание типов данных доступа к счетам Пользователя. Это список доменов данных, которые были одобрены Пользователем и запрошены для авторизации на стороне ППУ."
+          },
+          "expirationDateTime": {
+            "description": "Дата и время истечения срока действия разрешений. Если он не заполнен, разрешения будет с открытой датой.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "transactionFromDateTime": {
+            "description": "Дата и время начала периода запроса транзакции.Если он не заполнен, дата начала будет с открытой датой, и данные будутвозвращены с самой ранней из доступных транзакций.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "transactionToDateTime": {
+            "description": "Дата и время окончания периода запроса транзакции.Если он не заполнен, дата окончания будет открытой, и данные будутвозвращены в самую последнюю доступную транзакцию.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "consentId",
+          "creationDateTime",
+          "status",
+          "statusUpdateDateTime",
+          "permissions"
+        ]
+      },
+      "DataConsentResponseType1": {
+        "description": "Контейнер для данных",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consentId": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/consentId"
+              }
+            ],
+            "description": "Уникальный идентификатор, предназначенный для идентификации ресурса согласия на доступ к счету"
+          },
+          "retrievalGrantId": {
+            "type": "string",
+            "maxLength": 128,
+            "description": "Уникальный идентификатор, предназначенный для идентификации ресурса поручения на доступ к счету."
+          },
+          "documentType": {
+            "type": "string",
+            "maxLength": 128,
+            "description": "Тип документа. Пока передается фиксированное значение 'Поручение на извлечение'."
+          },
+          "OGRN": {
+            "type": "string",
+            "maxLength": 128,
+            "description": "ОГРН Стороннего поставщика. Поле может не передаваться, поскольку у Стороннему поставщику известен его ОГРН."
+          },
+          "creationDateTime": {
+            "description": "Дата и время создания ресурса.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "expirationDateTime": {
+            "description": "Дата и время истечения срока действия поручения на извлечение информации о счете. Дата и время совпадают с датой и временем для согласия на получение информации о счете.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "retrievalGrantId",
+          "documentType",
+          "creationDateTime"
+        ]
+      },
+      "DataTransactionResponseComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Transaction": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionComplex"
+            },
+            "minItems": 0
+          }
+        }
+      },
+      "TransactionComplex": {
+        "description": "Комплексный объект транзакция",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "description": "Уникальный и неизменный идентификатор, используемый для идентификации ресурса accounts",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/accountId"
+              }
+            ]
+          },
+          "transactionId": {
+            "description": "Уникальный и неизменный идентификатор, используемый для идентификации ресурса transactions",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/transactionId"
+              }
+            ]
+          },
+          "transactionReference": {
+            "type": "string",
+            "maxLength": 35,
+            "description": "Уникальная ссылка на сделку"
+          },
+          "creditDebitIndicator": {
+            "description": "Определяет является баланс кредитовым или дебетовым",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreditDebitIndicatorStaticType"
+              }
+            ]
+          },
+          "status": {
+            "description": "Статус транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionStatusStaticType"
+              }
+            ]
+          },
+          "bookingDateTime": {
+            "description": "Дата и время, когда запись о транзакции публикуется на счете в бухгалтерской книге обслуживающей организации. Используется стандарт ISO8601",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "valueDateTime": {
+            "description": "Дата и время, когда активы становятся доступными владельцу счета в случае ввода кредита или перестают быть доступными владельцу счета в случае ввода дебетовой транзакции.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "transactionInformation": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Детали транзакции"
+          },
+          "addressLine": {
+            "type": "string",
+            "maxLength": 70,
+            "description": "Информация, которая находит и идентифицирует конкретный адрес для записи транзакции, который представлен в тексте в произвольном формате."
+          },
+          "Amount": {
+            "description": "Информация о сумме и валюте транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          },
+          "ChargeAmount": {
+            "description": "Комиссионные за транзакцию",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          },
+          "CurrencyExchange": {
+            "description": "Подробная информация об обмене валюты",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CurrencyExchangeComplexType"
+              }
+            ]
+          },
+          "BankTransactionCode": {
+            "description": "Подробная информация для полной идентификации транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BankTransactionCodeStructureComplexType"
+              }
+            ]
+          },
+          "ProprietaryBankTransactionCode": {
+            "description": "Подробная информация для полной идентификации собственного банковского кода транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProprietaryBankTransactionCodeStructureComplexType"
+              }
+            ]
+          },
+          "Balance": {
+            "description": "Детальная информация о балансе счета",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionCashBalanceComplexType"
+              }
+            ]
+          },
+          "MerchantDetails": {
+            "description": "Детали продавца участвующего в сделке",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MerchantDetailsComplexType"
+              }
+            ]
+          },
+          "CreditorAgent": {
+            "description": "Финансовая организация, обслуживающая счет получателя средств",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BranchAndFinancialInstitutionIdentificationComplexType"
+              }
+            ]
+          },
+          "CreditorAccount": {
+            "description": "Идентификация счета получателя средств, в случае дебетовой транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CashAccountComplexType"
+              }
+            ]
+          },
+          "DebtorAgent": {
+            "description": "Финансовое организация, обслуживающая счет плательщика",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BranchAndFinancialInstitutionIdentificationComplexType"
+              }
+            ]
+          },
+          "DebtorAccount": {
+            "description": "Идентификация счета плательщика, в случае кредитной операции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CashAccountComplexType"
+              }
+            ]
+          },
+          "CardInstrument": {
+            "description": "Детальное описание карточного инструмента, использованного в транзакции",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionCardInstrumentComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "accountId",
+          "creditDebitIndicator",
+          "status",
+          "bookingDateTime",
+          "Amount"
+        ]
+      },
+      "CurrencyExchangeComplexType": {
+        "description": "Подробная информация об обмене валюты",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sourceCurrency": {
+            "description": "Валюта, из которой необходимо конвертировать сумму. Используется стандарт ISO 4217",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          },
+          "targetCurrency": {
+            "description": "Валюта, в которую необходимо конвертировать сумму. Используется стандарт ISO 4217",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          },
+          "unitCurrency": {
+            "description": "Валюта, в которой обменный курс выражен. Используется стандарт ISO 4217",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          },
+          "exchangeRate": {
+            "description": "Коэффициент, используемый для перевода суммы из одной валюты в другую. Это отражает цену, по которой одна валюта была куплена за другую валюту.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BaseOneRate"
+              }
+            ]
+          },
+          "contractIdentification": {
+            "type": "string",
+            "maxLength": 35,
+            "description": "Идентификатор для однозначного определения валютного контракта."
+          },
+          "quotationDate": {
+            "description": "Дата и время обменного курса. Используется стандарт ISO8601",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "InstructedAmount": {
+            "description": "Сумма денег, подлежащая переводу между плательщиком и получателем средств до вычета расходов, выраженная в валюте обозначенной инициирующей стороной",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "sourceCurrency",
+          "exchangeRate",
+          "amount",
+          "dateTime",
+          "Amount"
+        ]
+      },
+      "TransactionCardInstrumentComplexType": {
+        "description": "Детальное описание карточного инструмента, использованного в транзакции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cardSchemeName": {
+            "description": "Название схемы",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CardSchemeNameStaticType"
+              }
+            ]
+          },
+          "authorisationType": {
+            "description": "Тип авторизации",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CardAuthorisationTypeStaticType"
+              }
+            ]
+          },
+          "name": {
+            "description": "Имя владельца",
+            "type": "string",
+            "maxLength": 70
+          },
+          "identification": {
+            "description": "Идентификационный номер",
+            "type": "string",
+            "maxLength": 34
+          }
+        },
+        "required": [
+          "cardSchemeName"
+        ]
+      },
+      "CashAccountComplexType": {
+        "description": "Идентификация счета получателя средств в случае дебетовой транзакции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Название схемы",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "description": "Идентификатор",
+            "type": "string",
+            "maxLength": 256
+          },
+          "name": {
+            "description": "Название",
+            "type": "string",
+            "maxLength": 70
+          }
+        }
+      },
+      "PostalAddressComplexType": {
+        "description": "Адрес финансовой организации, обслуживающая счет получателя средств",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "addressType": {
+            "description": "Тип адреса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressTypeStaticType"
+              }
+            ]
+          },
+          "department": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "subDepartment": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "streetName": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "buildingNumber": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "postCode": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "townName": {
+            "type": "string",
+            "maxLength": 35
+          },
+          "countrySubDivision": {
+            "type": "string",
+            "maxLength": 35
+          },
+          "country": {
+            "description": "Страна. Справочник кодов ISO3166, Alpha-3 code.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CountryCode"
+              }
+            ]
+          },
+          "addressLine": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 70
+            },
+            "minItems": 0,
+            "maxItems": 7
+          }
+        }
+      },
+      "BranchAndFinancialInstitutionIdentificationComplexType": {
+        "description": "Финансовая организация, обслуживающая счет получателя средств",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Название схемы",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FinancialInstitutionIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "description": "Идентификатор",
+            "type": "string",
+            "maxLength": 35
+          },
+          "name": {
+            "description": "Название",
+            "type": "string",
+            "maxLength": 140
+          },
+          "Address": {
+            "description": "Адрес финансовой организации, обслуживающая счет получателя средств",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressComplexType"
+              }
+            ]
+          }
+        }
+      },
+      "MerchantDetailsComplexType": {
+        "description": "Детали продавца участвующего в сделке",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "merchantName": {
+            "type": "string",
+            "maxLength": 350,
+            "description": "Наименование продавца"
+          },
+          "merchantCategoryCode": {
+            "description": "Код категории относится к типу услуг или товаров, которые продавец предоставляет",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Min3Max4Text"
+              }
+            ]
+          }
+        }
+      },
+      "TransactionCashBalanceComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "creditDebitIndicator": {
+            "description": "Определяет является баланс кредитовым или дебетовым",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreditDebitIndicatorStaticType"
+              }
+            ]
+          },
+          "type": {
+            "description": "Тип баланса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BalanceTypeStaticType"
+              }
+            ]
+          },
+          "Amount": {
+            "description": "Детали баланса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "creditDebitIndicator",
+          "type",
+          "Amount"
+        ]
+      },
+      "ProprietaryBankTransactionCodeStructureComplexType": {
+        "description": "Подробная информация для полной идентификации собственного банковского кода транзакции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 35,
+            "description": "Собственный банковский код транзакции"
+          },
+          "issuer": {
+            "type": "string",
+            "maxLength": 35,
+            "description": "Идентификация эмитента собственного банковского кода транзакции"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "BankTransactionCodeStructureComplexType": {
+        "description": "Подробная информация для полной идентификации транзакции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "Множество внутри домена",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExternalBankTransactionFamily1Code"
+              }
+            ]
+          },
+          "subCode": {
+            "description": "Подмножество внутри множества",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExternalBankTransactionSubFamily1Code"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "subCode"
+        ]
+      },
+      "DataAccountResponseComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Account": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountComplexType"
+            },
+            "minItems": 0
+          }
+        }
+      },
+      "DataBalanceResponseComplexType": {
+        "description": "Контейнер для данных",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Balance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BalanceComplexType"
+            },
+            "minItems": 0
+          }
+        }
+      },
+      "BalanceComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "description": "Уникальный и неизменный идентификатор, используемый для идентификации ресурса 'accounts'",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/accountId"
+              }
+            ]
+          },
+          "creditDebitIndicator": {
+            "description": "Определяет является баланс кредитовым или дебетовым",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreditDebitIndicatorStaticType"
+              }
+            ]
+          },
+          "type": {
+            "description": "Тип баланса, заполняется согласно ISO 20022",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BalanceTypeStaticType"
+              }
+            ]
+          },
+          "dateTime": {
+            "description": "Дата и время построения отчета. Используется стандарт ISO8601",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "Amount": {
+            "description": "Детали баланса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          },
+          "CreditLine": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreditLineComplexType"
+            },
+            "minItems": 0,
+            "description": "Подробная информация о кредитной линии"
+          }
+        },
+        "required": [
+          "accountId",
+          "creditDebitIndicator",
+          "type",
+          "dateTime",
+          "Amount"
+        ]
+      },
+      "CreditLineComplexType": {
+        "description": "Подробная информация о кредитной линии",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "included": {
+            "type": "boolean"
+          },
+          "type": {
+            "$ref": "#/components/schemas/creditLineStaticType"
+          },
+          "Amount": {
+            "$ref": "#/components/schemas/AmountComplexType"
+          }
+        },
+        "required": [
+          "included",
+          "currency"
+        ]
+      },
+      "AmountComplexType": {
+        "description": "Детали баланса",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "description": "Сумма",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyAndAmount_SimpleType"
+              }
+            ]
+          },
+          "currency": {
+            "description": "Валюта счета. Используется стандарт ISO 4217",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ]
+      },
+      "AccountComplexType": {
+        "description": "Комплексный объект счета",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "description": "Уникальный и неизменный идентификатор, используемый для идентификации ресурса 'accounts'",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/accountId"
+              }
+            ]
+          },
+          "status": {
+            "description": "Статус счета в форме кода",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountStatusStaticType"
+              }
+            ]
+          },
+          "statusUpdateDateTime": {
+            "description": "Дата и время изменения статуса счета. Используется стандарт ISO8601",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "currency": {
+            "description": "Валюта ведения счета. Используется стандарт ISO 4217",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          },
+          "accountType": {
+            "description": "Тип счета (физическое или юридическое лицо)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountTypeStaticType"
+              }
+            ]
+          },
+          "accountSubType": {
+            "description": "Подтип счета (классификация банковских продуктов)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountSubTypeStaticType"
+              }
+            ]
+          },
+          "accountDescription": {
+            "type": "string",
+            "maxLength": 35,
+            "description": "Детальное описание продукта, привязанного к счету"
+          },
+          "AccountDetails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountDetailsComplexType"
+            },
+            "description": "Подробная информация для идентификации счета"
+          },
+          "Owner": {
+            "description": "Информация о владельце счета",
+            "$ref": "#/components/schemas/Party"
+          },
+          "ServiceProvider": {
+            "$ref": "#/components/schemas/ServiceProviderComplexType"
+          }
+        },
+        "required": [
+          "accountId",
+          "currency",
+          "accountType",
+          "accountSubType"
+        ]
+      },
+      "Party": {
+        "description": "Информация об участнике, используемая для идентификации юридического или физического лица",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Наименование организации или имя физического лица",
+            "type": "string",
+            "maxLength": 160,
+            "example": "ПАО Моя организация"
+          },
+          "mobileNumber": {
+            "description": "Набор данных, который определяет номер мобильного телефона в формате,  назначаемом оператором связи. Начинается с «+7-»",
+            "type": "string",
+            "maxLength": 15
+          },
+          "countryOfResidence": {
+            "description": "Код страны проживания. Справочник кодов ISO3166, Alpha-2 code.",
+            "$ref": "#/components/schemas/CountryCode",
+            "example": "RU"
+          },
+          "countryOfBirth": {
+            "description": "Место рождения (страна). Справочник кодов ISO3166, Alpha-2 code.",
+            "$ref": "#/components/schemas/CountryCode"
+          },
+          "provinceOfBirth": {
+            "description": "Место рождения (область).",
+            "type": "string",
+            "maxLength": 35
+          },
+          "cityOfBirth": {
+            "description": "Место рождения (город).",
+            "type": "string",
+            "maxLength": 35
+          },
+          "birthDate": {
+            "description": "Дата рождения.",
+            "$ref": "#/components/schemas/ISODateTime"
+          },
+          "PartyIdentification": {
+            "description": "Идентификация юридического или физического лица.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PartyIdentification"
+            },
+            "minItems": 1
+          },
+          "PostalAddress": {
+            "description": "Указывается адрес места нахождения юридического лица, места жительства (регистрации)  или места пребывания физического лица, индивидуального предпринимателя, физического  лица, занимающегося в установленном порядке частной практикой, в случаях, установленных  законодательством или договором. При указании адреса допускается использовать сокращения,  позволяющие определенно установить данную информацию ",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostalAddressComplexType"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "name",
+          "PartyIdentification"
+        ]
+      },
+      "PartyIdentification": {
+        "description": "Идентификация юридического или физического лица",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Наименование идентификационной схемы юридического или физического лица",
+            "$ref": "#/components/schemas/PartyIdentificationCode"
+          },
+          "identification": {
+            "description": "Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией.",
+            "type": "string",
+            "maxLength": 35
+          }
+        },
+        "required": [
+          "identification",
+          "schemeName"
+        ]
+      },
+      "PartyIdentificationCode": {
+        "description": "Схема идентифмкации юридического или физического лица",
+        "type": "string",
+        "maxLength": 35,
+        "enum": [
+          "RU.CBR.TXID",
+          "RU.CBR.PASP",
+          "RU.CBR.CLID",
+          "RU.CBR.QRST"
+        ]
+      },
+      "AccountDetailsComplexType": {
+        "description": "Подробная информация для идентификации счета",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Наименование схемы идентификации счета",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Номер счета, присваивается организацией для идентификации счета. Эта идентификация известна владельцу счета"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 70,
+            "description": "Название идентификатора счета"
+          }
+        },
+        "required": [
+          "schemeName",
+          "identification"
+        ]
+      },
+      "ServiceProviderComplexType": {
+        "description": "Организация, которая управляет счетом от имени владельца счета, то есть управляет регистрацией и бронированием записей на счете, рассчитывает остатки на счете и предоставляет информацию о счете",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Наименование схемы организации",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FinancialInstitutionIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "type": "string",
+            "maxLength": 35,
+            "description": "Идентификатор организации"
+          }
+        },
+        "required": [
+          "schemeName",
+          "identification"
+        ]
+      },
+      "RiskType": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Раздел 'Risk' содержит индикаторы риска для конкретного запроса API, предоставленного Сторонним Поставщиком."
+      },
+      "LinksType": {
+        "description": "ППУ предоставляет постраничный ответ для операций GET, которые возвращают множественные записи.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "self": {
+            "type": "string",
+            "format": "uri"
+          },
+          "first": {
+            "type": "string",
+            "format": "uri"
+          },
+          "prev": {
+            "type": "string",
+            "format": "uri"
+          },
+          "next": {
+            "type": "string",
+            "format": "uri"
+          },
+          "last": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "self"
+        ]
+      },
+      "MetaType": {
+        "description": "Раздел Meta обязателен, но может быть пустым. Необязательный элемент - «TotalPages», указывает на количество передаваемых страниц. Если передается более одной страницы, то элемент «TotalPages» обязательно присутствует.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "totalPages": {
+            "type": "integer",
+            "description": "Указывает на количество передаваемых страниц"
+          }
+        }
+      },
+      "OBRUErrorResponse": {
+        "description": "Контейнер с ошибкой",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Высокоуровневый текстовый код ошибки, необходимый для классификации"
+          },
+          "id": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок."
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса»."
+          },
+          "Errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OBRUError"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "Errors"
+        ]
+      },
+      "OBRUError": {
+        "description": "Контейнер с ошибкой",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "errorCode": {
+            "$ref": "#/components/schemas/OBRUErrorResponseErrorCode"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Описание ошибки. Например, 'Обязательное поле не указано'."
+          },
+          "path": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию."
+          }
+        },
+        "required": [
+          "errorCode",
+          "message"
+        ]
+      },
+      "OBRUErrorResponseErrorCode": {
+        "description": "Низкоуровневое текстовое описание ошибки",
+        "type": "string",
+        "enum": [
+          "RU.SBRF.Field.Missing"
+        ]
+      },
+      "PermissionsType": {
+        "description": "Типы разрешений на доступ к счету",
+        "type": "string",
+        "enum": [
+          "ReadAccountsBasic",
+          "ReadAccountsDetail",
+          "ReadBalances",
+          "ReadTransactionsBasic",
+          "ReadTransactionsCredits",
+          "ReadTransactionsDebits",
+          "ReadTransactionsDetail"
+        ]
+      },
+      "consentId": {
+        "description": "Уникальный идентификатор, предназначенный для идентификации ресурса согласия на доступ к счету",
+        "type": "string",
+        "maxLength": 128
+      },
+      "accountId": {
+        "description": "Уникальный и неизменный идентификатор, используемый для идентификации ресурса accounts",
+        "type": "string",
+        "maxLength": 40
+      },
+      "transactionId": {
+        "description": "Уникальный и неизменный идентификатор, используемый для идентификации ресурса transactions",
+        "type": "string",
+        "maxLength": 210
+      },
+      "statementId": {
+        "description": "Идентификатор ресурса выписки",
+        "type": "string",
+        "maxLength": 40
+      },
+      "ConsentStatusType": {
+        "description": "Статус ресурса account-consent",
+        "type": "string",
+        "enum": [
+          "AwaitingAuthorisation",
+          "Rejected",
+          "Authorised",
+          "Revoked"
+        ]
+      },
+      "AddressTypeStaticType": {
+        "description": "Тип адреса",
+        "type": "string",
+        "enum": [
+          "Business",
+          "Correspondence",
+          "DeliveryTo",
+          "MailTo",
+          "POBox",
+          "Postal",
+          "Residential",
+          "Statement"
+        ]
+      },
+      "ISODateTime": {
+        "description": "Формат даты и времени",
+        "type": "string",
+        "format": "date-time"
+      },
+      "AccountStatusStaticType": {
+        "description": "Статус ресурса счета",
+        "type": "string",
+        "enum": [
+          "Enabled",
+          "Disabled",
+          "Deleted"
+        ]
+      },
+      "AccountTypeStaticType": {
+        "description": "Тип ресурса банковского счета",
+        "type": "string",
+        "enum": [
+          "Business",
+          "Personal"
+        ]
+      },
+      "AccountSubTypeStaticType": {
+        "description": "Подтип ресурса банковского счета",
+        "type": "string",
+        "enum": [
+          "CreditCard",
+          "CurrentAccount",
+          "Loan",
+          "Mortgage",
+          "PrePaidCard",
+          "Savings"
+        ]
+      },
+      "CreditDebitIndicatorStaticType": {
+        "description": "Индикатор дебетовой/кредитовой операции",
+        "type": "string",
+        "enum": [
+          "Credit",
+          "Debit"
+        ]
+      },
+      "BalanceTypeStaticType": {
+        "description": "Тип баланса",
+        "type": "string",
+        "enum": [
+          "ClosingAvailable",
+          "ClosingBooked",
+          "ClosingCleared",
+          "Expected",
+          "OpeningAvailable",
+          "OpeningBooked",
+          "OpeningCleared",
+          "PreviouslyClosedBooked"
+        ]
+      },
+      "TransactionStatusStaticType": {
+        "description": "Статус записи транзакции",
+        "type": "string",
+        "enum": [
+          "Booked",
+          "Pending"
+        ]
+      },
+      "AddressTypeStaticCode": {
+        "description": "Тип адреса",
+        "type": "string",
+        "enum": [
+          "Business",
+          "Registration",
+          "DeliveryTo",
+          "Actual",
+          "Postal",
+          "Residential"
+        ]
+      },
+      "CardSchemeNameStaticType": {
+        "description": "Наименование схемы карты",
+        "type": "string",
+        "enum": [
+          "AmericanExpress",
+          "Diners",
+          "Discover",
+          "MasterCard",
+          "VISA",
+          "MIR"
+        ]
+      },
+      "CardAuthorisationTypeStaticType": {
+        "description": "Тип авторизации карты",
+        "type": "string",
+        "enum": [
+          "ConsumerDevice",
+          "Contactless",
+          "None",
+          "PIN"
+        ]
+      },
+      "creditLineStaticType": {
+        "description": "НЕ ОПРЕДЕЛЕН",
+        "type": "string",
+        "enum": [
+          "tmpVal1"
+        ]
+      },
+      "BaseOneRate": {
+        "description": "НЕ ОПРЕДЕЛЕН",
+        "type": "string",
+        "enum": [
+          "tmpVal2"
+        ]
+      },
+      "ActiveCurrencyAndAmount_SimpleType": {
+        "description": "Сумма",
+        "type": "string",
+        "pattern": "^\\d{1,13}\\.\\d{1,5}$"
+      },
+      "ActiveOrHistoricCurrencyAndAmount_SimpleType": {
+        "description": "Сумма",
+        "type": "string",
+        "pattern": "^\\d{1,13}\\.\\d{1,5}$"
+      },
+      "ActiveOrHistoricCurrencyCode": {
+        "description": "Код валюты",
+        "type": "string",
+        "pattern": "^[A-Z]{3,3}$"
+      },
+      "CountryCode": {
+        "description": "Код страны",
+        "type": "string",
+        "pattern": "^[A-Z]{2,2}$"
+      },
+      "ExternalBankTransactionFamily1Code": {
+        "description": "",
+        "type": "string"
+      },
+      "ExternalBankTransactionSubFamily1Code": {
+        "description": "",
+        "type": "string"
+      },
+      "Min3Max4Text": {
+        "description": "",
+        "type": "string"
+      },
+      "FinancialInstitutionIdentificationDynamicType": {
+        "description": "Идентификатор финансового учреждения",
+        "type": "string",
+        "enum": [
+          "RU.CBR.BICFI",
+          "RU.CBR.BIK"
+        ]
+      },
+      "AccountIdentificationDynamicType": {
+        "description": "Идентификатор счета",
+        "type": "string",
+        "enum": [
+          "RU.CBR.PAN",
+          "RU.CBR.CellphoneNumber",
+          "RU.CBR.BBAN"
+        ]
+      }
+    }
+  }
+}

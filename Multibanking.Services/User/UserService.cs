@@ -3,16 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Multibanking.Contracts;
 using Multibanking.Contracts.Consent.Enums;
 using Multibanking.Contracts.User;
-using Multibanking.Repositories.Users;
+using Multibanking.Data.Repositories.Users;
 
 namespace Multibanking.Services.User;
-
-public interface IUserService
-{
-    UserDto GetUserDtoFromHttpContext();
-    void CrateUserIfNotExist();
-    void UpdateUser(UserDto userDto);
-}
 
 public class UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
     : IUserService
@@ -22,29 +15,11 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IHttpCo
         return mapper.Map<UserDto>(GetUserFromHttpContext());
     }
 
-    private Entities.Users.User GetUserFromHttpContext()
-    {
-        var user = userRepository.Read()
-                       .SingleOrDefault(user => httpContextAccessor.GetLogin().ToLower() == user.Login.ToLower()) ??
-                   throw new ArgumentException("Пользователя с данным логином не существует");
-        return user;
-    }
-
     public void CrateUserIfNotExist()
     {
         if (userRepository.Exist(user => user.Login.ToLower() == httpContextAccessor.GetLogin().ToLower()))
             return;
         CreateUserFromHttpContext();
-    }
-
-    private void CreateUserFromHttpContext()
-    {
-        userRepository.Create(new Entities.Users.User
-        {
-            AccountConsents = [],
-            Login = httpContextAccessor.GetLogin()
-        });
-        userRepository.SaveChanges();
     }
 
     public void UpdateUser(UserDto userDto)
@@ -65,6 +40,24 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IHttpCo
         mapper.Map(userDto, user);
         // TODO: Начать кидать запросы на согласия по OPENAPI
         userRepository.Update(user);
+        userRepository.SaveChanges();
+    }
+
+    private Entities.Users.User GetUserFromHttpContext()
+    {
+        var user = userRepository.Read()
+                       .SingleOrDefault(user => httpContextAccessor.GetLogin().ToLower() == user.Login.ToLower()) ??
+                   throw new ArgumentException("Пользователя с данным логином не существует");
+        return user;
+    }
+
+    private void CreateUserFromHttpContext()
+    {
+        userRepository.Create(new Entities.Users.User
+        {
+            AccountConsents = [],
+            Login = httpContextAccessor.GetLogin()
+        });
         userRepository.SaveChanges();
     }
 }
