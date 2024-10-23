@@ -11,6 +11,13 @@ public class UserController(IUserService userService) : ControllerBase
     [HttpGet]
     public ActionResult<UserDto> Get()
     {
-        return userService.GetUserFromHttpContext();
+        return userService.GetUserDtoFromHttpContext();
+    }
+
+    [HttpPut]
+    public ActionResult Put(UserDto userDto)
+    {
+        userService.UpdateUser(userDto);
+        return Ok();
     }
 }
