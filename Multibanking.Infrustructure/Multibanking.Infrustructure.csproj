@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Multibanking.Data\Multibanking.Data.csproj"/>
         <ProjectReference Include="..\Multibanking.Services\Multibanking.Services.csproj"/>
     </ItemGroup>
 

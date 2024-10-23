@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -67,6 +68,8 @@ public static class InfrastructureServiceCollectionExtensions
     private static IServiceCollection AddKeycloakSettings(this IServiceCollection serviceCollection,
         KeycloakSettings keycloakSettings)
     {
+        // ReSharper disable once RedundantAssignment
+        // ReSharper disable once RedundantAssignment
         return serviceCollection.Configure<KeycloakSettings>(options => options = keycloakSettings);
     }
 
@@ -102,10 +105,7 @@ public static class InfrastructureServiceCollectionExtensions
             var value = configuration[key];
             if (value == null) continue;
             var substitutedValue = SubstituteEnvironmentVariables(value);
-            if (configuration is IConfigurationRoot configRoot)
-            {
-                configRoot[key] = substitutedValue;
-            }
+            if (configuration is IConfigurationRoot configRoot) configRoot[key] = substitutedValue;
         }
     }
 
@@ -126,7 +126,7 @@ public static class InfrastructureServiceCollectionExtensions
             ValidateWithLKG = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKeyResolver = (_, _, _, _) => GetSigningKeys(keycloakSettings),
-            LogValidationExceptions = true,
+            LogValidationExceptions = true
         };
 
         // Убрать когда захостимся, оставить только для дебага
@@ -140,7 +140,7 @@ public static class InfrastructureServiceCollectionExtensions
             return str;
 
         // Используем регулярное выражение для поиска всех ${VARIABLE_NAME}
-        var regex = new System.Text.RegularExpressions.Regex(@"\${(.*?)}");
+        var regex = new Regex(@"\${(.*?)}");
         return regex.Replace(str, match =>
         {
             var envVariable = match.Groups[1].Value; // Получаем имя переменной

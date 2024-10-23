@@ -20,7 +20,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-      <WarningLevel>0</WarningLevel>
+        <WarningLevel>0</WarningLevel>
     </PropertyGroup>
 
     <ItemGroup>
