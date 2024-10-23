@@ -132,6 +132,20 @@ public static class InfrastructureServiceCollectionExtensions
             LogValidationExceptions = true
         };
 
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"Authentication failed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            },
+            OnForbidden = _ =>
+            {
+                Console.WriteLine("Forbidden request.");
+                return Task.CompletedTask;
+            }
+        };
+        
         // Убрать когда захостимся, оставить только для дебага
         options.RequireHttpsMetadata = false;
     }
