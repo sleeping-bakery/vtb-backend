@@ -5,6 +5,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - api
+      - keycloak
     ports:
       - 80:80
     networks:
@@ -15,14 +16,14 @@ services:
       context: ../
       dockerfile: ./Multibanking.Devops/api-dockerfile
     depends_on:
-     - postgres
+      - postgres_app 
     expose:
       - "8080"
     networks:
       - backend-network
 
-  postgres:
-    image: postgres
+  postgres_app:
+    image: postgres:latest
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -31,6 +32,34 @@ services:
       - 5432:5432
     networks:
       - backend-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.0
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin  
+      DB_VENDOR: postgres
+      DB_ADDR: postgres_keycloak  
+      DB_DATABASE: keycloak_db
+      DB_USER: keycloak_user
+      DB_PASSWORD: keycloak_password
+    ports:
+      - 8080:8080
+    networks:
+      - backend-network
+    depends_on:
+      - postgres_keycloak
+    command: start-dev 
+
+  postgres_keycloak:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: keycloak_password
+      POSTGRES_USER: keycloak_user
+      POSTGRES_DB: keycloak_db
+    networks:
+      - backend-network
+
 networks:
   backend-network:
     driver: bridge
