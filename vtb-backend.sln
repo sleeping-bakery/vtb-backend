@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Services", "Mu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.Infrustructure", "Multibanking.Infrustructure\Multibanking.Infrustructure.csproj", "{5A264647-5F97-4ACE-A2F2-42021CB9EE14}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Multibanking.Devops", "Multibanking.Devops", "{099A1A21-EEA9-4C60-9606-A9265B93327B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

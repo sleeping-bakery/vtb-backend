@@ -1,0 +1,36 @@
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api
+    ports:
+      - 80:80
+    networks:
+      - backend-network
+
+  api: 
+    build: 
+      context: ../
+      dockerfile: ./Multibanking.Devops/api-dockerfile
+    depends_on:
+     - postgres
+    expose:
+      - "8080"
+    networks:
+      - backend-network
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - backend-network
+networks:
+  backend-network:
+    driver: bridge
