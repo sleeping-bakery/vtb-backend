@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Entities.Database;
 namespace Multibanking.Infrustructure.ServiceCollectionExtensions;
 
 public static class InfrastructureServiceCollectionExtensions
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
-        // TODO: Add connection string param
-        return serviceCollection.AddDbContext<MultibankingDbContext>(options => options.UseNpgsql("Server=postgres_app;Port=5432;Database=postgres;User Id=postgres;Password=postgres;"));
+        return serviceCollection.AddDbContext<MultibankingDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
     }
 }

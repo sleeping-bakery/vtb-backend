@@ -17,6 +17,7 @@ services:
       dockerfile: ./Multibanking.Devops/api-dockerfile
     depends_on:
       - postgres_app 
+      - keycloak
     expose:
       - "8080"
     networks:
