@@ -30,7 +30,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IHttpCo
             throw new ArgumentException("Нельзя обновлять другого пользователя");
         if (!string.Equals(user.Login, userDto.Login, StringComparison.CurrentCultureIgnoreCase))
             throw new ArgumentException("Нельзя обновлять логин");
-        if (user.AccountConsents.Distinct().Count() != userDto.AccountConsents.Count)
+        if (userDto.AccountConsents.Distinct().Count() != userDto.AccountConsents.Count)
             throw new ArgumentException("Нельзя проставлять несколько одинаковых согласий");
         var existingAccountConsents = Enum.GetValues<AccountConsent>();
         userDto.AccountConsents.ForEach(userConsent =>
