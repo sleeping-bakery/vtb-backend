@@ -12,122 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountConsentsService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.run/AccountClientSpecification.json.run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.run/AccountClientSpecification.json.run.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountsApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountsApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/BalancesApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/BalancesApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountConsentsApiAsync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountConsentsApiAsync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountConsentsApiSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountConsentsApiSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountsApiAsync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountsApiAsync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountsApiSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountsApiSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IBalancesApiAsync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IBalancesApiAsync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IBalancesApiSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IBalancesApiSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IStatementsApiAsync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IStatementsApiAsync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IStatementsApiSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/IStatementsApiSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/ITransactionsApiAsync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/ITransactionsApiAsync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/ITransactionsApiSync.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/ITransactionsApiSync.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/StatementsApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/StatementsApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Api/TransactionsApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Api/TransactionsApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ApiClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ApiException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ApiException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ApiResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/Auth/TokenResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/Auth/TokenResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/ClientUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/Configuration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/CustomJsonCodec.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/CustomJsonCodec.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/GlobalConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/GlobalConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Client/IAsynchronousClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountDetailsComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountDetailsComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AmountComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/AmountComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BankTransactionCodeStructureComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BankTransactionCodeStructureComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BranchAndFinancialInstitutionIdentificationComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BranchAndFinancialInstitutionIdentificationComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BranchAndFinancialInstitutionIdentificationComplexTypeAddress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/BranchAndFinancialInstitutionIdentificationComplexTypeAddress.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CashAccountCompexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CashAccountCompexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CashAccountComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CashAccountComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/Consent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/Consent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/ConsentResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/ConsentResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditLineComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditLineComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CurrencyExchangeComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CurrencyExchangeComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CurrencyExchangeComplexTypeInstructedAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/CurrencyExchangeComplexTypeInstructedAmount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataAccountResponseComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataAccountResponseComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataBalanceResponseComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataBalanceResponseComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataConsentResponseType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataConsentResponseType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataConsentResponseType1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataConsentResponseType1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementInitRequestComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementInitRequestComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementInitResponseComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementInitResponseComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementResponseComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementResponseComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataTransactionResponseComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataTransactionResponseComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/DataType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/LinksType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/LinksType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/MerchantDetailsComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/MerchantDetailsComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/MetaType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/MetaType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/OBRUError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/OBRUError.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/OBRUErrorResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/OBRUErrorResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/PartyIdentification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/PartyIdentification.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/PartyIdentificationComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/PartyIdentificationComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/PostalAddressComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/PostalAddressComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/ProprietaryBankTransactionCodeStructureComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/ProprietaryBankTransactionCodeStructureComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/RetrievalGrantResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/RetrievalGrantResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/ServiceProviderComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/ServiceProviderComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitReqComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitReqComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitRespComplex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitRespComplex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCardInstrumentComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCardInstrumentComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCashBalanceComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCashBalanceComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCashBalanceComplexTypeAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCashBalanceComplexTypeAmount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexBalance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexBalance.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexBankTransactionCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexBankTransactionCode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCardInstrument.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCardInstrument.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexChargeAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexChargeAmount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAgent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCurrencyExchange.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCurrencyExchange.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexDebtorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexDebtorAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexMerchantDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexMerchantDetails.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexProprietaryBankTransactionCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexProprietaryBankTransactionCode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeAmount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorAgent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorParty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorParty.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAgent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorParty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorParty.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Consent/Enums/AccountConsent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Consent/Enums/AccountConsent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/AccountConsentsClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/Implementations/AccountConsentsClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/AccountsClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/Implementations/AccountsClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/BalancesClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/Implementations/BalancesClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/StatementsClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/Implementations/StatementsClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/TransactionsClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/AccountClient/Implementations/TransactionsClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Devops/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Devops/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Multibanking.Infrustructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Multibanking.Infrustructure.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/ServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/ServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/CreateUserMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/Middlewares/CreateUserMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/UserMapperProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/MappingProfiles/UserMapperProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" afterDir="false" />
-    </list>
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add logging auth errors" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -137,7 +22,10 @@
     <option name="autoShow" value="false" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c2a442982e736e17ae6bcadbfd8ccba278ee1be6/src/Security/Authentication/Core/src/AuthenticationServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c2a442982e736e17ae6bcadbfd8ccba278ee1be6/src/Security/Authentication/JwtBearer/src/JwtBearerExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/4315fa43c9573671f8f5be21497d59f9c99cd829/src/EFCore/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/4315fa43c9573671f8f5be21497d59f9c99cd829/src/EFCore/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/4315fa43c9573671f8f5be21497d59f9c99cd829/src/EFCore/Query/Internal/ParameterExtractingExpressionVisitor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -170,6 +58,7 @@
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -214,12 +103,40 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="New Generated openapi and send to openapi client">
+      <option name="closed" value="true" />
+      <created>1729723883229</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1729723883229</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Edit codeStyleConfig.xml">
+      <option name="closed" value="true" />
+      <created>1729723910353</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729723910353</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add logging auth errors">
+      <option name="closed" value="true" />
+      <created>1729727140782</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729727140782</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="New Generated openapi and send to openapi client" />
+    <MESSAGE value="Edit codeStyleConfig.xml" />
+    <MESSAGE value="Add logging auth errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add logging auth errors" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
