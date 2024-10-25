@@ -12,9 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add transactions business logic get, get with accountId don't realise">
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add statement business logic">
+      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/StatementController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/IStatementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IStatementService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,9 +90,16 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditDebitIndicatorStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditLineStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataAccountResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/LinksType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/MetaType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementComplexType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementResponse.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplex.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeAmount.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/User/UserDto.cs" root0="SKIP_HIGHLIGHTING" />
@@ -119,9 +128,11 @@
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -241,7 +252,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729806791404</updated>
-      <workItem from="1729806792539" duration="24486000" />
+      <workItem from="1729806792539" duration="31091000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -283,7 +294,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729862326877</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Add consent validation and mock transactions">
+      <option name="closed" value="true" />
+      <created>1729881855879</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1729881855879</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add statement business logic">
+      <option name="closed" value="true" />
+      <created>1729882834250</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1729882834250</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,7 +327,28 @@
     <MESSAGE value="Add accounts business logic" />
     <MESSAGE value="Add balances business logic" />
     <MESSAGE value="Add transactions business logic get, get with accountId don't realise" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add transactions business logic get, get with accountId don't realise" />
+    <MESSAGE value="Add consent validation and mock transactions" />
+    <MESSAGE value="Add statement business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add statement business logic" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs</url>
+          <line>360</line>
+          <properties documentPath="C:\Users\Vadim\RiderProjects\vtb-backend\Multibanking.Infrustructure\Mocks\AccountClientMock.cs" containingFunctionPresentation="Lambda expression inside Method 'MockStatementsClient'">
+            <startOffsets>
+              <option value="25397" />
+            </startOffsets>
+            <endOffsets>
+              <option value="25531" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
