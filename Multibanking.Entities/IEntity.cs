@@ -1,3 +1,4 @@
+
 namespace Multibanking.Entities;
 
 public interface IEntity

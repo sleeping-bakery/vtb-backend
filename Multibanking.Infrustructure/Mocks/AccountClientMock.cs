@@ -9,7 +9,7 @@ public static class AccountClientMock
     public static Mock<IAccountConsentsClient> MockAccountConsentsClient()
     {
         var mock = new Mock<IAccountConsentsClient>();
-        mock.Setup(d => d.CreateAccountAccessConsents(It.IsAny<Consent>(), It.IsAny<string>(),
+        mock.Setup(accountConsentsClient => accountConsentsClient.CreateAccountAccessConsents(It.IsAny<Consent>(), It.IsAny<string>(),
                 It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
             .Returns(() =>
             {
@@ -17,6 +17,7 @@ public static class AccountClientMock
                 return new ConsentResponse(new DataConsentResponseType(id, DateTime.Now,
                     ConsentStatusType.Authorised, DateTime.Now, []), new object(), new LinksType(id), new MetaType());
             });
+
         return mock;
     }
 

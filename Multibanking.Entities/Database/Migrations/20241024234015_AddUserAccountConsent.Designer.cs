@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Multibanking.Entities.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Multibanking.Entities.Database.Migrations
 {
     [DbContext(typeof(MultibankingDbContext))]
-    partial class MultibankingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241024234015_AddUserAccountConsent")]
+    partial class AddUserAccountConsent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,16 +70,18 @@ namespace Multibanking.Entities.Database.Migrations
 
             modelBuilder.Entity("Multibanking.Entities.Accounts.UserAccountConsent", b =>
                 {
-                    b.HasOne("Multibanking.Entities.Users.User", null)
-                        .WithOne("UserAccountConsent")
+                    b.HasOne("Multibanking.Entities.Users.User", "User")
+                        .WithOne("AccountConsent")
                         .HasForeignKey("Multibanking.Entities.Accounts.UserAccountConsent", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Multibanking.Entities.Users.User", b =>
                 {
-                    b.Navigation("UserAccountConsent");
+                    b.Navigation("AccountConsent");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Multibanking.Contracts;
 using Multibanking.Contracts.Consent.Enums;
 using Multibanking.Contracts.User;
@@ -8,13 +7,9 @@ using Multibanking.Services.Account;
 
 namespace Multibanking.Services.User.Implementations;
 
-public class UserService(IUserRepository userRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor, IAccountConsentsService accountConsentsService)
+public class UserService(IUserRepository userRepository, IAccountConsentsService accountConsentsService, IHttpContextAccessor httpContextAccessor, IUserContextService userContextService)
     : IUserService
 {
-    public UserDto GetUserDtoFromHttpContext()
-    {
-        return mapper.Map<UserDto>(GetUserFromHttpContext());
-    }
 
     public void CrateUserIfNotExist()
     {
@@ -23,9 +18,9 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IHttpCo
         CreateUserFromHttpContext();
     }
 
-    public void UpdateUser(UserDto userDto)
+    public void UpdateUser(UserUpdateDto userDto)
     {
-        var user = GetUserFromHttpContext();
+        var user = userContextService.GetUserDtoFromHttpContext();
         if (user.Id != userDto.Id)
             throw new ArgumentException("Нельзя обновлять другого пользователя");
         if (!string.Equals(user.Login, userDto.Login, StringComparison.CurrentCultureIgnoreCase))
@@ -41,17 +36,12 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IHttpCo
 
         accountConsentsService.CreateAccountAccessConsents(userDto.AccountConsents);
 
-        mapper.Map(userDto, user);
-        userRepository.Update(user);
-        userRepository.SaveChanges();
-    }
+        var userEntity = userRepository.Read().Single(u => u.Id == userDto.Id);
 
-    private Entities.Users.User GetUserFromHttpContext()
-    {
-        var user = userRepository.Read()
-                       .SingleOrDefault(user => httpContextAccessor.GetLogin().ToLower() == user.Login.ToLower()) ??
-                   throw new ArgumentException("Пользователя с данным логином не существует");
-        return user;
+        userEntity.AccountConsents = userDto.AccountConsents;
+
+        userRepository.Update(userEntity);
+        userRepository.SaveChanges();
     }
 
     private void CreateUserFromHttpContext()

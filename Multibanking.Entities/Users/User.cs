@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Multibanking.Contracts.Consent.Enums;
+using Multibanking.Entities.Accounts;
 
 namespace Multibanking.Entities.Users;
 
@@ -16,6 +17,13 @@ public class User : IEntity
     public User()
     {
     }
+    
+    /// <summary>
+    ///     Идентификатор пользователя
+    /// </summary>
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
 
     /// <summary>
     ///     Согласия пользователя на операции со счетами
@@ -27,11 +35,9 @@ public class User : IEntity
     ///     Логин пользователя
     /// </summary>
     [Required]
-    [Length(5, 255)]
     public required string Login { get; set; }
+    
+    public UserAccountConsent? UserAccountConsent { get; set; }
 
-    /// <summary>
-    ///     Идентификатор пользователя
-    /// </summary>
-    public Guid Id { get; set; }
+    
 }

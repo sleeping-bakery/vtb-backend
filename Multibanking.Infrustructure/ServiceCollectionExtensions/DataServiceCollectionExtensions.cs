@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
+using Multibanking.Data.Repositories.Account;
 using Multibanking.Data.Repositories.Users;
 using Multibanking.Infrustructure.Mocks;
 using Multibanking.Infrustructure.Models;
@@ -19,7 +20,9 @@ public static class DataServiceCollectionExtensions
 
     private static IServiceCollection AddRepositories(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddScoped<IUserRepository, UserRepository>();
+        return serviceCollection
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IAccountConsentRepository, AccountConsentRepository>();
     }
 
     private static IServiceCollection AddOpenApiBankClients(this IServiceCollection serviceCollection,
@@ -30,20 +33,21 @@ public static class DataServiceCollectionExtensions
 
         if (mockClients.IsAccountClientMock)
         {
-            serviceCollection.AddScoped<IAccountConsentsClient>(_ =>
-                AccountClientMock.MockAccountConsentsClient().Object);
-            serviceCollection.AddScoped<IAccountsClient>(_ => AccountClientMock.MockAccountsClient().Object);
-            serviceCollection.AddScoped<IBalancesClient>(_ => AccountClientMock.MockBalancesClient().Object);
-            serviceCollection.AddScoped<IStatementsClient>(_ => AccountClientMock.MockStatementsClient().Object);
-            serviceCollection.AddScoped<ITransactionsClient>(_ => AccountClientMock.MockTransactionsClient().Object);
+            serviceCollection
+                .AddScoped<IAccountConsentsClient>(_ => AccountClientMock.MockAccountConsentsClient().Object)
+                .AddScoped<IAccountsClient>(_ => AccountClientMock.MockAccountsClient().Object)
+                .AddScoped<IBalancesClient>(_ => AccountClientMock.MockBalancesClient().Object)
+                .AddScoped<IStatementsClient>(_ => AccountClientMock.MockStatementsClient().Object)
+                .AddScoped<ITransactionsClient>(_ => AccountClientMock.MockTransactionsClient().Object);
         }
         else
         {
-            serviceCollection.AddScoped<IAccountConsentsClient, AccountConsentsClient>();
-            serviceCollection.AddScoped<IAccountsClient, AccountsClient>();
-            serviceCollection.AddScoped<IBalancesClient, BalancesClient>();
-            serviceCollection.AddScoped<IStatementsClient, StatementsClient>();
-            serviceCollection.AddScoped<ITransactionsClient, TransactionsClient>();
+            serviceCollection
+                .AddScoped<IAccountConsentsClient, AccountConsentsClient>()
+                .AddScoped<IAccountsClient, AccountsClient>()
+                .AddScoped<IBalancesClient, BalancesClient>()
+                .AddScoped<IStatementsClient, StatementsClient>()
+                .AddScoped<ITransactionsClient, TransactionsClient>();
         }
 
         return serviceCollection;

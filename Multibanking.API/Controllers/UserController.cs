@@ -6,16 +6,16 @@ namespace Multibanking.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController(IUserService userService) : ControllerBase
+public class UserController(IUserService userService, IUserContextService userContextService) : ControllerBase
 {
     [HttpGet]
     public ActionResult<UserDto> Get()
     {
-        return userService.GetUserDtoFromHttpContext();
+        return userContextService.GetUserDtoFromHttpContext();
     }
 
     [HttpPut]
-    public ActionResult Put(UserDto userDto)
+    public ActionResult Put(UserUpdateDto userDto)
     {
         userService.UpdateUser(userDto);
         return Ok();
