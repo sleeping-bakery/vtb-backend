@@ -37,6 +37,7 @@ public static class AccountClientMock
             new BalanceComplexType(AccountIds[1], CreditDebitIndicatorStaticType.Credit, BalanceTypeStaticType.Expected, DateTime.Now,
                 new TransactionCashBalanceComplexTypeAmount("130000", "RUB"),
                 [
+                    new CreditLineComplexType(false, CreditLineStaticType.TmpVal1, new AmountComplexType("10000", "RUB")),
                     new CreditLineComplexType(true, CreditLineStaticType.TmpVal1, new AmountComplexType("20000", "RUB"))
                 ]),
             new BalanceComplexType(AccountIds[2], CreditDebitIndicatorStaticType.Debit, BalanceTypeStaticType.OpeningCleared, DateTime.Now,
@@ -50,6 +51,7 @@ public static class AccountClientMock
     {
         return new TransactionResponse(new DataTransactionResponseComplexType
         ([
+            // Дебитовая карта
             new TransactionComplex(AccountIds[0], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("70000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
@@ -58,6 +60,49 @@ public static class AccountClientMock
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("985", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
                     new CurrencyExchangeComplexTypeInstructedAmount("985", "RUB"))),
+            // Кредитка
+            new TransactionComplex(AccountIds[1], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Кредитованные средства", "г. Калуга", new TransactionComplexTypeAmount("150000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("150000", "RUB"))),
+            new TransactionComplex(AccountIds[1], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Покупка телефона", "г. Калуга", new TransactionComplexTypeAmount("10000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("10000", "RUB"))),
+            new TransactionComplex(AccountIds[1], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Погашение телефона", "г. Калуга", new TransactionComplexTypeAmount("5000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("5000", "RUB"))),
+            new TransactionComplex(AccountIds[1], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Погашение делефона", "г. Калуга", new TransactionComplexTypeAmount("5000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("5000", "RUB"))),
+            new TransactionComplex(AccountIds[1], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Покупка скутера", "г. Калуга", new TransactionComplexTypeAmount("20000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("20000", "RUB"))),
+            // Ипотека
+            new TransactionComplex(AccountIds[3], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("100000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("100000", "RUB"))),
+            new TransactionComplex(AccountIds[3], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("564000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("564000", "RUB"))),
+            new TransactionComplex(AccountIds[3], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("169000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("169000", "RUB"))),
+            new TransactionComplex(AccountIds[3], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("203470", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("203470", "RUB"))),
+            new TransactionComplex(AccountIds[3], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("10020", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("10020", "RUB"))),
+            
         ]), new object(), new LinksType(""), new MetaType());
     }
 
@@ -128,6 +173,16 @@ public static class AccountClientMock
             )
             .Returns(MockedTransactions);
 
+        mock.Setup(transactionClient => transactionClient.GetAccountsaccountIdTransactions(It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<DateTime?>(), It.IsAny<DateTime?>(),
+                It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
+            )
+            .Returns((string accountId, int? _, DateTime? _, DateTime? _, string _, string _, string _, string _, int _) =>
+            {
+                var transactionsWithOneTransaction = MockedTransactions();
+                transactionsWithOneTransaction.Data.Transaction = transactionsWithOneTransaction.Data.Transaction.Where(transaction => transaction.AccountId == accountId).ToList();
+                return transactionsWithOneTransaction;
+            });
         return mock;
     }
 

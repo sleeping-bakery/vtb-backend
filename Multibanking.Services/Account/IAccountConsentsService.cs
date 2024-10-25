@@ -7,4 +7,6 @@ public interface IAccountConsentsService
     public void CreateAccountAccessConsents(ICollection<AccountConsent> consentStatusTypes);
 
     public void RevokeAccountAccessConsent();
+
+    public void ValidateUserConsent(AccountConsent consent);
 }

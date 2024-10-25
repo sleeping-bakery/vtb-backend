@@ -39,6 +39,18 @@ public class AccountConsentsService(IAccountConsentsClient accountConsentsClient
         accountConsentRepository.SaveChanges();
     }
 
+    public void ValidateUserConsent(AccountConsent consent)
+    {
+        var user = userContextService.GetUserDtoFromHttpContext();
+        if (user.UserAccountConsent == null)
+        {
+            throw new ArgumentException("У пользователя нет согласия на стороне банкинга, настройте согласия в настройках");
+        }
+        
+        if (!user.AccountConsents.Contains(consent))
+            throw new ArgumentException($"У пользователя нет согласия на {consent}, настройте согласие в настройках");
+    }
+    
     private ConsentResponse CreateAccountAccessConsentsWithClient(ICollection<AccountConsent> consentStatusTypes)
     {
         var consentResponse = accountConsentsClient.CreateAccountAccessConsents(
