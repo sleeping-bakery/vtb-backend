@@ -46,6 +46,21 @@ public static class AccountClientMock
         ]), new object(), new LinksType(""), new MetaType());
     }
 
+    private static TransactionResponse MockedTransactions()
+    {
+        return new TransactionResponse(new DataTransactionResponseComplexType
+        ([
+            new TransactionComplex(AccountIds[0], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("70000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("70000", "RUB"))),
+            new TransactionComplex(AccountIds[0], Guid.NewGuid().ToString(), "", CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, DateTime.Now,
+                DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("985", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
+                new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
+                    new CurrencyExchangeComplexTypeInstructedAmount("985", "RUB"))),
+        ]), new object(), new LinksType(""), new MetaType());
+    }
+
     public static Mock<IAccountConsentsClient> MockAccountConsentsClient()
     {
         var mock = new Mock<IAccountConsentsClient>();
@@ -107,6 +122,12 @@ public static class AccountClientMock
     public static Mock<ITransactionsClient> MockTransactionsClient()
     {
         var mock = new Mock<ITransactionsClient>();
+
+        mock.Setup(transactionClient => transactionClient.GetTransactions(It.IsAny<int?>(), It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
+            )
+            .Returns(MockedTransactions);
+
         return mock;
     }
 

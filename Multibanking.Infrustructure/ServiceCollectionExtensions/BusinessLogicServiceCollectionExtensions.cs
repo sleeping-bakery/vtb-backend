@@ -31,7 +31,8 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IUserContextService, UserContextService>()
             .AddScoped<IAccountConsentsService, AccountConsentsService>()
             .AddScoped<IAccountService, AccountService>()
-            .AddScoped<IBalanceService, BalanceService>();
+            .AddScoped<IBalanceService, BalanceService>()
+            .AddScoped<ITransactionService, TransactionService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)
