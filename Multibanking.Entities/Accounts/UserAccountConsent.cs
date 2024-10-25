@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Multibanking.Contracts.Consent.Enums;
 using Multibanking.Entities.Users;
 
 namespace Multibanking.Entities.Accounts;

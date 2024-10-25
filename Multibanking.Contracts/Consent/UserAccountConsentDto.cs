@@ -2,7 +2,7 @@ using Multibanking.Contracts.User;
 
 namespace Multibanking.Contracts.Consent;
 
-public class UserAccountConsentDto()
+public class UserAccountConsentDto
 {
     public Guid Id { get; init; }
     public Guid UserId { get; init; }

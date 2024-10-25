@@ -2,6 +2,7 @@ using Multibanking.AccountClient.Model;
 using Multibanking.Contracts.Consent.Enums;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.Repositories.Account;
+using Multibanking.Entities.Accounts;
 using Multibanking.Services.User;
 
 namespace Multibanking.Services.Account.Implementations;
@@ -15,7 +16,18 @@ public class AccountConsentsService(IAccountConsentsClient accountConsentsClient
 
         if (user.UserAccountConsent != null)
             RevokeAccountAccessConsent();
+        
+        if (user.AccountConsents.Count == 0)
+            return;
+        
+        var consentResponse = CreateAccountAccessConsentsWithClient(consentStatusTypes);
 
+        accountConsentRepository.Create(new UserAccountConsent { AccountConsentId = consentResponse.Data.ConsentId, UserId = user.Id });
+        accountConsentRepository.SaveChanges();
+    }
+
+    private ConsentResponse CreateAccountAccessConsentsWithClient(ICollection<AccountConsent> consentStatusTypes)
+    {
         var consentResponse = accountConsentsClient.CreateAccountAccessConsents(
             new Consent(
                 new DataType(consentStatusTypes.Select(accountConsent => (PermissionsType)(int)accountConsent).ToList()), new object()
@@ -28,14 +40,9 @@ public class AccountConsentsService(IAccountConsentsClient accountConsentsClient
             throw new Exception("Согласия не прошли валидацию на стороне банкинга, попробуйте позже");
         }
 
-        var accountConsent = accountConsentRepository.Read().Single(accountConsent => accountConsent.UserId == user.Id);
-        
-        accountConsent.AccountConsentId = consentResponse.Data.ConsentId;
-        accountConsentRepository.Update(accountConsent);
-        accountConsentRepository.SaveChanges();
+        return consentResponse;
     }
-    
-    
+
 
     public void RevokeAccountAccessConsent()
     {

@@ -12,31 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add logging auth errors">
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/User/UserUpdateDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Account/AccountConsentRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Entities/Accounts/UserAccountConsent.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/MappingProfiles/AccountConsentMapperProfile.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/User/IUserContextService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserContextService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/User/UserDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/User/UserDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/IEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/IEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Users/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountConsentsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountConsentsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/IUserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" afterDir="false" />
-    </list>
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Revoke user account consent" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,6 +84,7 @@
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/IEntity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -225,9 +202,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729806791404</updated>
-      <workItem from="1729806792539" duration="11033000" />
+      <workItem from="1729806792539" duration="11538000" />
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Revoke user account consent">
+      <option name="closed" value="true" />
+      <created>1729817943165</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1729817943165</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,7 +224,8 @@
     <MESSAGE value="New Generated openapi and send to openapi client" />
     <MESSAGE value="Edit codeStyleConfig.xml" />
     <MESSAGE value="Add logging auth errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add logging auth errors" />
+    <MESSAGE value="Revoke user account consent" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revoke user account consent" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
