@@ -5,7 +5,7 @@ namespace Multibanking.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AccountConsent(IAccountConsentsService accountConsentsService) : ControllerBase
+public class AccountConsentController(IAccountConsentsService accountConsentsService) : ControllerBase
 {
     [HttpDelete]
     public ActionResult Delete()

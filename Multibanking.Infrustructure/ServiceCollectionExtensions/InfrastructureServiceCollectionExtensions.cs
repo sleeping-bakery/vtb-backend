@@ -145,7 +145,7 @@ public static class InfrastructureServiceCollectionExtensions
                 return Task.CompletedTask;
             }
         };
-        
+
         // Убрать когда захостимся, оставить только для дебага
         options.RequireHttpsMetadata = false;
     }

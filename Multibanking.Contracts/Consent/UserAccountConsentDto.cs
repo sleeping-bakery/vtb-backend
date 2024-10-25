@@ -8,5 +8,4 @@ public class UserAccountConsentDto
     public Guid UserId { get; init; }
     public required UserDto User { get; init; }
     public required string AccountConsentId { get; init; }
-    
 }

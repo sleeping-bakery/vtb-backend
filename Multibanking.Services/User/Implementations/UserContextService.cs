@@ -7,8 +7,6 @@ using Multibanking.Data.Repositories.Users;
 
 namespace Multibanking.Services.User.Implementations;
 
-
-
 public class UserContextService(IMapper mapper, IUserRepository userRepository, IHttpContextAccessor httpContextAccessor) : IUserContextService
 {
     public UserDto GetUserDtoFromHttpContext()

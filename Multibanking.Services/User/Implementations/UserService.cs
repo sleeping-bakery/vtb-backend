@@ -7,10 +7,13 @@ using Multibanking.Services.Account;
 
 namespace Multibanking.Services.User.Implementations;
 
-public class UserService(IUserRepository userRepository, IAccountConsentsService accountConsentsService, IHttpContextAccessor httpContextAccessor, IUserContextService userContextService)
+public class UserService(
+    IUserRepository userRepository,
+    IAccountConsentsService accountConsentsService,
+    IHttpContextAccessor httpContextAccessor,
+    IUserContextService userContextService)
     : IUserService
 {
-
     public void CrateUserIfNotExist()
     {
         if (userRepository.Exist(user => user.Login.ToLower() == httpContextAccessor.GetLogin().ToLower()))

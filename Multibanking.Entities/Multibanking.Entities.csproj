@@ -16,7 +16,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.10"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10"/>
     </ItemGroup>
@@ -26,8 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Database\Migrations\20241025004529_FixNaming.cs" />
-      <Compile Remove="Database\Migrations\20241025004529_FixNaming.Designer.cs" />
+        <Compile Remove="Database\Migrations\20241025004529_FixNaming.cs"/>
+        <Compile Remove="Database\Migrations\20241025004529_FixNaming.Designer.cs"/>
     </ItemGroup>
 
 </Project>

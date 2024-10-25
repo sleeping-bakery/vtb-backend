@@ -16,31 +16,14 @@ public class AccountConsentsService(IAccountConsentsClient accountConsentsClient
 
         if (user.UserAccountConsent != null)
             RevokeAccountAccessConsent();
-        
+
         if (user.AccountConsents.Count == 0)
             return;
-        
+
         var consentResponse = CreateAccountAccessConsentsWithClient(consentStatusTypes);
 
         accountConsentRepository.Create(new UserAccountConsent { AccountConsentId = consentResponse.Data.ConsentId, UserId = user.Id });
         accountConsentRepository.SaveChanges();
-    }
-
-    private ConsentResponse CreateAccountAccessConsentsWithClient(ICollection<AccountConsent> consentStatusTypes)
-    {
-        var consentResponse = accountConsentsClient.CreateAccountAccessConsents(
-            new Consent(
-                new DataType(consentStatusTypes.Select(accountConsent => (PermissionsType)(int)accountConsent).ToList()), new object()
-            )
-        );
-        if (consentResponse == null)
-            throw new Exception("На стороне банкинга произошла ошибка, список согласия не возвращаются, попробуйте позже");
-        if (consentResponse.Data.Status != ConsentStatusType.Authorised)
-        {
-            throw new Exception("Согласия не прошли валидацию на стороне банкинга, попробуйте позже");
-        }
-
-        return consentResponse;
     }
 
 
@@ -54,5 +37,19 @@ public class AccountConsentsService(IAccountConsentsClient accountConsentsClient
         var userAccountConsent = accountConsentRepository.Read().Single(consent => consent.AccountConsentId == userDto.UserAccountConsent.AccountConsentId);
         accountConsentRepository.Delete(userAccountConsent);
         accountConsentRepository.SaveChanges();
+    }
+
+    private ConsentResponse CreateAccountAccessConsentsWithClient(ICollection<AccountConsent> consentStatusTypes)
+    {
+        var consentResponse = accountConsentsClient.CreateAccountAccessConsents(
+            new Consent(
+                new DataType(consentStatusTypes.Select(accountConsent => (PermissionsType)(int)accountConsent).ToList()), new object()
+            )
+        );
+        if (consentResponse == null)
+            throw new Exception("На стороне банкинга произошла ошибка, список согласия не возвращаются, попробуйте позже");
+        if (consentResponse.Data.Status != ConsentStatusType.Authorised) throw new Exception("Согласия не прошли валидацию на стороне банкинга, попробуйте позже");
+
+        return consentResponse;
     }
 }

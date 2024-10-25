@@ -17,13 +17,6 @@ public class User : IEntity
     public User()
     {
     }
-    
-    /// <summary>
-    ///     Идентификатор пользователя
-    /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
 
     /// <summary>
     ///     Согласия пользователя на операции со счетами
@@ -36,8 +29,13 @@ public class User : IEntity
     /// </summary>
     [Required]
     public required string Login { get; set; }
-    
+
     public UserAccountConsent? UserAccountConsent { get; set; }
 
-    
+    /// <summary>
+    ///     Идентификатор пользователя
+    /// </summary>
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
 }
