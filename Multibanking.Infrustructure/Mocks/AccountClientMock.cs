@@ -7,9 +7,8 @@ namespace Multibanking.Infrustructure.Mocks;
 
 public static class AccountClientMock
 {
-
     private static readonly List<string> AccountIds = [Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()];
-    
+
     private static AccountResponse MockedAccounts()
     {
         return new AccountResponse(new DataAccountResponseComplexType(
@@ -26,6 +25,24 @@ public static class AccountClientMock
             new AccountComplexType(AccountIds[3], AccountStatusStaticType.Enabled, DateTime.Now, "RUB", AccountTypeStaticType.Personal,
                 AccountSubTypeStaticType.Savings, "На ипотеку", [],
                 new Party("Мокнутый Мок Мокович", "+79995556677", "RUS", "RUS", "Калужская область", "Калуга", DateTime.Now, [], []))
+        ]), new object(), new LinksType(""), new MetaType());
+    }
+
+    private static BalanceResponse MockedBalances()
+    {
+        return new BalanceResponse(new DataBalanceResponseComplexType
+        ([
+            new BalanceComplexType(AccountIds[0], CreditDebitIndicatorStaticType.Debit, BalanceTypeStaticType.Expected, DateTime.Now,
+                new TransactionCashBalanceComplexTypeAmount("69015", "RUB"), []),
+            new BalanceComplexType(AccountIds[1], CreditDebitIndicatorStaticType.Credit, BalanceTypeStaticType.Expected, DateTime.Now,
+                new TransactionCashBalanceComplexTypeAmount("130000", "RUB"),
+                [
+                    new CreditLineComplexType(true, CreditLineStaticType.TmpVal1, new AmountComplexType("20000", "RUB"))
+                ]),
+            new BalanceComplexType(AccountIds[2], CreditDebitIndicatorStaticType.Debit, BalanceTypeStaticType.OpeningCleared, DateTime.Now,
+                new TransactionCashBalanceComplexTypeAmount("0", "RUB"), []),
+            new BalanceComplexType(AccountIds[3], CreditDebitIndicatorStaticType.Debit, BalanceTypeStaticType.Expected, DateTime.Now,
+                new TransactionCashBalanceComplexTypeAmount("1046490", "RUB"), []),
         ]), new object(), new LinksType(""), new MetaType());
     }
 
@@ -50,7 +67,7 @@ public static class AccountClientMock
         mock.Setup(accountsClient =>
                 accountsClient.GetAccounts(It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
             )
-            .Returns(MockedAccounts());
+            .Returns(MockedAccounts);
 
         mock.Setup(accountsClient =>
                 accountsClient.GetAccountsaccountId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
@@ -67,6 +84,22 @@ public static class AccountClientMock
     public static Mock<IBalancesClient> MockBalancesClient()
     {
         var mock = new Mock<IBalancesClient>();
+
+        mock.Setup(balancesClient =>
+                balancesClient.GetBalances(It.IsAny<int?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
+            )
+            .Returns(MockedBalances);
+
+        mock.Setup(balancesClient =>
+                balancesClient.GetAccountsaccountIdBalances(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
+            )
+            .Returns((string accountId, string _, string _, string _, string _, int _) =>
+            {
+                var balancesWithOneBalance = MockedBalances();
+                balancesWithOneBalance.Data.Balance = balancesWithOneBalance.Data.Balance.Where(balance => balance.AccountId == accountId).ToList();
+                return balancesWithOneBalance;
+            });
+
         return mock;
     }
 

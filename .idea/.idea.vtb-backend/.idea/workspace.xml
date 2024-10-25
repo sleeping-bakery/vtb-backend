@@ -12,26 +12,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Hot fix and add business logic">
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/User/UserDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/User/UserDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Accounts/UserAccountConsent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Accounts/UserAccountConsent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/IEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/IEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Users/User.cs" afterDir="false" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add accounts business logic">
+      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/BalanceController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IBalanceService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/BalanceService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountConsentsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountConsentsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserContextService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserContextService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,8 +85,10 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountSubTypeStaticType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceTypeStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/Consent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/ConsentStatusType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditLineStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataAccountResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/LinksType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/MetaType.cs" root0="SKIP_HIGHLIGHTING" />
@@ -125,6 +113,7 @@
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
@@ -250,7 +239,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729806791404</updated>
-      <workItem from="1729806792539" duration="19054000" />
+      <workItem from="1729806792539" duration="21214000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -268,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729818837263</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add accounts business logic">
+      <option name="closed" value="true" />
+      <created>1729858458409</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729858458409</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,7 +279,8 @@
     <MESSAGE value="Add logging auth errors" />
     <MESSAGE value="Revoke user account consent" />
     <MESSAGE value="Hot fix and add business logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Hot fix and add business logic" />
+    <MESSAGE value="Add accounts business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add accounts business logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
