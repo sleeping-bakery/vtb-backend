@@ -14,11 +14,11 @@ public class AccountConsentsService(IAccountConsentsClient accountConsentsClient
     {
         var user = userContextService.GetUserDtoFromHttpContext();
 
-        if (user.UserAccountConsent != null)
+        if (consentStatusTypes.Count == 0)
+        {
             RevokeAccountAccessConsent();
-
-        if (user.AccountConsents.Count == 0)
             return;
+        }
 
         var consentResponse = CreateAccountAccessConsentsWithClient(consentStatusTypes);
 
