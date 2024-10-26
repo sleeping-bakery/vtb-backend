@@ -1,0 +1,870 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Микросервис реализующий базовые операции с банковскими картами",
+    "title": "Сервис управления картой ФЛ, эмиссионные запросы",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bankingapi.ru/api/rb/dks/cardemission/hackathon/v1",
+      "description": "Адрес API в песочнице хакатона"
+    }
+  ],
+  "paths": {
+    "/prepaid": {
+      "post": {
+        "security": [
+          {
+            "EpaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Уникальный идентификатор клиента в MDM",
+            "in": "header",
+            "name": "X-Mdm-Id",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Признак использования API партнером",
+            "in": "header",
+            "name": "x-client-channel",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          },
+          {
+            "description": "Мнемокод партнера",
+            "in": "header",
+            "name": "X-PARTNER-ID",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardInfoResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Запрос принят, ответ вернется асинхронно",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ServiceError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TykErrorResponse"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Некорректный запрос",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TykErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TykErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TykErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceError"
+                }
+              }
+            },
+            "description": "Формат содержимого запроса не поддерживается",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TykErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TykErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ServiceError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TykErrorResponse"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Внутренняя ошибка сервиса",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "502": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ServiceError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TykErrorResponse"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Ошибка взаимодействия с внешним сервисом",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TykErrorResponse"
+                }
+              }
+            },
+            "headers": {
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ServiceError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/TykErrorResponse"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Таймаут ожидания ответа от внешнего сервиса",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Лимит вызовов. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Оставшееся количество вызовов в временном окне. Временное Окно лимита уточнить у поставщика API ключа X-TYK-API-KEY.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-RateLimit-Reset": {
+                "description": "Время обнуления лимита вызовов в формате Unix Timestamp в миллисекундах.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "X-Generator": {
+                "description": "Заголовок указывающий на сторону, сгенерировавшую ответ.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "API для работы с картами"
+        ],
+        "description": "Метод открытия карты",
+        "operationId": "updateCreateCard",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardOpenRequest"
+              }
+            }
+          },
+          "description": "Параметры открываемой карты",
+          "required": true
+        },
+        "summary": "Открытие карты"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "TykApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-TYK-API-KEY"
+      },
+      "EpaAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "TykErrorResponse": {
+        "type": "object",
+        "description": "Описание ошибки шлюза",
+        "properties": {
+          "error": {
+            "maxLength": 1000,
+            "type": "string",
+            "title": "Описание ошибки"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardOpenRequest": {
+        "additionalProperties": false,
+        "description": "Данные для открытия карты",
+        "properties": {
+          "partnerId": {
+            "description": "Идентификатор партнера",
+            "maxLength": 50,
+            "type": "string"
+          }
+        },
+        "required": [
+          "partnerId"
+        ],
+        "type": "object"
+      },
+      "CardInfoResponse": {
+        "additionalProperties": false,
+        "description": "Общая информация",
+        "properties": {
+          "maskedPan": {
+            "type": "string",
+            "example": "489350******8081",
+            "maxLength": 50,
+            "description": "Маскированый PAN"
+          },
+          "embossingName": {
+            "description": "Эмбоссированное имя клиента",
+            "example": "ИМЯ ФАМИЛИЯ",
+            "maxLength": 50,
+            "type": "string"
+          },
+          "cardExpiry": {
+            "description": "Дата окончания действия карты",
+            "maxLength": 5,
+            "type": "string",
+            "example": "MM/yy",
+            "pattern": "^(0[1-9]|1[0-2])/?([0-9]{2})$"
+          },
+          "publicId": {
+            "description": "Публичный идентификатор продукта",
+            "maxLength": 50,
+            "type": "string"
+          }
+        },
+        "required": [
+          "maskedPan",
+          "embossingName",
+          "cardExpiry",
+          "publicId"
+        ],
+        "type": "object"
+      },
+      "ServiceError": {
+        "additionalProperties": false,
+        "description": "Ошибка сервиса",
+        "properties": {
+          "debugMessage": {
+            "description": "Подробное сообщение об ошибке",
+            "maxLength": 5000,
+            "type": "string"
+          },
+          "message": {
+            "description": "Сообщение об ошибке",
+            "maxLength": 500,
+            "type": "string"
+          },
+          "status": {
+            "description": "Статус ошибки",
+            "enum": [
+              "100 CONTINUE",
+              "101 SWITCHING_PROTOCOLS",
+              "102 PROCESSING",
+              "103 CHECKPOINT",
+              "200 OK",
+              "201 CREATED",
+              "202 ACCEPTED",
+              "203 NON_AUTHORITATIVE_INFORMATION",
+              "204 NO_CONTENT",
+              "205 RESET_CONTENT",
+              "206 PARTIAL_CONTENT",
+              "207 MULTI_STATUS",
+              "208 ALREADY_REPORTED",
+              "226 IM_USED",
+              "300 MULTIPLE_CHOICES",
+              "301 MOVED_PERMANENTLY",
+              "302 FOUND",
+              "302 MOVED_TEMPORARILY",
+              "303 SEE_OTHER",
+              "304 NOT_MODIFIED",
+              "305 USE_PROXY",
+              "307 TEMPORARY_REDIRECT",
+              "308 PERMANENT_REDIRECT",
+              "400 BAD_REQUEST",
+              "401 UNAUTHORIZED",
+              "402 PAYMENT_REQUIRED",
+              "403 FORBIDDEN",
+              "404 NOT_FOUND",
+              "405 METHOD_NOT_ALLOWED",
+              "406 NOT_ACCEPTABLE",
+              "407 PROXY_AUTHENTICATION_REQUIRED",
+              "408 REQUEST_TIMEOUT",
+              "409 CONFLICT",
+              "410 GONE",
+              "411 LENGTH_REQUIRED",
+              "412 PRECONDITION_FAILED",
+              "413 PAYLOAD_TOO_LARGE",
+              "413 REQUEST_ENTITY_TOO_LARGE",
+              "414 URI_TOO_LONG",
+              "414 REQUEST_URI_TOO_LONG",
+              "415 UNSUPPORTED_MEDIA_TYPE",
+              "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+              "417 EXPECTATION_FAILED",
+              "418 I_AM_A_TEAPOT",
+              "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+              "420 METHOD_FAILURE",
+              "421 DESTINATION_LOCKED",
+              "422 UNPROCESSABLE_ENTITY",
+              "423 LOCKED",
+              "424 FAILED_DEPENDENCY",
+              "425 TOO_EARLY",
+              "426 UPGRADE_REQUIRED",
+              "428 PRECONDITION_REQUIRED",
+              "429 TOO_MANY_REQUESTS",
+              "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+              "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+              "500 INTERNAL_SERVER_ERROR",
+              "501 NOT_IMPLEMENTED",
+              "502 BAD_GATEWAY",
+              "503 SERVICE_UNAVAILABLE",
+              "504 GATEWAY_TIMEOUT",
+              "505 HTTP_VERSION_NOT_SUPPORTED",
+              "506 VARIANT_ALSO_NEGOTIATES",
+              "507 INSUFFICIENT_STORAGE",
+              "508 LOOP_DETECTED",
+              "509 BANDWIDTH_LIMIT_EXCEEDED",
+              "510 NOT_EXTENDED",
+              "511 NETWORK_AUTHENTICATION_REQUIRED"
+            ],
+            "example": "500 INTERNAL_SERVER_ERROR",
+            "maxLength": 50,
+            "type": "string"
+          },
+          "subErrors": {
+            "description": "Ошибки по цепочке вызовов",
+            "items": {
+              "$ref": "#/components/schemas/ServiceSubError"
+            },
+            "type": "array"
+          },
+          "timestamp": {
+            "description": "Время возникновения ошибки",
+            "format": "date-time",
+            "maxLength": 50,
+            "type": "string",
+            "pattern": "([0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2}[A-Z][0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]{1,3}[A-Z])"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "ServiceSubError": {
+        "additionalProperties": false,
+        "description": "Ошибка провайдера",
+        "properties": {
+          "field": {
+            "description": "Поле",
+            "maxLength": 100,
+            "type": "string"
+          },
+          "message": {
+            "description": "Сообщение",
+            "maxLength": 5000,
+            "type": "string"
+          },
+          "object": {
+            "description": "Объект",
+            "maxLength": 100,
+            "type": "string"
+          },
+          "rejectedValue": {
+            "additionalProperties": false,
+            "description": "Значение поля",
+            "maxLength": 5000,
+            "type": "string"
+          },
+          "response": {
+            "additionalProperties": false,
+            "description": "Ответ провайдера",
+            "maxLength": 5000,
+            "type": "string"
+          },
+          "status": {
+            "description": "Статус ошибки",
+            "enum": [
+              "100 CONTINUE",
+              "101 SWITCHING_PROTOCOLS",
+              "102 PROCESSING",
+              "103 CHECKPOINT",
+              "200 OK",
+              "201 CREATED",
+              "202 ACCEPTED",
+              "203 NON_AUTHORITATIVE_INFORMATION",
+              "204 NO_CONTENT",
+              "205 RESET_CONTENT",
+              "206 PARTIAL_CONTENT",
+              "207 MULTI_STATUS",
+              "208 ALREADY_REPORTED",
+              "226 IM_USED",
+              "300 MULTIPLE_CHOICES",
+              "301 MOVED_PERMANENTLY",
+              "302 FOUND",
+              "302 MOVED_TEMPORARILY",
+              "303 SEE_OTHER",
+              "304 NOT_MODIFIED",
+              "305 USE_PROXY",
+              "307 TEMPORARY_REDIRECT",
+              "308 PERMANENT_REDIRECT",
+              "400 BAD_REQUEST",
+              "401 UNAUTHORIZED",
+              "402 PAYMENT_REQUIRED",
+              "403 FORBIDDEN",
+              "404 NOT_FOUND",
+              "405 METHOD_NOT_ALLOWED",
+              "406 NOT_ACCEPTABLE",
+              "407 PROXY_AUTHENTICATION_REQUIRED",
+              "408 REQUEST_TIMEOUT",
+              "409 CONFLICT",
+              "410 GONE",
+              "411 LENGTH_REQUIRED",
+              "412 PRECONDITION_FAILED",
+              "413 PAYLOAD_TOO_LARGE",
+              "413 REQUEST_ENTITY_TOO_LARGE",
+              "414 URI_TOO_LONG",
+              "414 REQUEST_URI_TOO_LONG",
+              "415 UNSUPPORTED_MEDIA_TYPE",
+              "416 REQUESTED_RANGE_NOT_SATISFIABLE",
+              "417 EXPECTATION_FAILED",
+              "418 I_AM_A_TEAPOT",
+              "419 INSUFFICIENT_SPACE_ON_RESOURCE",
+              "420 METHOD_FAILURE",
+              "421 DESTINATION_LOCKED",
+              "422 UNPROCESSABLE_ENTITY",
+              "423 LOCKED",
+              "424 FAILED_DEPENDENCY",
+              "425 TOO_EARLY",
+              "426 UPGRADE_REQUIRED",
+              "428 PRECONDITION_REQUIRED",
+              "429 TOO_MANY_REQUESTS",
+              "431 REQUEST_HEADER_FIELDS_TOO_LARGE",
+              "451 UNAVAILABLE_FOR_LEGAL_REASONS",
+              "500 INTERNAL_SERVER_ERROR",
+              "501 NOT_IMPLEMENTED",
+              "502 BAD_GATEWAY",
+              "503 SERVICE_UNAVAILABLE",
+              "504 GATEWAY_TIMEOUT",
+              "505 HTTP_VERSION_NOT_SUPPORTED",
+              "506 VARIANT_ALSO_NEGOTIATES",
+              "507 INSUFFICIENT_STORAGE",
+              "508 LOOP_DETECTED",
+              "509 BANDWIDTH_LIMIT_EXCEEDED",
+              "510 NOT_EXTENDED",
+              "511 NETWORK_AUTHENTICATION_REQUIRED"
+            ],
+            "example": "500 INTERNAL_SERVER_ERROR",
+            "maxLength": 50,
+            "type": "string"
+          },
+          "type": {
+            "description": "Тип ошибки",
+            "enum": [
+              "ValidationError",
+              "ProviderError"
+            ],
+            "maxLength": 50,
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "type": "object"
+      }
+    }
+  },
+  "x-tyk-configuration": {
+    "application": {
+      "version": "v1",
+      "mw_enable_validate_header_limit_request": false,
+      "mw_enable_validate_header_limit_response": false,
+      "mask_log": [
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/prepaid"
+        }
+      ],
+      "name": "1234.open-EmissionRequests-s-rest-v1",
+      "providerRisId": "1234",
+      "providerMnemonic": "SUPR",
+      "strip_listen_path": true,
+      "provider_type": "internal",
+      "api_type": "rest",
+      "enable_middlewares": true,
+      "middlewares": {},
+      "global_size_limit": 1048576,
+      "rq_validate_json": [
+        {
+          "path": "/prepaid",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "additionalProperties": false,
+            "properties": {
+              "partnerId": {
+                "maxLength": 50,
+                "type": "string"
+              }
+            },
+            "required": [
+              "partnerId"
+            ],
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "gateway": {
+      "tyk_lan_MAIN": {
+        "gateway_type": "tyk",
+        "api_typization": "PublicAPI",
+        "application": {
+          "provider_rate_limit": {
+            "LT": {
+              "per": 1,
+              "rate": 50
+            }
+          },
+          "middlewares": {},
+          "listen_path": "/api/rb/dks/cardemission/hackathon/v1",
+          "auth_type": "JWT",
+          "enforced_timeout": {
+            "LT": 40
+          },
+          "target_url": {
+            "LT": "http://fl-emissions-svc.plug.svc"
+          }
+        },
+        "contour": "LAN",
+        "gatewayRisId": "1474",
+        "segment_mnemonic": "MAIN"
+      }
+    }
+  }
+}

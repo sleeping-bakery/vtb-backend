@@ -43,6 +43,37 @@ namespace Multibanking.Entities.Database.Migrations
                     b.ToTable("UserAccountConsents");
                 });
 
+            modelBuilder.Entity("Multibanking.Entities.Cards.Card", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Pan")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Cards");
+                });
+
             modelBuilder.Entity("Multibanking.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -74,8 +105,21 @@ namespace Multibanking.Entities.Database.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Multibanking.Entities.Cards.Card", b =>
+                {
+                    b.HasOne("Multibanking.Entities.Users.User", "User")
+                        .WithMany("Cards")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Multibanking.Entities.Users.User", b =>
                 {
+                    b.Navigation("Cards");
+
                     b.Navigation("UserAccountConsent");
                 });
 #pragma warning restore 612, 618

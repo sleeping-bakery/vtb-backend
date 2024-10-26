@@ -4,7 +4,7 @@ using Multibanking.Data.OpenAPIBankClients.AccountClient;
 
 namespace Multibanking.Services.Account.Implementations;
 
-public class StatementService(IStatementsClient statementsClient, IAccountConsentsService accountConsentsService, IAccountService accountService) : IStatementService
+public class StatementService(IStatementsClient statementsClient, IAccountConsentsService accountConsentsService) : IStatementService
 {
     public StatementResponse GetAccountStatement()
     {

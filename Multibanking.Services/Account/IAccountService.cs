@@ -7,4 +7,6 @@ public interface IAccountService
     AccountResponse GetAccounts();
 
     AccountResponse GetAccountDetail(string accountId);
+
+    bool IsAccountExist(string accountId);
 }

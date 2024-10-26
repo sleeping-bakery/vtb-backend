@@ -16,6 +16,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.AccountClient"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Multibanking.Devops", "Multibanking.Devops", "{099A1A21-EEA9-4C60-9606-A9265B93327B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.CardEmissionClient", "Multibanking.CardEmissionClient\Multibanking.CardEmissionClient.csproj", "{7BF7A279-838C-4E99-94F7-FF534B8EE15D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.CardOperationClient", "Multibanking.CardOperationClient\Multibanking.CardOperationClient.csproj", "{24FBC621-7E8F-4053-9F4D-64EBE3897960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.CardInformationClient", "Multibanking.CardInformationClient\Multibanking.CardInformationClient.csproj", "{F789EEA6-6154-4D72-B820-A1607AA76FE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,5 +56,17 @@ Global
 		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2AAD43A-6B1D-4B95-8F8A-ACCC2CA0DBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BF7A279-838C-4E99-94F7-FF534B8EE15D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BF7A279-838C-4E99-94F7-FF534B8EE15D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BF7A279-838C-4E99-94F7-FF534B8EE15D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BF7A279-838C-4E99-94F7-FF534B8EE15D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FBC621-7E8F-4053-9F4D-64EBE3897960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FBC621-7E8F-4053-9F4D-64EBE3897960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FBC621-7E8F-4053-9F4D-64EBE3897960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FBC621-7E8F-4053-9F4D-64EBE3897960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F789EEA6-6154-4D72-B820-A1607AA76FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F789EEA6-6154-4D72-B820-A1607AA76FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F789EEA6-6154-4D72-B820-A1607AA76FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F789EEA6-6154-4D72-B820-A1607AA76FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

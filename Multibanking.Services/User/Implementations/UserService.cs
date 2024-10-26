@@ -52,7 +52,8 @@ public class UserService(
         userRepository.Create(new Entities.Users.User
         {
             AccountConsents = [],
-            Login = httpContextAccessor.GetLogin()
+            Login = httpContextAccessor.GetLogin(),
+            Cards = []
         });
         userRepository.SaveChanges();
     }

@@ -1,4 +1,3 @@
-using AutoMapper;
 using Moq;
 using Multibanking.AccountClient.Model;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
@@ -80,7 +79,13 @@ public static class AccountClientMock
         return $"{adjective} {noun} {ending}";
     }
 
-    private static readonly List<string> AccountIds = [Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()];
+    private static readonly List<string> AccountIds =
+    [
+        "978232c6-dc4d-471c-880f-a7177422d9a8",
+        "cceac821-32e1-4682-907e-3c8602b5fc24",
+        "0293af91-b687-4e9a-8346-24693bd79bc6",
+        "40b68082-b078-4725-b3f5-a20d822da926"
+    ];
 
     private static readonly List<string> TransactionIds =
     [
@@ -192,7 +197,7 @@ public static class AccountClientMock
     {
         return new StatementResponse(new DataStatementResponseComplexType
         ([
-                // Дебитовая карта
+            // Дебитовая карта
             new StatementComplexType(AccountIds[0], Guid.NewGuid().ToString(), DateTime.Now, DateTime.Now, DateTime.Now,
             [
                 new TransactionComplexType(TransactionIds[0], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
@@ -204,9 +209,9 @@ public static class AccountClientMock
                     new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
             ]),
-                // Кредитка
+            // Кредитка
             new StatementComplexType(AccountIds[1], Guid.NewGuid().ToString(), DateTime.Now, DateTime.Now, DateTime.Now,
-            [ 
+            [
                 new TransactionComplexType(TransactionIds[2], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Кредитованные средства", new TransactionComplexTypeAmount("150000", "RUB"),
                     new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
@@ -227,10 +232,10 @@ public static class AccountClientMock
                     DateTime.Now, "Покупка скутера", new TransactionComplexTypeAmount("20000", "RUB"),
                     new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677"))
-                ]),
-                // Ипотека
-                new StatementComplexType(AccountIds[3], Guid.NewGuid().ToString(), DateTime.Now, DateTime.Now, DateTime.Now,
-                [ 
+            ]),
+            // Ипотека
+            new StatementComplexType(AccountIds[3], Guid.NewGuid().ToString(), DateTime.Now, DateTime.Now, DateTime.Now,
+            [
                 new TransactionComplexType(TransactionIds[7], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("100000", "RUB"),
                     new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
@@ -355,12 +360,12 @@ public static class AccountClientMock
         mock.Setup(statementClient => statementClient.GetAccountsaccountIdStatementsStatementId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<DateTime?>(),
                 It.IsAny<DateTime?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
             )
-            .Returns((string accountId, string statementId, int? _, DateTime? _, DateTime? _, string _, string _, string _, string _, int _) =>
-        {
-            var statementForAccount = MockedStatements();
-            statementForAccount.Data.Statement = statementForAccount.Data.Statement.Where(statement => statement.AccountId == accountId).ToList();
-            return statementForAccount;
-        });
+            .Returns((string accountId, string _, int? _, DateTime? _, DateTime? _, string _, string _, string _, string _, int _) =>
+            {
+                var statementForAccount = MockedStatements();
+                statementForAccount.Data.Statement = statementForAccount.Data.Statement.Where(statement => statement.AccountId == accountId).ToList();
+                return statementForAccount;
+            });
         return mock;
     }
 }

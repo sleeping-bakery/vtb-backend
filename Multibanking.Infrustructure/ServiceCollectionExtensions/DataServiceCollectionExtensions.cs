@@ -2,7 +2,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
+using Multibanking.Data.OpenAPIBankClients.CardClient;
 using Multibanking.Data.Repositories.Account;
+using Multibanking.Data.Repositories.Card;
 using Multibanking.Data.Repositories.Users;
 using Multibanking.Infrustructure.Mocks;
 using Multibanking.Infrustructure.Models;
@@ -22,7 +24,8 @@ public static class DataServiceCollectionExtensions
     {
         return serviceCollection
             .AddScoped<IUserRepository, UserRepository>()
-            .AddScoped<IAccountConsentRepository, AccountConsentRepository>();
+            .AddScoped<IAccountConsentRepository, AccountConsentRepository>()
+            .AddScoped<ICardRepository, CardRepository>();
     }
 
     private static IServiceCollection AddOpenApiBankClients(this IServiceCollection serviceCollection,
@@ -45,6 +48,17 @@ public static class DataServiceCollectionExtensions
                 .AddScoped<IBalancesClient, BalancesClient>()
                 .AddScoped<IStatementsClient, StatementsClient>()
                 .AddScoped<ITransactionsClient, TransactionsClient>();
+
+        if (mockClients.IsCardClientMock)
+            serviceCollection
+                .AddScoped<ICardEmissionClient>(_ => CardClientMock.MockCardEmissionClient().Object)
+                .AddScoped<ICardInformationClient>(_ => CardClientMock.MockCardInformationClient().Object)
+                .AddScoped<ICardOperationClient>(_ => CardClientMock.MockCardOperationClient().Object);
+        else
+            serviceCollection
+                .AddScoped<ICardEmissionClient, Data.OpenAPIBankClients.CardClient.Implementations.CardEmissionClient>()
+                .AddScoped<ICardInformationClient, Data.OpenAPIBankClients.CardClient.Implementations.CardInformationClient>()
+                .AddScoped<ICardOperationClient, Data.OpenAPIBankClients.CardClient.Implementations.CardOperationClient>();
 
         return serviceCollection;
     }

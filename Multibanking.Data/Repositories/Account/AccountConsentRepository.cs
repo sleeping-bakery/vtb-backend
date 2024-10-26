@@ -6,7 +6,3 @@ namespace Multibanking.Data.Repositories.Account;
 public class AccountConsentRepository(MultibankingDbContext dbContext) : Repository<UserAccountConsent>(dbContext), IAccountConsentRepository
 {
 }
-
-public interface IAccountConsentRepository : IRepository<UserAccountConsent>
-{
-}

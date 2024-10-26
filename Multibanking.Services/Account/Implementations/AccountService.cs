@@ -1,7 +1,6 @@
 using Multibanking.AccountClient.Model;
 using Multibanking.Contracts.Consent.Enums;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
-using Multibanking.Services.User;
 
 namespace Multibanking.Services.Account.Implementations;
 
@@ -17,6 +16,13 @@ public class AccountService(IAccountsClient accountsClient, IAccountConsentsServ
     {
         accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsDetail);
         return accountsClient.GetAccountsaccountId(accountId);
+    }
+
+    public bool IsAccountExist(string accountId)
+    {
+        accountConsentsService.ValidateUserConsent(AccountConsent.ReadAccountsBasic);
+        var accountResponse = GetAccountDetail(accountId);
+        return accountResponse.Data.Account.Count > 0;
     }
 }
 

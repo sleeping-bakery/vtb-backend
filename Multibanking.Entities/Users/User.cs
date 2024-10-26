@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Multibanking.Contracts.Consent.Enums;
 using Multibanking.Entities.Accounts;
+using Multibanking.Entities.Cards;
 
 namespace Multibanking.Entities.Users;
 
@@ -13,10 +14,6 @@ namespace Multibanking.Entities.Users;
 [Index(nameof(Login), IsUnique = true)]
 public class User : IEntity
 {
-    // ReSharper disable once EmptyConstructor
-    public User()
-    {
-    }
 
     /// <summary>
     ///     Согласия пользователя на операции со счетами
@@ -32,6 +29,9 @@ public class User : IEntity
 
     public UserAccountConsent? UserAccountConsent { get; set; }
 
+    // ReSharper disable once CollectionNeverUpdated.Global
+    public required List<Card> Cards { get; set; }
+    
     /// <summary>
     ///     Идентификатор пользователя
     /// </summary>
