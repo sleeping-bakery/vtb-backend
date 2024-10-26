@@ -9,12 +9,21 @@ namespace Multibanking.API.Controllers;
 [Route("[controller]")]
 public class BalanceController(IBalanceService balanceService) : ControllerBase
 {
+    /// <summary>
+    /// Все балансы по всем счетам
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public ActionResult<BalanceResponse> Get()
     {
         return balanceService.GetBalance();
     }
     
+    /// <summary>
+    /// Баланс по счету (массив с одним балансом)
+    /// </summary>
+    /// <param name="accountId"></param>
+    /// <returns></returns>
     [HttpGet("{accountId}")]
     public ActionResult<BalanceResponse> Get([Required] string accountId)
     {

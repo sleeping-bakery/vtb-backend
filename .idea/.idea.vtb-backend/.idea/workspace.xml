@@ -12,50 +12,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add mocked data for statements">
-      <change afterPath="$PROJECT_DIR$/.run/CardEmissionClientSpecification.json.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.run/CardInformationClient.json.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.run/CardOpetationClientSpecification.json.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/CardController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardCreateDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardReadDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardStatus.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardUpdateDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/CardEmissionClientSpecification.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/CardInformationClient.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/CardOpetationClientSpecification.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/ICardEmissionClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/ICardInformationClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/ICardOperationClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/Implementations/CardEmissionClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/Implementations/CardInformationClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/CardClient/Implementations/CardOperationClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Account/IAccountConsentRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Card/CardRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Card/ICardRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Entities/Cards/Card.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/CardClientMock.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Cards/CardService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Cards/ICardService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Cards/MappingProfiles/CardMapperProfile.cs" afterDir="false" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add bank card">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Repositories/Account/AccountConsentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Account/AccountConsentRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Devops/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Devops/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Users/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/IAccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/AccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/StatementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Account/Implementations/StatementService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/User/Implementations/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vtb-backend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/vtb-backend.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Multibanking.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Multibanking.API.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Multibanking.Infrustructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Multibanking.Infrustructure.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,20 +39,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c2a442982e736e17ae6bcadbfd8ccba278ee1be6/src/Security/Authentication/Core/src/AuthenticationServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/aspnetcore/c2a442982e736e17ae6bcadbfd8ccba278ee1be6/src/Security/Authentication/JwtBearer/src/JwtBearerExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/efcore/4315fa43c9573671f8f5be21497d59f9c99cd829/src/EFCore.Proxies/Proxies/Internal/ProxyBindingRewriter.cs" root0="SKIP_HIGHLIGHTING" />
@@ -106,6 +55,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.CoreLib/src/System/Collections/ObjectModel/Collection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.CoreLib/src/System/Enum.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.CoreLib/src/System/Runtime/ExceptionServices/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.Xml/src/System/Xml/Core/XmlTextReaderImpl.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/211e6f3b24fa438a92f1815153647ce2c8f908/4d/57e865be/IIdentity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/54c2c97bd5bd46e3961ad402640a3dd93818a0/49/dfca84f3/IQueryable`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -114,9 +64,8 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f8dbf677037c4363bdec07364295385f16908/e3/08ac3917/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/858fa85af8f360fe16f9ac5d211391573dccd769e4c998ad63d6497f469145e1/ISetupList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d253e85623dbcafcda28febe2a37a984ff78a8cab68dbdfe7c1b698d1f5fba/MethodCall.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/UserController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/UserController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/UserController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/AccountConsentController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountsApi.cs" root0="SKIP_HIGHLIGHTING" />
@@ -152,75 +101,24 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Api/CardEmissionApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Model/CardInfoResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Model/ServiceError.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Api/CardInformationApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Model/ServiceError.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Api/CardOpetationApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Model/CardInfoResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Model/CardStatusRequest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Model/ServiceError.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/User/UserDto.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/User/UserDto.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/User/UserDto.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Contracts/User/UserDto.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Accounts/UserAccountConsent.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/MultibankingDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/MultibankingDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Database/MultibankingDbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/IEntity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/IEntity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/IEntity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/IEntity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Entities/Users/User.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/ServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/IAccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/IAccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/IAccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/IAccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/Account/Implementations/AccountConsentsService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/IUserService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/IUserService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/Implementations/UserContextService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/Implementations/UserService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/Implementations/UserService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/Implementations/UserService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/Implementations/UserService.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/MappingProfiles/UserMapperProfile.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/MappingProfiles/UserMapperProfile.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Services/User/MappingProfiles/UserMapperProfile.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
   <component name="ProblemsViewState">
@@ -317,7 +215,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729806791404</updated>
-      <workItem from="1729806792539" duration="44475000" />
+      <workItem from="1729806792539" duration="45199000" />
+      <workItem from="1729964762161" duration="1246000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -383,7 +282,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729888042898</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Add bank card">
+      <option name="closed" value="true" />
+      <created>1729902730569</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1729902730569</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,26 +321,8 @@
     <MESSAGE value="Add consent validation and mock transactions" />
     <MESSAGE value="Add statement business logic" />
     <MESSAGE value="Add mocked data for statements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add mocked data for statements" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Multibanking.Services/Cards/CardService.cs</url>
-          <line>109</line>
-          <properties documentPath="C:\Users\Vadim\RiderProjects\vtb-backend\Multibanking.Services\Cards\CardService.cs" containingFunctionPresentation="Method 'UpdateCard'">
-            <startOffsets>
-              <option value="4475" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4696" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Add bank card" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add bank card" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

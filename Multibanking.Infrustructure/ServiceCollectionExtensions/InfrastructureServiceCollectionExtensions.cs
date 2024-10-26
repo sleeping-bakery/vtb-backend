@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -27,10 +28,13 @@ public static class InfrastructureServiceCollectionExtensions
 
     private static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddSwaggerGen(c =>
+        return serviceCollection.AddSwaggerGen(swaggerGenOptions =>
         {
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, "Multibanking.API.xml");
+            swaggerGenOptions.IncludeXmlComments(xmlPath);
+            
             // Настройка авторизации через Bearer token
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            swaggerGenOptions.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Header,
                 Description = "Введите 'Bearer' [пробел] и ваш токен в формате: 'Bearer 12345abcdef'",
@@ -38,7 +42,7 @@ public static class InfrastructureServiceCollectionExtensions
                 Type = SecuritySchemeType.ApiKey
             });
 
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            swaggerGenOptions.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
