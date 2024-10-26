@@ -67,7 +67,7 @@ public class CardController(ICardService cardService) : ControllerBase
     }
 
     /// <summary>
-    /// Обновить данные карты (статус, пин-код_. Пин-код должен быть зашифрованным ключем и передан вместе с публичным ключом. 
+    /// Обновить данные карты (статус, пин-код). Пин-код должен быть зашифрованным ключем и передан вместе с публичным ключом. 
     /// </summary>
     /// <param name="cardUpdateDto"></param>
     /// <returns></returns>

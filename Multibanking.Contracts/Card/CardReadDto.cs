@@ -9,4 +9,6 @@ public class CardReadDto
     public required Guid UserId { get; set; }
     
     public required string Pan { get; set; }
+    
+    public required CardStatus Status { get; set; }
 }

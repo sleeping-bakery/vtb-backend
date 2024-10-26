@@ -1,0 +1,5 @@
+using Multibanking.UnidentifiedPaymentClient.Api;
+
+namespace Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
+
+public class UnidentifiedPaymentClient : UnidentifiedPaymentsApi, IUnidentifiedPaymentClient;

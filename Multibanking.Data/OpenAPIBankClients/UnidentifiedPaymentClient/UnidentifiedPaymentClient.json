@@ -1,0 +1,2943 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Инициирование перевода денежных средств клиента третьей стороной",
+    "description": "Содержит описываются API для Открытых банковских интерфейсов по переводам.",
+    "version": "1.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bankingapi.ru/extapi/aft/payments/hackathon/v1",
+      "description": "Адрес API в песочнице хакатона"
+    }
+  ],
+  "paths": {
+    "/payment-consents": {
+      "post": {
+        "operationId": "CreatePaymentConsent",
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Создание ресурса согласия на проведение платежа.",
+        "description": "Конечная точка позволяет с помощью метода POST создавать на стороне ППУ ресурс согласия на проведение платежа (payment-consent) без предварительной идентификации пользователя.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-idempotency-key"
+          }
+        ],
+        "requestBody": {
+          "description": "Запрос на создание ресурса согласия на проведение платежа",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsentRequestComplexType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201ConsentCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "415": {
+            "$ref": "#/components/responses/415Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "payments"
+            ]
+          }
+        ]
+      }
+    },
+    "/payment-consents/{consentId}": {
+      "get": {
+        "operationId": "GetPaymentConsent",
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Получение ресурса согласия",
+        "description": "Данная конечная точка позволяет СППУ получать детали и статус созданного им ресурса согласия на проведение платежа по его идентификатору.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/consentId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetConsentId"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "payments"
+            ]
+          }
+        ]
+      }
+    },
+    "/payments": {
+      "post": {
+        "operationId": "CreatePayment",
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Инициирование платежа.",
+        "description": "Конечная точка используется для подтверждения инициирования проведения платежа.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-idempotency-key"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentRequestComplexType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201PaymentCreated"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "415": {
+            "$ref": "#/components/responses/415Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "payments"
+            ]
+          }
+        ]
+      }
+    },
+    "/payments/{paymentId}": {
+      "get": {
+        "operationId": "GetPayment",
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Получение ресурса платежа",
+        "description": "Данная конечная точка позволяет СППУ получать статус созданного ресурса платежа по его идентификатору",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/paymentId"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-auth-date"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-customer-ip-address"
+          },
+          {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          {
+            "$ref": "#/components/parameters/x-customer-user-agent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200GetPayment"
+          },
+          "400": {
+            "$ref": "#/components/responses/400Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/401Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/403Error"
+          },
+          "405": {
+            "$ref": "#/components/responses/405Error"
+          },
+          "406": {
+            "$ref": "#/components/responses/406Error"
+          },
+          "429": {
+            "$ref": "#/components/responses/429Error"
+          },
+          "500": {
+            "$ref": "#/components/responses/500Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/503Error"
+          }
+        },
+        "security": [
+          {
+            "PreAuthorization": [
+              "payments"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "consentId": {
+        "name": "consentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/consentID"
+        },
+        "description": ""
+      },
+      "paymentId": {
+        "name": "paymentId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/paymentID"
+        },
+        "description": ""
+      },
+      "page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Номер страницы",
+        "schema": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "x-customer-user-agent": {
+        "in": "header",
+        "name": "x-customer-user-agent",
+        "schema": {
+          "type": "string"
+        },
+        "description": "В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера.",
+        "required": false,
+        "example": ""
+      },
+      "x-fapi-customer-ip-address": {
+        "in": "header",
+        "name": "x-fapi-customer-ip-address",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика)."
+      },
+      "x-fapi-auth-date": {
+        "in": "header",
+        "name": "x-fapi-auth-date",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT"
+      },
+      "x-fapi-interaction-id": {
+        "in": "header",
+        "name": "x-fapi-interaction-id",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id."
+      },
+      "x-idempotency-key": {
+        "name": "x-idempotency-key",
+        "in": "header",
+        "description": "Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^(?!\\s)(.*)(\\S)$",
+          "maxLength": 40
+        }
+      },
+      "x-jws-signature": {
+        "name": "x-jws-signature",
+        "in": "header",
+        "required": false,
+        "description": "Указывает, что тело запроса подписано. В документации на ресурсы отдельно определяется, когда это поле в заголовке указывается.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "retry-after": {
+        "in": "header",
+        "name": "retry-after",
+        "schema": {
+          "type": "integer"
+        },
+        "required": false,
+        "description": "Параметр заголовка, указывающий время (в секундах), в течение которого Сторонний Поставщик ожидает перед повторением операции.ППУ следует включать этот заголовок вместе с ответами с кодом состояния HTTP 429 (Too Many Requests)."
+      }
+    },
+    "responses": {
+      "201ConsentCreated": {
+        "description": "Ресурс согласия создан.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "schema": {
+              "type": "string"
+            },
+            "description": "RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id."
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConsentResponseComplexType"
+            }
+          }
+        }
+      },
+      "200GetConsentId": {
+        "description": "Информация о ресурсе согласия.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConsentResponseComplexType"
+            }
+          }
+        }
+      },
+      "201PaymentCreated": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentResponseComplexType"
+            }
+          }
+        }
+      },
+      "200GetPayment": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentResponseComplexType"
+            }
+          }
+        }
+      },
+      "400Error": {
+        "description": "Запрос имеет неверные, отсутствующее или несовместимое тело JSON, параметры URL или поля заголовка.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      },
+      "401Error": {
+        "description": "Заголовок авторизации отсутствует или неверный токен.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "403Error": {
+        "description": "Токен имеет неверную область действия или была нарушена политика безопасности.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      },
+      "404Error": {
+        "description": "1.  Сторонний Поставщик пытается получить ресурс, который указан в спецификации, но не реализован на строне ППУ (например, ППУ решил не реализовывать конечную точку API статуса для внутренних запланированных платежей). 2.  Сторонний Поставщик пытается получить ресурс, который не определен",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "405Error": {
+        "description": "Сторонний Поставщик попытался получить доступ к ресурсу с помощью метода, который не поддерживается.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "406Error": {
+        "description": "Запрос содержал параметр заголовка Accept, отличный от разрешенных media types, и набор символов, отличный от UTF-8.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "415Error": {
+        "description": "Операция была отклонена, поскольку полезная нагрузка находится в формате, не поддерживаемом этим методом на целевом ресурсе.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        }
+      },
+      "429Error": {
+        "description": "Операция была отклонена, так как слишком много запросов было сделано в течение определенного периода времени.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          },
+          "Retry-After": {
+            "$ref": "#/components/parameters/retry-after"
+          }
+        }
+      },
+      "500Error": {
+        "description": "Что-то пошло не так на стороне ППУ.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      },
+      "503Error": {
+        "description": "Устаревшая версия сервиса.",
+        "headers": {
+          "x-fapi-interaction-id": {
+            "$ref": "#/components/parameters/x-fapi-interaction-id"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OBRUErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "ConsentRequestBody": {
+        "description": "Запрос на создание ресурса согласия на проведение платежа",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConsentRequestComplexType"
+            }
+          }
+        }
+      },
+      "PaymentRequestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentRequestComplexType"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "PreAuthorization": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://bank.ru/oapi-channel/tokenUrl",
+            "scopes": {
+              "payments": "Проведение платежа"
+            }
+          }
+        }
+      },
+      "Authorization": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://bank.ru/oapi-channel/authorize",
+            "tokenUrl": "https://bank.ru/oapi-channel/token",
+            "scopes": {
+              "payments": "Проведение платежа"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "201": {
+        "title": "201 Created",
+        "type": "string"
+      },
+      "LinksType": {
+        "description": "ППУ предоставляет постраничный ответ для операций GET, которые возвращают множественные записи.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "self": {
+            "type": "string",
+            "format": "uri"
+          },
+          "first": {
+            "type": "string",
+            "format": "uri"
+          },
+          "prev": {
+            "type": "string",
+            "format": "uri"
+          },
+          "next": {
+            "type": "string",
+            "format": "uri"
+          },
+          "last": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "self"
+        ]
+      },
+      "MetaType": {
+        "description": "Раздел Meta обязателен, но может быть пустым. Необязательный элемент - «TotalPages», указывает на количество передаваемых страниц. Если передается более одной страницы, то элемент «TotalPages» обязательно присутствует.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "totalPages": {
+            "type": "integer",
+            "description": "Указывает на количество передаваемых страниц"
+          }
+        }
+      },
+      "OBRUErrorResponse": {
+        "description": "Контейнер с ошибкой",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Высокоуровневый текстовый код ошибки, необходимый для классификации"
+          },
+          "id": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок."
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса»."
+          },
+          "Errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OBRUError"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "Errors"
+        ]
+      },
+      "OBRUError": {
+        "description": "Контейнер с ошибкой",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "errorCode": {
+            "$ref": "#/components/schemas/OBRUErrorResponseErrorCode"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Описание ошибки. Например, 'Обязательное поле не указано'."
+          },
+          "path": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию."
+          }
+        },
+        "required": [
+          "errorCode",
+          "message"
+        ]
+      },
+      "OBRUErrorResponseErrorCode": {
+        "description": "Низкоуровневое текстовое описание ошибки",
+        "type": "string",
+        "enum": [
+          "RU.SBRF.Field.Missing"
+        ]
+      },
+      "consentID": {
+        "description": "Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ",
+        "type": "string",
+        "maxLength": 128
+      },
+      "paymentID": {
+        "description": "идентификатор ресурса платежа, созданный на стороне ППУ",
+        "type": "string",
+        "maxLength": 128
+      },
+      "AddressTypeStaticType": {
+        "description": "Тип адреса",
+        "type": "string",
+        "enum": [
+          "Business",
+          "Correspondence",
+          "DeliveryTo",
+          "MailTo",
+          "POBox",
+          "Postal",
+          "Residential",
+          "Statement"
+        ]
+      },
+      "RiskComplexType": {
+        "description": "Раздел Risk используется в ресурсах согласия на проведение платежа и непосредственно платежа.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paymentContextCode": {
+            "$ref": "#/components/schemas/PaymentContextStaticType"
+          },
+          "merchantCategoryCode": {
+            "type": "string",
+            "pattern": "^\\d{3,4}$"
+          },
+          "merchantCustomerIdentification": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "DeliveryAddress": {
+            "$ref": "#/components/schemas/PostalAddress"
+          }
+        }
+      },
+      "PostalAddress": {
+        "description": "Информация, которая находит и идентифицирует определенный адрес, как определено почтовыми службами или в произвольном текстовом формате.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "addressLine": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 70
+            },
+            "minItems": 0,
+            "maxItems": 2
+          },
+          "streetName": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "buildingNumber": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "postCode": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "townName": {
+            "type": "string",
+            "maxLength": 35
+          },
+          "countrySubDivision": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 35
+            },
+            "minItems": 0,
+            "maxItems": 2
+          },
+          "country": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "maxLength": 2
+          }
+        }
+      },
+      "PaymentContextStaticType": {
+        "description": "Контекст проведения платежа.",
+        "type": "string",
+        "enum": [
+          "BillPayment",
+          "EcommerceGoods",
+          "EcommerceServices",
+          "Other",
+          "PartyToParty"
+        ]
+      },
+      "ChargeComplexType": {
+        "description": "Набор элементов, используемый для предоставления деталей о плате за инициацию платежа. Сколько будет стоит для пользователя проведение платежа.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "chargeBearer": {
+            "$ref": "#/components/schemas/ChargeBearerType1Code"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ExternalChargeType1Code"
+          },
+          "Amount": {
+            "$ref": "#/components/schemas/ActiveOrHistoricCurrencyAndAmount"
+          }
+        },
+        "required": [
+          "chargeBearer",
+          "type",
+          "Amount"
+        ]
+      },
+      "ChargeBearerType1Code": {
+        "description": "Информация о стороне или сторонах, которые будут нести расходы, связанные с обработкой платежной транзакции.",
+        "type": "string",
+        "enum": [
+          "CRED",
+          "DEBT",
+          "SLEV",
+          "SHAR"
+        ]
+      },
+      "ExternalChargeType1Code": {
+        "description": "Тип комиссии за проведение платежа.",
+        "type": "string",
+        "enum": [
+          "BRKF",
+          "BTCH",
+          "COMM",
+          "SUMM"
+        ]
+      },
+      "ActiveOrHistoricCurrencyAndAmount": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "description": "Сумма комиссии",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OBActiveCurrencyAndAmount_SimpleType"
+              }
+            ]
+          },
+          "currency": {
+            "description": "Код валюты, соответствующий международного стандарта ISO 4217.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ]
+      },
+      "AmountComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveCurrencyAndAmount_SimpleType"
+              }
+            ]
+          },
+          "currency": {
+            "description": "Код валюты, соответствующий международного стандарта ISO 4217.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ActiveOrHistoricCurrencyCode"
+              }
+            ]
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ]
+      },
+      "OBActiveCurrencyAndAmount_SimpleType": {
+        "description": "Сумма",
+        "type": "string",
+        "pattern": "^\\d{1,13}\\.\\d{1,5}$"
+      },
+      "ActiveCurrencyAndAmount_SimpleType": {
+        "description": "Сумма",
+        "type": "string",
+        "pattern": "^\\d{1,13}\\.\\d{1,5}$"
+      },
+      "ActiveOrHistoricCurrencyCode": {
+        "description": "Код валюты",
+        "type": "string",
+        "pattern": "^[A-Z]{3,3}$"
+      },
+      "CountryCode": {
+        "description": "Код страны",
+        "type": "string",
+        "pattern": "^[A-Z]{2,2}$"
+      },
+      "AuthorisationComplexType": {
+        "description": "Запрос типа авторизации от СППУ.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "authorisationType": {
+            "description": "Сумма комиссии",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthorisationStaticType"
+              }
+            ]
+          },
+          "completionDateTime": {
+            "description": "Дата и время, когда запрашиваемый поток авторизации завершается.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "authorisationType"
+        ]
+      },
+      "ISODateTime": {
+        "description": "Формат даты и времени",
+        "type": "string",
+        "format": "date-time"
+      },
+      "AuthorisationStaticType": {
+        "description": "Тип запрашиваемого потока авторизации.",
+        "type": "string",
+        "enum": [
+          "Any",
+          "Single",
+          "Multile"
+        ]
+      },
+      "MultiAuthorisationComplexType": {
+        "description": "Ответ потока множественной авторизации от ППУ.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "description": "Сумма комиссии",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MultiAuthorisationStatusStaticType"
+              }
+            ]
+          },
+          "numberRequired": {
+            "description": "Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации).",
+            "type": "number"
+          },
+          "numberReceived": {
+            "description": "Количество полученных авторизаций.",
+            "type": "number"
+          },
+          "lastUpdateDateTime": {
+            "description": "Дата и время последнего обновления авторизационного потока.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "expirationDateTime": {
+            "description": "Дата и время, когда поток авторизации завершается.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "MultiAuthorisationStatusStaticType": {
+        "description": "Состояние потока авторизации.",
+        "type": "string",
+        "enum": [
+          "Authorised",
+          "AwaitingFurtherAuthorisation",
+          "Rejected"
+        ]
+      },
+      "PaymentDetailsComplexType": {
+        "description": "Детали статуса оплаты.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paymentTransactionId": {
+            "description": "Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным.",
+            "type": "string",
+            "maxLength": 210
+          },
+          "status": {
+            "description": "Статус платежа, назначенный администратором транзакции.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExternalPaymentTransactionStatus1Code"
+              }
+            ]
+          },
+          "statusUpdateDateTime": {
+            "description": "Дата и время, когда статус был присвоен переводу.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "StatusDetail": {
+            "description": "Детали статуса оплаты.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaymentStatusDetailComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "paymentTransactionId",
+          "status",
+          "statusUpdateDateTime"
+        ]
+      },
+      "ExternalPaymentTransactionStatus1Code": {
+        "description": "",
+        "type": "string",
+        "enum": [
+          "ACCC",
+          "ACCP",
+          "ACFC",
+          "ACSC",
+          "ACSP",
+          "ACTC",
+          "ACWC",
+          "ACWP",
+          "CANC",
+          "PATC",
+          "PDNG",
+          "RCVD",
+          "RJCT"
+        ]
+      },
+      "PaymentStatusDetailComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "localInstrument": {
+            "description": "Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExternalPaymentTransactionStatus1Code"
+              }
+            ]
+          },
+          "status": {
+            "description": "Статус платежа, назначенный администратором транзакции.",
+            "type": "string",
+            "maxLength": 128
+          },
+          "statusReason": {
+            "description": "Код причины статуса платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionIndividualStatusReasonStaticType"
+              }
+            ]
+          },
+          "statusReasonDescription": {
+            "description": "Детальное описание причины статуса платежа.",
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "ExternalLocalInstrument1Code": {
+        "description": "НЕ ОПРЕДЕЛЕН",
+        "type": "string",
+        "enum": [
+          "tmpVal1"
+        ]
+      },
+      "TransactionIndividualStatusReasonStaticType": {
+        "description": "",
+        "type": "string",
+        "enum": [
+          "Cancelled",
+          "PendingFailingSettlement",
+          "PendingSettlement",
+          "Proprietary",
+          "ProprietaryRejection",
+          "Suspended",
+          "Unmatched"
+        ]
+      },
+      "SCASupportDataComplexType": {
+        "description": "Вспомогательные данные, предоставленные СППУ, при запросе SCA",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "requestedSCAExemptionType": {
+            "description": "Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SCAExemptionTypeStaticType"
+              }
+            ]
+          },
+          "appliedAuthenticationApproach": {
+            "description": "Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AppliedAuthenticationApproachStaticType"
+              }
+            ]
+          },
+          "referencePaymentOrderId": {
+            "description": "Детальное описание причины статуса платежа.",
+            "type": "string",
+            "maxLength": 128
+          }
+        }
+      },
+      "AppliedAuthenticationApproachStaticType": {
+        "description": "",
+        "type": "string",
+        "enum": [
+          "CA",
+          "SCA"
+        ]
+      },
+      "SCAExemptionTypeStaticType": {
+        "description": "",
+        "type": "string",
+        "enum": [
+          "BillPayment",
+          "ContactlessTravel",
+          "EcommerceGoods",
+          "EcommerceServices",
+          "Kiosk",
+          "Parking",
+          "PartyToParty"
+        ]
+      },
+      "TransactionStatusStaticType": {
+        "description": "",
+        "type": "string",
+        "enum": [
+          "AcceptedSettlementCompleted",
+          "AcceptedSettlementInProcess",
+          "Pending",
+          "Rejected",
+          "AcceptedWithoutPosting",
+          "AcceptedCreditSettlementCompleted"
+        ]
+      },
+      "ConsentStatusStaticType": {
+        "description": "",
+        "type": "string",
+        "enum": [
+          "AwaitingAuthorisation",
+          "Rejected",
+          "Authorised",
+          "Consumed"
+        ]
+      },
+      "InitiationComplexType": {
+        "description": "Полезная нагрузка отправляется инициирующей стороной в ППУ. Используется для запроса перевода средств со счета плательщика на счет получателя для одиночного внутреннего платежа.",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "instructionIdentification": {
+            "description": "Уникальный идентификатор, присвоенный инструктирующей стороной для инструктируемой стороны для однозначного определения инструкции.",
+            "type": "string",
+            "maxLength": 35
+          },
+          "endToEndIdentification": {
+            "description": "Уникальный идентификатор, присвоенный инициирующей стороной для однозначного определения транзакции. Эта идентификация передается без изменений по всей сквозной цепочке. Использование: сквозная идентификация может использоваться для выверки или связывания задач, относящихся к транзакции. Это может быть включено в несколько сообщений, связанных с транзакцией.",
+            "type": "string",
+            "maxLength": 35
+          },
+          "localInstrument": {
+            "description": "Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ExternalLocalInstrument1Code"
+              }
+            ]
+          },
+          "InstructedAmount": {
+            "description": "Сумма денег, подлежащая переводу между плательщиком и получателем до вычета комиссии, выраженная в валюте поручения инициатора.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AmountComplexType"
+              }
+            ]
+          },
+          "DebtorAccount": {
+            "description": "Уникальная идентификация счета плательщика, на котором будет сделана дебетовая запись в результате транзакции.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CashAccountComplexType"
+              }
+            ]
+          },
+          "CreditorParty": {
+            "description": "Информация о контрагенте.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PartyIdentificationCompexType"
+              }
+            ]
+          },
+          "CreditorAgent": {
+            "description": "Финансовое организация, обслуживающая счет получателя средств.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BranchAndFinancialInstitutionIdentificationComplexType"
+              }
+            ]
+          },
+          "CreditorAccount": {
+            "description": "Идентификатор счета получателя, на котором будет проведена запись о кредите в результате.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CashAccountComplexType"
+              }
+            ]
+          },
+          "RemittanceInformation": {
+            "description": "Предоставляемая информация, позволяющая сопоставить запись с позициями, для которых предназначен перевод, такими как коммерческие счета в системе дебиторской задолженности.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RemittanceInformationComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "instructionIdentification",
+          "endToEndIdentification",
+          "InstructedAmount",
+          "CreditorAccount"
+        ]
+      },
+      "CashAccountComplexType": {
+        "description": "Идентификация счета получателя средств в случае дебетовой транзакции",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "Наименование схемы идентификации.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "description": "Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...).",
+            "type": "string",
+            "maxLength": 256
+          },
+          "name": {
+            "description": "Имя владельца или владельцев учетной записи (банковского счета, карты, телефона).",
+            "type": "string",
+            "maxLength": 70
+          }
+        },
+        "required": [
+          "schemeName",
+          "identification"
+        ]
+      },
+      "AccountIdentificationDynamicType": {
+        "description": "Идентификатор счета",
+        "type": "string",
+        "enum": [
+          "RU.CBR.PAN",
+          "RU.CBR.CellphoneNumber",
+          "RU.CBR.BBAN"
+        ]
+      },
+      "PartyIdentificationCompexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "description": "Наименование контрагента.",
+            "type": "string",
+            "maxLength": 160
+          },
+          "PostalAddress": {
+            "description": "Информация, которая находит и идентифицирует определенный адрес, как определено почтовыми службами.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "PostalAddressComplexType": {
+        "description": "Адрес финансовой организации, обслуживающая счет получателя средств",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "addressType": {
+            "description": "Тип адреса",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressTypeStaticType"
+              }
+            ]
+          },
+          "department": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "subDepartment": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "streetName": {
+            "type": "string",
+            "maxLength": 70
+          },
+          "buildingNumber": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "postCode": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "townName": {
+            "type": "string",
+            "maxLength": 35
+          },
+          "countrySubDivision": {
+            "type": "string",
+            "maxLength": 35
+          },
+          "country": {
+            "description": "Страна. Справочник кодов ISO3166, Alpha-3 code.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CountryCode"
+              }
+            ]
+          },
+          "addressLine": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 70
+            },
+            "minItems": 0,
+            "maxItems": 7
+          }
+        }
+      },
+      "BranchAndFinancialInstitutionIdentificationComplexType": {
+        "description": "Финансовая организация, обслуживающая счет получателя средств",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemeName": {
+            "description": "БИК/SWIFT банка контрагента",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FinancialInstitutionIdentificationDynamicType"
+              }
+            ]
+          },
+          "identification": {
+            "description": "БИК/SWIFT банка контрагента",
+            "type": "string",
+            "maxLength": 35
+          },
+          "name": {
+            "description": "Наименование банка контрагента",
+            "type": "string",
+            "maxLength": 160
+          },
+          "PostalAddress": {
+            "description": "Информация, которая находит и идентифицирует определенный адрес, как определено почтовыми службами.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PostalAddressComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "schemeName",
+          "identification"
+        ]
+      },
+      "FinancialInstitutionIdentificationDynamicType": {
+        "description": "Идентификатор финансового учреждения",
+        "type": "string",
+        "enum": [
+          "RU.CBR.BICFI",
+          "RU.CBR.BIK"
+        ]
+      },
+      "RemittanceInformationComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "unstructured": {
+            "description": "Информация, позволяющая сопоставлять / сверять записи с позициями, для которых предназначен платеж, такими как коммерческие счета в системе дебиторской задолженности, в неструктурированной форме.",
+            "type": "string",
+            "maxLength": 140
+          },
+          "reference": {
+            "description": "Уникальная ссылка, присвоенная получателем, для однозначной ссылки на платежную транзакцию.",
+            "type": "string",
+            "maxLength": 35
+          }
+        }
+      },
+      "ConsentRequestComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataConsentRequestComplexType"
+              }
+            ]
+          },
+          "Risk": {
+            "description": "Раздел Risk отправляется инициатором в ППУ, используется для указания дополнительных деталей для оценки рисков при проведении платежей.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "Data",
+          "Risk"
+        ]
+      },
+      "DataConsentRequestComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Initiation": {
+            "description": "Полезная нагрузка отправляется инициирующей стороной в ППУ. Используется для запроса перевода средств со счета плательщика на счет получателя для одиночного внутреннего платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InitiationComplexType"
+              }
+            ]
+          },
+          "Authorisation": {
+            "description": "Запрос типа авторизации от СППУ.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthorisationComplexType"
+              }
+            ]
+          },
+          "SCASupportData": {
+            "description": "Вспомогательные данные, предоставленные СППУ, при запросе SCA.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SCASupportDataComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "Initiation"
+        ]
+      },
+      "ConsentResponseComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataConsentResponseComplexType"
+              }
+            ]
+          },
+          "Risk": {
+            "description": "Раздел Risk отправляется инициатором в ППУ, используется для указания дополнительных деталей для оценки рисков при проведении платежей.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskComplexType"
+              }
+            ]
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ]
+      },
+      "DataConsentResponseComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consentId": {
+            "description": "Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.",
+            "type": "string",
+            "maxLength": 128
+          },
+          "creationDateTime": {
+            "description": "Дата и время создания ресурса согласия на проведение платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "status": {
+            "description": "Текущий статус ресурса согласия на проведение платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConsentStatusStaticType"
+              }
+            ]
+          },
+          "statusUpdateDateTime": {
+            "description": "Дата и время обновления статуса ресурса согласия на проведение платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "cutOffDateTime": {
+            "description": "Дата и время актуальности согласия на проведение платежа (после этого согласие является не действующим).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "expectedExecutionDateTime": {
+            "description": "Ожидаемая дата и время исполнения платежа (платежного ресурса).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "expectedSettlementDateTime": {
+            "description": "Ожидаемая дата и время расчета платежа (платежного ресурса).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "Charges": {
+            "description": "Сборы при проведении платежа.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChargeComplexType"
+            },
+            "minItems": 0
+          },
+          "Initiation": {
+            "description": "Полезная нагрузка отправляется инициирующей стороной в ППУ. Используется для запроса перевода средств со счета плательщика на счет получателя для одиночного внутреннего платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InitiationComplexType"
+              }
+            ]
+          },
+          "Authorisation": {
+            "description": "Запрос типа авторизации от СППУ.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AuthorisationComplexType"
+              }
+            ]
+          },
+          "SCASupportData": {
+            "description": "Вспомогательные данные, предоставленные СППУ, при запросе SCA.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SCASupportDataComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "consentId",
+          "creationDateTime",
+          "status",
+          "statusUpdateDateTime",
+          "Initiation"
+        ]
+      },
+      "PaymentRequestComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataPaymentRequestComplexType"
+              }
+            ]
+          },
+          "Risk": {
+            "description": "Раздел Risk отправляется инициатором в ППУ, используется для указания дополнительных деталей для оценки рисков при проведении платежей.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "Data",
+          "Risk"
+        ]
+      },
+      "DataPaymentRequestComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "consentId": {
+            "description": "Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.",
+            "type": "string",
+            "maxLength": 128
+          },
+          "Initiation": {
+            "description": "Полезная нагрузка отправляется инициирующей стороной в ППУ. Используется для запроса перевода средств со счета плательщика на счет получателя для одиночного внутреннего платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InitiationComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "consentId",
+          "Initiation"
+        ]
+      },
+      "PaymentResponseComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Data": {
+            "description": "",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DataPaymentResponseComplexType"
+              }
+            ]
+          },
+          "Risk": {
+            "description": "Раздел Risk отправляется инициатором в ППУ, используется для указания дополнительных деталей для оценки рисков при проведении платежей.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RiskComplexType"
+              }
+            ]
+          },
+          "Links": {
+            "$ref": "#/components/schemas/LinksType"
+          },
+          "Meta": {
+            "$ref": "#/components/schemas/MetaType"
+          }
+        },
+        "required": [
+          "Data",
+          "Risk",
+          "Links",
+          "Meta"
+        ]
+      },
+      "DataPaymentResponseComplexType": {
+        "description": "",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paymentId": {
+            "description": "",
+            "type": "string",
+            "maxLength": 128
+          },
+          "consentId": {
+            "description": "Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.",
+            "type": "string",
+            "maxLength": 128
+          },
+          "creationDateTime": {
+            "description": "Дата и время создания ресурса согласия на проведение платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "status": {
+            "description": "Текущий статус ресурса согласия на проведение платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionStatusStaticType"
+              }
+            ]
+          },
+          "statusUpdateDateTime": {
+            "description": "Дата и время обновления статуса ресурса согласия на проведение платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "expectedExecutionDateTime": {
+            "description": "Ожидаемая дата и время исполнения платежа (платежного ресурса).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "expectedSettlementDateTime": {
+            "description": "Ожидаемая дата и время расчета платежа (платежного ресурса).",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ISODateTime"
+              }
+            ]
+          },
+          "Charges": {
+            "description": "Сборы при проведении платежа.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChargeComplexType"
+            },
+            "minItems": 0
+          },
+          "Initiation": {
+            "description": "Полезная нагрузка отправляется инициирующей стороной в ППУ. Используется для запроса перевода средств со счета плательщика на счет получателя для одиночного внутреннего платежа.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InitiationComplexType"
+              }
+            ]
+          },
+          "MultiAuthorisation": {
+            "description": "Ответ потока множественной авторизации от ППУ.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MultiAuthorisationComplexType"
+              }
+            ]
+          }
+        },
+        "required": [
+          "paymentId",
+          "consentId",
+          "creationDateTime",
+          "status",
+          "statusUpdateDateTime",
+          "Initiation"
+        ]
+      }
+    }
+  },
+  "x-tyk-configuration": {
+    "application": {
+      "version": "v1",
+      "mw_enable_validate_header_limit_request": false,
+      "mw_enable_validate_header_limit_response": false,
+      "mask_log": [
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/payment-consents"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/payment-consents/{consentId}"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/payments"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/payments/{paymentId}"
+        }
+      ],
+      "name": "1234.open-getCustomAccount-s-rest-v1",
+      "providerRisId": "1234",
+      "providerMnemonic": "SUPR",
+      "strip_listen_path": true,
+      "provider_type": "internal",
+      "api_type": "rest",
+      "enable_middlewares": true,
+      "rq_validate_json": [
+        {
+          "path": "/payment-consents",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "Data": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "Initiation": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "instructionIdentification": {
+                                "type": "string",
+                                "maxLength": 35
+                              },
+                              "endToEndIdentification": {
+                                "type": "string",
+                                "maxLength": 35
+                              },
+                              "localInstrument": {
+                                "allOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "tmpVal1"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "InstructedAmount": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "amount": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "pattern": "^\\d{1,13}\\.\\d{1,5}$"
+                                          }
+                                        ]
+                                      },
+                                      "currency": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "pattern": "^[A-Z]{3,3}$"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "amount",
+                                      "currency"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "DebtorAccount": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "schemeName": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "enum": [
+                                              "RU.CBR.PAN",
+                                              "RU.CBR.CellphoneNumber",
+                                              "RU.CBR.BBAN"
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "identification": {
+                                        "type": "string",
+                                        "maxLength": 256
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 70
+                                      }
+                                    },
+                                    "required": [
+                                      "schemeName",
+                                      "identification"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CreditorParty": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 160
+                                      },
+                                      "PostalAddress": {
+                                        "allOf": [
+                                          {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "addressType": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "enum": [
+                                                      "Business",
+                                                      "Correspondence",
+                                                      "DeliveryTo",
+                                                      "MailTo",
+                                                      "POBox",
+                                                      "Postal",
+                                                      "Residential",
+                                                      "Statement"
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              "department": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "subDepartment": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "streetName": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "buildingNumber": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "postCode": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "townName": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "countrySubDivision": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "country": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "pattern": "^[A-Z]{2,2}$"
+                                                  }
+                                                ]
+                                              },
+                                              "addressLine": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string",
+                                                  "maxLength": 70
+                                                },
+                                                "minItems": 0,
+                                                "maxItems": 7
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "name"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CreditorAgent": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "schemeName": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "enum": [
+                                              "RU.CBR.BICFI",
+                                              "RU.CBR.BIK"
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "identification": {
+                                        "type": "string",
+                                        "maxLength": 35
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 160
+                                      },
+                                      "PostalAddress": {
+                                        "allOf": [
+                                          {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "addressType": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "enum": [
+                                                      "Business",
+                                                      "Correspondence",
+                                                      "DeliveryTo",
+                                                      "MailTo",
+                                                      "POBox",
+                                                      "Postal",
+                                                      "Residential",
+                                                      "Statement"
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              "department": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "subDepartment": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "streetName": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "buildingNumber": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "postCode": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "townName": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "countrySubDivision": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "country": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "pattern": "^[A-Z]{2,2}$"
+                                                  }
+                                                ]
+                                              },
+                                              "addressLine": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string",
+                                                  "maxLength": 70
+                                                },
+                                                "minItems": 0,
+                                                "maxItems": 7
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "schemeName",
+                                      "identification"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CreditorAccount": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "schemeName": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "enum": [
+                                              "RU.CBR.PAN",
+                                              "RU.CBR.CellphoneNumber",
+                                              "RU.CBR.BBAN"
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "identification": {
+                                        "type": "string",
+                                        "maxLength": 256
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 70
+                                      }
+                                    },
+                                    "required": [
+                                      "schemeName",
+                                      "identification"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "RemittanceInformation": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "unstructured": {
+                                        "type": "string",
+                                        "maxLength": 140
+                                      },
+                                      "reference": {
+                                        "type": "string",
+                                        "maxLength": 35
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "instructionIdentification",
+                              "endToEndIdentification",
+                              "InstructedAmount",
+                              "CreditorAccount"
+                            ]
+                          }
+                        ]
+                      },
+                      "Authorisation": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "authorisationType": {
+                                "allOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "Any",
+                                      "Single",
+                                      "Multile"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "completionDateTime": {
+                                "allOf": [
+                                  {
+                                    "type": "string",
+                                    "format": "date-time"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "authorisationType"
+                            ]
+                          }
+                        ]
+                      },
+                      "SCASupportData": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "requestedSCAExemptionType": {
+                                "allOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "BillPayment",
+                                      "ContactlessTravel",
+                                      "EcommerceGoods",
+                                      "EcommerceServices",
+                                      "Kiosk",
+                                      "Parking",
+                                      "PartyToParty"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "appliedAuthenticationApproach": {
+                                "allOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "CA",
+                                      "SCA"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "referencePaymentOrderId": {
+                                "type": "string",
+                                "maxLength": 128
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "Initiation"
+                    ]
+                  }
+                ]
+              },
+              "Risk": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "paymentContextCode": {
+                        "type": "string",
+                        "enum": [
+                          "BillPayment",
+                          "EcommerceGoods",
+                          "EcommerceServices",
+                          "Other",
+                          "PartyToParty"
+                        ]
+                      },
+                      "merchantCategoryCode": {
+                        "type": "string",
+                        "pattern": "^\\d{3,4}$"
+                      },
+                      "merchantCustomerIdentification": {
+                        "type": "string",
+                        "maxLength": 70
+                      },
+                      "DeliveryAddress": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "addressLine": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "maxLength": 70
+                            },
+                            "minItems": 0,
+                            "maxItems": 2
+                          },
+                          "streetName": {
+                            "type": "string",
+                            "maxLength": 70
+                          },
+                          "buildingNumber": {
+                            "type": "string",
+                            "maxLength": 16
+                          },
+                          "postCode": {
+                            "type": "string",
+                            "maxLength": 16
+                          },
+                          "townName": {
+                            "type": "string",
+                            "maxLength": 35
+                          },
+                          "countrySubDivision": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "maxLength": 35
+                            },
+                            "minItems": 0,
+                            "maxItems": 2
+                          },
+                          "country": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}$",
+                            "maxLength": 2
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "Data",
+              "Risk"
+            ]
+          }
+        },
+        {
+          "path": "/payments",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "Data": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "consentId": {
+                        "type": "string",
+                        "maxLength": 128
+                      },
+                      "Initiation": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "instructionIdentification": {
+                                "type": "string",
+                                "maxLength": 35
+                              },
+                              "endToEndIdentification": {
+                                "type": "string",
+                                "maxLength": 35
+                              },
+                              "localInstrument": {
+                                "allOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": [
+                                      "tmpVal1"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "InstructedAmount": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "amount": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "pattern": "^\\d{1,13}\\.\\d{1,5}$"
+                                          }
+                                        ]
+                                      },
+                                      "currency": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "pattern": "^[A-Z]{3,3}$"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "amount",
+                                      "currency"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "DebtorAccount": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "schemeName": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "enum": [
+                                              "RU.CBR.PAN",
+                                              "RU.CBR.CellphoneNumber",
+                                              "RU.CBR.BBAN"
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "identification": {
+                                        "type": "string",
+                                        "maxLength": 256
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 70
+                                      }
+                                    },
+                                    "required": [
+                                      "schemeName",
+                                      "identification"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CreditorParty": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 160
+                                      },
+                                      "PostalAddress": {
+                                        "allOf": [
+                                          {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "addressType": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "enum": [
+                                                      "Business",
+                                                      "Correspondence",
+                                                      "DeliveryTo",
+                                                      "MailTo",
+                                                      "POBox",
+                                                      "Postal",
+                                                      "Residential",
+                                                      "Statement"
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              "department": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "subDepartment": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "streetName": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "buildingNumber": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "postCode": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "townName": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "countrySubDivision": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "country": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "pattern": "^[A-Z]{2,2}$"
+                                                  }
+                                                ]
+                                              },
+                                              "addressLine": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string",
+                                                  "maxLength": 70
+                                                },
+                                                "minItems": 0,
+                                                "maxItems": 7
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "name"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CreditorAgent": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "schemeName": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "enum": [
+                                              "RU.CBR.BICFI",
+                                              "RU.CBR.BIK"
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "identification": {
+                                        "type": "string",
+                                        "maxLength": 35
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 160
+                                      },
+                                      "PostalAddress": {
+                                        "allOf": [
+                                          {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "properties": {
+                                              "addressType": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "enum": [
+                                                      "Business",
+                                                      "Correspondence",
+                                                      "DeliveryTo",
+                                                      "MailTo",
+                                                      "POBox",
+                                                      "Postal",
+                                                      "Residential",
+                                                      "Statement"
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              "department": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "subDepartment": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "streetName": {
+                                                "type": "string",
+                                                "maxLength": 70
+                                              },
+                                              "buildingNumber": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "postCode": {
+                                                "type": "string",
+                                                "maxLength": 16
+                                              },
+                                              "townName": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "countrySubDivision": {
+                                                "type": "string",
+                                                "maxLength": 35
+                                              },
+                                              "country": {
+                                                "allOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "pattern": "^[A-Z]{2,2}$"
+                                                  }
+                                                ]
+                                              },
+                                              "addressLine": {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string",
+                                                  "maxLength": 70
+                                                },
+                                                "minItems": 0,
+                                                "maxItems": 7
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "schemeName",
+                                      "identification"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CreditorAccount": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "schemeName": {
+                                        "allOf": [
+                                          {
+                                            "type": "string",
+                                            "enum": [
+                                              "RU.CBR.PAN",
+                                              "RU.CBR.CellphoneNumber",
+                                              "RU.CBR.BBAN"
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      "identification": {
+                                        "type": "string",
+                                        "maxLength": 256
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "maxLength": 70
+                                      }
+                                    },
+                                    "required": [
+                                      "schemeName",
+                                      "identification"
+                                    ]
+                                  }
+                                ]
+                              },
+                              "RemittanceInformation": {
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "unstructured": {
+                                        "type": "string",
+                                        "maxLength": 140
+                                      },
+                                      "reference": {
+                                        "type": "string",
+                                        "maxLength": 35
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "instructionIdentification",
+                              "endToEndIdentification",
+                              "InstructedAmount",
+                              "CreditorAccount"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "consentId",
+                      "Initiation"
+                    ]
+                  }
+                ]
+              },
+              "Risk": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "paymentContextCode": {
+                        "type": "string",
+                        "enum": [
+                          "BillPayment",
+                          "EcommerceGoods",
+                          "EcommerceServices",
+                          "Other",
+                          "PartyToParty"
+                        ]
+                      },
+                      "merchantCategoryCode": {
+                        "type": "string",
+                        "pattern": "^\\d{3,4}$"
+                      },
+                      "merchantCustomerIdentification": {
+                        "type": "string",
+                        "maxLength": 70
+                      },
+                      "DeliveryAddress": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "addressLine": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "maxLength": 70
+                            },
+                            "minItems": 0,
+                            "maxItems": 2
+                          },
+                          "streetName": {
+                            "type": "string",
+                            "maxLength": 70
+                          },
+                          "buildingNumber": {
+                            "type": "string",
+                            "maxLength": 16
+                          },
+                          "postCode": {
+                            "type": "string",
+                            "maxLength": 16
+                          },
+                          "townName": {
+                            "type": "string",
+                            "maxLength": 35
+                          },
+                          "countrySubDivision": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "maxLength": 35
+                            },
+                            "minItems": 0,
+                            "maxItems": 2
+                          },
+                          "country": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}$",
+                            "maxLength": 2
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": [
+              "Data",
+              "Risk"
+            ]
+          }
+        }
+      ]
+    },
+    "gateway": {
+      "tyk_lan_MAIN": {
+        "gateway_type": "tyk",
+        "api_typization": "PublicAPI",
+        "application": {
+          "provider_rate_limit": {
+            "LT": {
+              "per": 1,
+              "rate": 50
+            }
+          },
+          "target_url": {
+            "LT": "http://sandbox-svc.hk2023.svc/extapi/aft/payments/hackathon/v1"
+          },
+          "middlewares": {},
+          "listen_path": "/extapi/aft/payments/hackathon/v1",
+          "enforced_timeout": {
+            "LT": 40
+          },
+          "auth_type": "JWT"
+        },
+        "contour": "LAN",
+        "gatewayRisId": "1474",
+        "segment_mnemonic": "MAIN"
+      }
+    }
+  }
+}

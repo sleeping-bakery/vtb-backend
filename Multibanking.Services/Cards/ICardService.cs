@@ -16,4 +16,6 @@ public interface ICardService
     void DeleteCard(Guid cardId);
 
     void UpdateCard(CardUpdateDto cardUpdateDto);
+
+    bool UserHasCard(Guid cardId);
 }

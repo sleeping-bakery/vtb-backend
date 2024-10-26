@@ -4,6 +4,8 @@ using Multibanking.Services.Account.Implementations;
 using Multibanking.Services.Account.MappingProfiles;
 using Multibanking.Services.Cards;
 using Multibanking.Services.Cards.MappingProfiles;
+using Multibanking.Services.UnidentifiedPayments;
+using Multibanking.Services.UnidentifiedPayments.MappingProfiles;
 using Multibanking.Services.User;
 using Multibanking.Services.User.Implementations;
 using Multibanking.Services.User.MappingProfiles;
@@ -23,7 +25,7 @@ public static class BusinessLogicServiceCollectionExtensions
 
     private static IServiceCollection AddMapping(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddAutoMapper([typeof(UserMapperProfile), typeof(AccountConsentMapperProfile), typeof(CardMapperProfile)]);
+        return serviceCollection.AddAutoMapper([typeof(UserMapperProfile), typeof(AccountConsentMapperProfile), typeof(CardMapperProfile), typeof(UnidentifiedPaymentMapperProfile)]);
     }
 
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
@@ -36,7 +38,8 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IBalanceService, BalanceService>()
             .AddScoped<ITransactionService, TransactionService>()
             .AddScoped<IStatementService, StatementService>()
-            .AddScoped<ICardService, CardService>();
+            .AddScoped<ICardService, CardService>()
+            .AddScoped<IUnidentifiedPaymentService, UnidentifiedPaymentService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)

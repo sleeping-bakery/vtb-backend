@@ -20,6 +20,12 @@ public class CardService(
     IMapper mapper,
     ICardInformationClient cardInformationClient) : ICardService
 {
+    public bool UserHasCard(Guid cardId)
+    {
+        var userDto = userContextService.GetUserDtoFromHttpContext();
+        return cardRepository.Read().SingleOrDefault(card => card.UserId == userDto.Id && card.Id == cardId && card.Status != CardStatus.PermanentBlock) != null;
+    }
+    
     public void CreateCard(CardCreateDto cardCreateDto)
     {
         if (!accountService.IsAccountExist(cardCreateDto.AccountId))

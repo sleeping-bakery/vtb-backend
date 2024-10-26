@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
+using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
 using Multibanking.Data.Repositories.Account;
 using Multibanking.Data.Repositories.Card;
 using Multibanking.Data.Repositories.Users;
@@ -49,6 +50,11 @@ public static class DataServiceCollectionExtensions
                 .AddScoped<IStatementsClient, StatementsClient>()
                 .AddScoped<ITransactionsClient, TransactionsClient>();
 
+        if (mockClients.IsUnidentifiedPaymentClientMock)
+            serviceCollection.AddScoped<IUnidentifiedPaymentClient>(_ => UnidentifiedPaymentClientMock.MockUnidentifiedPaymentClient().Object);
+        else
+            serviceCollection.AddScoped<IUnidentifiedPaymentClient, Data.OpenAPIBankClients.UnidentifiedPaymentClient.UnidentifiedPaymentClient>();
+        
         if (mockClients.IsCardClientMock)
             serviceCollection
                 .AddScoped<ICardEmissionClient>(_ => CardClientMock.MockCardEmissionClient().Object)
