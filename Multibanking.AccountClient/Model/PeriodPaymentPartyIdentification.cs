@@ -20,27 +20,27 @@ namespace Multibanking.AccountClient.Model;
 /// <summary>
 ///     Идентификация юридического или физического лица
 /// </summary>
-[DataContract(Name = "PartyIdentification")]
-public class PartyIdentification : IEquatable<PartyIdentification>, IValidatableObject
+[DataContract(Name = "PeriodPaymentPartyIdentification")]
+public class PeriodPaymentPartyIdentification : IEquatable<PeriodPaymentPartyIdentification>, IValidatableObject
 {
     /// <summary>
-    ///     Initializes a new instance of the <see cref="PartyIdentification" /> class.
+    ///     Initializes a new instance of the <see cref="PeriodPaymentPartyIdentification" /> class.
     /// </summary>
     [JsonConstructorAttribute]
-    protected PartyIdentification()
+    protected PeriodPaymentPartyIdentification()
     {
     }
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="PartyIdentification" /> class.
+    ///     Initializes a new instance of the <see cref="PeriodPaymentPartyIdentification" /> class.
     /// </summary>
     /// <param name="schemeName">schemeName (required).</param>
     /// <param name="identification">Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией. (required).</param>
-    public PartyIdentification(PartyIdentificationCode schemeName = default, string identification = default)
+    public PeriodPaymentPartyIdentification(PartyIdentificationCode schemeName = default, string identification = default)
     {
         SchemeName = schemeName;
         // to ensure "identification" is required (not null)
-        if (identification == null) throw new ArgumentNullException("identification is a required property for PartyIdentification and cannot be null");
+        if (identification == null) throw new ArgumentNullException("identification is a required property for PeriodPaymentPartyIdentification and cannot be null");
         Identification = identification;
     }
 
@@ -58,11 +58,11 @@ public class PartyIdentification : IEquatable<PartyIdentification>, IValidatable
     public string Identification { get; set; }
 
     /// <summary>
-    ///     Returns true if PartyIdentification instances are equal
+    ///     Returns true if PeriodPaymentPartyIdentification instances are equal
     /// </summary>
-    /// <param name="input">Instance of PartyIdentification to be compared</param>
+    /// <param name="input">Instance of PeriodPaymentPartyIdentification to be compared</param>
     /// <returns>Boolean</returns>
-    public bool Equals(PartyIdentification input)
+    public bool Equals(PeriodPaymentPartyIdentification input)
     {
         if (input == null) return false;
         return
@@ -96,7 +96,7 @@ public class PartyIdentification : IEquatable<PartyIdentification>, IValidatable
     public override string ToString()
     {
         var sb = new StringBuilder();
-        sb.Append("class PartyIdentification {\n");
+        sb.Append("class PeriodPaymentPartyIdentification {\n");
         sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
         sb.Append("  Identification: ").Append(Identification).Append("\n");
         sb.Append("}\n");
@@ -119,7 +119,7 @@ public class PartyIdentification : IEquatable<PartyIdentification>, IValidatable
     /// <returns>Boolean</returns>
     public override bool Equals(object input)
     {
-        return Equals(input as PartyIdentification);
+        return Equals(input as PeriodPaymentPartyIdentification);
     }
 
     /// <summary>

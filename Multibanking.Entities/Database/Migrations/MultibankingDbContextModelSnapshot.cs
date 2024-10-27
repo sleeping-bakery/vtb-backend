@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Multibanking.Entities.Database;
+using Multibanking.PeriodPaymentClient.Model;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -74,6 +75,29 @@ namespace Multibanking.Entities.Database.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("Multibanking.Entities.PeriodPayment.PeriodPaymentConsent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CardId")
+                        .HasColumnType("uuid");
+
+                    b.Property<VRPConsentResponse>("ConsentBanking")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("PeriodPaymentConsents");
+                });
+
             modelBuilder.Entity("Multibanking.Entities.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -114,6 +138,17 @@ namespace Multibanking.Entities.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Multibanking.Entities.PeriodPayment.PeriodPaymentConsent", b =>
+                {
+                    b.HasOne("Multibanking.Entities.Cards.Card", "Card")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Card");
                 });
 
             modelBuilder.Entity("Multibanking.Entities.Users.User", b =>

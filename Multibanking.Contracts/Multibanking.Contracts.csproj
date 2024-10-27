@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Multibanking.PeriodPaymentClient\Multibanking.PeriodPaymentClient.csproj" />
         <ProjectReference Include="..\Multibanking.UnidentifiedPaymentClient\Multibanking.UnidentifiedPaymentClient.csproj"/>
     </ItemGroup>
 

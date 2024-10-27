@@ -1,4 +1,3 @@
-using System.Text;
 using AutoMapper;
 using Multibanking.Contracts.UnidentifiedPayment;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
@@ -83,9 +82,7 @@ public class UnidentifiedPaymentService(IUnidentifiedPaymentClient unidentifiedP
                         ExternalLocalInstrument1Code.TmpVal1,
                         new InitiationComplexTypeInstructedAmount(createUnidentifiedPaymentModel.Amount, createUnidentifiedPaymentModel.Currency),
                         new InitiationComplexTypeDebtorAccount(PaymentAccountIdentificationDynamicType.PAN, createUnidentifiedPaymentModel.DebtorPan),
-                        null,
-                        null,
-                        new InitiationComplexTypeCreditorAccount(createUnidentifiedPaymentModel.CreditPaymentAccountIdentificationDynamicType,
+                        creditorAccount: new InitiationComplexTypeCreditorAccount(createUnidentifiedPaymentModel.CreditPaymentAccountIdentificationDynamicType,
                             createUnidentifiedPaymentModel.CreditAccountIdentification)
                     )),
                 new ConsentRequestComplexTypeRisk()

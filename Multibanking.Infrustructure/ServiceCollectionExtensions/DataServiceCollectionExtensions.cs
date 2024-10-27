@@ -3,11 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
+using Multibanking.Data.OpenAPIBankClients.PeriodPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.ServiceClient;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.UniversalPaymentClient;
 using Multibanking.Data.Repositories.Account;
 using Multibanking.Data.Repositories.Card;
+using Multibanking.Data.Repositories.PeriodPayments;
 using Multibanking.Data.Repositories.Users;
 using Multibanking.Infrustructure.Mocks;
 using Multibanking.Infrustructure.Models;
@@ -28,7 +30,8 @@ public static class DataServiceCollectionExtensions
         return serviceCollection
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IAccountConsentRepository, AccountConsentRepository>()
-            .AddScoped<ICardRepository, CardRepository>();
+            .AddScoped<ICardRepository, CardRepository>()
+            .AddScoped<IPeriodPaymentConsentRepository, PeriodPaymentConsentRepository>();
     }
 
     private static IServiceCollection AddOpenApiBankClients(this IServiceCollection serviceCollection,
@@ -78,6 +81,17 @@ public static class DataServiceCollectionExtensions
         else
             serviceCollection.AddScoped<IUniversalPaymentClient, Data.OpenAPIBankClients.UniversalPaymentClient.UniversalPaymentClient>();
 
+        if (mockClients.IsPeriodPaymentClientMock)
+        {
+            serviceCollection.AddScoped<IPeriodPaymentConsentClient>(_ => PeriodPaymentClientMock.MockPeriodPaymentConsentClient().Object);
+            serviceCollection.AddScoped<IPeriodPaymentClient>(_ => PeriodPaymentClientMock.MockPeriodPaymentClient().Object);
+        }
+        else
+        {
+            serviceCollection.AddScoped<IPeriodPaymentConsentClient, Data.OpenAPIBankClients.PeriodPaymentClient.Implementations.PeriodPaymentConsentClient>();
+            serviceCollection.AddScoped<IPeriodPaymentClient, Data.OpenAPIBankClients.PeriodPaymentClient.Implementations.PeriodPaymentClient>();
+        }
+        
         return serviceCollection;
     }
 }

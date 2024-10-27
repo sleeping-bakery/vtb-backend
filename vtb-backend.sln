@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.UnidentifiedPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.UniversalPaymentClient", "Multibanking.UniversalPaymentClient\Multibanking.UniversalPaymentClient.csproj", "{C2DB23F9-7C16-4E04-AD1F-7D0AF93518BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.PeriodPaymentClient", "Multibanking.PeriodPaymentClient\Multibanking.PeriodPaymentClient.csproj", "{B8C3D546-CE83-4765-B070-01713BFD3BFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,9 @@ Global
 		{C2DB23F9-7C16-4E04-AD1F-7D0AF93518BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2DB23F9-7C16-4E04-AD1F-7D0AF93518BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2DB23F9-7C16-4E04-AD1F-7D0AF93518BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8C3D546-CE83-4765-B070-01713BFD3BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C3D546-CE83-4765-B070-01713BFD3BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C3D546-CE83-4765-B070-01713BFD3BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C3D546-CE83-4765-B070-01713BFD3BFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

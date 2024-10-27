@@ -1,0 +1,30 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PeriodPaymentClientSpecification.json" type="SwaggerCodegen" editBeforeRun="true" show_console_on_std_err="false" show_console_on_std_out="false">
+    <option name="allowRunningInParallel" value="false" />
+    <option name="customTemplatesPath" value="" />
+    <option name="envs">
+      <map />
+    </option>
+    <option name="generateToPath" value="C:\Users\Vadim\gen\PeriodPeymentClient" />
+    <option name="generationParameters">
+      <list>
+        <CliArgumentViewModel>
+          <option name="name" value="packageName" />
+          <option name="value" value="Multibanking.PeriodPaymentClient" />
+        </CliArgumentViewModel>
+      </list>
+    </option>
+    <option name="generatorType" value="OPENAPI_GENERATOR_V6" />
+    <option name="jdkPath" value="C:\Program Files\JetBrains\JetBrains Rider 2024.1.2\jbr\bin\java.exe" />
+    <option name="language" value="csharp-netcore" />
+    <option name="passParentEnvs" value="true" />
+    <option name="programParameters" />
+    <option name="projectPathOnTarget" />
+    <option name="selectedOptions">
+      <list />
+    </option>
+    <option name="specificationPath" value="C:\Users\Vadim\RiderProjects\vtb-backend\Multibanking.Data\OpenAPIBankClients\PeriodPaymentClientSpecification.json" />
+    <option name="workingDirectory" value="C:\Users\Vadim\RiderProjects\vtb-backend\Multibanking.Data\OpenAPIBankClients" />
+    <method v="2" />
+  </configuration>
+</component>

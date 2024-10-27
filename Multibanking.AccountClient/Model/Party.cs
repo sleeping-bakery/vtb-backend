@@ -50,7 +50,7 @@ public class Party : IEquatable<Party>, IValidatableObject
     ///     допускается использовать сокращения,  позволяющие определенно установить данную информацию .
     /// </param>
     public Party(string name = default, string mobileNumber = default, string countryOfResidence = default, string countryOfBirth = default, string provinceOfBirth = default,
-        string cityOfBirth = default, DateTime birthDate = default, List<PartyIdentification> partyIdentification = default, List<PostalAddressComplexType> postalAddress = default)
+        string cityOfBirth = default, DateTime birthDate = default, List<PeriodPaymentPartyIdentification> partyIdentification = default, List<PostalAddressComplexType> postalAddress = default)
     {
         // to ensure "name" is required (not null)
         if (name == null) throw new ArgumentNullException("name is a required property for Party and cannot be null");
@@ -120,8 +120,8 @@ public class Party : IEquatable<Party>, IValidatableObject
     ///     Идентификация юридического или физического лица.
     /// </summary>
     /// <value>Идентификация юридического или физического лица.</value>
-    [DataMember(Name = "PartyIdentification", IsRequired = true, EmitDefaultValue = true)]
-    public List<PartyIdentification> PartyIdentification { get; set; }
+    [DataMember(Name = "PeriodPaymentPartyIdentification", IsRequired = true, EmitDefaultValue = true)]
+    public List<PeriodPaymentPartyIdentification> PartyIdentification { get; set; }
 
     /// <summary>
     ///     Указывается адрес места нахождения юридического лица, места жительства (регистрации)  или места пребывания физического лица, индивидуального предпринимателя, физического
@@ -242,7 +242,7 @@ public class Party : IEquatable<Party>, IValidatableObject
         sb.Append("  ProvinceOfBirth: ").Append(ProvinceOfBirth).Append("\n");
         sb.Append("  CityOfBirth: ").Append(CityOfBirth).Append("\n");
         sb.Append("  BirthDate: ").Append(BirthDate).Append("\n");
-        sb.Append("  PartyIdentification: ").Append(PartyIdentification).Append("\n");
+        sb.Append("  PeriodPaymentPartyIdentification: ").Append(PartyIdentification).Append("\n");
         sb.Append("  PostalAddress: ").Append(PostalAddress).Append("\n");
         sb.Append("}\n");
         return sb.ToString();

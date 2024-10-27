@@ -1,4 +1,3 @@
-using AutoMapper;
 using Multibanking.Contracts.UniversalPayment;
 using Multibanking.Data.OpenAPIBankClients.UniversalPaymentClient;
 using Multibanking.Services.Cards;
