@@ -43,7 +43,6 @@ public static class AccountClientMock
         Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
     ];
 
-    
 
     private static string GenerateCompanyName()
     {
@@ -102,53 +101,77 @@ public static class AccountClientMock
             new TransactionComplex(AccountIds[0], TransactionIds[0], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("70000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("70000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("70000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+            ),
             new TransactionComplex(AccountIds[0], TransactionIds[1], "", CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Покупки в магазине", "г. Калуга", new TransactionComplexTypeAmount("985", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("985", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("985", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "ООО 'Магнитос'")
+            ),
             // Кредитка
             new TransactionComplex(AccountIds[1], TransactionIds[2], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Кредитованные средства", "г. Калуга", new TransactionComplexTypeAmount("150000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("150000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("150000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+            ),
             new TransactionComplex(AccountIds[1], TransactionIds[3], "", CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Покупка телефона", "г. Калуга", new TransactionComplexTypeAmount("10000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("10000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("10000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "ООО 'Добрая Новая Система'")
+            ),
             new TransactionComplex(AccountIds[1], TransactionIds[4], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Погашение телефона", "г. Калуга", new TransactionComplexTypeAmount("5000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("5000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("5000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                ),
             new TransactionComplex(AccountIds[1], TransactionIds[5], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Погашение телефона", "г. Калуга", new TransactionComplexTypeAmount("5000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("5000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("5000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                ),
             new TransactionComplex(AccountIds[1], TransactionIds[6], "", CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Покупка скутера", "г. Калуга", new TransactionComplexTypeAmount("20000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("20000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("20000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "ООО 'Веломэн'")
+                ),
             // Ипотека
             new TransactionComplex(AccountIds[3], TransactionIds[7], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("100000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("100000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("100000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                ),
             new TransactionComplex(AccountIds[3], TransactionIds[8], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("564000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("564000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("564000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                ),
             new TransactionComplex(AccountIds[3], TransactionIds[9], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("169000", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("169000", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("169000", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                ),
             new TransactionComplex(AccountIds[3], TransactionIds[10], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("203470", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("203470", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("203470", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                ),
             new TransactionComplex(AccountIds[3], TransactionIds[11], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("10020", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("10020", "RUB")))
+                    new CurrencyExchangeComplexTypeInstructedAmount("10020", "RUB")),
+                creditorAccount: new TransactionComplexCreditorAccount(AccountIdentificationDynamicType.BBAN, Generator.GenerateAccount(), "Моков Мок Мокович")
+                )
         ]), new object(), new LinksType(""), new MetaType());
     }
 
