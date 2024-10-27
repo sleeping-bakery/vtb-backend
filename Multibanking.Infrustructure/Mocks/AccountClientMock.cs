@@ -43,47 +43,9 @@ public static class AccountClientMock
         Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
     ];
 
-    private static string GenerateInn()
-    {
-        var random = new Random();
-        var inn = new int[12];
+    
 
-        for (var i = 0; i < 10; i++) inn[i] = random.Next(0, 10);
-
-        inn[10] =
-            (7 * inn[0] + 2 * inn[1] + 4 * inn[2] + 10 * inn[3] +
-             3 * inn[4] + 5 * inn[5] + 9 * inn[6] + 4 * inn[7] +
-             6 * inn[8] + 8 * inn[9]) % 11 % 10;
-
-        inn[11] =
-            (3 * inn[0] + 7 * inn[1] + 2 * inn[2] + 4 * inn[3] +
-             10 * inn[4] + 3 * inn[5] + 5 * inn[6] + 9 * inn[7] +
-             4 * inn[8] + 6 * inn[9] + 8 * inn[10]) % 11 % 10;
-
-        return string.Concat(inn);
-    }
-
-    private static string GenerateKpp()
-    {
-        var random = new Random();
-        var kpp = new char[9];
-
-        kpp[0] = '7';
-        kpp[1] = '7';
-        kpp[2] = (char)('0' + random.Next(0, 10)); // случайная третья цифра
-        kpp[3] = (char)('0' + random.Next(0, 10)); // случайная четвертая цифра
-
-        kpp[4] = '0';
-        kpp[5] = '1';
-
-        kpp[6] = (char)('0' + random.Next(0, 10));
-        kpp[7] = (char)('0' + random.Next(0, 10));
-        kpp[8] = (char)('0' + random.Next(0, 10));
-
-        return new string(kpp);
-    }
-
-    public static string GenerateCompanyName()
+    private static string GenerateCompanyName()
     {
         var random = new Random();
 
@@ -199,11 +161,11 @@ public static class AccountClientMock
             [
                 new TransactionComplexType(TransactionIds[0], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("70000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[1], CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Покупки в магазине", new TransactionComplexTypeAmount("985", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677"))
             ]),
             // Кредитка
@@ -211,23 +173,23 @@ public static class AccountClientMock
             [
                 new TransactionComplexType(TransactionIds[2], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Кредитованные средства", new TransactionComplexTypeAmount("150000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[3], CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Покупка телефона", new TransactionComplexTypeAmount("10000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[4], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Погашение телефона", new TransactionComplexTypeAmount("5000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[5], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Погашение телефона", new TransactionComplexTypeAmount("5000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[6], CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Покупка скутера", new TransactionComplexTypeAmount("20000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677"))
             ]),
             // Ипотека
@@ -235,23 +197,23 @@ public static class AccountClientMock
             [
                 new TransactionComplexType(TransactionIds[7], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("100000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[8], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("564000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[9], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("169000", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[10], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("203470", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
                 new TransactionComplexType(TransactionIds[11], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("10020", "RUB"),
-                    new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
+                    new TransactionComplexTypeDebtorParty(Generator.GenerateInn(), GenerateCompanyName(), Generator.GenerateKpp()),
                     new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677"))
             ])
         ]), new object(), new LinksType(""), new MetaType());

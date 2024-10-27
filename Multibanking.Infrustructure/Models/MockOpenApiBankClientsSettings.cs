@@ -7,4 +7,6 @@ public class MockOpenApiBankClientsSettings
     public bool IsCardClientMock { get; set; }
 
     public bool IsUnidentifiedPaymentClientMock { get; set; }
+    
+    public bool IsServiceClientMock { get; set; }
 }

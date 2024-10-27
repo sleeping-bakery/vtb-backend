@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
+using Multibanking.Data.OpenAPIBankClients.ServiceClient;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
 using Multibanking.Data.Repositories.Account;
 using Multibanking.Data.Repositories.Card;
@@ -66,6 +67,11 @@ public static class DataServiceCollectionExtensions
                 .AddScoped<ICardInformationClient, Data.OpenAPIBankClients.CardClient.Implementations.CardInformationClient>()
                 .AddScoped<ICardOperationClient, Data.OpenAPIBankClients.CardClient.Implementations.CardOperationClient>();
 
+        if (mockClients.IsServiceClientMock)
+            serviceCollection.AddScoped<IServiceClient>(_ => ServiceClientMock.MockServiceClient().Object); 
+        else
+            serviceCollection.AddScoped<IServiceClient, Data.OpenAPIBankClients.ServiceClient.ServiceClient>();
+        
         return serviceCollection;
     }
 }

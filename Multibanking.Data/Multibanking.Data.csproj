@@ -12,6 +12,7 @@
         <ProjectReference Include="..\Multibanking.CardInformationClient\Multibanking.CardInformationClient.csproj"/>
         <ProjectReference Include="..\Multibanking.CardOperationClient\Multibanking.CardOperationClient.csproj"/>
         <ProjectReference Include="..\Multibanking.Entities\Multibanking.Entities.csproj"/>
+        <ProjectReference Include="..\Multibanking.ServiceClient\Multibanking.ServiceClient.csproj" />
         <ProjectReference Include="..\Multibanking.UnidentifiedPaymentClient\Multibanking.UnidentifiedPaymentClient.csproj"/>
     </ItemGroup>
 

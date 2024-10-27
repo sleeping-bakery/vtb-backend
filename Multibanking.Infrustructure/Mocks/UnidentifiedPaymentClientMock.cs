@@ -4,7 +4,7 @@ using Multibanking.UnidentifiedPaymentClient.Model;
 
 namespace Multibanking.Infrustructure.Mocks;
 
-public class UnidentifiedPaymentClientMock
+public static class UnidentifiedPaymentClientMock
 {
     public static Mock<IUnidentifiedPaymentClient> MockUnidentifiedPaymentClient()
     {

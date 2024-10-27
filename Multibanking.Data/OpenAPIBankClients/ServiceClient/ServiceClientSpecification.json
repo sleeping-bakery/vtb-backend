@@ -1,0 +1,1201 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Поисковые сервисы каталога поставщиков услуг",
+    "description": "Поисковые сервисы каталога поставщиков услуг",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bankingapi.ru/api/rb/pmnt/catalog/hackathon/v1",
+      "description": "Адрес API в песочнице хакатона"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Клиентское API",
+      "description": "Методы клиентского API"
+    }
+  ],
+  "paths": {
+    "/catalog/operations": {
+      "get": {
+        "tags": [
+          "Клиентское API"
+        ],
+        "summary": "Поиск услуг ПУ",
+        "description": "Поиск услуг по фильтрам",
+        "operationId": "findOperations",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "УНК",
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientUnc",
+            "in": "query",
+            "description": "УНК",
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CLIENT-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 32,
+              "minLength": 0,
+              "type": "string",
+              "enum": [
+                "MOBILE",
+                "ATM",
+                "WEB",
+                "OPEN_API"
+              ]
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа клиента",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 32,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 255,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "Фильтр по категории",
+            "required": false,
+            "schema": {
+              "maxLength": 16,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "regionId",
+            "in": "query",
+            "description": "Фильтр по региону",
+            "required": false,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Фильтр по наименованию или ИНН",
+            "required": false,
+            "schema": {
+              "maxLength": 255,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "subTypes",
+            "in": "query",
+            "description": "Фильтр по подтипам",
+            "required": false,
+            "schema": {
+              "maxLength": 255,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "actions",
+            "in": "query",
+            "description": "Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION",
+            "required": false,
+            "schema": {
+              "maxLength": 255,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "Номер страницы результата (страницы нумеруются с 0)",
+            "required": false,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "maxLength": 6,
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Размер страницы результата",
+            "required": false,
+            "schema": {
+              "maximum": 1000,
+              "minimum": 0,
+              "maxLength": 4,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoRsServiceProviderSearchDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/operations/{id}": {
+      "get": {
+        "tags": [
+          "Клиентское API"
+        ],
+        "summary": "Получение услуги ПУ по ID",
+        "description": "Получение договорной (type = CONTRACT) услуги ПУ по идентификатору",
+        "operationId": "getOperation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор услуги",
+            "required": true,
+            "schema": {
+              "maxLength": 32,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceProviderDetailDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Услуга не найдена",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceProviderDetailDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/operations/list": {
+      "get": {
+        "tags": [
+          "Клиентское API"
+        ],
+        "summary": "Получение услуг ПУ по списку ID",
+        "description": "Получение договорных (type = CONTRACT) услуг ПУ по списку идентфикаторов",
+        "operationId": "findOperations_1",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "Список идентификаторов услуг (через \",\")",
+            "required": true,
+            "schema": {
+              "maxLength": 2000,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoRsServiceProviderDetailDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoRsServiceProviderDetailDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog/categories": {
+      "get": {
+        "tags": [
+          "Клиентское API"
+        ],
+        "summary": "Получение доступных категорий услуг ПУ",
+        "description": "Получение доступных категорий услуг ПУ",
+        "operationId": "getCategories",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "УНК",
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "clientUnc",
+            "in": "query",
+            "description": "УНК",
+            "required": false,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CLIENT-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 32,
+              "minLength": 0,
+              "type": "string",
+              "enum": [
+                "MOBILE",
+                "ATM",
+                "WEB",
+                "OPEN_API"
+              ]
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа клиента",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 32,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 0,
+              "type": "string"
+            }
+          },
+          {
+            "name": "operationPageSize",
+            "in": "query",
+            "description": "Количество услуг для каждой категории",
+            "required": false,
+            "schema": {
+              "maximum": 1000,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "regionId",
+            "in": "query",
+            "description": "Регион пользователя для формирования услуг ПУ в категориях",
+            "required": false,
+            "schema": {
+              "maxLength": 3,
+              "minLength": 0,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoRsCategoryDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Сервис не доступен (список категорий не задан)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageDtoRsCategoryDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Тип ошибки"
+          },
+          "message": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Сообщение об ошибке"
+          }
+        },
+        "description": "Ответ о неуспешности запроса"
+      },
+      "BankDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Наименование банка"
+          },
+          "bic": {
+            "maxLength": 9,
+            "type": "string",
+            "description": "БИК банка"
+          }
+        },
+        "description": "Информация о банке"
+      },
+      "OperationActionDtoRs": {
+        "required": [
+          "key"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 32,
+            "type": "string",
+            "description": "Действие, которое можно произвести над услугой",
+            "enum": [
+              "PAYMENT",
+              "TEMPLATE",
+              "AUTO_PAYMENT_BY_DATE",
+              "AUTO_PAYMENT_BY_BALANCE",
+              "INVOICE",
+              "REPEAT",
+              "REMIND",
+              "SUBSCRIPTION"
+            ]
+          },
+          "systemId": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Имя системы, которая будет проводить операцию, если не задано считается что операцию выполняет MS",
+            "enum": [
+              "MINERVA",
+              "MS"
+            ]
+          }
+        },
+        "description": "Действие над услугой ПУ"
+      },
+      "PageDtoRsServiceProviderSearchDtoRs": {
+        "required": [
+          "hasMore",
+          "items",
+          "pageNumber",
+          "pageSize",
+          "total"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Список объектов страницы",
+            "items": {
+              "$ref": "#/components/schemas/ServiceProviderSearchDtoRs"
+            }
+          },
+          "pageNumber": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Номер страницы",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Размер страницы",
+            "format": "int32"
+          },
+          "total": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Общее число результатов",
+            "format": "int64"
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Признак наличия следующей страницы с результатами"
+          }
+        },
+        "description": "Страница ресурса"
+      },
+      "PaymentReceiverDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "inn": {
+            "maxLength": 12,
+            "type": "string",
+            "description": "ИНН получателя платежа"
+          },
+          "kpp": {
+            "maxLength": 9,
+            "type": "string",
+            "description": "КПП получателя платежа"
+          },
+          "account": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "Номер счета получателя платежа"
+          },
+          "bank": {
+            "$ref": "#/components/schemas/BankDtoRs"
+          }
+        },
+        "description": "Получатель платежа"
+      },
+      "PaymentSettingsSearchDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "acceptanceKey": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Ключ-наименование микросервиса для оплаты услуги"
+          },
+          "clientAuthTypePayAvailable": {
+            "type": "boolean",
+            "description": "Флаг недоступности оплаты текущему клиенту"
+          }
+        },
+        "description": "Настройки для платежного сценария по услуге"
+      },
+      "ServiceProviderSearchDtoRs": {
+        "required": [
+          "id",
+          "name",
+          "operationCode",
+          "type"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Идентификатор услуги"
+          },
+          "operationCode": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Код операции (услуги)"
+          },
+          "productId": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Идентификатор продукта"
+          },
+          "type": {
+            "maxLength": 32,
+            "type": "string",
+            "description": "Тип услуги",
+            "enum": [
+              "CONTRACT",
+              "GIS_HCS"
+            ]
+          },
+          "subType": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Подтип услуги (deprecated, см. subTypes)",
+            "deprecated": true,
+            "enum": [
+              "MOBILE_BY_PHONE",
+              "FEDERAL",
+              "BY_ACCOUNT_TO_ANOTHER_BANK",
+              "BY_ACCOUNT_TO_INTERNAL",
+              "TO_ANOTHER_BANK",
+              "TO_INTERNAL"
+            ]
+          },
+          "subTypes": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Подтипы услуги",
+            "items": {
+              "maxLength": 20,
+              "type": "string",
+              "description": "Подтипы услуги",
+              "enum": [
+                "MOBILE_BY_PHONE",
+                "FEDERAL",
+                "BY_ACCOUNT_TO_ANOTHER_BANK",
+                "BY_ACCOUNT_TO_INTERNAL",
+                "TO_ANOTHER_BANK",
+                "TO_INTERNAL"
+              ]
+            }
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Наименование услуги"
+          },
+          "shortName": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Короткое наименование услуги"
+          },
+          "description": {
+            "maxLength": 2000,
+            "type": "string",
+            "description": "Описание услуги"
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/PaymentReceiverDtoRs"
+          },
+          "actions": {
+            "type": "array",
+            "description": "Список возможных действий над услугой",
+            "items": {
+              "$ref": "#/components/schemas/OperationActionDtoRs"
+            }
+          },
+          "categoryIds": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Список идентификаторов категорий, в которых доступна услуга",
+            "items": {
+              "maxLength": 20,
+              "type": "string",
+              "description": "Список идентификаторов категорий, в которых доступна услуга"
+            }
+          },
+          "regionIds": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Список кодов регионов, в которых доступна услуга",
+            "items": {
+              "maxLength": 100,
+              "type": "string",
+              "description": "Список кодов регионов, в которых доступна услуга"
+            }
+          },
+          "pmntSettings": {
+            "$ref": "#/components/schemas/PaymentSettingsSearchDtoRs"
+          }
+        },
+        "description": "Услуга поставщика услуг"
+      },
+      "ChannelDtoRs": {
+        "required": [
+          "name",
+          "visible"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 16,
+            "type": "string",
+            "description": "Наименование канала",
+            "enum": [
+              "MOBILE",
+              "WEB",
+              "ATM",
+              "MOBILE_LITE",
+              "WEB_LITE"
+            ]
+          },
+          "visible": {
+            "type": "boolean",
+            "description": "Видимость канала"
+          }
+        },
+        "description": "Информация о канале ПУ"
+      },
+      "PaymentSettingsDetailDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "acceptanceKey": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Ключ-наименование микросервиса для оплаты услуги"
+          },
+          "clientRolePayRestrictions": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Ограничения для совершения платежа по типу аутентификации клиента",
+            "items": {
+              "maxLength": 20,
+              "type": "string",
+              "description": "Ограничения для совершения платежа по типу аутентификации клиента",
+              "enum": [
+                "ANONYM_CLIENT",
+                "UPRID_CLIENT"
+              ]
+            }
+          }
+        },
+        "description": "Настройки для платежного сценария по услуге"
+      },
+      "ServiceProviderDetailDtoRs": {
+        "required": [
+          "id",
+          "name",
+          "operationCode",
+          "status",
+          "type"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Идентификатор услуги"
+          },
+          "operationCode": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Код операции (услуги)"
+          },
+          "facadeOperationCode": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Код \"фасадки\", в случае если операция - \"реалка\""
+          },
+          "productId": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Идентификатор продукта"
+          },
+          "type": {
+            "maxLength": 32,
+            "type": "string",
+            "description": "Тип услуги",
+            "enum": [
+              "CONTRACT"
+            ]
+          },
+          "subTypes": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Подтипы услуги",
+            "items": {
+              "type": "string",
+              "description": "Подтипы услуги",
+              "enum": [
+                "MOBILE_BY_PHONE"
+              ]
+            }
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Наименование услуги"
+          },
+          "shortName": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Короткое наименование услуги"
+          },
+          "description": {
+            "maxLength": 2000,
+            "type": "string",
+            "description": "Описание услуги"
+          },
+          "status": {
+            "maxLength": 32,
+            "type": "string",
+            "description": "Статус услуги",
+            "enum": [
+              "ACTIVE",
+              "INACTIVE"
+            ]
+          },
+          "receiver": {
+            "$ref": "#/components/schemas/PaymentReceiverDtoRs"
+          },
+          "actions": {
+            "type": "array",
+            "description": "Список возможных действий над услугой",
+            "items": {
+              "$ref": "#/components/schemas/OperationActionDtoRs"
+            }
+          },
+          "categoryIds": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Список идентификаторов категорий, в которых доступна услуга",
+            "items": {
+              "maxLength": 20,
+              "type": "string",
+              "description": "Список идентификаторов категорий, в которых доступна услуга"
+            }
+          },
+          "regionIds": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Список кодов регионов, в которых доступна услуга",
+            "items": {
+              "maxLength": 100,
+              "type": "string",
+              "description": "Список кодов регионов, в которых доступна услуга"
+            }
+          },
+          "channels": {
+            "type": "array",
+            "description": "Информация о каналах услуги",
+            "items": {
+              "$ref": "#/components/schemas/ChannelDtoRs"
+            }
+          },
+          "partners": {
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Список идентификаторов партнеров, для которых доступна услуга при обращении в канале OPEN_API",
+            "items": {
+              "maxLength": 30,
+              "type": "string",
+              "description": "Список идентификаторов партнеров, для которых доступна услуга при обращении в канале OPEN_API"
+            }
+          },
+          "pmntSettings": {
+            "$ref": "#/components/schemas/PaymentSettingsDetailDtoRs"
+          }
+        },
+        "description": "Услуга поставщика услуг (детальная информация)"
+      },
+      "PageDtoRsServiceProviderDetailDtoRs": {
+        "required": [
+          "hasMore",
+          "items",
+          "pageNumber",
+          "pageSize",
+          "total"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Список объектов страницы",
+            "items": {
+              "$ref": "#/components/schemas/ServiceProviderDetailDtoRs"
+            }
+          },
+          "pageNumber": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Номер страницы",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Размер страницы",
+            "format": "int32"
+          },
+          "total": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Общее число результатов",
+            "format": "int64"
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Признак наличия следующей страницы с результатами"
+          }
+        },
+        "description": "Страница ресурса"
+      },
+      "CategoryDtoRs": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 16,
+            "type": "string",
+            "description": "ID категории ПУ"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Название категории ПУ"
+          },
+          "nameKey": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Уникальный текстовой код категории"
+          },
+          "serviceProviders": {
+            "type": "array",
+            "description": "Список услуг",
+            "items": {
+              "$ref": "#/components/schemas/ServiceProviderSearchDtoRs"
+            }
+          }
+        },
+        "description": "Категория ПУ"
+      },
+      "PageDtoRsCategoryDtoRs": {
+        "required": [
+          "hasMore",
+          "items",
+          "pageNumber",
+          "pageSize",
+          "total"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Список объектов страницы",
+            "items": {
+              "$ref": "#/components/schemas/CategoryDtoRs"
+            }
+          },
+          "pageNumber": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Номер страницы",
+            "format": "int32"
+          },
+          "pageSize": {
+            "maximum": 100,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Размер страницы",
+            "format": "int32"
+          },
+          "total": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "description": "Общее число результатов",
+            "format": "int64"
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Признак наличия следующей страницы с результатами"
+          }
+        },
+        "description": "Страница ресурса"
+      }
+    },
+    "securitySchemes": {
+      "EpaAuth": {
+        "type": "http",
+        "description": "Авторизация ЕПА",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "x-tyk-configuration": {
+    "application": {
+      "version": "v1",
+      "mw_enable_validate_header_limit_request": false,
+      "mw_enable_validate_header_limit_response": false,
+      "mask_log": [
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/catalog/operations"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/catalog/operations/{id}"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/catalog/operations/list"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/catalog/categories"
+        }
+      ],
+      "name": "1234.open-SearchProviders-s-rest-v1",
+      "providerRisId": "1234",
+      "providerMnemonic": "SUPR",
+      "strip_listen_path": true,
+      "provider_type": "internal",
+      "api_type": "rest",
+      "enable_middlewares": true,
+      "middlewares": {},
+      "global_size_limit": 1048576
+    },
+    "gateway": {
+      "tyk_lan_MAIN": {
+        "gateway_type": "tyk",
+        "api_typization": "PublicAPI",
+        "application": {
+          "provider_rate_limit": {
+            "LT": {
+              "per": 1,
+              "rate": 50
+            }
+          },
+          "middlewares": {},
+          "listen_path": "/api/rb/pmnt/catalog/hackathon/v1",
+          "auth_type": "JWT",
+          "enforced_timeout": {
+            "LT": 40
+          },
+          "target_url": {
+            "LT": "http://payments-search-svc.plug.svc"
+          }
+        },
+        "contour": "LAN",
+        "gatewayRisId": "1474",
+        "segment_mnemonic": "MAIN"
+      }
+    }
+  }
+}
