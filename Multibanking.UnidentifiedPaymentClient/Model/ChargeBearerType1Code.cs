@@ -8,54 +8,36 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Информация о стороне или сторонах, которые будут нести расходы, связанные с обработкой платежной транзакции.
+/// </summary>
+/// <value>Информация о стороне или сторонах, которые будут нести расходы, связанные с обработкой платежной транзакции.</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ChargeBearerType1Code
 {
     /// <summary>
-    /// Информация о стороне или сторонах, которые будут нести расходы, связанные с обработкой платежной транзакции.
+    ///     Enum CRED for value: CRED
     /// </summary>
-    /// <value>Информация о стороне или сторонах, которые будут нести расходы, связанные с обработкой платежной транзакции.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ChargeBearerType1Code
-    {
-        /// <summary>
-        /// Enum CRED for value: CRED
-        /// </summary>
-        [EnumMember(Value = "CRED")]
-        CRED = 1,
+    [EnumMember(Value = "CRED")] CRED = 1,
 
-        /// <summary>
-        /// Enum DEBT for value: DEBT
-        /// </summary>
-        [EnumMember(Value = "DEBT")]
-        DEBT = 2,
+    /// <summary>
+    ///     Enum DEBT for value: DEBT
+    /// </summary>
+    [EnumMember(Value = "DEBT")] DEBT = 2,
 
-        /// <summary>
-        /// Enum SLEV for value: SLEV
-        /// </summary>
-        [EnumMember(Value = "SLEV")]
-        SLEV = 3,
+    /// <summary>
+    ///     Enum SLEV for value: SLEV
+    /// </summary>
+    [EnumMember(Value = "SLEV")] SLEV = 3,
 
-        /// <summary>
-        /// Enum SHAR for value: SHAR
-        /// </summary>
-        [EnumMember(Value = "SHAR")]
-        SHAR = 4
-
-    }
-
+    /// <summary>
+    ///     Enum SHAR for value: SHAR
+    /// </summary>
+    [EnumMember(Value = "SHAR")] SHAR = 4
 }

@@ -10,7 +10,7 @@ namespace Multibanking.API.Controllers;
 public class TransactionController(ITransactionService transactionService) : ControllerBase
 {
     /// <summary>
-    /// Получить операции (транзакции) по всем счетам
+    ///     Получить операции (транзакции) по всем счетам
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -18,9 +18,9 @@ public class TransactionController(ITransactionService transactionService) : Con
     {
         return transactionService.GetTransactions();
     }
-    
+
     /// <summary>
-    /// Получить операции (транзакции) по счету
+    ///     Получить операции (транзакции) по счету
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>

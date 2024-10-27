@@ -8,15 +8,47 @@ public static class AccountClientMock
 {
     private static readonly string StatementId = Guid.NewGuid().ToString();
 
+    private static readonly string[] Adjectives =
+    [
+        "Global", "Innovative", "Dynamic", "NextGen", "Smart", "Unified",
+        "Advanced", "Modern", "Green", "Prime", "Vanguard", "Elite"
+    ];
+
+    private static readonly string[] Nouns =
+    [
+        "Solutions", "Technologies", "Systems", "Networks", "Group",
+        "Holdings", "Ventures", "Dynamics", "Industries", "Concepts", "Partners"
+    ];
+
+    private static readonly string[] Endings =
+    [
+        "Ltd", "LLC", "Corp", "Inc", "AG", "SA", "PLC", "Group", "Enterprises"
+    ];
+
+    private static readonly List<string> AccountIds =
+    [
+        "978232c6-dc4d-471c-880f-a7177422d9a8",
+        "cceac821-32e1-4682-907e-3c8602b5fc24",
+        "0293af91-b687-4e9a-8346-24693bd79bc6",
+        "40b68082-b078-4725-b3f5-a20d822da926"
+    ];
+
+    private static readonly List<string> TransactionIds =
+    [
+        // Дебитовая
+        Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
+        // Кредитка
+        Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
+        // Ипотека
+        Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
+    ];
+
     private static string GenerateInn()
     {
         var random = new Random();
         var inn = new int[12];
 
-        for (var i = 0; i < 10; i++)
-        {
-            inn[i] = random.Next(0, 10);
-        }
+        for (var i = 0; i < 10; i++) inn[i] = random.Next(0, 10);
 
         inn[10] =
             (7 * inn[0] + 2 * inn[1] + 4 * inn[2] + 10 * inn[3] +
@@ -51,23 +83,6 @@ public static class AccountClientMock
         return new string(kpp);
     }
 
-    private static readonly string[] Adjectives =
-    [
-        "Global", "Innovative", "Dynamic", "NextGen", "Smart", "Unified",
-        "Advanced", "Modern", "Green", "Prime", "Vanguard", "Elite"
-    ];
-
-    private static readonly string[] Nouns =
-    [
-        "Solutions", "Technologies", "Systems", "Networks", "Group",
-        "Holdings", "Ventures", "Dynamics", "Industries", "Concepts", "Partners"
-    ];
-
-    private static readonly string[] Endings =
-    [
-        "Ltd", "LLC", "Corp", "Inc", "AG", "SA", "PLC", "Group", "Enterprises"
-    ];
-
     public static string GenerateCompanyName()
     {
         var random = new Random();
@@ -78,24 +93,6 @@ public static class AccountClientMock
 
         return $"{adjective} {noun} {ending}";
     }
-
-    private static readonly List<string> AccountIds =
-    [
-        "978232c6-dc4d-471c-880f-a7177422d9a8",
-        "cceac821-32e1-4682-907e-3c8602b5fc24",
-        "0293af91-b687-4e9a-8346-24693bd79bc6",
-        "40b68082-b078-4725-b3f5-a20d822da926"
-    ];
-
-    private static readonly List<string> TransactionIds =
-    [
-        // Дебитовая
-        Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
-        // Кредитка
-        Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
-        // Ипотека
-        Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
-    ];
 
     private static AccountResponse MockedAccounts()
     {
@@ -131,7 +128,7 @@ public static class AccountClientMock
             new BalanceComplexType(AccountIds[2], CreditDebitIndicatorStaticType.Debit, BalanceTypeStaticType.OpeningCleared, DateTime.Now,
                 new TransactionCashBalanceComplexTypeAmount("0", "RUB"), []),
             new BalanceComplexType(AccountIds[3], CreditDebitIndicatorStaticType.Debit, BalanceTypeStaticType.Expected, DateTime.Now,
-                new TransactionCashBalanceComplexTypeAmount("1046490", "RUB"), []),
+                new TransactionCashBalanceComplexTypeAmount("1046490", "RUB"), [])
         ]), new object(), new LinksType(""), new MetaType());
     }
 
@@ -189,7 +186,7 @@ public static class AccountClientMock
             new TransactionComplex(AccountIds[3], TransactionIds[11], "", CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, DateTime.Now,
                 DateTime.Now, "Пополнение счета", "г. Калуга", new TransactionComplexTypeAmount("10020", "RUB"), new TransactionComplexChargeAmount("0", "RUB"),
                 new TransactionComplexCurrencyExchange("RUB", "RUB", "RUB", BaseOneRate.TmpVal2, Guid.NewGuid().ToString(), DateTime.Now,
-                    new CurrencyExchangeComplexTypeInstructedAmount("10020", "RUB"))),
+                    new CurrencyExchangeComplexTypeInstructedAmount("10020", "RUB")))
         ]), new object(), new LinksType(""), new MetaType());
     }
 
@@ -207,7 +204,7 @@ public static class AccountClientMock
                 new TransactionComplexType(TransactionIds[1], CreditDebitIndicatorStaticType.Credit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Покупки в магазине", new TransactionComplexTypeAmount("985", "RUB"),
                     new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
-                    new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
+                    new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677"))
             ]),
             // Кредитка
             new StatementComplexType(AccountIds[1], Guid.NewGuid().ToString(), DateTime.Now, DateTime.Now, DateTime.Now,
@@ -255,7 +252,7 @@ public static class AccountClientMock
                 new TransactionComplexType(TransactionIds[11], CreditDebitIndicatorStaticType.Debit, TransactionStatusStaticType.Booked, Guid.NewGuid().ToString(), DateTime.Now,
                     DateTime.Now, "Пополнение счета", new TransactionComplexTypeAmount("10020", "RUB"),
                     new TransactionComplexTypeDebtorParty(GenerateInn(), GenerateCompanyName(), GenerateKpp()),
-                    new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677")),
+                    new TransactionComplexTypeDebtorAccount(AccountIdentificationDynamicType.CellphoneNumber, "+79995556677"))
             ])
         ]), new object(), new LinksType(""), new MetaType());
     }

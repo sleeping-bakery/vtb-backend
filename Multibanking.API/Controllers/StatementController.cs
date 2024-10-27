@@ -10,7 +10,7 @@ namespace Multibanking.API.Controllers;
 public class StatementController(IStatementService statementService) : ControllerBase
 {
     /// <summary>
-    /// Получить выписку по счету
+    ///     Получить выписку по счету
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>
@@ -19,9 +19,9 @@ public class StatementController(IStatementService statementService) : Controlle
     {
         return statementService.GetAccountStatement(accountId);
     }
-    
+
     /// <summary>
-    /// Получить выписки по всем счетам
+    ///     Получить выписки по всем счетам
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -29,5 +29,4 @@ public class StatementController(IStatementService statementService) : Controlle
     {
         return statementService.GetAccountStatement();
     }
-    
 }

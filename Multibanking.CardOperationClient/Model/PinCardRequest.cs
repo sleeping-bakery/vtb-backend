@@ -9,167 +9,138 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.CardOperationClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.CardOperationClient.Model
+namespace Multibanking.CardOperationClient.Model;
+
+/// <summary>
+///     Данные для смены пин-кода карты
+/// </summary>
+[DataContract(Name = "PinCardRequest")]
+public class PinCardRequest : IEquatable<PinCardRequest>, IValidatableObject
 {
     /// <summary>
-    /// Данные для смены пин-кода карты
+    ///     Initializes a new instance of the <see cref="PinCardRequest" /> class.
     /// </summary>
-    [DataContract(Name = "PinCardRequest")]
-    public partial class PinCardRequest : IEquatable<PinCardRequest>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected PinCardRequest()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PinCardRequest" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PinCardRequest() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PinCardRequest" /> class.
-        /// </summary>
-        /// <param name="pin">Шифрованный ПИН-код. (required).</param>
-        /// <param name="publicKeyId">Идентификатор публичного ключа, выданный криптосервером. (required).</param>
-        public PinCardRequest(string pin = default(string), string publicKeyId = default(string))
-        {
-            // to ensure "pin" is required (not null)
-            if (pin == null)
-            {
-                throw new ArgumentNullException("pin is a required property for PinCardRequest and cannot be null");
-            }
-            this.Pin = pin;
-            // to ensure "publicKeyId" is required (not null)
-            if (publicKeyId == null)
-            {
-                throw new ArgumentNullException("publicKeyId is a required property for PinCardRequest and cannot be null");
-            }
-            this.PublicKeyId = publicKeyId;
-        }
-
-        /// <summary>
-        /// Шифрованный ПИН-код.
-        /// </summary>
-        /// <value>Шифрованный ПИН-код.</value>
-        [DataMember(Name = "Pin", IsRequired = true, EmitDefaultValue = true)]
-        public string Pin { get; set; }
-
-        /// <summary>
-        /// Идентификатор публичного ключа, выданный криптосервером.
-        /// </summary>
-        /// <value>Идентификатор публичного ключа, выданный криптосервером.</value>
-        [DataMember(Name = "publicKeyId", IsRequired = true, EmitDefaultValue = true)]
-        public string PublicKeyId { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PinCardRequest {\n");
-            sb.Append("  Pin: ").Append(Pin).Append("\n");
-            sb.Append("  PublicKeyId: ").Append(PublicKeyId).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PinCardRequest);
-        }
-
-        /// <summary>
-        /// Returns true if PinCardRequest instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PinCardRequest to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PinCardRequest input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Pin == input.Pin ||
-                    (this.Pin != null &&
-                    this.Pin.Equals(input.Pin))
-                ) && 
-                (
-                    this.PublicKeyId == input.PublicKeyId ||
-                    (this.PublicKeyId != null &&
-                    this.PublicKeyId.Equals(input.PublicKeyId))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Pin != null)
-                {
-                    hashCode = (hashCode * 59) + this.Pin.GetHashCode();
-                }
-                if (this.PublicKeyId != null)
-                {
-                    hashCode = (hashCode * 59) + this.PublicKeyId.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Pin (string) maxLength
-            if (this.Pin != null && this.Pin.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Pin, length must be less than 500.", new [] { "Pin" });
-            }
-
-            // PublicKeyId (string) maxLength
-            if (this.PublicKeyId != null && this.PublicKeyId.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PublicKeyId, length must be less than 500.", new [] { "PublicKeyId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PinCardRequest" /> class.
+    /// </summary>
+    /// <param name="pin">Шифрованный ПИН-код. (required).</param>
+    /// <param name="publicKeyId">Идентификатор публичного ключа, выданный криптосервером. (required).</param>
+    public PinCardRequest(string pin = default, string publicKeyId = default)
+    {
+        // to ensure "pin" is required (not null)
+        if (pin == null) throw new ArgumentNullException("pin is a required property for PinCardRequest and cannot be null");
+        Pin = pin;
+        // to ensure "publicKeyId" is required (not null)
+        if (publicKeyId == null) throw new ArgumentNullException("publicKeyId is a required property for PinCardRequest and cannot be null");
+        PublicKeyId = publicKeyId;
+    }
+
+    /// <summary>
+    ///     Шифрованный ПИН-код.
+    /// </summary>
+    /// <value>Шифрованный ПИН-код.</value>
+    [DataMember(Name = "Pin", IsRequired = true, EmitDefaultValue = true)]
+    public string Pin { get; set; }
+
+    /// <summary>
+    ///     Идентификатор публичного ключа, выданный криптосервером.
+    /// </summary>
+    /// <value>Идентификатор публичного ключа, выданный криптосервером.</value>
+    [DataMember(Name = "publicKeyId", IsRequired = true, EmitDefaultValue = true)]
+    public string PublicKeyId { get; set; }
+
+    /// <summary>
+    ///     Returns true if PinCardRequest instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PinCardRequest to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PinCardRequest input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Pin == input.Pin ||
+                (Pin != null &&
+                 Pin.Equals(input.Pin))
+            ) &&
+            (
+                PublicKeyId == input.PublicKeyId ||
+                (PublicKeyId != null &&
+                 PublicKeyId.Equals(input.PublicKeyId))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Pin (string) maxLength
+        if (Pin != null && Pin.Length > 500) yield return new ValidationResult("Invalid value for Pin, length must be less than 500.", new[] { "Pin" });
+
+        // PublicKeyId (string) maxLength
+        if (PublicKeyId != null && PublicKeyId.Length > 500)
+            yield return new ValidationResult("Invalid value for PublicKeyId, length must be less than 500.", new[] { "PublicKeyId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PinCardRequest {\n");
+        sb.Append("  Pin: ").Append(Pin).Append("\n");
+        sb.Append("  PublicKeyId: ").Append(PublicKeyId).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PinCardRequest);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Pin != null) hashCode = hashCode * 59 + Pin.GetHashCode();
+            if (PublicKeyId != null) hashCode = hashCode * 59 + PublicKeyId.GetHashCode();
+            return hashCode;
+        }
+    }
 }

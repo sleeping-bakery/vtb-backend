@@ -9,318 +9,268 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     DataPaymentResponseComplexType
+/// </summary>
+[DataContract(Name = "DataPaymentResponseComplexType")]
+public class DataPaymentResponseComplexType : IEquatable<DataPaymentResponseComplexType>, IValidatableObject
 {
     /// <summary>
-    /// DataPaymentResponseComplexType
+    ///     Initializes a new instance of the <see cref="DataPaymentResponseComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "DataPaymentResponseComplexType")]
-    public partial class DataPaymentResponseComplexType : IEquatable<DataPaymentResponseComplexType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected DataPaymentResponseComplexType()
     {
-
-        /// <summary>
-        /// Текущий статус ресурса согласия на проведение платежа.
-        /// </summary>
-        /// <value>Текущий статус ресурса согласия на проведение платежа.</value>
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
-        public TransactionStatusStaticType Status { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataPaymentResponseComplexType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected DataPaymentResponseComplexType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataPaymentResponseComplexType" /> class.
-        /// </summary>
-        /// <param name="paymentId">paymentId (required).</param>
-        /// <param name="consentId">Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ. (required).</param>
-        /// <param name="creationDateTime">Дата и время создания ресурса согласия на проведение платежа. (required).</param>
-        /// <param name="status">Текущий статус ресурса согласия на проведение платежа. (required).</param>
-        /// <param name="statusUpdateDateTime">Дата и время обновления статуса ресурса согласия на проведение платежа. (required).</param>
-        /// <param name="expectedExecutionDateTime">Ожидаемая дата и время исполнения платежа (платежного ресурса)..</param>
-        /// <param name="expectedSettlementDateTime">Ожидаемая дата и время расчета платежа (платежного ресурса)..</param>
-        /// <param name="charges">Сборы при проведении платежа..</param>
-        /// <param name="initiation">initiation (required).</param>
-        /// <param name="multiAuthorisation">multiAuthorisation.</param>
-        public DataPaymentResponseComplexType(string paymentId = default(string), string consentId = default(string), DateTime creationDateTime = default(DateTime), TransactionStatusStaticType status = default(TransactionStatusStaticType), DateTime statusUpdateDateTime = default(DateTime), DateTime expectedExecutionDateTime = default(DateTime), DateTime expectedSettlementDateTime = default(DateTime), List<ChargeComplexType> charges = default(List<ChargeComplexType>), DataConsentRequestComplexTypeInitiation initiation = default(DataConsentRequestComplexTypeInitiation), DataPaymentResponseComplexTypeMultiAuthorisation multiAuthorisation = default(DataPaymentResponseComplexTypeMultiAuthorisation))
-        {
-            // to ensure "paymentId" is required (not null)
-            if (paymentId == null)
-            {
-                throw new ArgumentNullException("paymentId is a required property for DataPaymentResponseComplexType and cannot be null");
-            }
-            this.PaymentId = paymentId;
-            // to ensure "consentId" is required (not null)
-            if (consentId == null)
-            {
-                throw new ArgumentNullException("consentId is a required property for DataPaymentResponseComplexType and cannot be null");
-            }
-            this.ConsentId = consentId;
-            this.CreationDateTime = creationDateTime;
-            this.Status = status;
-            this.StatusUpdateDateTime = statusUpdateDateTime;
-            // to ensure "initiation" is required (not null)
-            if (initiation == null)
-            {
-                throw new ArgumentNullException("initiation is a required property for DataPaymentResponseComplexType and cannot be null");
-            }
-            this.Initiation = initiation;
-            this.ExpectedExecutionDateTime = expectedExecutionDateTime;
-            this.ExpectedSettlementDateTime = expectedSettlementDateTime;
-            this.Charges = charges;
-            this.MultiAuthorisation = multiAuthorisation;
-        }
-
-        /// <summary>
-        /// Gets or Sets PaymentId
-        /// </summary>
-        [DataMember(Name = "paymentId", IsRequired = true, EmitDefaultValue = true)]
-        public string PaymentId { get; set; }
-
-        /// <summary>
-        /// Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.
-        /// </summary>
-        /// <value>Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.</value>
-        [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
-        public string ConsentId { get; set; }
-
-        /// <summary>
-        /// Дата и время создания ресурса согласия на проведение платежа.
-        /// </summary>
-        /// <value>Дата и время создания ресурса согласия на проведение платежа.</value>
-        [DataMember(Name = "creationDateTime", IsRequired = true, EmitDefaultValue = true)]
-        public DateTime CreationDateTime { get; set; }
-
-        /// <summary>
-        /// Дата и время обновления статуса ресурса согласия на проведение платежа.
-        /// </summary>
-        /// <value>Дата и время обновления статуса ресурса согласия на проведение платежа.</value>
-        [DataMember(Name = "statusUpdateDateTime", IsRequired = true, EmitDefaultValue = true)]
-        public DateTime StatusUpdateDateTime { get; set; }
-
-        /// <summary>
-        /// Ожидаемая дата и время исполнения платежа (платежного ресурса).
-        /// </summary>
-        /// <value>Ожидаемая дата и время исполнения платежа (платежного ресурса).</value>
-        [DataMember(Name = "expectedExecutionDateTime", EmitDefaultValue = false)]
-        public DateTime ExpectedExecutionDateTime { get; set; }
-
-        /// <summary>
-        /// Ожидаемая дата и время расчета платежа (платежного ресурса).
-        /// </summary>
-        /// <value>Ожидаемая дата и время расчета платежа (платежного ресурса).</value>
-        [DataMember(Name = "expectedSettlementDateTime", EmitDefaultValue = false)]
-        public DateTime ExpectedSettlementDateTime { get; set; }
-
-        /// <summary>
-        /// Сборы при проведении платежа.
-        /// </summary>
-        /// <value>Сборы при проведении платежа.</value>
-        [DataMember(Name = "Charges", EmitDefaultValue = false)]
-        public List<ChargeComplexType> Charges { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Initiation
-        /// </summary>
-        [DataMember(Name = "Initiation", IsRequired = true, EmitDefaultValue = true)]
-        public DataConsentRequestComplexTypeInitiation Initiation { get; set; }
-
-        /// <summary>
-        /// Gets or Sets MultiAuthorisation
-        /// </summary>
-        [DataMember(Name = "MultiAuthorisation", EmitDefaultValue = false)]
-        public DataPaymentResponseComplexTypeMultiAuthorisation MultiAuthorisation { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class DataPaymentResponseComplexType {\n");
-            sb.Append("  PaymentId: ").Append(PaymentId).Append("\n");
-            sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
-            sb.Append("  CreationDateTime: ").Append(CreationDateTime).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  StatusUpdateDateTime: ").Append(StatusUpdateDateTime).Append("\n");
-            sb.Append("  ExpectedExecutionDateTime: ").Append(ExpectedExecutionDateTime).Append("\n");
-            sb.Append("  ExpectedSettlementDateTime: ").Append(ExpectedSettlementDateTime).Append("\n");
-            sb.Append("  Charges: ").Append(Charges).Append("\n");
-            sb.Append("  Initiation: ").Append(Initiation).Append("\n");
-            sb.Append("  MultiAuthorisation: ").Append(MultiAuthorisation).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as DataPaymentResponseComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if DataPaymentResponseComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of DataPaymentResponseComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(DataPaymentResponseComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.PaymentId == input.PaymentId ||
-                    (this.PaymentId != null &&
-                    this.PaymentId.Equals(input.PaymentId))
-                ) && 
-                (
-                    this.ConsentId == input.ConsentId ||
-                    (this.ConsentId != null &&
-                    this.ConsentId.Equals(input.ConsentId))
-                ) && 
-                (
-                    this.CreationDateTime == input.CreationDateTime ||
-                    (this.CreationDateTime != null &&
-                    this.CreationDateTime.Equals(input.CreationDateTime))
-                ) && 
-                (
-                    this.Status == input.Status ||
-                    this.Status.Equals(input.Status)
-                ) && 
-                (
-                    this.StatusUpdateDateTime == input.StatusUpdateDateTime ||
-                    (this.StatusUpdateDateTime != null &&
-                    this.StatusUpdateDateTime.Equals(input.StatusUpdateDateTime))
-                ) && 
-                (
-                    this.ExpectedExecutionDateTime == input.ExpectedExecutionDateTime ||
-                    (this.ExpectedExecutionDateTime != null &&
-                    this.ExpectedExecutionDateTime.Equals(input.ExpectedExecutionDateTime))
-                ) && 
-                (
-                    this.ExpectedSettlementDateTime == input.ExpectedSettlementDateTime ||
-                    (this.ExpectedSettlementDateTime != null &&
-                    this.ExpectedSettlementDateTime.Equals(input.ExpectedSettlementDateTime))
-                ) && 
-                (
-                    this.Charges == input.Charges ||
-                    this.Charges != null &&
-                    input.Charges != null &&
-                    this.Charges.SequenceEqual(input.Charges)
-                ) && 
-                (
-                    this.Initiation == input.Initiation ||
-                    (this.Initiation != null &&
-                    this.Initiation.Equals(input.Initiation))
-                ) && 
-                (
-                    this.MultiAuthorisation == input.MultiAuthorisation ||
-                    (this.MultiAuthorisation != null &&
-                    this.MultiAuthorisation.Equals(input.MultiAuthorisation))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.PaymentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.PaymentId.GetHashCode();
-                }
-                if (this.ConsentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.ConsentId.GetHashCode();
-                }
-                if (this.CreationDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreationDateTime.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.Status.GetHashCode();
-                if (this.StatusUpdateDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.StatusUpdateDateTime.GetHashCode();
-                }
-                if (this.ExpectedExecutionDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.ExpectedExecutionDateTime.GetHashCode();
-                }
-                if (this.ExpectedSettlementDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.ExpectedSettlementDateTime.GetHashCode();
-                }
-                if (this.Charges != null)
-                {
-                    hashCode = (hashCode * 59) + this.Charges.GetHashCode();
-                }
-                if (this.Initiation != null)
-                {
-                    hashCode = (hashCode * 59) + this.Initiation.GetHashCode();
-                }
-                if (this.MultiAuthorisation != null)
-                {
-                    hashCode = (hashCode * 59) + this.MultiAuthorisation.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // PaymentId (string) maxLength
-            if (this.PaymentId != null && this.PaymentId.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PaymentId, length must be less than 128.", new [] { "PaymentId" });
-            }
-
-            // ConsentId (string) maxLength
-            if (this.ConsentId != null && this.ConsentId.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ConsentId, length must be less than 128.", new [] { "ConsentId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="DataPaymentResponseComplexType" /> class.
+    /// </summary>
+    /// <param name="paymentId">paymentId (required).</param>
+    /// <param name="consentId">Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ. (required).</param>
+    /// <param name="creationDateTime">Дата и время создания ресурса согласия на проведение платежа. (required).</param>
+    /// <param name="status">Текущий статус ресурса согласия на проведение платежа. (required).</param>
+    /// <param name="statusUpdateDateTime">Дата и время обновления статуса ресурса согласия на проведение платежа. (required).</param>
+    /// <param name="expectedExecutionDateTime">Ожидаемая дата и время исполнения платежа (платежного ресурса)..</param>
+    /// <param name="expectedSettlementDateTime">Ожидаемая дата и время расчета платежа (платежного ресурса)..</param>
+    /// <param name="charges">Сборы при проведении платежа..</param>
+    /// <param name="initiation">initiation (required).</param>
+    /// <param name="multiAuthorisation">multiAuthorisation.</param>
+    public DataPaymentResponseComplexType(string paymentId = default, string consentId = default, DateTime creationDateTime = default, TransactionStatusStaticType status = default,
+        DateTime statusUpdateDateTime = default, DateTime expectedExecutionDateTime = default, DateTime expectedSettlementDateTime = default,
+        List<ChargeComplexType> charges = default, DataConsentRequestComplexTypeInitiation initiation = default,
+        DataPaymentResponseComplexTypeMultiAuthorisation multiAuthorisation = default)
+    {
+        // to ensure "paymentId" is required (not null)
+        if (paymentId == null) throw new ArgumentNullException("paymentId is a required property for DataPaymentResponseComplexType and cannot be null");
+        PaymentId = paymentId;
+        // to ensure "consentId" is required (not null)
+        if (consentId == null) throw new ArgumentNullException("consentId is a required property for DataPaymentResponseComplexType and cannot be null");
+        ConsentId = consentId;
+        CreationDateTime = creationDateTime;
+        Status = status;
+        StatusUpdateDateTime = statusUpdateDateTime;
+        // to ensure "initiation" is required (not null)
+        if (initiation == null) throw new ArgumentNullException("initiation is a required property for DataPaymentResponseComplexType and cannot be null");
+        Initiation = initiation;
+        ExpectedExecutionDateTime = expectedExecutionDateTime;
+        ExpectedSettlementDateTime = expectedSettlementDateTime;
+        Charges = charges;
+        MultiAuthorisation = multiAuthorisation;
+    }
+
+    /// <summary>
+    ///     Текущий статус ресурса согласия на проведение платежа.
+    /// </summary>
+    /// <value>Текущий статус ресурса согласия на проведение платежа.</value>
+    [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
+    public TransactionStatusStaticType Status { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets PaymentId
+    /// </summary>
+    [DataMember(Name = "paymentId", IsRequired = true, EmitDefaultValue = true)]
+    public string PaymentId { get; set; }
+
+    /// <summary>
+    ///     Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.
+    /// </summary>
+    /// <value>Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.</value>
+    [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
+    public string ConsentId { get; set; }
+
+    /// <summary>
+    ///     Дата и время создания ресурса согласия на проведение платежа.
+    /// </summary>
+    /// <value>Дата и время создания ресурса согласия на проведение платежа.</value>
+    [DataMember(Name = "creationDateTime", IsRequired = true, EmitDefaultValue = true)]
+    public DateTime CreationDateTime { get; set; }
+
+    /// <summary>
+    ///     Дата и время обновления статуса ресурса согласия на проведение платежа.
+    /// </summary>
+    /// <value>Дата и время обновления статуса ресурса согласия на проведение платежа.</value>
+    [DataMember(Name = "statusUpdateDateTime", IsRequired = true, EmitDefaultValue = true)]
+    public DateTime StatusUpdateDateTime { get; set; }
+
+    /// <summary>
+    ///     Ожидаемая дата и время исполнения платежа (платежного ресурса).
+    /// </summary>
+    /// <value>Ожидаемая дата и время исполнения платежа (платежного ресурса).</value>
+    [DataMember(Name = "expectedExecutionDateTime", EmitDefaultValue = false)]
+    public DateTime ExpectedExecutionDateTime { get; set; }
+
+    /// <summary>
+    ///     Ожидаемая дата и время расчета платежа (платежного ресурса).
+    /// </summary>
+    /// <value>Ожидаемая дата и время расчета платежа (платежного ресурса).</value>
+    [DataMember(Name = "expectedSettlementDateTime", EmitDefaultValue = false)]
+    public DateTime ExpectedSettlementDateTime { get; set; }
+
+    /// <summary>
+    ///     Сборы при проведении платежа.
+    /// </summary>
+    /// <value>Сборы при проведении платежа.</value>
+    [DataMember(Name = "Charges", EmitDefaultValue = false)]
+    public List<ChargeComplexType> Charges { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Initiation
+    /// </summary>
+    [DataMember(Name = "Initiation", IsRequired = true, EmitDefaultValue = true)]
+    public DataConsentRequestComplexTypeInitiation Initiation { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets MultiAuthorisation
+    /// </summary>
+    [DataMember(Name = "MultiAuthorisation", EmitDefaultValue = false)]
+    public DataPaymentResponseComplexTypeMultiAuthorisation MultiAuthorisation { get; set; }
+
+    /// <summary>
+    ///     Returns true if DataPaymentResponseComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of DataPaymentResponseComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(DataPaymentResponseComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                PaymentId == input.PaymentId ||
+                (PaymentId != null &&
+                 PaymentId.Equals(input.PaymentId))
+            ) &&
+            (
+                ConsentId == input.ConsentId ||
+                (ConsentId != null &&
+                 ConsentId.Equals(input.ConsentId))
+            ) &&
+            (
+                CreationDateTime == input.CreationDateTime ||
+                (CreationDateTime != null &&
+                 CreationDateTime.Equals(input.CreationDateTime))
+            ) &&
+            (
+                Status == input.Status ||
+                Status.Equals(input.Status)
+            ) &&
+            (
+                StatusUpdateDateTime == input.StatusUpdateDateTime ||
+                (StatusUpdateDateTime != null &&
+                 StatusUpdateDateTime.Equals(input.StatusUpdateDateTime))
+            ) &&
+            (
+                ExpectedExecutionDateTime == input.ExpectedExecutionDateTime ||
+                (ExpectedExecutionDateTime != null &&
+                 ExpectedExecutionDateTime.Equals(input.ExpectedExecutionDateTime))
+            ) &&
+            (
+                ExpectedSettlementDateTime == input.ExpectedSettlementDateTime ||
+                (ExpectedSettlementDateTime != null &&
+                 ExpectedSettlementDateTime.Equals(input.ExpectedSettlementDateTime))
+            ) &&
+            (
+                Charges == input.Charges ||
+                (Charges != null &&
+                 input.Charges != null &&
+                 Charges.SequenceEqual(input.Charges))
+            ) &&
+            (
+                Initiation == input.Initiation ||
+                (Initiation != null &&
+                 Initiation.Equals(input.Initiation))
+            ) &&
+            (
+                MultiAuthorisation == input.MultiAuthorisation ||
+                (MultiAuthorisation != null &&
+                 MultiAuthorisation.Equals(input.MultiAuthorisation))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // PaymentId (string) maxLength
+        if (PaymentId != null && PaymentId.Length > 128) yield return new ValidationResult("Invalid value for PaymentId, length must be less than 128.", new[] { "PaymentId" });
+
+        // ConsentId (string) maxLength
+        if (ConsentId != null && ConsentId.Length > 128) yield return new ValidationResult("Invalid value for ConsentId, length must be less than 128.", new[] { "ConsentId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class DataPaymentResponseComplexType {\n");
+        sb.Append("  PaymentId: ").Append(PaymentId).Append("\n");
+        sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
+        sb.Append("  CreationDateTime: ").Append(CreationDateTime).Append("\n");
+        sb.Append("  Status: ").Append(Status).Append("\n");
+        sb.Append("  StatusUpdateDateTime: ").Append(StatusUpdateDateTime).Append("\n");
+        sb.Append("  ExpectedExecutionDateTime: ").Append(ExpectedExecutionDateTime).Append("\n");
+        sb.Append("  ExpectedSettlementDateTime: ").Append(ExpectedSettlementDateTime).Append("\n");
+        sb.Append("  Charges: ").Append(Charges).Append("\n");
+        sb.Append("  Initiation: ").Append(Initiation).Append("\n");
+        sb.Append("  MultiAuthorisation: ").Append(MultiAuthorisation).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as DataPaymentResponseComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (PaymentId != null) hashCode = hashCode * 59 + PaymentId.GetHashCode();
+            if (ConsentId != null) hashCode = hashCode * 59 + ConsentId.GetHashCode();
+            if (CreationDateTime != null) hashCode = hashCode * 59 + CreationDateTime.GetHashCode();
+            hashCode = hashCode * 59 + Status.GetHashCode();
+            if (StatusUpdateDateTime != null) hashCode = hashCode * 59 + StatusUpdateDateTime.GetHashCode();
+            if (ExpectedExecutionDateTime != null) hashCode = hashCode * 59 + ExpectedExecutionDateTime.GetHashCode();
+            if (ExpectedSettlementDateTime != null) hashCode = hashCode * 59 + ExpectedSettlementDateTime.GetHashCode();
+            if (Charges != null) hashCode = hashCode * 59 + Charges.GetHashCode();
+            if (Initiation != null) hashCode = hashCode * 59 + Initiation.GetHashCode();
+            if (MultiAuthorisation != null) hashCode = hashCode * 59 + MultiAuthorisation.GetHashCode();
+            return hashCode;
+        }
+    }
 }

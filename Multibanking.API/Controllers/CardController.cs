@@ -9,9 +9,8 @@ namespace Multibanking.API.Controllers;
 [Route("[controller]")]
 public class CardController(ICardService cardService) : ControllerBase
 {
-    
     /// <summary>
-    /// Открыть (создать) карту
+    ///     Открыть (создать) карту
     /// </summary>
     /// <param name="cardCreateDto"></param>
     /// <returns></returns>
@@ -21,9 +20,9 @@ public class CardController(ICardService cardService) : ControllerBase
         cardService.CreateCard(cardCreateDto);
         return Ok();
     }
-    
+
     /// <summary>
-    /// Получить реквизиты карты (номер, срок действия, владелец)
+    ///     Получить реквизиты карты (номер, срок действия, владелец)
     /// </summary>
     /// <param name="cardId"></param>
     /// <returns></returns>
@@ -32,9 +31,9 @@ public class CardController(ICardService cardService) : ControllerBase
     {
         return cardService.GetCardDetail(cardId);
     }
-    
+
     /// <summary>
-    /// Получить CVV карты
+    ///     Получить CVV карты
     /// </summary>
     /// <param name="cardId"></param>
     /// <returns></returns>
@@ -45,7 +44,7 @@ public class CardController(ICardService cardService) : ControllerBase
     }
 
     /// <summary>
-    /// Получить все карты пользователя
+    ///     Получить все карты пользователя
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -55,7 +54,7 @@ public class CardController(ICardService cardService) : ControllerBase
     }
 
     /// <summary>
-    /// Удалить карту
+    ///     Удалить карту
     /// </summary>
     /// <param name="cardId"></param>
     /// <returns></returns>
@@ -67,7 +66,7 @@ public class CardController(ICardService cardService) : ControllerBase
     }
 
     /// <summary>
-    /// Обновить данные карты (статус, пин-код). Пин-код должен быть зашифрованным ключем и передан вместе с публичным ключом. 
+    ///     Обновить данные карты (статус, пин-код). Пин-код должен быть зашифрованным ключем и передан вместе с публичным ключом.
     /// </summary>
     /// <param name="cardUpdateDto"></param>
     /// <returns></returns>
@@ -77,5 +76,4 @@ public class CardController(ICardService cardService) : ControllerBase
         cardService.UpdateCard(cardUpdateDto);
         return Ok();
     }
-    
 }

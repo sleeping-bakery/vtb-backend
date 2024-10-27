@@ -8,42 +8,26 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Идентификатор финансового учреждения
+/// </summary>
+/// <value>Идентификатор финансового учреждения</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum FinancialInstitutionIdentificationDynamicType
 {
     /// <summary>
-    /// Идентификатор финансового учреждения
+    ///     Enum BICFI for value: RU.CBR.BICFI
     /// </summary>
-    /// <value>Идентификатор финансового учреждения</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum FinancialInstitutionIdentificationDynamicType
-    {
-        /// <summary>
-        /// Enum BICFI for value: RU.CBR.BICFI
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.BICFI")]
-        BICFI = 1,
+    [EnumMember(Value = "RU.CBR.BICFI")] BICFI = 1,
 
-        /// <summary>
-        /// Enum BIK for value: RU.CBR.BIK
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.BIK")]
-        BIK = 2
-
-    }
-
+    /// <summary>
+    ///     Enum BIK for value: RU.CBR.BIK
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.BIK")] BIK = 2
 }

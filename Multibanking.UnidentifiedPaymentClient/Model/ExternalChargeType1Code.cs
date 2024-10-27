@@ -8,54 +8,36 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Тип комиссии за проведение платежа.
+/// </summary>
+/// <value>Тип комиссии за проведение платежа.</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ExternalChargeType1Code
 {
     /// <summary>
-    /// Тип комиссии за проведение платежа.
+    ///     Enum BRKF for value: BRKF
     /// </summary>
-    /// <value>Тип комиссии за проведение платежа.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ExternalChargeType1Code
-    {
-        /// <summary>
-        /// Enum BRKF for value: BRKF
-        /// </summary>
-        [EnumMember(Value = "BRKF")]
-        BRKF = 1,
+    [EnumMember(Value = "BRKF")] BRKF = 1,
 
-        /// <summary>
-        /// Enum BTCH for value: BTCH
-        /// </summary>
-        [EnumMember(Value = "BTCH")]
-        BTCH = 2,
+    /// <summary>
+    ///     Enum BTCH for value: BTCH
+    /// </summary>
+    [EnumMember(Value = "BTCH")] BTCH = 2,
 
-        /// <summary>
-        /// Enum COMM for value: COMM
-        /// </summary>
-        [EnumMember(Value = "COMM")]
-        COMM = 3,
+    /// <summary>
+    ///     Enum COMM for value: COMM
+    /// </summary>
+    [EnumMember(Value = "COMM")] COMM = 3,
 
-        /// <summary>
-        /// Enum SUMM for value: SUMM
-        /// </summary>
-        [EnumMember(Value = "SUMM")]
-        SUMM = 4
-
-    }
-
+    /// <summary>
+    ///     Enum SUMM for value: SUMM
+    /// </summary>
+    [EnumMember(Value = "SUMM")] SUMM = 4
 }

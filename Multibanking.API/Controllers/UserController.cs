@@ -9,7 +9,7 @@ namespace Multibanking.API.Controllers;
 public class UserController(IUserService userService, IUserContextService userContextService) : ControllerBase
 {
     /// <summary>
-    /// Получить информацию о текущем пользователе
+    ///     Получить информацию о текущем пользователе
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -19,7 +19,7 @@ public class UserController(IUserService userService, IUserContextService userCo
     }
 
     /// <summary>
-    /// Обновить текущего пользователя. Влияет на согласие на стороне банкинга
+    ///     Обновить текущего пользователя. Влияет на согласие на стороне банкинга
     /// </summary>
     /// <param name="userDto"></param>
     /// <returns></returns>

@@ -25,7 +25,8 @@ public static class BusinessLogicServiceCollectionExtensions
 
     private static IServiceCollection AddMapping(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddAutoMapper([typeof(UserMapperProfile), typeof(AccountConsentMapperProfile), typeof(CardMapperProfile), typeof(UnidentifiedPaymentMapperProfile)]);
+        return serviceCollection.AddAutoMapper(
+            [typeof(UserMapperProfile), typeof(AccountConsentMapperProfile), typeof(CardMapperProfile), typeof(UnidentifiedPaymentMapperProfile)]);
     }
 
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)

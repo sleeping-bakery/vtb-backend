@@ -31,7 +31,7 @@ public static class InfrastructureServiceCollectionExtensions
         {
             var xmlPath = Path.Combine(AppContext.BaseDirectory, "Multibanking.API.xml");
             swaggerGenOptions.IncludeXmlComments(xmlPath);
-            
+
             // Настройка авторизации через Bearer token
             swaggerGenOptions.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {

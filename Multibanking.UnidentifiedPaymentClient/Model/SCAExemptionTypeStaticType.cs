@@ -8,71 +8,52 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Defines SCAExemptionTypeStaticType
+/// </summary>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum SCAExemptionTypeStaticType
 {
     /// <summary>
-    /// Defines SCAExemptionTypeStaticType
+    ///     Enum BillPayment for value: BillPayment
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SCAExemptionTypeStaticType
-    {
-        /// <summary>
-        /// Enum BillPayment for value: BillPayment
-        /// </summary>
-        [EnumMember(Value = "BillPayment")]
-        BillPayment = 1,
+    [EnumMember(Value = "BillPayment")] BillPayment = 1,
 
-        /// <summary>
-        /// Enum ContactlessTravel for value: ContactlessTravel
-        /// </summary>
-        [EnumMember(Value = "ContactlessTravel")]
-        ContactlessTravel = 2,
+    /// <summary>
+    ///     Enum ContactlessTravel for value: ContactlessTravel
+    /// </summary>
+    [EnumMember(Value = "ContactlessTravel")]
+    ContactlessTravel = 2,
 
-        /// <summary>
-        /// Enum EcommerceGoods for value: EcommerceGoods
-        /// </summary>
-        [EnumMember(Value = "EcommerceGoods")]
-        EcommerceGoods = 3,
+    /// <summary>
+    ///     Enum EcommerceGoods for value: EcommerceGoods
+    /// </summary>
+    [EnumMember(Value = "EcommerceGoods")] EcommerceGoods = 3,
 
-        /// <summary>
-        /// Enum EcommerceServices for value: EcommerceServices
-        /// </summary>
-        [EnumMember(Value = "EcommerceServices")]
-        EcommerceServices = 4,
+    /// <summary>
+    ///     Enum EcommerceServices for value: EcommerceServices
+    /// </summary>
+    [EnumMember(Value = "EcommerceServices")]
+    EcommerceServices = 4,
 
-        /// <summary>
-        /// Enum Kiosk for value: Kiosk
-        /// </summary>
-        [EnumMember(Value = "Kiosk")]
-        Kiosk = 5,
+    /// <summary>
+    ///     Enum Kiosk for value: Kiosk
+    /// </summary>
+    [EnumMember(Value = "Kiosk")] Kiosk = 5,
 
-        /// <summary>
-        /// Enum Parking for value: Parking
-        /// </summary>
-        [EnumMember(Value = "Parking")]
-        Parking = 6,
+    /// <summary>
+    ///     Enum Parking for value: Parking
+    /// </summary>
+    [EnumMember(Value = "Parking")] Parking = 6,
 
-        /// <summary>
-        /// Enum PartyToParty for value: PartyToParty
-        /// </summary>
-        [EnumMember(Value = "PartyToParty")]
-        PartyToParty = 7
-
-    }
-
+    /// <summary>
+    ///     Enum PartyToParty for value: PartyToParty
+    /// </summary>
+    [EnumMember(Value = "PartyToParty")] PartyToParty = 7
 }

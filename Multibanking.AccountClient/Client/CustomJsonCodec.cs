@@ -94,7 +94,6 @@ internal class CustomJsonCodec : IRestSerializer, ISerializer, IDeserializer
         if (type == typeof(byte[])) // return byte array
             return response.RawBytes;
 
-        // TODO: ? if (type.IsAssignableFrom(typeof(Stream)))
         if (type == typeof(Stream))
         {
             var bytes = response.RawBytes;

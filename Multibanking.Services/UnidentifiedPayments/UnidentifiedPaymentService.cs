@@ -13,6 +13,16 @@ public class UnidentifiedPaymentService(IUnidentifiedPaymentClient unidentifiedP
     private const int QuantityLongPullingAttempts = 10;
     private const int LongPullingPeriod = 1000;
 
+    public async Task CreatePayment(CreateUnidentifiedPaymentDto createUnidentifiedPaymentDto)
+    {
+        if (!cardService.UserHasCard(createUnidentifiedPaymentDto.CardGuid))
+            throw new Exception("Взаимодействие с данной картой невозможно (заблокирована или относится к другому пользователю");
+        var createUnidentifiedPaymentModel = mapper.Map<CreateUnidentifiedPaymentModel>(createUnidentifiedPaymentDto);
+        createUnidentifiedPaymentModel.DebtorPan = Encoding.UTF8.GetString(Convert.FromBase64String(cardService.GetCardDetail(createUnidentifiedPaymentDto.CardGuid).EncryptedPan));
+
+        await CreatePaymentWithValidation(createUnidentifiedPaymentModel);
+    }
+
     private ConsentResponseComplexType CreateConsentPaymentInit(CreateUnidentifiedPaymentModel createUnidentifiedPaymentModel)
     {
         var consentResponseComplexType = unidentifiedPaymentClient.CreatePaymentConsent(Guid.NewGuid().ToString(),
@@ -111,15 +121,5 @@ public class UnidentifiedPaymentService(IUnidentifiedPaymentClient unidentifiedP
 
         if (paymentResponseComplexType.Data.Status == TransactionStatusStaticType.Rejected)
             throw new Exception("Банкинг отклонил транзакцию");
-    }
-
-    public async Task CreatePayment(CreateUnidentifiedPaymentDto createUnidentifiedPaymentDto)
-    {
-        if (!cardService.UserHasCard(createUnidentifiedPaymentDto.CardGuid))
-            throw new Exception("Взаимодействие с данной картой невозможно (заблокирована или относится к другому пользователю");
-        var createUnidentifiedPaymentModel = mapper.Map<CreateUnidentifiedPaymentModel>(createUnidentifiedPaymentDto);
-        createUnidentifiedPaymentModel.DebtorPan = Encoding.UTF8.GetString(Convert.FromBase64String(cardService.GetCardDetail(createUnidentifiedPaymentDto.CardGuid).EncryptedPan));
-
-        await CreatePaymentWithValidation(createUnidentifiedPaymentModel);
     }
 }

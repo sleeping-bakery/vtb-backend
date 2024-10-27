@@ -9,174 +9,154 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.CardOperationClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.CardOperationClient.Model
+namespace Multibanking.CardOperationClient.Model;
+
+/// <summary>
+///     Данные для блокировки/разблокировки карты
+/// </summary>
+[DataContract(Name = "CardStatusRequest")]
+public class CardStatusRequest : IEquatable<CardStatusRequest>, IValidatableObject
 {
     /// <summary>
-    /// Данные для блокировки/разблокировки карты
+    ///     Новый статус карты
     /// </summary>
-    [DataContract(Name = "CardStatusRequest")]
-    public partial class CardStatusRequest : IEquatable<CardStatusRequest>, IValidatableObject
+    /// <value>Новый статус карты</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum NewStatusEnum
     {
         /// <summary>
-        /// Новый статус карты
+        ///     Enum BLOCK for value: BLOCK
         /// </summary>
-        /// <value>Новый статус карты</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum NewStatusEnum
-        {
-            /// <summary>
-            /// Enum BLOCK for value: BLOCK
-            /// </summary>
-            [EnumMember(Value = "BLOCK")]
-            BLOCK = 1,
-
-            /// <summary>
-            /// Enum ACTIVE for value: ACTIVE
-            /// </summary>
-            [EnumMember(Value = "ACTIVE")]
-            ACTIVE = 2,
-
-            /// <summary>
-            /// Enum PERMANENTBLOCK for value: PERMANENTBLOCK
-            /// </summary>
-            [EnumMember(Value = "PERMANENTBLOCK")]
-            PERMANENTBLOCK = 3
-
-        }
-
+        [EnumMember(Value = "BLOCK")] BLOCK = 1,
 
         /// <summary>
-        /// Новый статус карты
+        ///     Enum ACTIVE for value: ACTIVE
         /// </summary>
-        /// <value>Новый статус карты</value>
-        [DataMember(Name = "newStatus", IsRequired = true, EmitDefaultValue = true)]
-        public NewStatusEnum NewStatus { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardStatusRequest" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected CardStatusRequest() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardStatusRequest" /> class.
-        /// </summary>
-        /// <param name="newStatus">Новый статус карты (required).</param>
-        /// <param name="reason">Причина блокировки/разблокировки карты.</param>
-        public CardStatusRequest(NewStatusEnum newStatus = default(NewStatusEnum), string reason = default(string))
-        {
-            this.NewStatus = newStatus;
-            this.Reason = reason;
-        }
+        [EnumMember(Value = "ACTIVE")] ACTIVE = 2,
 
         /// <summary>
-        /// Причина блокировки/разблокировки карты
+        ///     Enum PERMANENTBLOCK for value: PERMANENTBLOCK
         /// </summary>
-        /// <value>Причина блокировки/разблокировки карты</value>
-        [DataMember(Name = "reason", EmitDefaultValue = false)]
-        public string Reason { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class CardStatusRequest {\n");
-            sb.Append("  NewStatus: ").Append(NewStatus).Append("\n");
-            sb.Append("  Reason: ").Append(Reason).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as CardStatusRequest);
-        }
-
-        /// <summary>
-        /// Returns true if CardStatusRequest instances are equal
-        /// </summary>
-        /// <param name="input">Instance of CardStatusRequest to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(CardStatusRequest input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.NewStatus == input.NewStatus ||
-                    this.NewStatus.Equals(input.NewStatus)
-                ) && 
-                (
-                    this.Reason == input.Reason ||
-                    (this.Reason != null &&
-                    this.Reason.Equals(input.Reason))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.NewStatus.GetHashCode();
-                if (this.Reason != null)
-                {
-                    hashCode = (hashCode * 59) + this.Reason.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Reason (string) maxLength
-            if (this.Reason != null && this.Reason.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Reason, length must be less than 500.", new [] { "Reason" });
-            }
-
-            yield break;
-        }
+        [EnumMember(Value = "PERMANENTBLOCK")] PERMANENTBLOCK = 3
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="CardStatusRequest" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected CardStatusRequest()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="CardStatusRequest" /> class.
+    /// </summary>
+    /// <param name="newStatus">Новый статус карты (required).</param>
+    /// <param name="reason">Причина блокировки/разблокировки карты.</param>
+    public CardStatusRequest(NewStatusEnum newStatus = default, string reason = default)
+    {
+        NewStatus = newStatus;
+        Reason = reason;
+    }
+
+
+    /// <summary>
+    ///     Новый статус карты
+    /// </summary>
+    /// <value>Новый статус карты</value>
+    [DataMember(Name = "newStatus", IsRequired = true, EmitDefaultValue = true)]
+    public NewStatusEnum NewStatus { get; set; }
+
+    /// <summary>
+    ///     Причина блокировки/разблокировки карты
+    /// </summary>
+    /// <value>Причина блокировки/разблокировки карты</value>
+    [DataMember(Name = "reason", EmitDefaultValue = false)]
+    public string Reason { get; set; }
+
+    /// <summary>
+    ///     Returns true if CardStatusRequest instances are equal
+    /// </summary>
+    /// <param name="input">Instance of CardStatusRequest to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(CardStatusRequest input)
+    {
+        if (input == null) return false;
+        return
+            (
+                NewStatus == input.NewStatus ||
+                NewStatus.Equals(input.NewStatus)
+            ) &&
+            (
+                Reason == input.Reason ||
+                (Reason != null &&
+                 Reason.Equals(input.Reason))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Reason (string) maxLength
+        if (Reason != null && Reason.Length > 500) yield return new ValidationResult("Invalid value for Reason, length must be less than 500.", new[] { "Reason" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class CardStatusRequest {\n");
+        sb.Append("  NewStatus: ").Append(NewStatus).Append("\n");
+        sb.Append("  Reason: ").Append(Reason).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as CardStatusRequest);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + NewStatus.GetHashCode();
+            if (Reason != null) hashCode = hashCode * 59 + Reason.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -25,4 +25,3 @@ public class AccountService(IAccountsClient accountsClient, IAccountConsentsServ
         return accountResponse.Data.Account.Count > 0;
     }
 }
-

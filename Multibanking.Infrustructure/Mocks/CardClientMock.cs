@@ -8,40 +8,33 @@ namespace Multibanking.Infrustructure.Mocks;
 
 public static class CardClientMock
 {
-    private static readonly Random Random = new Random();
+    private static readonly Random Random = new();
 
     private static string GenerateRandomPan(int length)
     {
         var pan = new char[length];
-        for (var i = 0; i < length; i++)
-        {
-            pan[i] = (char)('0' + Random.Next(0, 10)); // Генерация случайной цифры
-        }
+        for (var i = 0; i < length; i++) pan[i] = (char)('0' + Random.Next(0, 10)); // Генерация случайной цифры
 
         return new string(pan);
     }
 
     private static string GenerateMaskedPan(int panLength = 16, int visibleDigits = 4)
     {
-        if (panLength <= visibleDigits)
-        {
-            throw new ArgumentException("PAN length must be greater than the number of visible digits.");
-        }
+        if (panLength <= visibleDigits) throw new ArgumentException("PAN length must be greater than the number of visible digits.");
 
         var pan = GenerateRandomPan(panLength);
         var maskedLength = pan.Length - visibleDigits;
 
         return string.Concat(new string('*', maskedLength), pan.AsSpan(maskedLength));
     }
-    
+
     private static string GenerateCvv(int length = 3)
     {
-        
         var minValue = (int)Math.Pow(10, length - 1);
         var maxValue = (int)Math.Pow(10, length) - 1;
 
         var cvvNumber = Random.Next(minValue, maxValue + 1);
-        
+
         return cvvNumber.ToString();
     }
 

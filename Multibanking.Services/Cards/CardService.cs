@@ -25,7 +25,7 @@ public class CardService(
         var userDto = userContextService.GetUserDtoFromHttpContext();
         return cardRepository.Read().SingleOrDefault(card => card.UserId == userDto.Id && card.Id == cardId && card.Status != CardStatus.PermanentBlock) != null;
     }
-    
+
     public void CreateCard(CardCreateDto cardCreateDto)
     {
         if (!accountService.IsAccountExist(cardCreateDto.AccountId))
@@ -53,13 +53,6 @@ public class CardService(
         return credentialsResponse;
     }
 
-    private Card GetCardEntityAndValidate(Guid cardId)
-    {
-        var card = cardRepository.Read().SingleOrDefault(card => card.Id == cardId);
-        ValidateCard(card);
-        return card!;
-    }
-
 
     public CvvResponse GetCardCvv(Guid cardId)
     {
@@ -85,15 +78,6 @@ public class CardService(
         cardRepository.SaveChanges();
     }
 
-    private void ValidateCard(Card? card)
-    {
-        if (card is null)
-            throw new ArgumentException("Данной карты не существует");
-
-        if (card.UserId != userContextService.GetUserDtoFromHttpContext().Id)
-            throw new ArgumentException("Нельзя взаимодействовать с чужой картой");
-    }
-
     public void UpdateCard(CardUpdateDto cardUpdateDto)
     {
         var card = GetCardEntityAndValidate(cardUpdateDto.Id);
@@ -115,5 +99,21 @@ public class CardService(
         if (cardUpdateDto is { EncodedPinCode: not null, PublicKey: not null })
             cardOperationClient.UpdateCardPin(card.PublicId, Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(),
                 new PinCardRequest(cardUpdateDto.EncodedPinCode, cardUpdateDto.PublicKey));
+    }
+
+    private Card GetCardEntityAndValidate(Guid cardId)
+    {
+        var card = cardRepository.Read().SingleOrDefault(card => card.Id == cardId);
+        ValidateCard(card);
+        return card!;
+    }
+
+    private void ValidateCard(Card? card)
+    {
+        if (card is null)
+            throw new ArgumentException("Данной карты не существует");
+
+        if (card.UserId != userContextService.GetUserDtoFromHttpContext().Id)
+            throw new ArgumentException("Нельзя взаимодействовать с чужой картой");
     }
 }

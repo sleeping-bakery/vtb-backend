@@ -9,157 +9,138 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Вспомогательные данные, предоставленные СППУ, при запросе SCA
+/// </summary>
+[DataContract(Name = "SCASupportDataComplexType")]
+public class SCASupportDataComplexType : IEquatable<SCASupportDataComplexType>, IValidatableObject
 {
     /// <summary>
-    /// Вспомогательные данные, предоставленные СППУ, при запросе SCA
+    ///     Initializes a new instance of the <see cref="SCASupportDataComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "SCASupportDataComplexType")]
-    public partial class SCASupportDataComplexType : IEquatable<SCASupportDataComplexType>, IValidatableObject
+    /// <param name="requestedSCAExemptionType">Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа..</param>
+    /// <param name="appliedAuthenticationApproach">Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ..</param>
+    /// <param name="referencePaymentOrderId">Детальное описание причины статуса платежа..</param>
+    public SCASupportDataComplexType(SCAExemptionTypeStaticType? requestedSCAExemptionType = default,
+        AppliedAuthenticationApproachStaticType? appliedAuthenticationApproach = default, string referencePaymentOrderId = default)
     {
-
-        /// <summary>
-        /// Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа.
-        /// </summary>
-        /// <value>Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа.</value>
-        [DataMember(Name = "requestedSCAExemptionType", EmitDefaultValue = false)]
-        public SCAExemptionTypeStaticType? RequestedSCAExemptionType { get; set; }
-
-        /// <summary>
-        /// Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ.
-        /// </summary>
-        /// <value>Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ.</value>
-        [DataMember(Name = "appliedAuthenticationApproach", EmitDefaultValue = false)]
-        public AppliedAuthenticationApproachStaticType? AppliedAuthenticationApproach { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SCASupportDataComplexType" /> class.
-        /// </summary>
-        /// <param name="requestedSCAExemptionType">Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа..</param>
-        /// <param name="appliedAuthenticationApproach">Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ..</param>
-        /// <param name="referencePaymentOrderId">Детальное описание причины статуса платежа..</param>
-        public SCASupportDataComplexType(SCAExemptionTypeStaticType? requestedSCAExemptionType = default(SCAExemptionTypeStaticType?), AppliedAuthenticationApproachStaticType? appliedAuthenticationApproach = default(AppliedAuthenticationApproachStaticType?), string referencePaymentOrderId = default(string))
-        {
-            this.RequestedSCAExemptionType = requestedSCAExemptionType;
-            this.AppliedAuthenticationApproach = appliedAuthenticationApproach;
-            this.ReferencePaymentOrderId = referencePaymentOrderId;
-        }
-
-        /// <summary>
-        /// Детальное описание причины статуса платежа.
-        /// </summary>
-        /// <value>Детальное описание причины статуса платежа.</value>
-        [DataMember(Name = "referencePaymentOrderId", EmitDefaultValue = false)]
-        public string ReferencePaymentOrderId { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class SCASupportDataComplexType {\n");
-            sb.Append("  RequestedSCAExemptionType: ").Append(RequestedSCAExemptionType).Append("\n");
-            sb.Append("  AppliedAuthenticationApproach: ").Append(AppliedAuthenticationApproach).Append("\n");
-            sb.Append("  ReferencePaymentOrderId: ").Append(ReferencePaymentOrderId).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as SCASupportDataComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if SCASupportDataComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of SCASupportDataComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(SCASupportDataComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.RequestedSCAExemptionType == input.RequestedSCAExemptionType ||
-                    this.RequestedSCAExemptionType.Equals(input.RequestedSCAExemptionType)
-                ) && 
-                (
-                    this.AppliedAuthenticationApproach == input.AppliedAuthenticationApproach ||
-                    this.AppliedAuthenticationApproach.Equals(input.AppliedAuthenticationApproach)
-                ) && 
-                (
-                    this.ReferencePaymentOrderId == input.ReferencePaymentOrderId ||
-                    (this.ReferencePaymentOrderId != null &&
-                    this.ReferencePaymentOrderId.Equals(input.ReferencePaymentOrderId))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.RequestedSCAExemptionType.GetHashCode();
-                hashCode = (hashCode * 59) + this.AppliedAuthenticationApproach.GetHashCode();
-                if (this.ReferencePaymentOrderId != null)
-                {
-                    hashCode = (hashCode * 59) + this.ReferencePaymentOrderId.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // ReferencePaymentOrderId (string) maxLength
-            if (this.ReferencePaymentOrderId != null && this.ReferencePaymentOrderId.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ReferencePaymentOrderId, length must be less than 128.", new [] { "ReferencePaymentOrderId" });
-            }
-
-            yield break;
-        }
+        RequestedSCAExemptionType = requestedSCAExemptionType;
+        AppliedAuthenticationApproach = appliedAuthenticationApproach;
+        ReferencePaymentOrderId = referencePaymentOrderId;
     }
 
+    /// <summary>
+    ///     Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа.
+    /// </summary>
+    /// <value>Поле позволяет СППУ запрашивать конкретное исключение SCA для инициирования платежа.</value>
+    [DataMember(Name = "requestedSCAExemptionType", EmitDefaultValue = false)]
+    public SCAExemptionTypeStaticType? RequestedSCAExemptionType { get; set; }
+
+    /// <summary>
+    ///     Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ.
+    /// </summary>
+    /// <value>Поле показывает, подвергался ли Пользователь SCA, выполняемый СППУ.</value>
+    [DataMember(Name = "appliedAuthenticationApproach", EmitDefaultValue = false)]
+    public AppliedAuthenticationApproachStaticType? AppliedAuthenticationApproach { get; set; }
+
+    /// <summary>
+    ///     Детальное описание причины статуса платежа.
+    /// </summary>
+    /// <value>Детальное описание причины статуса платежа.</value>
+    [DataMember(Name = "referencePaymentOrderId", EmitDefaultValue = false)]
+    public string ReferencePaymentOrderId { get; set; }
+
+    /// <summary>
+    ///     Returns true if SCASupportDataComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of SCASupportDataComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(SCASupportDataComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                RequestedSCAExemptionType == input.RequestedSCAExemptionType ||
+                RequestedSCAExemptionType.Equals(input.RequestedSCAExemptionType)
+            ) &&
+            (
+                AppliedAuthenticationApproach == input.AppliedAuthenticationApproach ||
+                AppliedAuthenticationApproach.Equals(input.AppliedAuthenticationApproach)
+            ) &&
+            (
+                ReferencePaymentOrderId == input.ReferencePaymentOrderId ||
+                (ReferencePaymentOrderId != null &&
+                 ReferencePaymentOrderId.Equals(input.ReferencePaymentOrderId))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // ReferencePaymentOrderId (string) maxLength
+        if (ReferencePaymentOrderId != null && ReferencePaymentOrderId.Length > 128)
+            yield return new ValidationResult("Invalid value for ReferencePaymentOrderId, length must be less than 128.", new[] { "ReferencePaymentOrderId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class SCASupportDataComplexType {\n");
+        sb.Append("  RequestedSCAExemptionType: ").Append(RequestedSCAExemptionType).Append("\n");
+        sb.Append("  AppliedAuthenticationApproach: ").Append(AppliedAuthenticationApproach).Append("\n");
+        sb.Append("  ReferencePaymentOrderId: ").Append(ReferencePaymentOrderId).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as SCASupportDataComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + RequestedSCAExemptionType.GetHashCode();
+            hashCode = hashCode * 59 + AppliedAuthenticationApproach.GetHashCode();
+            if (ReferencePaymentOrderId != null) hashCode = hashCode * 59 + ReferencePaymentOrderId.GetHashCode();
+            return hashCode;
+        }
+    }
 }

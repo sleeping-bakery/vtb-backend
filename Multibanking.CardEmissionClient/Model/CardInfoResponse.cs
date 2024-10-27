@@ -9,234 +9,186 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.CardEmissionClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.CardEmissionClient.Model
+namespace Multibanking.CardEmissionClient.Model;
+
+/// <summary>
+///     Общая информация
+/// </summary>
+[DataContract(Name = "CardInfoResponse")]
+public class CardInfoResponse : IEquatable<CardInfoResponse>, IValidatableObject
 {
     /// <summary>
-    /// Общая информация
+    ///     Initializes a new instance of the <see cref="CardInfoResponse" /> class.
     /// </summary>
-    [DataContract(Name = "CardInfoResponse")]
-    public partial class CardInfoResponse : IEquatable<CardInfoResponse>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected CardInfoResponse()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardInfoResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected CardInfoResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardInfoResponse" /> class.
-        /// </summary>
-        /// <param name="maskedPan">Маскированый PAN (required).</param>
-        /// <param name="embossingName">Эмбоссированное имя клиента (required).</param>
-        /// <param name="cardExpiry">Дата окончания действия карты (required).</param>
-        /// <param name="publicId">Публичный идентификатор продукта (required).</param>
-        public CardInfoResponse(string maskedPan = default(string), string embossingName = default(string), string cardExpiry = default(string), string publicId = default(string))
-        {
-            // to ensure "maskedPan" is required (not null)
-            if (maskedPan == null)
-            {
-                throw new ArgumentNullException("maskedPan is a required property for CardInfoResponse and cannot be null");
-            }
-            this.MaskedPan = maskedPan;
-            // to ensure "embossingName" is required (not null)
-            if (embossingName == null)
-            {
-                throw new ArgumentNullException("embossingName is a required property for CardInfoResponse and cannot be null");
-            }
-            this.EmbossingName = embossingName;
-            // to ensure "cardExpiry" is required (not null)
-            if (cardExpiry == null)
-            {
-                throw new ArgumentNullException("cardExpiry is a required property for CardInfoResponse and cannot be null");
-            }
-            this.CardExpiry = cardExpiry;
-            // to ensure "publicId" is required (not null)
-            if (publicId == null)
-            {
-                throw new ArgumentNullException("publicId is a required property for CardInfoResponse and cannot be null");
-            }
-            this.PublicId = publicId;
-        }
-
-        /// <summary>
-        /// Маскированый PAN
-        /// </summary>
-        /// <value>Маскированый PAN</value>
-        [DataMember(Name = "maskedPan", IsRequired = true, EmitDefaultValue = true)]
-        public string MaskedPan { get; set; }
-
-        /// <summary>
-        /// Эмбоссированное имя клиента
-        /// </summary>
-        /// <value>Эмбоссированное имя клиента</value>
-        [DataMember(Name = "embossingName", IsRequired = true, EmitDefaultValue = true)]
-        public string EmbossingName { get; set; }
-
-        /// <summary>
-        /// Дата окончания действия карты
-        /// </summary>
-        /// <value>Дата окончания действия карты</value>
-        [DataMember(Name = "cardExpiry", IsRequired = true, EmitDefaultValue = true)]
-        public string CardExpiry { get; set; }
-
-        /// <summary>
-        /// Публичный идентификатор продукта
-        /// </summary>
-        /// <value>Публичный идентификатор продукта</value>
-        [DataMember(Name = "publicId", IsRequired = true, EmitDefaultValue = true)]
-        public string PublicId { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class CardInfoResponse {\n");
-            sb.Append("  MaskedPan: ").Append(MaskedPan).Append("\n");
-            sb.Append("  EmbossingName: ").Append(EmbossingName).Append("\n");
-            sb.Append("  CardExpiry: ").Append(CardExpiry).Append("\n");
-            sb.Append("  PublicId: ").Append(PublicId).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as CardInfoResponse);
-        }
-
-        /// <summary>
-        /// Returns true if CardInfoResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of CardInfoResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(CardInfoResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.MaskedPan == input.MaskedPan ||
-                    (this.MaskedPan != null &&
-                    this.MaskedPan.Equals(input.MaskedPan))
-                ) && 
-                (
-                    this.EmbossingName == input.EmbossingName ||
-                    (this.EmbossingName != null &&
-                    this.EmbossingName.Equals(input.EmbossingName))
-                ) && 
-                (
-                    this.CardExpiry == input.CardExpiry ||
-                    (this.CardExpiry != null &&
-                    this.CardExpiry.Equals(input.CardExpiry))
-                ) && 
-                (
-                    this.PublicId == input.PublicId ||
-                    (this.PublicId != null &&
-                    this.PublicId.Equals(input.PublicId))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.MaskedPan != null)
-                {
-                    hashCode = (hashCode * 59) + this.MaskedPan.GetHashCode();
-                }
-                if (this.EmbossingName != null)
-                {
-                    hashCode = (hashCode * 59) + this.EmbossingName.GetHashCode();
-                }
-                if (this.CardExpiry != null)
-                {
-                    hashCode = (hashCode * 59) + this.CardExpiry.GetHashCode();
-                }
-                if (this.PublicId != null)
-                {
-                    hashCode = (hashCode * 59) + this.PublicId.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // MaskedPan (string) maxLength
-            if (this.MaskedPan != null && this.MaskedPan.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MaskedPan, length must be less than 50.", new [] { "MaskedPan" });
-            }
-
-            // EmbossingName (string) maxLength
-            if (this.EmbossingName != null && this.EmbossingName.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EmbossingName, length must be less than 50.", new [] { "EmbossingName" });
-            }
-
-            // CardExpiry (string) maxLength
-            if (this.CardExpiry != null && this.CardExpiry.Length > 5)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardExpiry, length must be less than 5.", new [] { "CardExpiry" });
-            }
-
-            // CardExpiry (string) pattern
-            Regex regexCardExpiry = new Regex(@"^(0[1-9]|1[0-2])\/?([0-9]{2})$", RegexOptions.CultureInvariant);
-            if (false == regexCardExpiry.Match(this.CardExpiry).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardExpiry, must match a pattern of " + regexCardExpiry, new [] { "CardExpiry" });
-            }
-
-            // PublicId (string) maxLength
-            if (this.PublicId != null && this.PublicId.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PublicId, length must be less than 50.", new [] { "PublicId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="CardInfoResponse" /> class.
+    /// </summary>
+    /// <param name="maskedPan">Маскированый PAN (required).</param>
+    /// <param name="embossingName">Эмбоссированное имя клиента (required).</param>
+    /// <param name="cardExpiry">Дата окончания действия карты (required).</param>
+    /// <param name="publicId">Публичный идентификатор продукта (required).</param>
+    public CardInfoResponse(string maskedPan = default, string embossingName = default, string cardExpiry = default, string publicId = default)
+    {
+        // to ensure "maskedPan" is required (not null)
+        if (maskedPan == null) throw new ArgumentNullException("maskedPan is a required property for CardInfoResponse and cannot be null");
+        MaskedPan = maskedPan;
+        // to ensure "embossingName" is required (not null)
+        if (embossingName == null) throw new ArgumentNullException("embossingName is a required property for CardInfoResponse and cannot be null");
+        EmbossingName = embossingName;
+        // to ensure "cardExpiry" is required (not null)
+        if (cardExpiry == null) throw new ArgumentNullException("cardExpiry is a required property for CardInfoResponse and cannot be null");
+        CardExpiry = cardExpiry;
+        // to ensure "publicId" is required (not null)
+        if (publicId == null) throw new ArgumentNullException("publicId is a required property for CardInfoResponse and cannot be null");
+        PublicId = publicId;
+    }
+
+    /// <summary>
+    ///     Маскированый PAN
+    /// </summary>
+    /// <value>Маскированый PAN</value>
+    [DataMember(Name = "maskedPan", IsRequired = true, EmitDefaultValue = true)]
+    public string MaskedPan { get; set; }
+
+    /// <summary>
+    ///     Эмбоссированное имя клиента
+    /// </summary>
+    /// <value>Эмбоссированное имя клиента</value>
+    [DataMember(Name = "embossingName", IsRequired = true, EmitDefaultValue = true)]
+    public string EmbossingName { get; set; }
+
+    /// <summary>
+    ///     Дата окончания действия карты
+    /// </summary>
+    /// <value>Дата окончания действия карты</value>
+    [DataMember(Name = "cardExpiry", IsRequired = true, EmitDefaultValue = true)]
+    public string CardExpiry { get; set; }
+
+    /// <summary>
+    ///     Публичный идентификатор продукта
+    /// </summary>
+    /// <value>Публичный идентификатор продукта</value>
+    [DataMember(Name = "publicId", IsRequired = true, EmitDefaultValue = true)]
+    public string PublicId { get; set; }
+
+    /// <summary>
+    ///     Returns true if CardInfoResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of CardInfoResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(CardInfoResponse input)
+    {
+        if (input == null) return false;
+        return
+            (
+                MaskedPan == input.MaskedPan ||
+                (MaskedPan != null &&
+                 MaskedPan.Equals(input.MaskedPan))
+            ) &&
+            (
+                EmbossingName == input.EmbossingName ||
+                (EmbossingName != null &&
+                 EmbossingName.Equals(input.EmbossingName))
+            ) &&
+            (
+                CardExpiry == input.CardExpiry ||
+                (CardExpiry != null &&
+                 CardExpiry.Equals(input.CardExpiry))
+            ) &&
+            (
+                PublicId == input.PublicId ||
+                (PublicId != null &&
+                 PublicId.Equals(input.PublicId))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // MaskedPan (string) maxLength
+        if (MaskedPan != null && MaskedPan.Length > 50) yield return new ValidationResult("Invalid value for MaskedPan, length must be less than 50.", new[] { "MaskedPan" });
+
+        // EmbossingName (string) maxLength
+        if (EmbossingName != null && EmbossingName.Length > 50)
+            yield return new ValidationResult("Invalid value for EmbossingName, length must be less than 50.", new[] { "EmbossingName" });
+
+        // CardExpiry (string) maxLength
+        if (CardExpiry != null && CardExpiry.Length > 5) yield return new ValidationResult("Invalid value for CardExpiry, length must be less than 5.", new[] { "CardExpiry" });
+
+        // CardExpiry (string) pattern
+        var regexCardExpiry = new Regex(@"^(0[1-9]|1[0-2])\/?([0-9]{2})$", RegexOptions.CultureInvariant);
+        if (false == regexCardExpiry.Match(CardExpiry).Success)
+            yield return new ValidationResult("Invalid value for CardExpiry, must match a pattern of " + regexCardExpiry, new[] { "CardExpiry" });
+
+        // PublicId (string) maxLength
+        if (PublicId != null && PublicId.Length > 50) yield return new ValidationResult("Invalid value for PublicId, length must be less than 50.", new[] { "PublicId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class CardInfoResponse {\n");
+        sb.Append("  MaskedPan: ").Append(MaskedPan).Append("\n");
+        sb.Append("  EmbossingName: ").Append(EmbossingName).Append("\n");
+        sb.Append("  CardExpiry: ").Append(CardExpiry).Append("\n");
+        sb.Append("  PublicId: ").Append(PublicId).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as CardInfoResponse);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (MaskedPan != null) hashCode = hashCode * 59 + MaskedPan.GetHashCode();
+            if (EmbossingName != null) hashCode = hashCode * 59 + EmbossingName.GetHashCode();
+            if (CardExpiry != null) hashCode = hashCode * 59 + CardExpiry.GetHashCode();
+            if (PublicId != null) hashCode = hashCode * 59 + PublicId.GetHashCode();
+            return hashCode;
+        }
+    }
 }

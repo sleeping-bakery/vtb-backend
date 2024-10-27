@@ -9,7 +9,7 @@ namespace Multibanking.API.Controllers;
 public class UnidentifiedPaymentController(IUnidentifiedPaymentService unidentifiedPaymentService) : ControllerBase
 {
     /// <summary>
-    /// Позволяет сделать неидентифицированный платеж
+    ///     Позволяет сделать неидентифицированный платеж
     /// </summary>
     /// <param name="createUnidentifiedPaymentDto"></param>
     /// <returns></returns>
@@ -17,7 +17,7 @@ public class UnidentifiedPaymentController(IUnidentifiedPaymentService unidentif
     public async Task<IActionResult> Post(CreateUnidentifiedPaymentDto createUnidentifiedPaymentDto)
     {
         await unidentifiedPaymentService.CreatePayment(createUnidentifiedPaymentDto);
-        
+
         return Ok();
     }
 }

@@ -9,192 +9,174 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     PaymentStatusDetailComplexType
+/// </summary>
+[DataContract(Name = "PaymentStatusDetailComplexType")]
+public class PaymentStatusDetailComplexType : IEquatable<PaymentStatusDetailComplexType>, IValidatableObject
 {
     /// <summary>
-    /// PaymentStatusDetailComplexType
+    ///     Initializes a new instance of the <see cref="PaymentStatusDetailComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "PaymentStatusDetailComplexType")]
-    public partial class PaymentStatusDetailComplexType : IEquatable<PaymentStatusDetailComplexType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected PaymentStatusDetailComplexType()
     {
-
-        /// <summary>
-        /// Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания.
-        /// </summary>
-        /// <value>Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания.</value>
-        [DataMember(Name = "localInstrument", EmitDefaultValue = false)]
-        public ExternalPaymentTransactionStatus1Code? LocalInstrument { get; set; }
-
-        /// <summary>
-        /// Код причины статуса платежа.
-        /// </summary>
-        /// <value>Код причины статуса платежа.</value>
-        [DataMember(Name = "statusReason", EmitDefaultValue = false)]
-        public TransactionIndividualStatusReasonStaticType? StatusReason { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentStatusDetailComplexType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PaymentStatusDetailComplexType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentStatusDetailComplexType" /> class.
-        /// </summary>
-        /// <param name="localInstrument">Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания..</param>
-        /// <param name="status">Статус платежа, назначенный администратором транзакции. (required).</param>
-        /// <param name="statusReason">Код причины статуса платежа..</param>
-        /// <param name="statusReasonDescription">Детальное описание причины статуса платежа..</param>
-        public PaymentStatusDetailComplexType(ExternalPaymentTransactionStatus1Code? localInstrument = default(ExternalPaymentTransactionStatus1Code?), string status = default(string), TransactionIndividualStatusReasonStaticType? statusReason = default(TransactionIndividualStatusReasonStaticType?), string statusReasonDescription = default(string))
-        {
-            // to ensure "status" is required (not null)
-            if (status == null)
-            {
-                throw new ArgumentNullException("status is a required property for PaymentStatusDetailComplexType and cannot be null");
-            }
-            this.Status = status;
-            this.LocalInstrument = localInstrument;
-            this.StatusReason = statusReason;
-            this.StatusReasonDescription = statusReasonDescription;
-        }
-
-        /// <summary>
-        /// Статус платежа, назначенный администратором транзакции.
-        /// </summary>
-        /// <value>Статус платежа, назначенный администратором транзакции.</value>
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
-        public string Status { get; set; }
-
-        /// <summary>
-        /// Детальное описание причины статуса платежа.
-        /// </summary>
-        /// <value>Детальное описание причины статуса платежа.</value>
-        [DataMember(Name = "statusReasonDescription", EmitDefaultValue = false)]
-        public string StatusReasonDescription { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PaymentStatusDetailComplexType {\n");
-            sb.Append("  LocalInstrument: ").Append(LocalInstrument).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  StatusReason: ").Append(StatusReason).Append("\n");
-            sb.Append("  StatusReasonDescription: ").Append(StatusReasonDescription).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentStatusDetailComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentStatusDetailComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentStatusDetailComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentStatusDetailComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.LocalInstrument == input.LocalInstrument ||
-                    this.LocalInstrument.Equals(input.LocalInstrument)
-                ) && 
-                (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
-                ) && 
-                (
-                    this.StatusReason == input.StatusReason ||
-                    this.StatusReason.Equals(input.StatusReason)
-                ) && 
-                (
-                    this.StatusReasonDescription == input.StatusReasonDescription ||
-                    (this.StatusReasonDescription != null &&
-                    this.StatusReasonDescription.Equals(input.StatusReasonDescription))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.LocalInstrument.GetHashCode();
-                if (this.Status != null)
-                {
-                    hashCode = (hashCode * 59) + this.Status.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.StatusReason.GetHashCode();
-                if (this.StatusReasonDescription != null)
-                {
-                    hashCode = (hashCode * 59) + this.StatusReasonDescription.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Status (string) maxLength
-            if (this.Status != null && this.Status.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Status, length must be less than 128.", new [] { "Status" });
-            }
-
-            // StatusReasonDescription (string) maxLength
-            if (this.StatusReasonDescription != null && this.StatusReasonDescription.Length > 256)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for StatusReasonDescription, length must be less than 256.", new [] { "StatusReasonDescription" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PaymentStatusDetailComplexType" /> class.
+    /// </summary>
+    /// <param name="localInstrument">
+    ///     Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации
+    ///     услуги или уровня обслуживания..
+    /// </param>
+    /// <param name="status">Статус платежа, назначенный администратором транзакции. (required).</param>
+    /// <param name="statusReason">Код причины статуса платежа..</param>
+    /// <param name="statusReasonDescription">Детальное описание причины статуса платежа..</param>
+    public PaymentStatusDetailComplexType(ExternalPaymentTransactionStatus1Code? localInstrument = default, string status = default,
+        TransactionIndividualStatusReasonStaticType? statusReason = default, string statusReasonDescription = default)
+    {
+        // to ensure "status" is required (not null)
+        if (status == null) throw new ArgumentNullException("status is a required property for PaymentStatusDetailComplexType and cannot be null");
+        Status = status;
+        LocalInstrument = localInstrument;
+        StatusReason = statusReason;
+        StatusReasonDescription = statusReasonDescription;
+    }
+
+    /// <summary>
+    ///     Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня
+    ///     обслуживания.
+    /// </summary>
+    /// <value>
+    ///     Инструмент для сообщества пользователей. Используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня
+    ///     обслуживания.
+    /// </value>
+    [DataMember(Name = "localInstrument", EmitDefaultValue = false)]
+    public ExternalPaymentTransactionStatus1Code? LocalInstrument { get; set; }
+
+    /// <summary>
+    ///     Код причины статуса платежа.
+    /// </summary>
+    /// <value>Код причины статуса платежа.</value>
+    [DataMember(Name = "statusReason", EmitDefaultValue = false)]
+    public TransactionIndividualStatusReasonStaticType? StatusReason { get; set; }
+
+    /// <summary>
+    ///     Статус платежа, назначенный администратором транзакции.
+    /// </summary>
+    /// <value>Статус платежа, назначенный администратором транзакции.</value>
+    [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
+    public string Status { get; set; }
+
+    /// <summary>
+    ///     Детальное описание причины статуса платежа.
+    /// </summary>
+    /// <value>Детальное описание причины статуса платежа.</value>
+    [DataMember(Name = "statusReasonDescription", EmitDefaultValue = false)]
+    public string StatusReasonDescription { get; set; }
+
+    /// <summary>
+    ///     Returns true if PaymentStatusDetailComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PaymentStatusDetailComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PaymentStatusDetailComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                LocalInstrument == input.LocalInstrument ||
+                LocalInstrument.Equals(input.LocalInstrument)
+            ) &&
+            (
+                Status == input.Status ||
+                (Status != null &&
+                 Status.Equals(input.Status))
+            ) &&
+            (
+                StatusReason == input.StatusReason ||
+                StatusReason.Equals(input.StatusReason)
+            ) &&
+            (
+                StatusReasonDescription == input.StatusReasonDescription ||
+                (StatusReasonDescription != null &&
+                 StatusReasonDescription.Equals(input.StatusReasonDescription))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Status (string) maxLength
+        if (Status != null && Status.Length > 128) yield return new ValidationResult("Invalid value for Status, length must be less than 128.", new[] { "Status" });
+
+        // StatusReasonDescription (string) maxLength
+        if (StatusReasonDescription != null && StatusReasonDescription.Length > 256)
+            yield return new ValidationResult("Invalid value for StatusReasonDescription, length must be less than 256.", new[] { "StatusReasonDescription" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PaymentStatusDetailComplexType {\n");
+        sb.Append("  LocalInstrument: ").Append(LocalInstrument).Append("\n");
+        sb.Append("  Status: ").Append(Status).Append("\n");
+        sb.Append("  StatusReason: ").Append(StatusReason).Append("\n");
+        sb.Append("  StatusReasonDescription: ").Append(StatusReasonDescription).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PaymentStatusDetailComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + LocalInstrument.GetHashCode();
+            if (Status != null) hashCode = hashCode * 59 + Status.GetHashCode();
+            hashCode = hashCode * 59 + StatusReason.GetHashCode();
+            if (StatusReasonDescription != null) hashCode = hashCode * 59 + StatusReasonDescription.GetHashCode();
+            return hashCode;
+        }
+    }
 }

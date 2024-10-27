@@ -9,216 +9,175 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Контейнер с ошибкой
+/// </summary>
+[DataContract(Name = "OBRUErrorResponse")]
+public class OBRUErrorResponse : IEquatable<OBRUErrorResponse>, IValidatableObject
 {
     /// <summary>
-    /// Контейнер с ошибкой
+    ///     Initializes a new instance of the <see cref="OBRUErrorResponse" /> class.
     /// </summary>
-    [DataContract(Name = "OBRUErrorResponse")]
-    public partial class OBRUErrorResponse : IEquatable<OBRUErrorResponse>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected OBRUErrorResponse()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OBRUErrorResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected OBRUErrorResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OBRUErrorResponse" /> class.
-        /// </summary>
-        /// <param name="code">Высокоуровневый текстовый код ошибки, необходимый для классификации (required).</param>
-        /// <param name="id">Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок..</param>
-        /// <param name="message">Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса». (required).</param>
-        /// <param name="errors">errors (required).</param>
-        public OBRUErrorResponse(string code = default(string), string id = default(string), string message = default(string), List<OBRUError> errors = default(List<OBRUError>))
-        {
-            // to ensure "code" is required (not null)
-            if (code == null)
-            {
-                throw new ArgumentNullException("code is a required property for OBRUErrorResponse and cannot be null");
-            }
-            this.Code = code;
-            // to ensure "message" is required (not null)
-            if (message == null)
-            {
-                throw new ArgumentNullException("message is a required property for OBRUErrorResponse and cannot be null");
-            }
-            this.Message = message;
-            // to ensure "errors" is required (not null)
-            if (errors == null)
-            {
-                throw new ArgumentNullException("errors is a required property for OBRUErrorResponse and cannot be null");
-            }
-            this.Errors = errors;
-            this.Id = id;
-        }
-
-        /// <summary>
-        /// Высокоуровневый текстовый код ошибки, необходимый для классификации
-        /// </summary>
-        /// <value>Высокоуровневый текстовый код ошибки, необходимый для классификации</value>
-        [DataMember(Name = "code", IsRequired = true, EmitDefaultValue = true)]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок.
-        /// </summary>
-        /// <value>Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок.</value>
-        [DataMember(Name = "id", EmitDefaultValue = false)]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса».
-        /// </summary>
-        /// <value>Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса».</value>
-        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
-        public string Message { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Errors
-        /// </summary>
-        [DataMember(Name = "Errors", IsRequired = true, EmitDefaultValue = true)]
-        public List<OBRUError> Errors { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class OBRUErrorResponse {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("  Errors: ").Append(Errors).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as OBRUErrorResponse);
-        }
-
-        /// <summary>
-        /// Returns true if OBRUErrorResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of OBRUErrorResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(OBRUErrorResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Code == input.Code ||
-                    (this.Code != null &&
-                    this.Code.Equals(input.Code))
-                ) && 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
-                ) && 
-                (
-                    this.Errors == input.Errors ||
-                    this.Errors != null &&
-                    input.Errors != null &&
-                    this.Errors.SequenceEqual(input.Errors)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Code != null)
-                {
-                    hashCode = (hashCode * 59) + this.Code.GetHashCode();
-                }
-                if (this.Id != null)
-                {
-                    hashCode = (hashCode * 59) + this.Id.GetHashCode();
-                }
-                if (this.Message != null)
-                {
-                    hashCode = (hashCode * 59) + this.Message.GetHashCode();
-                }
-                if (this.Errors != null)
-                {
-                    hashCode = (hashCode * 59) + this.Errors.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Code (string) maxLength
-            if (this.Code != null && this.Code.Length > 40)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be less than 40.", new [] { "Code" });
-            }
-
-            // Id (string) maxLength
-            if (this.Id != null && this.Id.Length > 40)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Id, length must be less than 40.", new [] { "Id" });
-            }
-
-            // Message (string) maxLength
-            if (this.Message != null && this.Message.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Message, length must be less than 500.", new [] { "Message" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="OBRUErrorResponse" /> class.
+    /// </summary>
+    /// <param name="code">Высокоуровневый текстовый код ошибки, необходимый для классификации (required).</param>
+    /// <param name="id">Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок..</param>
+    /// <param name="message">Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса». (required).</param>
+    /// <param name="errors">errors (required).</param>
+    public OBRUErrorResponse(string code = default, string id = default, string message = default, List<OBRUError> errors = default)
+    {
+        // to ensure "code" is required (not null)
+        if (code == null) throw new ArgumentNullException("code is a required property for OBRUErrorResponse and cannot be null");
+        Code = code;
+        // to ensure "message" is required (not null)
+        if (message == null) throw new ArgumentNullException("message is a required property for OBRUErrorResponse and cannot be null");
+        Message = message;
+        // to ensure "errors" is required (not null)
+        if (errors == null) throw new ArgumentNullException("errors is a required property for OBRUErrorResponse and cannot be null");
+        Errors = errors;
+        Id = id;
+    }
+
+    /// <summary>
+    ///     Высокоуровневый текстовый код ошибки, необходимый для классификации
+    /// </summary>
+    /// <value>Высокоуровневый текстовый код ошибки, необходимый для классификации</value>
+    [DataMember(Name = "code", IsRequired = true, EmitDefaultValue = true)]
+    public string Code { get; set; }
+
+    /// <summary>
+    ///     Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок.
+    /// </summary>
+    /// <value>Уникальный идентификатор ошибки, для целей аудита, в случае неизвестных / не классифицированных ошибок.</value>
+    [DataMember(Name = "id", EmitDefaultValue = false)]
+    public string Id { get; set; }
+
+    /// <summary>
+    ///     Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса».
+    /// </summary>
+    /// <value>Краткое сообщение об ошибке. Например, «что-то не так с предоставленными параметрами запроса».</value>
+    [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
+    public string Message { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Errors
+    /// </summary>
+    [DataMember(Name = "Errors", IsRequired = true, EmitDefaultValue = true)]
+    public List<OBRUError> Errors { get; set; }
+
+    /// <summary>
+    ///     Returns true if OBRUErrorResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of OBRUErrorResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(OBRUErrorResponse input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Code == input.Code ||
+                (Code != null &&
+                 Code.Equals(input.Code))
+            ) &&
+            (
+                Id == input.Id ||
+                (Id != null &&
+                 Id.Equals(input.Id))
+            ) &&
+            (
+                Message == input.Message ||
+                (Message != null &&
+                 Message.Equals(input.Message))
+            ) &&
+            (
+                Errors == input.Errors ||
+                (Errors != null &&
+                 input.Errors != null &&
+                 Errors.SequenceEqual(input.Errors))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Code (string) maxLength
+        if (Code != null && Code.Length > 40) yield return new ValidationResult("Invalid value for Code, length must be less than 40.", new[] { "Code" });
+
+        // Id (string) maxLength
+        if (Id != null && Id.Length > 40) yield return new ValidationResult("Invalid value for Id, length must be less than 40.", new[] { "Id" });
+
+        // Message (string) maxLength
+        if (Message != null && Message.Length > 500) yield return new ValidationResult("Invalid value for Message, length must be less than 500.", new[] { "Message" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class OBRUErrorResponse {\n");
+        sb.Append("  Code: ").Append(Code).Append("\n");
+        sb.Append("  Id: ").Append(Id).Append("\n");
+        sb.Append("  Message: ").Append(Message).Append("\n");
+        sb.Append("  Errors: ").Append(Errors).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as OBRUErrorResponse);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Code != null) hashCode = hashCode * 59 + Code.GetHashCode();
+            if (Id != null) hashCode = hashCode * 59 + Id.GetHashCode();
+            if (Message != null) hashCode = hashCode * 59 + Message.GetHashCode();
+            if (Errors != null) hashCode = hashCode * 59 + Errors.GetHashCode();
+            return hashCode;
+        }
+    }
 }

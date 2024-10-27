@@ -8,48 +8,32 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Состояние потока авторизации.
+/// </summary>
+/// <value>Состояние потока авторизации.</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum MultiAuthorisationStatusStaticType
 {
     /// <summary>
-    /// Состояние потока авторизации.
+    ///     Enum Authorised for value: Authorised
     /// </summary>
-    /// <value>Состояние потока авторизации.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MultiAuthorisationStatusStaticType
-    {
-        /// <summary>
-        /// Enum Authorised for value: Authorised
-        /// </summary>
-        [EnumMember(Value = "Authorised")]
-        Authorised = 1,
+    [EnumMember(Value = "Authorised")] Authorised = 1,
 
-        /// <summary>
-        /// Enum AwaitingFurtherAuthorisation for value: AwaitingFurtherAuthorisation
-        /// </summary>
-        [EnumMember(Value = "AwaitingFurtherAuthorisation")]
-        AwaitingFurtherAuthorisation = 2,
+    /// <summary>
+    ///     Enum AwaitingFurtherAuthorisation for value: AwaitingFurtherAuthorisation
+    /// </summary>
+    [EnumMember(Value = "AwaitingFurtherAuthorisation")]
+    AwaitingFurtherAuthorisation = 2,
 
-        /// <summary>
-        /// Enum Rejected for value: Rejected
-        /// </summary>
-        [EnumMember(Value = "Rejected")]
-        Rejected = 3
-
-    }
-
+    /// <summary>
+    ///     Enum Rejected for value: Rejected
+    /// </summary>
+    [EnumMember(Value = "Rejected")] Rejected = 3
 }

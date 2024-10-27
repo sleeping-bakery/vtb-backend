@@ -14,7 +14,6 @@ namespace Multibanking.Entities.Users;
 [Index(nameof(Login), IsUnique = true)]
 public class User : IEntity
 {
-
     /// <summary>
     ///     Согласия пользователя на операции со счетами
     /// </summary>
@@ -31,7 +30,7 @@ public class User : IEntity
 
     // ReSharper disable once CollectionNeverUpdated.Global
     public required List<Card> Cards { get; set; }
-    
+
     /// <summary>
     ///     Идентификатор пользователя
     /// </summary>

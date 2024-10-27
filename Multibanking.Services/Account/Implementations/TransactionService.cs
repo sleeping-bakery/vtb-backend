@@ -8,15 +8,15 @@ public class TransactionService(ITransactionsClient transactionsClient, IAccount
 {
     public TransactionResponse GetTransactions()
     {
-        accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsBasic);        
+        accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsBasic);
         accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsCredits);
 
         return transactionsClient.GetTransactions();
     }
-    
+
     public TransactionResponse GetTransactions(string accountId)
     {
-        accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsBasic);        
+        accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsBasic);
         accountConsentsService.ValidateUserConsent(AccountConsent.ReadTransactionsCredits);
         return transactionsClient.GetAccountsaccountIdTransactions(accountId);
     }

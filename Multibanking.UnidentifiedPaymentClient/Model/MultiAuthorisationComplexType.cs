@@ -9,190 +9,175 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Ответ потока множественной авторизации от ППУ.
+/// </summary>
+[DataContract(Name = "MultiAuthorisationComplexType")]
+public class MultiAuthorisationComplexType : IEquatable<MultiAuthorisationComplexType>, IValidatableObject
 {
     /// <summary>
-    /// Ответ потока множественной авторизации от ППУ.
+    ///     Initializes a new instance of the <see cref="MultiAuthorisationComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "MultiAuthorisationComplexType")]
-    public partial class MultiAuthorisationComplexType : IEquatable<MultiAuthorisationComplexType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected MultiAuthorisationComplexType()
     {
-
-        /// <summary>
-        /// Сумма комиссии
-        /// </summary>
-        /// <value>Сумма комиссии</value>
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
-        public MultiAuthorisationStatusStaticType Status { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MultiAuthorisationComplexType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected MultiAuthorisationComplexType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MultiAuthorisationComplexType" /> class.
-        /// </summary>
-        /// <param name="status">Сумма комиссии (required).</param>
-        /// <param name="numberRequired">Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации)..</param>
-        /// <param name="numberReceived">Количество полученных авторизаций..</param>
-        /// <param name="lastUpdateDateTime">Дата и время последнего обновления авторизационного потока..</param>
-        /// <param name="expirationDateTime">Дата и время, когда поток авторизации завершается..</param>
-        public MultiAuthorisationComplexType(MultiAuthorisationStatusStaticType status = default(MultiAuthorisationStatusStaticType), decimal numberRequired = default(decimal), decimal numberReceived = default(decimal), DateTime lastUpdateDateTime = default(DateTime), DateTime expirationDateTime = default(DateTime))
-        {
-            this.Status = status;
-            this.NumberRequired = numberRequired;
-            this.NumberReceived = numberReceived;
-            this.LastUpdateDateTime = lastUpdateDateTime;
-            this.ExpirationDateTime = expirationDateTime;
-        }
-
-        /// <summary>
-        /// Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации).
-        /// </summary>
-        /// <value>Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации).</value>
-        [DataMember(Name = "numberRequired", EmitDefaultValue = false)]
-        public decimal NumberRequired { get; set; }
-
-        /// <summary>
-        /// Количество полученных авторизаций.
-        /// </summary>
-        /// <value>Количество полученных авторизаций.</value>
-        [DataMember(Name = "numberReceived", EmitDefaultValue = false)]
-        public decimal NumberReceived { get; set; }
-
-        /// <summary>
-        /// Дата и время последнего обновления авторизационного потока.
-        /// </summary>
-        /// <value>Дата и время последнего обновления авторизационного потока.</value>
-        [DataMember(Name = "lastUpdateDateTime", EmitDefaultValue = false)]
-        public DateTime LastUpdateDateTime { get; set; }
-
-        /// <summary>
-        /// Дата и время, когда поток авторизации завершается.
-        /// </summary>
-        /// <value>Дата и время, когда поток авторизации завершается.</value>
-        [DataMember(Name = "expirationDateTime", EmitDefaultValue = false)]
-        public DateTime ExpirationDateTime { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class MultiAuthorisationComplexType {\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  NumberRequired: ").Append(NumberRequired).Append("\n");
-            sb.Append("  NumberReceived: ").Append(NumberReceived).Append("\n");
-            sb.Append("  LastUpdateDateTime: ").Append(LastUpdateDateTime).Append("\n");
-            sb.Append("  ExpirationDateTime: ").Append(ExpirationDateTime).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as MultiAuthorisationComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if MultiAuthorisationComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of MultiAuthorisationComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(MultiAuthorisationComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Status == input.Status ||
-                    this.Status.Equals(input.Status)
-                ) && 
-                (
-                    this.NumberRequired == input.NumberRequired ||
-                    this.NumberRequired.Equals(input.NumberRequired)
-                ) && 
-                (
-                    this.NumberReceived == input.NumberReceived ||
-                    this.NumberReceived.Equals(input.NumberReceived)
-                ) && 
-                (
-                    this.LastUpdateDateTime == input.LastUpdateDateTime ||
-                    (this.LastUpdateDateTime != null &&
-                    this.LastUpdateDateTime.Equals(input.LastUpdateDateTime))
-                ) && 
-                (
-                    this.ExpirationDateTime == input.ExpirationDateTime ||
-                    (this.ExpirationDateTime != null &&
-                    this.ExpirationDateTime.Equals(input.ExpirationDateTime))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.Status.GetHashCode();
-                hashCode = (hashCode * 59) + this.NumberRequired.GetHashCode();
-                hashCode = (hashCode * 59) + this.NumberReceived.GetHashCode();
-                if (this.LastUpdateDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.LastUpdateDateTime.GetHashCode();
-                }
-                if (this.ExpirationDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.ExpirationDateTime.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="MultiAuthorisationComplexType" /> class.
+    /// </summary>
+    /// <param name="status">Сумма комиссии (required).</param>
+    /// <param name="numberRequired">Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации)..</param>
+    /// <param name="numberReceived">Количество полученных авторизаций..</param>
+    /// <param name="lastUpdateDateTime">Дата и время последнего обновления авторизационного потока..</param>
+    /// <param name="expirationDateTime">Дата и время, когда поток авторизации завершается..</param>
+    public MultiAuthorisationComplexType(MultiAuthorisationStatusStaticType status = default, decimal numberRequired = default, decimal numberReceived = default,
+        DateTime lastUpdateDateTime = default, DateTime expirationDateTime = default)
+    {
+        Status = status;
+        NumberRequired = numberRequired;
+        NumberReceived = numberReceived;
+        LastUpdateDateTime = lastUpdateDateTime;
+        ExpirationDateTime = expirationDateTime;
+    }
+
+    /// <summary>
+    ///     Сумма комиссии
+    /// </summary>
+    /// <value>Сумма комиссии</value>
+    [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
+    public MultiAuthorisationStatusStaticType Status { get; set; }
+
+    /// <summary>
+    ///     Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации).
+    /// </summary>
+    /// <value>Количество авторизаций, необходимых для инициирования проведения платежа (общее количество, необходимое при старте мультиавторизации).</value>
+    [DataMember(Name = "numberRequired", EmitDefaultValue = false)]
+    public decimal NumberRequired { get; set; }
+
+    /// <summary>
+    ///     Количество полученных авторизаций.
+    /// </summary>
+    /// <value>Количество полученных авторизаций.</value>
+    [DataMember(Name = "numberReceived", EmitDefaultValue = false)]
+    public decimal NumberReceived { get; set; }
+
+    /// <summary>
+    ///     Дата и время последнего обновления авторизационного потока.
+    /// </summary>
+    /// <value>Дата и время последнего обновления авторизационного потока.</value>
+    [DataMember(Name = "lastUpdateDateTime", EmitDefaultValue = false)]
+    public DateTime LastUpdateDateTime { get; set; }
+
+    /// <summary>
+    ///     Дата и время, когда поток авторизации завершается.
+    /// </summary>
+    /// <value>Дата и время, когда поток авторизации завершается.</value>
+    [DataMember(Name = "expirationDateTime", EmitDefaultValue = false)]
+    public DateTime ExpirationDateTime { get; set; }
+
+    /// <summary>
+    ///     Returns true if MultiAuthorisationComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of MultiAuthorisationComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(MultiAuthorisationComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Status == input.Status ||
+                Status.Equals(input.Status)
+            ) &&
+            (
+                NumberRequired == input.NumberRequired ||
+                NumberRequired.Equals(input.NumberRequired)
+            ) &&
+            (
+                NumberReceived == input.NumberReceived ||
+                NumberReceived.Equals(input.NumberReceived)
+            ) &&
+            (
+                LastUpdateDateTime == input.LastUpdateDateTime ||
+                (LastUpdateDateTime != null &&
+                 LastUpdateDateTime.Equals(input.LastUpdateDateTime))
+            ) &&
+            (
+                ExpirationDateTime == input.ExpirationDateTime ||
+                (ExpirationDateTime != null &&
+                 ExpirationDateTime.Equals(input.ExpirationDateTime))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class MultiAuthorisationComplexType {\n");
+        sb.Append("  Status: ").Append(Status).Append("\n");
+        sb.Append("  NumberRequired: ").Append(NumberRequired).Append("\n");
+        sb.Append("  NumberReceived: ").Append(NumberReceived).Append("\n");
+        sb.Append("  LastUpdateDateTime: ").Append(LastUpdateDateTime).Append("\n");
+        sb.Append("  ExpirationDateTime: ").Append(ExpirationDateTime).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as MultiAuthorisationComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + Status.GetHashCode();
+            hashCode = hashCode * 59 + NumberRequired.GetHashCode();
+            hashCode = hashCode * 59 + NumberReceived.GetHashCode();
+            if (LastUpdateDateTime != null) hashCode = hashCode * 59 + LastUpdateDateTime.GetHashCode();
+            if (ExpirationDateTime != null) hashCode = hashCode * 59 + ExpirationDateTime.GetHashCode();
+            return hashCode;
+        }
+    }
 }

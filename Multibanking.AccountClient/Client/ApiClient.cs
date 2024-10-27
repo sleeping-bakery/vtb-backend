@@ -191,7 +191,6 @@ public partial class ApiClient : ISynchronousClient, IAsynchronousClient
                 {
                     var contentTypes = options.HeaderParameters["Content-Type"];
                     if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json"))) request.RequestFormat = DataFormat.Json;
-                    // TODO: Generated client user should add additional handlers. RestSharp only supports XML and JSON, with XML as default.
                 }
                 else
                 {

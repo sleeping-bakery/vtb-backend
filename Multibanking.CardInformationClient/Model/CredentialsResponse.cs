@@ -9,197 +9,160 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.CardInformationClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.CardInformationClient.Model
+namespace Multibanking.CardInformationClient.Model;
+
+/// <summary>
+///     Реквизиты карты
+/// </summary>
+[DataContract(Name = "CredentialsResponse")]
+public class CredentialsResponse : IEquatable<CredentialsResponse>, IValidatableObject
 {
     /// <summary>
-    /// Реквизиты карты
+    ///     Initializes a new instance of the <see cref="CredentialsResponse" /> class.
     /// </summary>
-    [DataContract(Name = "CredentialsResponse")]
-    public partial class CredentialsResponse : IEquatable<CredentialsResponse>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected CredentialsResponse()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CredentialsResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected CredentialsResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CredentialsResponse" /> class.
-        /// </summary>
-        /// <param name="encryptedPan">Зашифрованный полный номер карты в base64 кодировке (required).</param>
-        /// <param name="cardExpiry">Окончание срока действия карты ММ/ГГ (required).</param>
-        /// <param name="embossingName">Имя держателя (required).</param>
-        public CredentialsResponse(string encryptedPan = default(string), string cardExpiry = default(string), string embossingName = default(string))
-        {
-            // to ensure "encryptedPan" is required (not null)
-            if (encryptedPan == null)
-            {
-                throw new ArgumentNullException("encryptedPan is a required property for CredentialsResponse and cannot be null");
-            }
-            this.EncryptedPan = encryptedPan;
-            // to ensure "cardExpiry" is required (not null)
-            if (cardExpiry == null)
-            {
-                throw new ArgumentNullException("cardExpiry is a required property for CredentialsResponse and cannot be null");
-            }
-            this.CardExpiry = cardExpiry;
-            // to ensure "embossingName" is required (not null)
-            if (embossingName == null)
-            {
-                throw new ArgumentNullException("embossingName is a required property for CredentialsResponse and cannot be null");
-            }
-            this.EmbossingName = embossingName;
-        }
-
-        /// <summary>
-        /// Зашифрованный полный номер карты в base64 кодировке
-        /// </summary>
-        /// <value>Зашифрованный полный номер карты в base64 кодировке</value>
-        [DataMember(Name = "encryptedPan", IsRequired = true, EmitDefaultValue = true)]
-        public string EncryptedPan { get; set; }
-
-        /// <summary>
-        /// Окончание срока действия карты ММ/ГГ
-        /// </summary>
-        /// <value>Окончание срока действия карты ММ/ГГ</value>
-        [DataMember(Name = "cardExpiry", IsRequired = true, EmitDefaultValue = true)]
-        public string CardExpiry { get; set; }
-
-        /// <summary>
-        /// Имя держателя
-        /// </summary>
-        /// <value>Имя держателя</value>
-        [DataMember(Name = "embossingName", IsRequired = true, EmitDefaultValue = true)]
-        public string EmbossingName { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class CredentialsResponse {\n");
-            sb.Append("  EncryptedPan: ").Append(EncryptedPan).Append("\n");
-            sb.Append("  CardExpiry: ").Append(CardExpiry).Append("\n");
-            sb.Append("  EmbossingName: ").Append(EmbossingName).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as CredentialsResponse);
-        }
-
-        /// <summary>
-        /// Returns true if CredentialsResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of CredentialsResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(CredentialsResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.EncryptedPan == input.EncryptedPan ||
-                    (this.EncryptedPan != null &&
-                    this.EncryptedPan.Equals(input.EncryptedPan))
-                ) && 
-                (
-                    this.CardExpiry == input.CardExpiry ||
-                    (this.CardExpiry != null &&
-                    this.CardExpiry.Equals(input.CardExpiry))
-                ) && 
-                (
-                    this.EmbossingName == input.EmbossingName ||
-                    (this.EmbossingName != null &&
-                    this.EmbossingName.Equals(input.EmbossingName))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.EncryptedPan != null)
-                {
-                    hashCode = (hashCode * 59) + this.EncryptedPan.GetHashCode();
-                }
-                if (this.CardExpiry != null)
-                {
-                    hashCode = (hashCode * 59) + this.CardExpiry.GetHashCode();
-                }
-                if (this.EmbossingName != null)
-                {
-                    hashCode = (hashCode * 59) + this.EmbossingName.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // EncryptedPan (string) maxLength
-            if (this.EncryptedPan != null && this.EncryptedPan.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EncryptedPan, length must be less than 500.", new [] { "EncryptedPan" });
-            }
-
-            // CardExpiry (string) maxLength
-            if (this.CardExpiry != null && this.CardExpiry.Length > 5)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CardExpiry, length must be less than 5.", new [] { "CardExpiry" });
-            }
-
-            // EmbossingName (string) maxLength
-            if (this.EmbossingName != null && this.EmbossingName.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EmbossingName, length must be less than 50.", new [] { "EmbossingName" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="CredentialsResponse" /> class.
+    /// </summary>
+    /// <param name="encryptedPan">Зашифрованный полный номер карты в base64 кодировке (required).</param>
+    /// <param name="cardExpiry">Окончание срока действия карты ММ/ГГ (required).</param>
+    /// <param name="embossingName">Имя держателя (required).</param>
+    public CredentialsResponse(string encryptedPan = default, string cardExpiry = default, string embossingName = default)
+    {
+        // to ensure "encryptedPan" is required (not null)
+        if (encryptedPan == null) throw new ArgumentNullException("encryptedPan is a required property for CredentialsResponse and cannot be null");
+        EncryptedPan = encryptedPan;
+        // to ensure "cardExpiry" is required (not null)
+        if (cardExpiry == null) throw new ArgumentNullException("cardExpiry is a required property for CredentialsResponse and cannot be null");
+        CardExpiry = cardExpiry;
+        // to ensure "embossingName" is required (not null)
+        if (embossingName == null) throw new ArgumentNullException("embossingName is a required property for CredentialsResponse and cannot be null");
+        EmbossingName = embossingName;
+    }
+
+    /// <summary>
+    ///     Зашифрованный полный номер карты в base64 кодировке
+    /// </summary>
+    /// <value>Зашифрованный полный номер карты в base64 кодировке</value>
+    [DataMember(Name = "encryptedPan", IsRequired = true, EmitDefaultValue = true)]
+    public string EncryptedPan { get; set; }
+
+    /// <summary>
+    ///     Окончание срока действия карты ММ/ГГ
+    /// </summary>
+    /// <value>Окончание срока действия карты ММ/ГГ</value>
+    [DataMember(Name = "cardExpiry", IsRequired = true, EmitDefaultValue = true)]
+    public string CardExpiry { get; set; }
+
+    /// <summary>
+    ///     Имя держателя
+    /// </summary>
+    /// <value>Имя держателя</value>
+    [DataMember(Name = "embossingName", IsRequired = true, EmitDefaultValue = true)]
+    public string EmbossingName { get; set; }
+
+    /// <summary>
+    ///     Returns true if CredentialsResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of CredentialsResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(CredentialsResponse input)
+    {
+        if (input == null) return false;
+        return
+            (
+                EncryptedPan == input.EncryptedPan ||
+                (EncryptedPan != null &&
+                 EncryptedPan.Equals(input.EncryptedPan))
+            ) &&
+            (
+                CardExpiry == input.CardExpiry ||
+                (CardExpiry != null &&
+                 CardExpiry.Equals(input.CardExpiry))
+            ) &&
+            (
+                EmbossingName == input.EmbossingName ||
+                (EmbossingName != null &&
+                 EmbossingName.Equals(input.EmbossingName))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // EncryptedPan (string) maxLength
+        if (EncryptedPan != null && EncryptedPan.Length > 500)
+            yield return new ValidationResult("Invalid value for EncryptedPan, length must be less than 500.", new[] { "EncryptedPan" });
+
+        // CardExpiry (string) maxLength
+        if (CardExpiry != null && CardExpiry.Length > 5) yield return new ValidationResult("Invalid value for CardExpiry, length must be less than 5.", new[] { "CardExpiry" });
+
+        // EmbossingName (string) maxLength
+        if (EmbossingName != null && EmbossingName.Length > 50)
+            yield return new ValidationResult("Invalid value for EmbossingName, length must be less than 50.", new[] { "EmbossingName" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class CredentialsResponse {\n");
+        sb.Append("  EncryptedPan: ").Append(EncryptedPan).Append("\n");
+        sb.Append("  CardExpiry: ").Append(CardExpiry).Append("\n");
+        sb.Append("  EmbossingName: ").Append(EmbossingName).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as CredentialsResponse);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (EncryptedPan != null) hashCode = hashCode * 59 + EncryptedPan.GetHashCode();
+            if (CardExpiry != null) hashCode = hashCode * 59 + CardExpiry.GetHashCode();
+            if (EmbossingName != null) hashCode = hashCode * 59 + EmbossingName.GetHashCode();
+            return hashCode;
+        }
+    }
 }

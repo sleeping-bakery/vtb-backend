@@ -5,12 +5,10 @@ namespace Multibanking.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-
 public class AccountConsentController(IAccountConsentsService accountConsentsService) : ControllerBase
 {
-    
     /// <summary>
-    /// Отозвать согласие со стороны банкинга
+    ///     Отозвать согласие со стороны банкинга
     /// </summary>
     /// <returns></returns>
     [HttpDelete]

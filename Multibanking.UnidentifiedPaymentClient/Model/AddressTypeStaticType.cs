@@ -8,78 +8,56 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Тип адреса
+/// </summary>
+/// <value>Тип адреса</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum AddressTypeStaticType
 {
     /// <summary>
-    /// Тип адреса
+    ///     Enum Business for value: Business
     /// </summary>
-    /// <value>Тип адреса</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AddressTypeStaticType
-    {
-        /// <summary>
-        /// Enum Business for value: Business
-        /// </summary>
-        [EnumMember(Value = "Business")]
-        Business = 1,
+    [EnumMember(Value = "Business")] Business = 1,
 
-        /// <summary>
-        /// Enum Correspondence for value: Correspondence
-        /// </summary>
-        [EnumMember(Value = "Correspondence")]
-        Correspondence = 2,
+    /// <summary>
+    ///     Enum Correspondence for value: Correspondence
+    /// </summary>
+    [EnumMember(Value = "Correspondence")] Correspondence = 2,
 
-        /// <summary>
-        /// Enum DeliveryTo for value: DeliveryTo
-        /// </summary>
-        [EnumMember(Value = "DeliveryTo")]
-        DeliveryTo = 3,
+    /// <summary>
+    ///     Enum DeliveryTo for value: DeliveryTo
+    /// </summary>
+    [EnumMember(Value = "DeliveryTo")] DeliveryTo = 3,
 
-        /// <summary>
-        /// Enum MailTo for value: MailTo
-        /// </summary>
-        [EnumMember(Value = "MailTo")]
-        MailTo = 4,
+    /// <summary>
+    ///     Enum MailTo for value: MailTo
+    /// </summary>
+    [EnumMember(Value = "MailTo")] MailTo = 4,
 
-        /// <summary>
-        /// Enum POBox for value: POBox
-        /// </summary>
-        [EnumMember(Value = "POBox")]
-        POBox = 5,
+    /// <summary>
+    ///     Enum POBox for value: POBox
+    /// </summary>
+    [EnumMember(Value = "POBox")] POBox = 5,
 
-        /// <summary>
-        /// Enum Postal for value: Postal
-        /// </summary>
-        [EnumMember(Value = "Postal")]
-        Postal = 6,
+    /// <summary>
+    ///     Enum Postal for value: Postal
+    /// </summary>
+    [EnumMember(Value = "Postal")] Postal = 6,
 
-        /// <summary>
-        /// Enum Residential for value: Residential
-        /// </summary>
-        [EnumMember(Value = "Residential")]
-        Residential = 7,
+    /// <summary>
+    ///     Enum Residential for value: Residential
+    /// </summary>
+    [EnumMember(Value = "Residential")] Residential = 7,
 
-        /// <summary>
-        /// Enum Statement for value: Statement
-        /// </summary>
-        [EnumMember(Value = "Statement")]
-        Statement = 8
-
-    }
-
+    /// <summary>
+    ///     Enum Statement for value: Statement
+    /// </summary>
+    [EnumMember(Value = "Statement")] Statement = 8
 }

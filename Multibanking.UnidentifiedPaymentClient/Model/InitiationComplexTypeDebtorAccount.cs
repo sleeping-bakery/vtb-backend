@@ -9,177 +9,154 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Уникальная идентификация счета плательщика, на котором будет сделана дебетовая запись в результате транзакции.
+/// </summary>
+[DataContract(Name = "InitiationComplexType_DebtorAccount")]
+public class InitiationComplexTypeDebtorAccount : IEquatable<InitiationComplexTypeDebtorAccount>, IValidatableObject
 {
     /// <summary>
-    /// Уникальная идентификация счета плательщика, на котором будет сделана дебетовая запись в результате транзакции.
+    ///     Initializes a new instance of the <see cref="InitiationComplexTypeDebtorAccount" /> class.
     /// </summary>
-    [DataContract(Name = "InitiationComplexType_DebtorAccount")]
-    public partial class InitiationComplexTypeDebtorAccount : IEquatable<InitiationComplexTypeDebtorAccount>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected InitiationComplexTypeDebtorAccount()
     {
-
-        /// <summary>
-        /// Наименование схемы идентификации.
-        /// </summary>
-        /// <value>Наименование схемы идентификации.</value>
-        [DataMember(Name = "schemeName", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentAccountIdentificationDynamicType SchemeName { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InitiationComplexTypeDebtorAccount" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected InitiationComplexTypeDebtorAccount() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InitiationComplexTypeDebtorAccount" /> class.
-        /// </summary>
-        /// <param name="schemeName">Наименование схемы идентификации. (required).</param>
-        /// <param name="identification">Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...). (required).</param>
-        /// <param name="name">Имя владельца или владельцев учетной записи (банковского счета, карты, телефона)..</param>
-        public InitiationComplexTypeDebtorAccount(PaymentAccountIdentificationDynamicType schemeName = default(PaymentAccountIdentificationDynamicType), string identification = default(string), string name = default(string))
-        {
-            this.SchemeName = schemeName;
-            // to ensure "identification" is required (not null)
-            if (identification == null)
-            {
-                throw new ArgumentNullException("identification is a required property for InitiationComplexTypeDebtorAccount and cannot be null");
-            }
-            this.Identification = identification;
-            this.Name = name;
-        }
-
-        /// <summary>
-        /// Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...).
-        /// </summary>
-        /// <value>Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...).</value>
-        [DataMember(Name = "identification", IsRequired = true, EmitDefaultValue = true)]
-        public string Identification { get; set; }
-
-        /// <summary>
-        /// Имя владельца или владельцев учетной записи (банковского счета, карты, телефона).
-        /// </summary>
-        /// <value>Имя владельца или владельцев учетной записи (банковского счета, карты, телефона).</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class InitiationComplexTypeDebtorAccount {\n");
-            sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
-            sb.Append("  Identification: ").Append(Identification).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as InitiationComplexTypeDebtorAccount);
-        }
-
-        /// <summary>
-        /// Returns true if InitiationComplexTypeDebtorAccount instances are equal
-        /// </summary>
-        /// <param name="input">Instance of InitiationComplexTypeDebtorAccount to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(InitiationComplexTypeDebtorAccount input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.SchemeName == input.SchemeName ||
-                    this.SchemeName.Equals(input.SchemeName)
-                ) && 
-                (
-                    this.Identification == input.Identification ||
-                    (this.Identification != null &&
-                    this.Identification.Equals(input.Identification))
-                ) && 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.SchemeName.GetHashCode();
-                if (this.Identification != null)
-                {
-                    hashCode = (hashCode * 59) + this.Identification.GetHashCode();
-                }
-                if (this.Name != null)
-                {
-                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Identification (string) maxLength
-            if (this.Identification != null && this.Identification.Length > 256)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identification, length must be less than 256.", new [] { "Identification" });
-            }
-
-            // Name (string) maxLength
-            if (this.Name != null && this.Name.Length > 70)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be less than 70.", new [] { "Name" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="InitiationComplexTypeDebtorAccount" /> class.
+    /// </summary>
+    /// <param name="schemeName">Наименование схемы идентификации. (required).</param>
+    /// <param name="identification">
+    ///     Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...).
+    ///     (required).
+    /// </param>
+    /// <param name="name">Имя владельца или владельцев учетной записи (банковского счета, карты, телефона)..</param>
+    public InitiationComplexTypeDebtorAccount(PaymentAccountIdentificationDynamicType schemeName = default, string identification = default, string name = default)
+    {
+        SchemeName = schemeName;
+        // to ensure "identification" is required (not null)
+        if (identification == null) throw new ArgumentNullException("identification is a required property for InitiationComplexTypeDebtorAccount and cannot be null");
+        Identification = identification;
+        Name = name;
+    }
+
+    /// <summary>
+    ///     Наименование схемы идентификации.
+    /// </summary>
+    /// <value>Наименование схемы идентификации.</value>
+    [DataMember(Name = "schemeName", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentAccountIdentificationDynamicType SchemeName { get; set; }
+
+    /// <summary>
+    ///     Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...).
+    /// </summary>
+    /// <value>Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...).</value>
+    [DataMember(Name = "identification", IsRequired = true, EmitDefaultValue = true)]
+    public string Identification { get; set; }
+
+    /// <summary>
+    ///     Имя владельца или владельцев учетной записи (банковского счета, карты, телефона).
+    /// </summary>
+    /// <value>Имя владельца или владельцев учетной записи (банковского счета, карты, телефона).</value>
+    [DataMember(Name = "name", EmitDefaultValue = false)]
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     Returns true if InitiationComplexTypeDebtorAccount instances are equal
+    /// </summary>
+    /// <param name="input">Instance of InitiationComplexTypeDebtorAccount to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(InitiationComplexTypeDebtorAccount input)
+    {
+        if (input == null) return false;
+        return
+            (
+                SchemeName == input.SchemeName ||
+                SchemeName.Equals(input.SchemeName)
+            ) &&
+            (
+                Identification == input.Identification ||
+                (Identification != null &&
+                 Identification.Equals(input.Identification))
+            ) &&
+            (
+                Name == input.Name ||
+                (Name != null &&
+                 Name.Equals(input.Name))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Identification (string) maxLength
+        if (Identification != null && Identification.Length > 256)
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
+
+        // Name (string) maxLength
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class InitiationComplexTypeDebtorAccount {\n");
+        sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
+        sb.Append("  Identification: ").Append(Identification).Append("\n");
+        sb.Append("  Name: ").Append(Name).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as InitiationComplexTypeDebtorAccount);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + SchemeName.GetHashCode();
+            if (Identification != null) hashCode = hashCode * 59 + Identification.GetHashCode();
+            if (Name != null) hashCode = hashCode * 59 + Name.GetHashCode();
+            return hashCode;
+        }
+    }
 }

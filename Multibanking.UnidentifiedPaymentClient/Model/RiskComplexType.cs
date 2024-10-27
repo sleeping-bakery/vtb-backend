@@ -9,183 +9,157 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Раздел Risk используется в ресурсах согласия на проведение платежа и непосредственно платежа.
+/// </summary>
+[DataContract(Name = "RiskComplexType")]
+public class RiskComplexType : IEquatable<RiskComplexType>, IValidatableObject
 {
     /// <summary>
-    /// Раздел Risk используется в ресурсах согласия на проведение платежа и непосредственно платежа.
+    ///     Initializes a new instance of the <see cref="RiskComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "RiskComplexType")]
-    public partial class RiskComplexType : IEquatable<RiskComplexType>, IValidatableObject
+    /// <param name="paymentContextCode">paymentContextCode.</param>
+    /// <param name="merchantCategoryCode">merchantCategoryCode.</param>
+    /// <param name="merchantCustomerIdentification">merchantCustomerIdentification.</param>
+    /// <param name="deliveryAddress">deliveryAddress.</param>
+    public RiskComplexType(PaymentContextStaticType? paymentContextCode = default, string merchantCategoryCode = default, string merchantCustomerIdentification = default,
+        PostalAddress deliveryAddress = default)
     {
-
-        /// <summary>
-        /// Gets or Sets PaymentContextCode
-        /// </summary>
-        [DataMember(Name = "paymentContextCode", EmitDefaultValue = false)]
-        public PaymentContextStaticType? PaymentContextCode { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RiskComplexType" /> class.
-        /// </summary>
-        /// <param name="paymentContextCode">paymentContextCode.</param>
-        /// <param name="merchantCategoryCode">merchantCategoryCode.</param>
-        /// <param name="merchantCustomerIdentification">merchantCustomerIdentification.</param>
-        /// <param name="deliveryAddress">deliveryAddress.</param>
-        public RiskComplexType(PaymentContextStaticType? paymentContextCode = default(PaymentContextStaticType?), string merchantCategoryCode = default(string), string merchantCustomerIdentification = default(string), PostalAddress deliveryAddress = default(PostalAddress))
-        {
-            this.PaymentContextCode = paymentContextCode;
-            this.MerchantCategoryCode = merchantCategoryCode;
-            this.MerchantCustomerIdentification = merchantCustomerIdentification;
-            this.DeliveryAddress = deliveryAddress;
-        }
-
-        /// <summary>
-        /// Gets or Sets MerchantCategoryCode
-        /// </summary>
-        [DataMember(Name = "merchantCategoryCode", EmitDefaultValue = false)]
-        public string MerchantCategoryCode { get; set; }
-
-        /// <summary>
-        /// Gets or Sets MerchantCustomerIdentification
-        /// </summary>
-        [DataMember(Name = "merchantCustomerIdentification", EmitDefaultValue = false)]
-        public string MerchantCustomerIdentification { get; set; }
-
-        /// <summary>
-        /// Gets or Sets DeliveryAddress
-        /// </summary>
-        [DataMember(Name = "DeliveryAddress", EmitDefaultValue = false)]
-        public PostalAddress DeliveryAddress { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RiskComplexType {\n");
-            sb.Append("  PaymentContextCode: ").Append(PaymentContextCode).Append("\n");
-            sb.Append("  MerchantCategoryCode: ").Append(MerchantCategoryCode).Append("\n");
-            sb.Append("  MerchantCustomerIdentification: ").Append(MerchantCustomerIdentification).Append("\n");
-            sb.Append("  DeliveryAddress: ").Append(DeliveryAddress).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RiskComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if RiskComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RiskComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RiskComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.PaymentContextCode == input.PaymentContextCode ||
-                    this.PaymentContextCode.Equals(input.PaymentContextCode)
-                ) && 
-                (
-                    this.MerchantCategoryCode == input.MerchantCategoryCode ||
-                    (this.MerchantCategoryCode != null &&
-                    this.MerchantCategoryCode.Equals(input.MerchantCategoryCode))
-                ) && 
-                (
-                    this.MerchantCustomerIdentification == input.MerchantCustomerIdentification ||
-                    (this.MerchantCustomerIdentification != null &&
-                    this.MerchantCustomerIdentification.Equals(input.MerchantCustomerIdentification))
-                ) && 
-                (
-                    this.DeliveryAddress == input.DeliveryAddress ||
-                    (this.DeliveryAddress != null &&
-                    this.DeliveryAddress.Equals(input.DeliveryAddress))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.PaymentContextCode.GetHashCode();
-                if (this.MerchantCategoryCode != null)
-                {
-                    hashCode = (hashCode * 59) + this.MerchantCategoryCode.GetHashCode();
-                }
-                if (this.MerchantCustomerIdentification != null)
-                {
-                    hashCode = (hashCode * 59) + this.MerchantCustomerIdentification.GetHashCode();
-                }
-                if (this.DeliveryAddress != null)
-                {
-                    hashCode = (hashCode * 59) + this.DeliveryAddress.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // MerchantCategoryCode (string) pattern
-            Regex regexMerchantCategoryCode = new Regex(@"^\\d{3,4}$", RegexOptions.CultureInvariant);
-            if (false == regexMerchantCategoryCode.Match(this.MerchantCategoryCode).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MerchantCategoryCode, must match a pattern of " + regexMerchantCategoryCode, new [] { "MerchantCategoryCode" });
-            }
-
-            // MerchantCustomerIdentification (string) maxLength
-            if (this.MerchantCustomerIdentification != null && this.MerchantCustomerIdentification.Length > 70)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for MerchantCustomerIdentification, length must be less than 70.", new [] { "MerchantCustomerIdentification" });
-            }
-
-            yield break;
-        }
+        PaymentContextCode = paymentContextCode;
+        MerchantCategoryCode = merchantCategoryCode;
+        MerchantCustomerIdentification = merchantCustomerIdentification;
+        DeliveryAddress = deliveryAddress;
     }
 
+    /// <summary>
+    ///     Gets or Sets PaymentContextCode
+    /// </summary>
+    [DataMember(Name = "paymentContextCode", EmitDefaultValue = false)]
+    public PaymentContextStaticType? PaymentContextCode { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets MerchantCategoryCode
+    /// </summary>
+    [DataMember(Name = "merchantCategoryCode", EmitDefaultValue = false)]
+    public string MerchantCategoryCode { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets MerchantCustomerIdentification
+    /// </summary>
+    [DataMember(Name = "merchantCustomerIdentification", EmitDefaultValue = false)]
+    public string MerchantCustomerIdentification { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets DeliveryAddress
+    /// </summary>
+    [DataMember(Name = "DeliveryAddress", EmitDefaultValue = false)]
+    public PostalAddress DeliveryAddress { get; set; }
+
+    /// <summary>
+    ///     Returns true if RiskComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RiskComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RiskComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                PaymentContextCode == input.PaymentContextCode ||
+                PaymentContextCode.Equals(input.PaymentContextCode)
+            ) &&
+            (
+                MerchantCategoryCode == input.MerchantCategoryCode ||
+                (MerchantCategoryCode != null &&
+                 MerchantCategoryCode.Equals(input.MerchantCategoryCode))
+            ) &&
+            (
+                MerchantCustomerIdentification == input.MerchantCustomerIdentification ||
+                (MerchantCustomerIdentification != null &&
+                 MerchantCustomerIdentification.Equals(input.MerchantCustomerIdentification))
+            ) &&
+            (
+                DeliveryAddress == input.DeliveryAddress ||
+                (DeliveryAddress != null &&
+                 DeliveryAddress.Equals(input.DeliveryAddress))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // MerchantCategoryCode (string) pattern
+        var regexMerchantCategoryCode = new Regex(@"^\\d{3,4}$", RegexOptions.CultureInvariant);
+        if (false == regexMerchantCategoryCode.Match(MerchantCategoryCode).Success)
+            yield return new ValidationResult("Invalid value for MerchantCategoryCode, must match a pattern of " + regexMerchantCategoryCode, new[] { "MerchantCategoryCode" });
+
+        // MerchantCustomerIdentification (string) maxLength
+        if (MerchantCustomerIdentification != null && MerchantCustomerIdentification.Length > 70)
+            yield return new ValidationResult("Invalid value for MerchantCustomerIdentification, length must be less than 70.", new[] { "MerchantCustomerIdentification" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RiskComplexType {\n");
+        sb.Append("  PaymentContextCode: ").Append(PaymentContextCode).Append("\n");
+        sb.Append("  MerchantCategoryCode: ").Append(MerchantCategoryCode).Append("\n");
+        sb.Append("  MerchantCustomerIdentification: ").Append(MerchantCustomerIdentification).Append("\n");
+        sb.Append("  DeliveryAddress: ").Append(DeliveryAddress).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RiskComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + PaymentContextCode.GetHashCode();
+            if (MerchantCategoryCode != null) hashCode = hashCode * 59 + MerchantCategoryCode.GetHashCode();
+            if (MerchantCustomerIdentification != null) hashCode = hashCode * 59 + MerchantCustomerIdentification.GetHashCode();
+            if (DeliveryAddress != null) hashCode = hashCode * 59 + DeliveryAddress.GetHashCode();
+            return hashCode;
+        }
+    }
 }

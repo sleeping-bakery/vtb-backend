@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <NoWarn>$(NoWarn);NU1902</NoWarn>
-        
+
     </PropertyGroup>
 
     <ItemGroup>

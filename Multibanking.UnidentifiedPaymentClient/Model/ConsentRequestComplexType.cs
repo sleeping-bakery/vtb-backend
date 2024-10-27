@@ -9,153 +9,131 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     ConsentRequestComplexType
+/// </summary>
+[DataContract(Name = "ConsentRequestComplexType")]
+public class ConsentRequestComplexType : IEquatable<ConsentRequestComplexType>, IValidatableObject
 {
     /// <summary>
-    /// ConsentRequestComplexType
+    ///     Initializes a new instance of the <see cref="ConsentRequestComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "ConsentRequestComplexType")]
-    public partial class ConsentRequestComplexType : IEquatable<ConsentRequestComplexType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected ConsentRequestComplexType()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConsentRequestComplexType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ConsentRequestComplexType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConsentRequestComplexType" /> class.
-        /// </summary>
-        /// <param name="data">data (required).</param>
-        /// <param name="risk">risk (required).</param>
-        public ConsentRequestComplexType(ConsentRequestComplexTypeData data = default(ConsentRequestComplexTypeData), ConsentRequestComplexTypeRisk risk = default(ConsentRequestComplexTypeRisk))
-        {
-            // to ensure "data" is required (not null)
-            if (data == null)
-            {
-                throw new ArgumentNullException("data is a required property for ConsentRequestComplexType and cannot be null");
-            }
-            this.Data = data;
-            // to ensure "risk" is required (not null)
-            if (risk == null)
-            {
-                throw new ArgumentNullException("risk is a required property for ConsentRequestComplexType and cannot be null");
-            }
-            this.Risk = risk;
-        }
-
-        /// <summary>
-        /// Gets or Sets Data
-        /// </summary>
-        [DataMember(Name = "Data", IsRequired = true, EmitDefaultValue = true)]
-        public ConsentRequestComplexTypeData Data { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Risk
-        /// </summary>
-        [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
-        public ConsentRequestComplexTypeRisk Risk { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ConsentRequestComplexType {\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
-            sb.Append("  Risk: ").Append(Risk).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ConsentRequestComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if ConsentRequestComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ConsentRequestComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ConsentRequestComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Data == input.Data ||
-                    (this.Data != null &&
-                    this.Data.Equals(input.Data))
-                ) && 
-                (
-                    this.Risk == input.Risk ||
-                    (this.Risk != null &&
-                    this.Risk.Equals(input.Risk))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Data != null)
-                {
-                    hashCode = (hashCode * 59) + this.Data.GetHashCode();
-                }
-                if (this.Risk != null)
-                {
-                    hashCode = (hashCode * 59) + this.Risk.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ConsentRequestComplexType" /> class.
+    /// </summary>
+    /// <param name="data">data (required).</param>
+    /// <param name="risk">risk (required).</param>
+    public ConsentRequestComplexType(ConsentRequestComplexTypeData data = default, ConsentRequestComplexTypeRisk risk = default)
+    {
+        // to ensure "data" is required (not null)
+        if (data == null) throw new ArgumentNullException("data is a required property for ConsentRequestComplexType and cannot be null");
+        Data = data;
+        // to ensure "risk" is required (not null)
+        if (risk == null) throw new ArgumentNullException("risk is a required property for ConsentRequestComplexType and cannot be null");
+        Risk = risk;
+    }
+
+    /// <summary>
+    ///     Gets or Sets Data
+    /// </summary>
+    [DataMember(Name = "Data", IsRequired = true, EmitDefaultValue = true)]
+    public ConsentRequestComplexTypeData Data { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Risk
+    /// </summary>
+    [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
+    public ConsentRequestComplexTypeRisk Risk { get; set; }
+
+    /// <summary>
+    ///     Returns true if ConsentRequestComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ConsentRequestComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ConsentRequestComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Data == input.Data ||
+                (Data != null &&
+                 Data.Equals(input.Data))
+            ) &&
+            (
+                Risk == input.Risk ||
+                (Risk != null &&
+                 Risk.Equals(input.Risk))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ConsentRequestComplexType {\n");
+        sb.Append("  Data: ").Append(Data).Append("\n");
+        sb.Append("  Risk: ").Append(Risk).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ConsentRequestComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Data != null) hashCode = hashCode * 59 + Data.GetHashCode();
+            if (Risk != null) hashCode = hashCode * 59 + Risk.GetHashCode();
+            return hashCode;
+        }
+    }
 }

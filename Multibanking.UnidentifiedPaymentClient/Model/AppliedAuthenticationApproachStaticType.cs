@@ -8,41 +8,25 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Defines AppliedAuthenticationApproachStaticType
+/// </summary>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum AppliedAuthenticationApproachStaticType
 {
     /// <summary>
-    /// Defines AppliedAuthenticationApproachStaticType
+    ///     Enum CA for value: CA
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AppliedAuthenticationApproachStaticType
-    {
-        /// <summary>
-        /// Enum CA for value: CA
-        /// </summary>
-        [EnumMember(Value = "CA")]
-        CA = 1,
+    [EnumMember(Value = "CA")] CA = 1,
 
-        /// <summary>
-        /// Enum SCA for value: SCA
-        /// </summary>
-        [EnumMember(Value = "SCA")]
-        SCA = 2
-
-    }
-
+    /// <summary>
+    ///     Enum SCA for value: SCA
+    /// </summary>
+    [EnumMember(Value = "SCA")] SCA = 2
 }

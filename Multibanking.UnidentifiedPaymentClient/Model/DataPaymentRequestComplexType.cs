@@ -9,160 +9,133 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     DataPaymentRequestComplexType
+/// </summary>
+[DataContract(Name = "DataPaymentRequestComplexType")]
+public class DataPaymentRequestComplexType : IEquatable<DataPaymentRequestComplexType>, IValidatableObject
 {
     /// <summary>
-    /// DataPaymentRequestComplexType
+    ///     Initializes a new instance of the <see cref="DataPaymentRequestComplexType" /> class.
     /// </summary>
-    [DataContract(Name = "DataPaymentRequestComplexType")]
-    public partial class DataPaymentRequestComplexType : IEquatable<DataPaymentRequestComplexType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected DataPaymentRequestComplexType()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataPaymentRequestComplexType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected DataPaymentRequestComplexType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataPaymentRequestComplexType" /> class.
-        /// </summary>
-        /// <param name="consentId">Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ. (required).</param>
-        /// <param name="initiation">initiation (required).</param>
-        public DataPaymentRequestComplexType(string consentId = default(string), DataConsentRequestComplexTypeInitiation initiation = default(DataConsentRequestComplexTypeInitiation))
-        {
-            // to ensure "consentId" is required (not null)
-            if (consentId == null)
-            {
-                throw new ArgumentNullException("consentId is a required property for DataPaymentRequestComplexType and cannot be null");
-            }
-            this.ConsentId = consentId;
-            // to ensure "initiation" is required (not null)
-            if (initiation == null)
-            {
-                throw new ArgumentNullException("initiation is a required property for DataPaymentRequestComplexType and cannot be null");
-            }
-            this.Initiation = initiation;
-        }
-
-        /// <summary>
-        /// Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.
-        /// </summary>
-        /// <value>Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.</value>
-        [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
-        public string ConsentId { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Initiation
-        /// </summary>
-        [DataMember(Name = "Initiation", IsRequired = true, EmitDefaultValue = true)]
-        public DataConsentRequestComplexTypeInitiation Initiation { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class DataPaymentRequestComplexType {\n");
-            sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
-            sb.Append("  Initiation: ").Append(Initiation).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as DataPaymentRequestComplexType);
-        }
-
-        /// <summary>
-        /// Returns true if DataPaymentRequestComplexType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of DataPaymentRequestComplexType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(DataPaymentRequestComplexType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ConsentId == input.ConsentId ||
-                    (this.ConsentId != null &&
-                    this.ConsentId.Equals(input.ConsentId))
-                ) && 
-                (
-                    this.Initiation == input.Initiation ||
-                    (this.Initiation != null &&
-                    this.Initiation.Equals(input.Initiation))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ConsentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.ConsentId.GetHashCode();
-                }
-                if (this.Initiation != null)
-                {
-                    hashCode = (hashCode * 59) + this.Initiation.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // ConsentId (string) maxLength
-            if (this.ConsentId != null && this.ConsentId.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ConsentId, length must be less than 128.", new [] { "ConsentId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="DataPaymentRequestComplexType" /> class.
+    /// </summary>
+    /// <param name="consentId">Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ. (required).</param>
+    /// <param name="initiation">initiation (required).</param>
+    public DataPaymentRequestComplexType(string consentId = default, DataConsentRequestComplexTypeInitiation initiation = default)
+    {
+        // to ensure "consentId" is required (not null)
+        if (consentId == null) throw new ArgumentNullException("consentId is a required property for DataPaymentRequestComplexType and cannot be null");
+        ConsentId = consentId;
+        // to ensure "initiation" is required (not null)
+        if (initiation == null) throw new ArgumentNullException("initiation is a required property for DataPaymentRequestComplexType and cannot be null");
+        Initiation = initiation;
+    }
+
+    /// <summary>
+    ///     Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.
+    /// </summary>
+    /// <value>Идентификатор ресурса согласия на проведение платежа, присвоенный на стороне ППУ.</value>
+    [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
+    public string ConsentId { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Initiation
+    /// </summary>
+    [DataMember(Name = "Initiation", IsRequired = true, EmitDefaultValue = true)]
+    public DataConsentRequestComplexTypeInitiation Initiation { get; set; }
+
+    /// <summary>
+    ///     Returns true if DataPaymentRequestComplexType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of DataPaymentRequestComplexType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(DataPaymentRequestComplexType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ConsentId == input.ConsentId ||
+                (ConsentId != null &&
+                 ConsentId.Equals(input.ConsentId))
+            ) &&
+            (
+                Initiation == input.Initiation ||
+                (Initiation != null &&
+                 Initiation.Equals(input.Initiation))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // ConsentId (string) maxLength
+        if (ConsentId != null && ConsentId.Length > 128) yield return new ValidationResult("Invalid value for ConsentId, length must be less than 128.", new[] { "ConsentId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class DataPaymentRequestComplexType {\n");
+        sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
+        sb.Append("  Initiation: ").Append(Initiation).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as DataPaymentRequestComplexType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ConsentId != null) hashCode = hashCode * 59 + ConsentId.GetHashCode();
+            if (Initiation != null) hashCode = hashCode * 59 + Initiation.GetHashCode();
+            return hashCode;
+        }
+    }
 }

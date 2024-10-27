@@ -9,1299 +9,844 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
+using System.Threading;
+using System.Threading.Tasks;
 using Multibanking.CardInformationClient.Client;
 using Multibanking.CardInformationClient.Model;
 
-namespace Multibanking.CardInformationClient.Api
+namespace Multibanking.CardInformationClient.Api;
+
+/// <summary>
+///     Represents a collection of functions to interact with the API endpoints
+/// </summary>
+public class CardInformationApi : ICardInformationApi
 {
+    private ExceptionFactory _exceptionFactory = (name, response) => null;
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="CardInformationApi" /> class.
     /// </summary>
-    public interface IAPIApiSync : IApiAccessor
+    /// <returns></returns>
+    public CardInformationApi() : this((string)null)
     {
-        #region Synchronous Operations
-        /// <summary>
-        /// Получение реквизитов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения реквизитов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>CredentialsResponse</returns>
-        CredentialsResponse GetCredentials(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0);
-
-        /// <summary>
-        /// Получение реквизитов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения реквизитов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of CredentialsResponse</returns>
-        ApiResponse<CredentialsResponse> GetCredentialsWithHttpInfo(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0);
-        /// <summary>
-        /// Получение кода CVV карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения CVV кода карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>CvvResponse</returns>
-        CvvResponse GetCvv(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0);
-
-        /// <summary>
-        /// Получение кода CVV карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения CVV кода карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of CvvResponse</returns>
-        ApiResponse<CvvResponse> GetCvvWithHttpInfo(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0);
-        /// <summary>
-        /// Получение токенов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения токенов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>TokensDto</returns>
-        TokensDto GetTokens(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0);
-
-        /// <summary>
-        /// Получение токенов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения токенов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of TokensDto</returns>
-        ApiResponse<TokensDto> GetTokensWithHttpInfo(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0);
-        /// <summary>
-        /// Токенизация карты
-        /// </summary>
-        /// <remarks>
-        /// Операция токенизации карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>TokensDto</returns>
-        TokensDto UpdateTokenize(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0);
-
-        /// <summary>
-        /// Токенизация карты
-        /// </summary>
-        /// <remarks>
-        /// Операция токенизации карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of TokensDto</returns>
-        ApiResponse<TokensDto> UpdateTokenizeWithHttpInfo(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0);
-        #endregion Synchronous Operations
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="CardInformationApi" /> class.
     /// </summary>
-    public interface IAPIApiAsync : IApiAccessor
+    /// <returns></returns>
+    public CardInformationApi(string basePath)
     {
-        #region Asynchronous Operations
-        /// <summary>
-        /// Получение реквизитов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения реквизитов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of CredentialsResponse</returns>
-        System.Threading.Tasks.Task<CredentialsResponse> GetCredentialsAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение реквизитов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения реквизитов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (CredentialsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CredentialsResponse>> GetCredentialsWithHttpInfoAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Получение кода CVV карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения CVV кода карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of CvvResponse</returns>
-        System.Threading.Tasks.Task<CvvResponse> GetCvvAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение кода CVV карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения CVV кода карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (CvvResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CvvResponse>> GetCvvWithHttpInfoAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Получение токенов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения токенов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of TokensDto</returns>
-        System.Threading.Tasks.Task<TokensDto> GetTokensAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение токенов карты
-        /// </summary>
-        /// <remarks>
-        /// Метод получения токенов карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (TokensDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TokensDto>> GetTokensWithHttpInfoAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Токенизация карты
-        /// </summary>
-        /// <remarks>
-        /// Операция токенизации карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of TokensDto</returns>
-        System.Threading.Tasks.Task<TokensDto> UpdateTokenizeAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Токенизация карты
-        /// </summary>
-        /// <remarks>
-        /// Операция токенизации карты
-        /// </remarks>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (TokensDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TokensDto>> UpdateTokenizeWithHttpInfoAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        #endregion Asynchronous Operations
+        Configuration = CardInformationClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            new Configuration { BasePath = basePath }
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = CardInformationClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="CardInformationApi" /> class
+    ///     using Configuration object
     /// </summary>
-    public interface ICardInformationApi : IAPIApiSync, IAPIApiAsync
+    /// <param name="configuration">An instance of Configuration</param>
+    /// <returns></returns>
+    public CardInformationApi(Configuration configuration)
     {
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
+        Configuration = CardInformationClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            configuration
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = CardInformationClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="CardInformationApi" /> class
+    ///     using a Configuration object and client instance.
     /// </summary>
-    public partial class CardInformationApi : ICardInformationApi
+    /// <param name="client">The client interface for synchronous API access.</param>
+    /// <param name="asyncClient">The client interface for asynchronous API access.</param>
+    /// <param name="configuration">The configuration object.</param>
+    public CardInformationApi(ISynchronousClient client, IAsynchronousClient asyncClient, IReadableConfiguration configuration)
     {
-        private Multibanking.CardInformationClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        if (client == null) throw new ArgumentNullException("client");
+        if (asyncClient == null) throw new ArgumentNullException("asyncClient");
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardInformationApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public CardInformationApi() : this((string)null)
+        Client = client;
+        AsynchronousClient = asyncClient;
+        Configuration = configuration;
+        ExceptionFactory = CardInformationClient.Client.Configuration.DefaultExceptionFactory;
+    }
+
+    /// <summary>
+    ///     The client for accessing this underlying API asynchronously.
+    /// </summary>
+    public IAsynchronousClient AsynchronousClient { get; set; }
+
+    /// <summary>
+    ///     The client for accessing this underlying API synchronously.
+    /// </summary>
+    public ISynchronousClient Client { get; set; }
+
+    /// <summary>
+    ///     Gets the base path of the API client.
+    /// </summary>
+    /// <value>The base path</value>
+    public string GetBasePath()
+    {
+        return Configuration.BasePath;
+    }
+
+    /// <summary>
+    ///     Gets or sets the configuration object
+    /// </summary>
+    /// <value>An instance of the Configuration</value>
+    public IReadableConfiguration Configuration { get; set; }
+
+    /// <summary>
+    ///     Provides a factory method hook for the creation of exceptions.
+    /// </summary>
+    public ExceptionFactory ExceptionFactory
+    {
+        get
         {
+            if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
+                throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
+            return _exceptionFactory;
+        }
+        set => _exceptionFactory = value;
+    }
+
+    /// <summary>
+    ///     Получение реквизитов карты Метод получения реквизитов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>CredentialsResponse</returns>
+    public CredentialsResponse GetCredentials(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+    {
+        var localVarResponse = GetCredentialsWithHttpInfo(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение реквизитов карты Метод получения реквизитов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of CredentialsResponse</returns>
+    public ApiResponse<CredentialsResponse> GetCredentialsWithHttpInfo(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID,
+        int operationIndex = 0)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'clientOpenKey' is set
+        if (clientOpenKey == null) throw new ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCredentials");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("clientOpenKey", ClientUtils.ParameterToString(clientOpenKey)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "CardInformationApi.GetCredentials";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<CredentialsResponse>("/credentials/{publicId}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetCredentials", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardInformationApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public CardInformationApi(string basePath)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Получение реквизитов карты Метод получения реквизитов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of CredentialsResponse</returns>
+    public async Task<CredentialsResponse> GetCredentialsAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID,
+        int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await GetCredentialsWithHttpInfoAsync(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID, operationIndex, cancellationToken)
+            .ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение реквизитов карты Метод получения реквизитов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (CredentialsResponse)</returns>
+    public async Task<ApiResponse<CredentialsResponse>> GetCredentialsWithHttpInfoAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel,
+        string X_PARTNER_ID, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'clientOpenKey' is set
+        if (clientOpenKey == null) throw new ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCredentials");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCredentials");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            this.Configuration = Multibanking.CardInformationClient.Client.Configuration.MergeConfigurations(
-                Multibanking.CardInformationClient.Client.GlobalConfiguration.Instance,
-                new Multibanking.CardInformationClient.Client.Configuration { BasePath = basePath }
-            );
-            this.Client = new Multibanking.CardInformationClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.CardInformationClient.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Multibanking.CardInformationClient.Client.Configuration.DefaultExceptionFactory;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("clientOpenKey", ClientUtils.ParameterToString(clientOpenKey)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "CardInformationApi.GetCredentials";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.GetAsync<CredentialsResponse>("/credentials/{publicId}", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetCredentials", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardInformationApi"/> class
-        /// using Configuration object
-        /// </summary>
-        /// <param name="configuration">An instance of Configuration</param>
-        /// <returns></returns>
-        public CardInformationApi(Multibanking.CardInformationClient.Client.Configuration configuration)
-        {
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        return localVarResponse;
+    }
 
-            this.Configuration = Multibanking.CardInformationClient.Client.Configuration.MergeConfigurations(
-                Multibanking.CardInformationClient.Client.GlobalConfiguration.Instance,
-                configuration
-            );
-            this.Client = new Multibanking.CardInformationClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.CardInformationClient.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Multibanking.CardInformationClient.Client.Configuration.DefaultExceptionFactory;
+    /// <summary>
+    ///     Получение кода CVV карты Метод получения CVV кода карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>CvvResponse</returns>
+    public CvvResponse GetCvv(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+    {
+        var localVarResponse = GetCvvWithHttpInfo(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение кода CVV карты Метод получения CVV кода карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of CvvResponse</returns>
+    public ApiResponse<CvvResponse> GetCvvWithHttpInfo(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'clientOpenKey' is set
+        if (clientOpenKey == null) throw new ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCvv");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("clientOpenKey", ClientUtils.ParameterToString(clientOpenKey)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "CardInformationApi.GetCvv";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<CvvResponse>("/cvv/{publicId}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetCvv", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CardInformationApi"/> class
-        /// using a Configuration object and client instance.
-        /// </summary>
-        /// <param name="client">The client interface for synchronous API access.</param>
-        /// <param name="asyncClient">The client interface for asynchronous API access.</param>
-        /// <param name="configuration">The configuration object.</param>
-        public CardInformationApi(Multibanking.CardInformationClient.Client.ISynchronousClient client, Multibanking.CardInformationClient.Client.IAsynchronousClient asyncClient, Multibanking.CardInformationClient.Client.IReadableConfiguration configuration)
-        {
-            if (client == null) throw new ArgumentNullException("client");
-            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        return localVarResponse;
+    }
 
-            this.Client = client;
-            this.AsynchronousClient = asyncClient;
-            this.Configuration = configuration;
-            this.ExceptionFactory = Multibanking.CardInformationClient.Client.Configuration.DefaultExceptionFactory;
+    /// <summary>
+    ///     Получение кода CVV карты Метод получения CVV кода карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of CvvResponse</returns>
+    public async Task<CvvResponse> GetCvvAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await GetCvvWithHttpInfoAsync(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID, operationIndex, cancellationToken)
+            .ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение кода CVV карты Метод получения CVV кода карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="clientOpenKey">Открытый ключ клиента</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (CvvResponse)</returns>
+    public async Task<ApiResponse<CvvResponse>> GetCvvWithHttpInfoAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID,
+        int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'clientOpenKey' is set
+        if (clientOpenKey == null) throw new ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCvv");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCvv");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("clientOpenKey", ClientUtils.ParameterToString(clientOpenKey)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "CardInformationApi.GetCvv";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.GetAsync<CvvResponse>("/cvv/{publicId}", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetCvv", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// The client for accessing this underlying API asynchronously.
-        /// </summary>
-        public Multibanking.CardInformationClient.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        return localVarResponse;
+    }
 
-        /// <summary>
-        /// The client for accessing this underlying API synchronously.
-        /// </summary>
-        public Multibanking.CardInformationClient.Client.ISynchronousClient Client { get; set; }
+    /// <summary>
+    ///     Получение токенов карты Метод получения токенов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>TokensDto</returns>
+    public TokensDto GetTokens(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+    {
+        var localVarResponse = GetTokensWithHttpInfo(publicId, xMdmId, xClientChannel, X_PARTNER_ID);
+        return localVarResponse.Data;
+    }
 
-        /// <summary>
-        /// Gets the base path of the API client.
-        /// </summary>
-        /// <value>The base path</value>
-        public string GetBasePath()
+    /// <summary>
+    ///     Получение токенов карты Метод получения токенов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of TokensDto</returns>
+    public ApiResponse<TokensDto> GetTokensWithHttpInfo(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetTokens");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetTokens");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetTokens");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetTokens");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            return this.Configuration.BasePath;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "CardInformationApi.GetTokens";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<TokensDto>("/tokens/{publicId}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetTokens", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Gets or sets the configuration object
-        /// </summary>
-        /// <value>An instance of the Configuration</value>
-        public Multibanking.CardInformationClient.Client.IReadableConfiguration Configuration { get; set; }
+        return localVarResponse;
+    }
 
-        /// <summary>
-        /// Provides a factory method hook for the creation of exceptions.
-        /// </summary>
-        public Multibanking.CardInformationClient.Client.ExceptionFactory ExceptionFactory
+    /// <summary>
+    ///     Получение токенов карты Метод получения токенов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of TokensDto</returns>
+    public async Task<TokensDto> GetTokensAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await GetTokensWithHttpInfoAsync(publicId, xMdmId, xClientChannel, X_PARTNER_ID, operationIndex, cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение токенов карты Метод получения токенов карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (TokensDto)</returns>
+    public async Task<ApiResponse<TokensDto>> GetTokensWithHttpInfoAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetTokens");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetTokens");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetTokens");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetTokens");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            get
-            {
-                if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
-                {
-                    throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
-                }
-                return _exceptionFactory;
-            }
-            set { _exceptionFactory = value; }
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "CardInformationApi.GetTokens";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.GetAsync<TokensDto>("/tokens/{publicId}", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetTokens", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Получение реквизитов карты Метод получения реквизитов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>CredentialsResponse</returns>
-        public CredentialsResponse GetCredentials(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Токенизация карты Операция токенизации карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>TokensDto</returns>
+    public TokensDto UpdateTokenize(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest,
+        int operationIndex = 0)
+    {
+        var localVarResponse = UpdateTokenizeWithHttpInfo(publicId, xMdmId, xClientChannel, X_PARTNER_ID, generateWalletTokenRequest);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Токенизация карты Операция токенизации карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of TokensDto</returns>
+    public ApiResponse<TokensDto> UpdateTokenizeWithHttpInfo(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID,
+        GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'generateWalletTokenRequest' is set
+        if (generateWalletTokenRequest == null)
+            throw new ApiException(400, "Missing required parameter 'generateWalletTokenRequest' when calling CardInformationApi->UpdateTokenize");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            Multibanking.CardInformationClient.Client.ApiResponse<CredentialsResponse> localVarResponse = GetCredentialsWithHttpInfo(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID);
-            return localVarResponse.Data;
+            "application/json"
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+        localVarRequestOptions.Data = generateWalletTokenRequest;
+
+        localVarRequestOptions.Operation = "CardInformationApi.UpdateTokenize";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+
+        // make the HTTP request
+        var localVarResponse = Client.Post<TokensDto>("/token/{publicId}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("UpdateTokenize", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Получение реквизитов карты Метод получения реквизитов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of CredentialsResponse</returns>
-        public Multibanking.CardInformationClient.Client.ApiResponse<CredentialsResponse> GetCredentialsWithHttpInfo(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Токенизация карты Операция токенизации карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of TokensDto</returns>
+    public async Task<TokensDto> UpdateTokenizeAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID,
+        GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await UpdateTokenizeWithHttpInfoAsync(publicId, xMdmId, xClientChannel, X_PARTNER_ID, generateWalletTokenRequest, operationIndex, cancellationToken)
+            .ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Токенизация карты Операция токенизации карты
+    /// </summary>
+    /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="publicId">Публичный идентификатор продукта</param>
+    /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
+    /// <param name="xClientChannel">Признак использования API партнером</param>
+    /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
+    /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (TokensDto)</returns>
+    public async Task<ApiResponse<TokensDto>> UpdateTokenizeWithHttpInfoAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID,
+        GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'publicId' is set
+        if (publicId == null) throw new ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'xMdmId' is set
+        if (xMdmId == null) throw new ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'xClientChannel' is set
+        if (xClientChannel == null) throw new ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'X_PARTNER_ID' is set
+        if (X_PARTNER_ID == null) throw new ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->UpdateTokenize");
+
+        // verify the required parameter 'generateWalletTokenRequest' is set
+        if (generateWalletTokenRequest == null)
+            throw new ApiException(400, "Missing required parameter 'generateWalletTokenRequest' when calling CardInformationApi->UpdateTokenize");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCredentials");
-            }
+            "application/json"
+        };
 
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCredentials");
-            }
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
 
-            // verify the required parameter 'clientOpenKey' is set
-            if (clientOpenKey == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCredentials");
-            }
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
 
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCredentials");
-            }
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCredentials");
-            }
+        localVarRequestOptions.PathParameters.Add("publicId", ClientUtils.ParameterToString(publicId)); // path parameter
+        localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", ClientUtils.ParameterToString(xMdmId)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("x-client-channel", ClientUtils.ParameterToString(xClientChannel)); // header parameter
+        localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+        localVarRequestOptions.Data = generateWalletTokenRequest;
 
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
+        localVarRequestOptions.Operation = "CardInformationApi.UpdateTokenize";
+        localVarRequestOptions.OperationIndex = operationIndex;
 
-            string[] _contentTypes = new string[] {
-            };
+        // authentication (EpaAuth) required
+        // bearer authentication required
+        if (!string.IsNullOrEmpty(Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
 
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.PostAsync<TokensDto>("/token/{publicId}", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
 
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("clientOpenKey", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(clientOpenKey)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-
-            localVarRequestOptions.Operation = "CardInformationApi.GetCredentials";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<CredentialsResponse>("/credentials/{publicId}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetCredentials", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("UpdateTokenize", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Получение реквизитов карты Метод получения реквизитов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of CredentialsResponse</returns>
-        public async System.Threading.Tasks.Task<CredentialsResponse> GetCredentialsAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<CredentialsResponse> localVarResponse = await GetCredentialsWithHttpInfoAsync(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение реквизитов карты Метод получения реквизитов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (CredentialsResponse)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.CardInformationClient.Client.ApiResponse<CredentialsResponse>> GetCredentialsWithHttpInfoAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCredentials");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCredentials");
-            }
-
-            // verify the required parameter 'clientOpenKey' is set
-            if (clientOpenKey == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCredentials");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCredentials");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCredentials");
-            }
-
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("clientOpenKey", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(clientOpenKey)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-
-            localVarRequestOptions.Operation = "CardInformationApi.GetCredentials";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<CredentialsResponse>("/credentials/{publicId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetCredentials", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение кода CVV карты Метод получения CVV кода карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>CvvResponse</returns>
-        public CvvResponse GetCvv(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<CvvResponse> localVarResponse = GetCvvWithHttpInfo(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение кода CVV карты Метод получения CVV кода карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of CvvResponse</returns>
-        public Multibanking.CardInformationClient.Client.ApiResponse<CvvResponse> GetCvvWithHttpInfo(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'clientOpenKey' is set
-            if (clientOpenKey == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCvv");
-            }
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("clientOpenKey", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(clientOpenKey)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-
-            localVarRequestOptions.Operation = "CardInformationApi.GetCvv";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<CvvResponse>("/cvv/{publicId}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetCvv", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение кода CVV карты Метод получения CVV кода карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of CvvResponse</returns>
-        public async System.Threading.Tasks.Task<CvvResponse> GetCvvAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<CvvResponse> localVarResponse = await GetCvvWithHttpInfoAsync(publicId, xMdmId, clientOpenKey, xClientChannel, X_PARTNER_ID, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение кода CVV карты Метод получения CVV кода карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="clientOpenKey">Открытый ключ клиента</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (CvvResponse)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.CardInformationClient.Client.ApiResponse<CvvResponse>> GetCvvWithHttpInfoAsync(string publicId, string xMdmId, string clientOpenKey, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'clientOpenKey' is set
-            if (clientOpenKey == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'clientOpenKey' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetCvv");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetCvv");
-            }
-
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("clientOpenKey", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(clientOpenKey)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-
-            localVarRequestOptions.Operation = "CardInformationApi.GetCvv";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<CvvResponse>("/cvv/{publicId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetCvv", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение токенов карты Метод получения токенов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>TokensDto</returns>
-        public TokensDto GetTokens(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<TokensDto> localVarResponse = GetTokensWithHttpInfo(publicId, xMdmId, xClientChannel, X_PARTNER_ID);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение токенов карты Метод получения токенов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of TokensDto</returns>
-        public Multibanking.CardInformationClient.Client.ApiResponse<TokensDto> GetTokensWithHttpInfo(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0)
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetTokens");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetTokens");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetTokens");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetTokens");
-            }
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-
-            localVarRequestOptions.Operation = "CardInformationApi.GetTokens";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<TokensDto>("/tokens/{publicId}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetTokens", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение токенов карты Метод получения токенов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of TokensDto</returns>
-        public async System.Threading.Tasks.Task<TokensDto> GetTokensAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<TokensDto> localVarResponse = await GetTokensWithHttpInfoAsync(publicId, xMdmId, xClientChannel, X_PARTNER_ID, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение токенов карты Метод получения токенов карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (TokensDto)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.CardInformationClient.Client.ApiResponse<TokensDto>> GetTokensWithHttpInfoAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->GetTokens");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->GetTokens");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->GetTokens");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->GetTokens");
-            }
-
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-
-            localVarRequestOptions.Operation = "CardInformationApi.GetTokens";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<TokensDto>("/tokens/{publicId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetTokens", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Токенизация карты Операция токенизации карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>TokensDto</returns>
-        public TokensDto UpdateTokenize(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0)
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<TokensDto> localVarResponse = UpdateTokenizeWithHttpInfo(publicId, xMdmId, xClientChannel, X_PARTNER_ID, generateWalletTokenRequest);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Токенизация карты Операция токенизации карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of TokensDto</returns>
-        public Multibanking.CardInformationClient.Client.ApiResponse<TokensDto> UpdateTokenizeWithHttpInfo(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0)
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'generateWalletTokenRequest' is set
-            if (generateWalletTokenRequest == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'generateWalletTokenRequest' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-            localVarRequestOptions.Data = generateWalletTokenRequest;
-
-            localVarRequestOptions.Operation = "CardInformationApi.UpdateTokenize";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Post<TokensDto>("/token/{publicId}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("UpdateTokenize", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Токенизация карты Операция токенизации карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of TokensDto</returns>
-        public async System.Threading.Tasks.Task<TokensDto> UpdateTokenizeAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.CardInformationClient.Client.ApiResponse<TokensDto> localVarResponse = await UpdateTokenizeWithHttpInfoAsync(publicId, xMdmId, xClientChannel, X_PARTNER_ID, generateWalletTokenRequest, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Токенизация карты Операция токенизации карты
-        /// </summary>
-        /// <exception cref="Multibanking.CardInformationClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="publicId">Публичный идентификатор продукта</param>
-        /// <param name="xMdmId">Уникальный идентификатор клиента в MDM</param>
-        /// <param name="xClientChannel">Признак использования API партнером</param>
-        /// <param name="X_PARTNER_ID">Мнемокод партнера</param>
-        /// <param name="generateWalletTokenRequest">Данные для формирования зашифрованных параметров</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (TokensDto)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.CardInformationClient.Client.ApiResponse<TokensDto>> UpdateTokenizeWithHttpInfoAsync(string publicId, string xMdmId, string xClientChannel, string X_PARTNER_ID, GenerateWalletTokenRequest generateWalletTokenRequest, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'publicId' is set
-            if (publicId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'publicId' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'xMdmId' is set
-            if (xMdmId == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xMdmId' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'xClientChannel' is set
-            if (xClientChannel == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'xClientChannel' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'X_PARTNER_ID' is set
-            if (X_PARTNER_ID == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'X_PARTNER_ID' when calling CardInformationApi->UpdateTokenize");
-            }
-
-            // verify the required parameter 'generateWalletTokenRequest' is set
-            if (generateWalletTokenRequest == null)
-            {
-                throw new Multibanking.CardInformationClient.Client.ApiException(400, "Missing required parameter 'generateWalletTokenRequest' when calling CardInformationApi->UpdateTokenize");
-            }
-
-
-            Multibanking.CardInformationClient.Client.RequestOptions localVarRequestOptions = new Multibanking.CardInformationClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.CardInformationClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("publicId", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(publicId)); // path parameter
-            localVarRequestOptions.HeaderParameters.Add("X-Mdm-Id", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xMdmId)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("x-client-channel", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(xClientChannel)); // header parameter
-            localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.CardInformationClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-            localVarRequestOptions.Data = generateWalletTokenRequest;
-
-            localVarRequestOptions.Operation = "CardInformationApi.UpdateTokenize";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (EpaAuth) required
-            // bearer authentication required
-            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.PostAsync<TokensDto>("/token/{publicId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("UpdateTokenize", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
+        return localVarResponse;
     }
 }

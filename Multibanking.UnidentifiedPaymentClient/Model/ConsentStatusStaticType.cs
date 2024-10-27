@@ -8,53 +8,36 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Defines ConsentStatusStaticType
+/// </summary>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ConsentStatusStaticType
 {
     /// <summary>
-    /// Defines ConsentStatusStaticType
+    ///     Enum AwaitingAuthorisation for value: AwaitingAuthorisation
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ConsentStatusStaticType
-    {
-        /// <summary>
-        /// Enum AwaitingAuthorisation for value: AwaitingAuthorisation
-        /// </summary>
-        [EnumMember(Value = "AwaitingAuthorisation")]
-        AwaitingAuthorisation = 1,
+    [EnumMember(Value = "AwaitingAuthorisation")]
+    AwaitingAuthorisation = 1,
 
-        /// <summary>
-        /// Enum Rejected for value: Rejected
-        /// </summary>
-        [EnumMember(Value = "Rejected")]
-        Rejected = 2,
+    /// <summary>
+    ///     Enum Rejected for value: Rejected
+    /// </summary>
+    [EnumMember(Value = "Rejected")] Rejected = 2,
 
-        /// <summary>
-        /// Enum Authorised for value: Authorised
-        /// </summary>
-        [EnumMember(Value = "Authorised")]
-        Authorised = 3,
+    /// <summary>
+    ///     Enum Authorised for value: Authorised
+    /// </summary>
+    [EnumMember(Value = "Authorised")] Authorised = 3,
 
-        /// <summary>
-        /// Enum Consumed for value: Consumed
-        /// </summary>
-        [EnumMember(Value = "Consumed")]
-        Consumed = 4
-
-    }
-
+    /// <summary>
+    ///     Enum Consumed for value: Consumed
+    /// </summary>
+    [EnumMember(Value = "Consumed")] Consumed = 4
 }

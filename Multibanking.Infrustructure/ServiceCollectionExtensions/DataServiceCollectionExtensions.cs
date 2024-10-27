@@ -54,7 +54,7 @@ public static class DataServiceCollectionExtensions
             serviceCollection.AddScoped<IUnidentifiedPaymentClient>(_ => UnidentifiedPaymentClientMock.MockUnidentifiedPaymentClient().Object);
         else
             serviceCollection.AddScoped<IUnidentifiedPaymentClient, Data.OpenAPIBankClients.UnidentifiedPaymentClient.UnidentifiedPaymentClient>();
-        
+
         if (mockClients.IsCardClientMock)
             serviceCollection
                 .AddScoped<ICardEmissionClient>(_ => CardClientMock.MockCardEmissionClient().Object)

@@ -8,36 +8,22 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Низкоуровневое текстовое описание ошибки
+/// </summary>
+/// <value>Низкоуровневое текстовое описание ошибки</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum OBRUErrorResponseErrorCode
 {
     /// <summary>
-    /// Низкоуровневое текстовое описание ошибки
+    ///     Enum RUSBRFFieldMissing for value: RU.SBRF.Field.Missing
     /// </summary>
-    /// <value>Низкоуровневое текстовое описание ошибки</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum OBRUErrorResponseErrorCode
-    {
-        /// <summary>
-        /// Enum RUSBRFFieldMissing for value: RU.SBRF.Field.Missing
-        /// </summary>
-        [EnumMember(Value = "RU.SBRF.Field.Missing")]
-        RUSBRFFieldMissing = 1
-
-    }
-
+    [EnumMember(Value = "RU.SBRF.Field.Missing")]
+    RUSBRFFieldMissing = 1
 }

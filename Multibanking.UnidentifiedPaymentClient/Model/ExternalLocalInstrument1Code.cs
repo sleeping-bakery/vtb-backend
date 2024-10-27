@@ -8,36 +8,21 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     НЕ ОПРЕДЕЛЕН
+/// </summary>
+/// <value>НЕ ОПРЕДЕЛЕН</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ExternalLocalInstrument1Code
 {
     /// <summary>
-    /// НЕ ОПРЕДЕЛЕН
+    ///     Enum TmpVal1 for value: tmpVal1
     /// </summary>
-    /// <value>НЕ ОПРЕДЕЛЕН</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ExternalLocalInstrument1Code
-    {
-        /// <summary>
-        /// Enum TmpVal1 for value: tmpVal1
-        /// </summary>
-        [EnumMember(Value = "tmpVal1")]
-        TmpVal1 = 1
-
-    }
-
+    [EnumMember(Value = "tmpVal1")] TmpVal1 = 1
 }

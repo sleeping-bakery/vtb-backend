@@ -8,71 +8,53 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Defines TransactionIndividualStatusReasonStaticType
+/// </summary>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum TransactionIndividualStatusReasonStaticType
 {
     /// <summary>
-    /// Defines TransactionIndividualStatusReasonStaticType
+    ///     Enum Cancelled for value: Cancelled
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum TransactionIndividualStatusReasonStaticType
-    {
-        /// <summary>
-        /// Enum Cancelled for value: Cancelled
-        /// </summary>
-        [EnumMember(Value = "Cancelled")]
-        Cancelled = 1,
+    [EnumMember(Value = "Cancelled")] Cancelled = 1,
 
-        /// <summary>
-        /// Enum PendingFailingSettlement for value: PendingFailingSettlement
-        /// </summary>
-        [EnumMember(Value = "PendingFailingSettlement")]
-        PendingFailingSettlement = 2,
+    /// <summary>
+    ///     Enum PendingFailingSettlement for value: PendingFailingSettlement
+    /// </summary>
+    [EnumMember(Value = "PendingFailingSettlement")]
+    PendingFailingSettlement = 2,
 
-        /// <summary>
-        /// Enum PendingSettlement for value: PendingSettlement
-        /// </summary>
-        [EnumMember(Value = "PendingSettlement")]
-        PendingSettlement = 3,
+    /// <summary>
+    ///     Enum PendingSettlement for value: PendingSettlement
+    /// </summary>
+    [EnumMember(Value = "PendingSettlement")]
+    PendingSettlement = 3,
 
-        /// <summary>
-        /// Enum Proprietary for value: Proprietary
-        /// </summary>
-        [EnumMember(Value = "Proprietary")]
-        Proprietary = 4,
+    /// <summary>
+    ///     Enum Proprietary for value: Proprietary
+    /// </summary>
+    [EnumMember(Value = "Proprietary")] Proprietary = 4,
 
-        /// <summary>
-        /// Enum ProprietaryRejection for value: ProprietaryRejection
-        /// </summary>
-        [EnumMember(Value = "ProprietaryRejection")]
-        ProprietaryRejection = 5,
+    /// <summary>
+    ///     Enum ProprietaryRejection for value: ProprietaryRejection
+    /// </summary>
+    [EnumMember(Value = "ProprietaryRejection")]
+    ProprietaryRejection = 5,
 
-        /// <summary>
-        /// Enum Suspended for value: Suspended
-        /// </summary>
-        [EnumMember(Value = "Suspended")]
-        Suspended = 6,
+    /// <summary>
+    ///     Enum Suspended for value: Suspended
+    /// </summary>
+    [EnumMember(Value = "Suspended")] Suspended = 6,
 
-        /// <summary>
-        /// Enum Unmatched for value: Unmatched
-        /// </summary>
-        [EnumMember(Value = "Unmatched")]
-        Unmatched = 7
-
-    }
-
+    /// <summary>
+    ///     Enum Unmatched for value: Unmatched
+    /// </summary>
+    [EnumMember(Value = "Unmatched")] Unmatched = 7
 }

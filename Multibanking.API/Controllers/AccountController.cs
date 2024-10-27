@@ -6,7 +6,7 @@ using Multibanking.Services.Account;
 namespace Multibanking.API.Controllers;
 
 /// <summary>
-/// Контроллер счетов
+///     Контроллер счетов
 /// </summary>
 /// <param name="accountService"></param>
 [ApiController]
@@ -14,7 +14,7 @@ namespace Multibanking.API.Controllers;
 public class AccountController(IAccountService accountService) : ControllerBase
 {
     /// <summary>
-    /// Получить все счета пользователя
+    ///     Получить все счета пользователя
     /// </summary>
     /// <returns> </returns>
     [HttpGet]
@@ -22,9 +22,9 @@ public class AccountController(IAccountService accountService) : ControllerBase
     {
         return accountService.GetAccounts();
     }
-    
+
     /// <summary>
-    /// Получить счет пользователя. Вернется Массив счетов с одним счетом пользователя
+    ///     Получить счет пользователя. Вернется Массив счетов с одним счетом пользователя
     /// </summary>
     /// <param name="accountId">Id счета</param>
     /// <returns></returns>

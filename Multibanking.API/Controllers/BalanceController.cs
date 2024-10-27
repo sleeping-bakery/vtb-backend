@@ -10,7 +10,7 @@ namespace Multibanking.API.Controllers;
 public class BalanceController(IBalanceService balanceService) : ControllerBase
 {
     /// <summary>
-    /// Все балансы по всем счетам
+    ///     Все балансы по всем счетам
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -18,9 +18,9 @@ public class BalanceController(IBalanceService balanceService) : ControllerBase
     {
         return balanceService.GetBalance();
     }
-    
+
     /// <summary>
-    /// Баланс по счету (массив с одним балансом)
+    ///     Баланс по счету (массив с одним балансом)
     /// </summary>
     /// <param name="accountId"></param>
     /// <returns></returns>
@@ -29,5 +29,4 @@ public class BalanceController(IBalanceService balanceService) : ControllerBase
     {
         return balanceService.GetBalance(accountId);
     }
-    
 }

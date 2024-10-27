@@ -8,48 +8,32 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UnidentifiedPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UnidentifiedPaymentClient.Model
+namespace Multibanking.UnidentifiedPaymentClient.Model;
+
+/// <summary>
+///     Идентификатор счета
+/// </summary>
+/// <value>Идентификатор счета</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum PaymentAccountIdentificationDynamicType
 {
     /// <summary>
-    /// Идентификатор счета
+    ///     Enum PAN for value: RU.CBR.PAN
     /// </summary>
-    /// <value>Идентификатор счета</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum PaymentAccountIdentificationDynamicType
-    {
-        /// <summary>
-        /// Enum PAN for value: RU.CBR.PAN
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.PAN")]
-        PAN = 1,
+    [EnumMember(Value = "RU.CBR.PAN")] PAN = 1,
 
-        /// <summary>
-        /// Enum CellphoneNumber for value: RU.CBR.CellphoneNumber
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.CellphoneNumber")]
-        CellphoneNumber = 2,
+    /// <summary>
+    ///     Enum CellphoneNumber for value: RU.CBR.CellphoneNumber
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.CellphoneNumber")]
+    CellphoneNumber = 2,
 
-        /// <summary>
-        /// Enum BBAN for value: RU.CBR.BBAN
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.BBAN")]
-        BBAN = 3
-
-    }
-
+    /// <summary>
+    ///     Enum BBAN for value: RU.CBR.BBAN
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.BBAN")] BBAN = 3
 }
