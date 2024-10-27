@@ -8,6 +8,10 @@ namespace Multibanking.API.Controllers;
 [Route("[controller]")]
 public class UniversalPaymentController(IUniversalPaymentService paymentService): ControllerBase
 {
+    /// <summary>
+    /// Создать универсальный платеж по услуге
+    /// </summary>
+    /// <param name="createUniversalPaymentDto"></param>
     [HttpPost]
     public void Post(CreateUniversalPaymentDto createUniversalPaymentDto)
     {

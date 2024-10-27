@@ -12,29 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add services business logic">
-      <change afterPath="$PROJECT_DIR$/.run/UniversalPaymentClientSpecification.json.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/UniversalPaymentController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/UniversalPayment/CreateUniversalPaymentDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/UniversalPaymentClient/IUniversalPaymentClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/UniversalPaymentClient/UniversalPaymentClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/UniversalPaymentClient/UniversalPaymentClientSpecification.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/UniversalPaymentClientMock.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/UniversalPayments/IUniversalPaymentService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/UniversalPayments/UniversalPaymentService.cs" afterDir="false" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add universal payment business logic">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardReadDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardReadDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Devops/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Devops/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Cards/CardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Cards/CardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Cards/ICardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Cards/ICardService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/UnidentifiedPayments/UnidentifiedPaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/UnidentifiedPayments/UnidentifiedPaymentService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vtb-backend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/vtb-backend.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/UniversalPaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/UniversalPaymentController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +117,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Model/UpdateCreateCard400ResponseJsonConverter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Api/CardInformationApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Client/Configuration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Model/ServiceError.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardInformationClient/Model/TykErrorResponse.cs" root0="SKIP_HIGHLIGHTING" />
@@ -181,6 +162,9 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/SCASupportDataComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/DefaultApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AccountDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/CardDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductDtoRq.cs" root0="SKIP_HIGHLIGHTING" />
@@ -289,7 +273,7 @@
       <updated>1729806791404</updated>
       <workItem from="1729806792539" duration="45199000" />
       <workItem from="1729964762161" duration="26378000" />
-      <workItem from="1729993017067" duration="2339000" />
+      <workItem from="1729993017067" duration="4188000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -411,7 +395,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729992095172</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Add universal payment business logic">
+      <option name="closed" value="true" />
+      <created>1729995743792</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1729995743792</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -449,7 +441,8 @@
     <MESSAGE value="Рефакторинг" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Add services business logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add services business logic" />
+    <MESSAGE value="Add universal payment business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add universal payment business logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
