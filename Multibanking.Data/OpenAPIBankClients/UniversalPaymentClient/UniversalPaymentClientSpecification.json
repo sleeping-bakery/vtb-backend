@@ -1,0 +1,2172 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Cервис платежа с базовым сценарием оплаты",
+    "description": "сервис платежа с базовым сценарием оплаты",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bankingapi.ru/api/rb/pmnt/acceptance/universal/hackathon/v1",
+      "description": "Адрес API в песочнице хакатона"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Платежи",
+      "description": "Методы работы с универсальными платежами"
+    },
+    {
+      "name": "Продукты клиента",
+      "description": "Методы работы с продуктами(карты/счета) клиентаv"
+    }
+  ],
+  "paths": {
+    "/payments/{paymentId}": {
+      "get": {
+        "tags": [
+          "Платежи"
+        ],
+        "summary": "Запрос детальной информации по универсальному платежу",
+        "operationId": "getPayment",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "Идентификатор клиента УНК",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-MDM-ID",
+            "in": "header",
+            "description": "Идентификатор клиента mdm id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа в ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": true,
+            "schema": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "name": "X-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WEB",
+                "MOBILE",
+                "WEB_LITE",
+                "MOBILE_LITE",
+                "ATM",
+                "CHATBOT",
+                "OPENAPI"
+              ]
+            }
+          },
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "Идентификатор платежа",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 36
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка обработки запроса",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Продукты клиента"
+        ],
+        "summary": "Получение списка продуктов, доступных для оплаты универсальных платежей",
+        "operationId": "getClientProducts",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "Идентификатор клиента УНК",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-MDM-ID",
+            "in": "header",
+            "description": "Идентификатор клиента mdm id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа в ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": true,
+            "schema": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "name": "X-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WEB",
+                "MOBILE",
+                "WEB_LITE",
+                "MOBILE_LITE",
+                "ATM",
+                "CHATBOT",
+                "OPENAPI"
+              ]
+            }
+          },
+          {
+            "name": "minBalance",
+            "in": "query",
+            "description": "Баланс который должен  быть в наличии у продуктов клиента",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "maximum": 9007199254740991,
+              "type": "number",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientProductsDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка обработки запроса",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/confirm": {
+      "post": {
+        "tags": [
+          "Платежи"
+        ],
+        "summary": "Запрос на оплату универсального платежа",
+        "operationId": "confirm",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "Идентификатор клиента УНК",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-MDM-ID",
+            "in": "header",
+            "description": "Идентификатор клиента mdm id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-TB-ID",
+            "in": "header",
+            "description": "Идентификатор клиента TB id",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-USER-SESSION-ID",
+            "in": "header",
+            "description": "Идентификатор сессии клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа в ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": true,
+            "schema": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "name": "X-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WEB",
+                "MOBILE",
+                "WEB_LITE",
+                "MOBILE_LITE",
+                "ATM",
+                "CHATBOT",
+                "OPENAPI"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmPaymentDtoRq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmPaymentDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка обработки запроса",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/request": {
+      "post": {
+        "tags": [
+          "Платежи"
+        ],
+        "summary": "Запрос на оплату универсального платежа",
+        "operationId": "request",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "Идентификатор клиента УНК",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-MDM-ID",
+            "in": "header",
+            "description": "Идентификатор клиента mdm id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-TB-ID",
+            "in": "header",
+            "description": "Идентификатор клиента TB id",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа в ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": true,
+            "schema": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "name": "X-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WEB",
+                "MOBILE",
+                "WEB_LITE",
+                "MOBILE_LITE",
+                "ATM",
+                "CHATBOT",
+                "OPENAPI"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestPaymentDtoRq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestPaymentDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка обработки запроса",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/{paymentId}/check": {
+      "get": {
+        "tags": [
+          "Платежи"
+        ],
+        "summary": "Запрос чека по универсальному платежу",
+        "operationId": "getPaymentCheck",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "Идентификатор клиента УНК",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-MDM-ID",
+            "in": "header",
+            "description": "Идентификатор клиента mdm id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа в ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": true,
+            "schema": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "name": "X-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WEB",
+                "MOBILE",
+                "WEB_LITE",
+                "MOBILE_LITE",
+                "ATM",
+                "CHATBOT",
+                "OPENAPI"
+              ]
+            }
+          },
+          {
+            "name": "paymentId",
+            "in": "path",
+            "description": "Идентификатор платежа",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 36
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentCheckDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка обработки запроса",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payments/start": {
+      "post": {
+        "tags": [
+          "Платежи"
+        ],
+        "summary": "Запрос на старт оплаты универсального платежа",
+        "operationId": "start",
+        "parameters": [
+          {
+            "name": "X-UNC",
+            "in": "header",
+            "description": "Идентификатор клиента УНК",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-MDM-ID",
+            "in": "header",
+            "description": "Идентификатор клиента mdm id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-PARTNER-ID",
+            "in": "header",
+            "description": "Идентификатор партнера ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-LOGIN-MODE",
+            "in": "header",
+            "description": "Режим входа в ВТБ",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 255
+            }
+          },
+          {
+            "name": "X-ROLES",
+            "in": "header",
+            "description": "Роли клиента",
+            "required": true,
+            "schema": {
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 255
+              }
+            }
+          },
+          {
+            "name": "X-CHANNEL",
+            "in": "header",
+            "description": "Идентификатор канала клиента",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "WEB",
+                "MOBILE",
+                "WEB_LITE",
+                "MOBILE_LITE",
+                "ATM",
+                "CHATBOT",
+                "OPENAPI"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartPaymentDtoRq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartPaymentDtoRs"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Неправильный формат запроса к сервису",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Ошибка обработки запроса",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDtoRs"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorDtoRs": {
+        "required": [
+          "status"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/StatusDtoRs"
+          },
+          "errors": {
+            "type": "array",
+            "description": "Список полей с ошибками",
+            "items": {
+              "$ref": "#/components/schemas/ErrorFieldDtoRs"
+            }
+          }
+        },
+        "description": "Ответ с информацией об ошибке"
+      },
+      "ErrorFieldDtoRs": {
+        "required": [
+          "code",
+          "message",
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Ключ/название ошибочного поля"
+          },
+          "code": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Код ошибки"
+          },
+          "message": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Текст ошибки",
+            "example": "Некорректные данные"
+          }
+        },
+        "description": "Описание ошибки"
+      },
+      "StatusDtoRs": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Код статуса"
+          },
+          "message": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Сообщение",
+            "example": "Ошибка валидации запроса на оплату"
+          }
+        },
+        "description": "Статус ответа"
+      },
+      "AccountDtoRs": {
+        "required": [
+          "productType",
+          "publicId"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "publicId": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Публичный идентификатор продукта"
+          },
+          "productType": {
+            "maxLength": 7,
+            "type": "string",
+            "description": "Общий тип продукта",
+            "enum": [
+              "ACCOUNT",
+              "CARD",
+              "ACCOUNT"
+            ]
+          }
+        },
+        "description": "Информация о счете клиента"
+      },
+      "CardDtoRs": {
+        "required": [
+          "productType",
+          "publicId"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "publicId": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Публичный идентификатор продукта"
+          },
+          "productType": {
+            "maxLength": 4,
+            "type": "string",
+            "description": "Общий тип продукта",
+            "enum": [
+              "ACCOUNT",
+              "CARD",
+              "CARD"
+            ]
+          }
+        },
+        "description": "Информация о карте клиента"
+      },
+      "ClientProductDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/AccountDtoRs"
+          },
+          "card": {
+            "$ref": "#/components/schemas/CardDtoRs"
+          }
+        },
+        "description": "Информация о продукте клиента"
+      },
+      "CurrencyDto": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "maxLength": 3,
+            "type": "string",
+            "description": "Код",
+            "example": "RUB"
+          }
+        },
+        "description": "Информация о валюте"
+      },
+      "MoneyDto": {
+        "maxLength": 255,
+        "required": [
+          "amount"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "maximum": 999999999,
+            "minimum": -999999999,
+            "type": "number",
+            "description": "Сумма",
+            "example": 600
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyDto"
+          }
+        },
+        "description": "Информация о сумме и валюте"
+      },
+      "PaymentActionDtoRs": {
+        "required": [
+          "autoPaymentByBalance",
+          "autoPaymentByDate",
+          "check",
+          "remind",
+          "repeat",
+          "template"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "repeat": {
+            "type": "boolean",
+            "description": "Возможен повтор",
+            "example": true
+          },
+          "check": {
+            "type": "boolean",
+            "description": "Возможно получение квитанции",
+            "example": true
+          },
+          "remind": {
+            "type": "boolean",
+            "description": "Возможно создание напоминания",
+            "example": true
+          },
+          "template": {
+            "type": "boolean",
+            "description": "Возможно создание шаблона",
+            "example": true
+          },
+          "autoPaymentByDate": {
+            "type": "boolean",
+            "description": "Возможно создание автоплатежа на дату",
+            "example": true
+          },
+          "autoPaymentByBalance": {
+            "type": "boolean",
+            "description": "Возможно создание автоплатежа по сумме на балансе",
+            "example": true
+          }
+        },
+        "description": "Информация о доступных действиях с платежом"
+      },
+      "PaymentDtoRs": {
+        "required": [
+          "actions",
+          "clientProduct",
+          "commissionSum",
+          "createdAt",
+          "description",
+          "documentId",
+          "fields",
+          "id",
+          "paySum",
+          "providerService",
+          "status",
+          "totalSum"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Id платежа",
+            "example": "4d9065bc-55f7-4317-b728-5097344dc72f"
+          },
+          "documentId": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Номер платежа",
+            "example": "1234567890"
+          },
+          "createdAt": {
+            "pattern": "yyyy-MM-ddTHH-mm-ss.zzzzzz",
+            "type": "string",
+            "description": "Время создания платежа",
+            "format": "date-time"
+          },
+          "providerService": {
+            "$ref": "#/components/schemas/ProviderServiceDtoRs"
+          },
+          "clientProduct": {
+            "$ref": "#/components/schemas/ClientProductDtoRs"
+          },
+          "fields": {
+            "type": "array",
+            "description": "Набор полей платежа",
+            "items": {
+              "$ref": "#/components/schemas/PaymentFieldDtoRs"
+            }
+          },
+          "paySum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "commissionSum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "totalSum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Назначение платежа"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatusDtoRs"
+          },
+          "actions": {
+            "$ref": "#/components/schemas/PaymentActionDtoRs"
+          }
+        },
+        "description": "Платеж"
+      },
+      "PaymentFieldDtoRs": {
+        "required": [
+          "key",
+          "name",
+          "type",
+          "value"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Ключ поля",
+            "example": "phone"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Название поля",
+            "example": "Лицевой счет"
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Описание поля",
+            "example": "Лицевой счет"
+          },
+          "type": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Тип поля",
+            "enum": [
+              "STRING",
+              "NUMERIC",
+              "NUMBER",
+              "DECIMAL",
+              "BOOLEAN",
+              "MONEY",
+              "DATE",
+              "MONTH_YEAR",
+              "MONTH",
+              "YEAR",
+              "MOBILE_PHONE",
+              "DICTIONARY"
+            ]
+          },
+          "value": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Значение поля",
+            "example": "89535184636"
+          }
+        },
+        "description": "Поле платежа для ответа"
+      },
+      "PaymentStatusDtoRs": {
+        "maxLength": 10,
+        "required": [
+          "code",
+          "description"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Код статуса платежа",
+            "enum": [
+              "PROCESSING",
+              "EXECUTED",
+              "REVIEW",
+              "REFUSED",
+              "NEED_CONFIRM",
+              "ERROR"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Описание статуса платежа"
+          }
+        },
+        "description": "Статус платежа"
+      },
+      "ProviderServiceDtoRs": {
+        "required": [
+          "categoryIds",
+          "id",
+          "name",
+          "type"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Id услуги ПУ",
+            "example": "1"
+          },
+          "name": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Наименование услуги поставщика",
+            "example": "КИВИ"
+          },
+          "type": {
+            "maxLength": 8,
+            "type": "string",
+            "description": "Тип услуги ПУ",
+            "enum": [
+              "CONTRACT",
+              "GIS_HCS"
+            ]
+          },
+          "subTypes": {
+            "maxLength": 36,
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Подтипы услуги ПУ",
+            "example": "MOBILE_BY_PHONE",
+            "items": {
+              "maxLength": 36,
+              "type": "string",
+              "description": "Подтипы услуги ПУ",
+              "example": "MOBILE_BY_PHONE",
+              "enum": [
+                "MOBILE_BY_PHONE"
+              ]
+            },
+            "enum": [
+              "MOBILE_BY_PHONE"
+            ]
+          },
+          "categoryIds": {
+            "maxLength": 255,
+            "uniqueItems": true,
+            "type": "array",
+            "description": "Список Id категорий, в которых доступна услуга ПУ",
+            "items": {
+              "maxLength": 255,
+              "type": "string",
+              "description": "Список Id категорий, в которых доступна услуга ПУ"
+            }
+          }
+        },
+        "description": "Информация о услуге ПУ ответ"
+      },
+      "ClientProductsDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accounts": {
+            "type": "array",
+            "description": "Список счетов клиента",
+            "items": {
+              "$ref": "#/components/schemas/AccountDtoRs"
+            }
+          },
+          "cards": {
+            "type": "array",
+            "description": "Список карт клиента",
+            "items": {
+              "$ref": "#/components/schemas/CardDtoRs"
+            }
+          }
+        },
+        "description": "Информация о продукте клиента"
+      },
+      "ClientConfirmCodeDtoRq": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Значение кода подтверждения",
+            "example": "123456"
+          }
+        },
+        "description": "Код подтверждения операции"
+      },
+      "ClientConfirmDtoRq": {
+        "required": [
+          "confirmPurpose"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "confirmPurpose": {
+            "maxLength": 12,
+            "type": "string",
+            "description": "Цель запроса подтверждения",
+            "enum": [
+              "REQUEST_CODE",
+              "CHECK_CODE"
+            ]
+          },
+          "confirmCode": {
+            "$ref": "#/components/schemas/ClientConfirmCodeDtoRq"
+          }
+        },
+        "description": "Информация по подтверждению"
+      },
+      "ConfirmPaymentDtoRq": {
+        "required": [
+          "paymentId"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "paymentId": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Id подтверждаемого платежа"
+          },
+          "clientConfirm": {
+            "$ref": "#/components/schemas/ClientConfirmDtoRq"
+          }
+        },
+        "description": "Запрос подтверждения платежа"
+      },
+      "ClientConfirmDtoRs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "confirmCode": {
+            "$ref": "#/components/schemas/ConfirmCodeDtoRs"
+          }
+        },
+        "description": "Информация для подтверждения платежа"
+      },
+      "ConfirmCodeDtoRs": {
+        "required": [
+          "lifeTime"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lifeTime": {
+            "maximum": 180,
+            "minimum": 30,
+            "type": "integer",
+            "description": "Время жизни кода подтверждения в секундах",
+            "format": "int64"
+          }
+        },
+        "description": "Информация о коде подтверждения"
+      },
+      "ConfirmPaymentDtoRs": {
+        "required": [
+          "payment"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "payment": {
+            "$ref": "#/components/schemas/PaymentDtoRs"
+          },
+          "clientConfirm": {
+            "$ref": "#/components/schemas/ClientConfirmDtoRs"
+          }
+        },
+        "description": "Ответ подтверждения платежа"
+      },
+      "ClientProductDtoRq": {
+        "required": [
+          "productType",
+          "publicId"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "publicId": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Id продукта клиента",
+            "example": "1329CD96444B428895BEF56AF8016246"
+          },
+          "productType": {
+            "maxLength": 7,
+            "type": "string",
+            "description": "Тип продукта клиента",
+            "enum": [
+              "ACCOUNT",
+              "CARD",
+              "ACCOUNT",
+              "CARD"
+            ]
+          }
+        },
+        "description": "Информация о продукте клиента"
+      },
+      "InputFieldDtoRq": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string",
+            "description": "Ключ поля"
+          },
+          "value": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Значение поля"
+          }
+        },
+        "description": "Платежное поле запрос"
+      },
+      "ProviderServiceDtoRq": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Id услуги поставщика услуг",
+            "example": "1"
+          }
+        },
+        "description": "Информация о услуге ПУ для начала оплаты"
+      },
+      "RequestPaymentDtoRq": {
+        "required": [
+          "clientProduct",
+          "fields",
+          "paySum",
+          "providerService"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "providerService": {
+            "$ref": "#/components/schemas/ProviderServiceDtoRq"
+          },
+          "fields": {
+            "type": "array",
+            "description": "Набор полей для оплаты",
+            "items": {
+              "$ref": "#/components/schemas/InputFieldDtoRq"
+            }
+          },
+          "paySum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "clientProduct": {
+            "$ref": "#/components/schemas/ClientProductDtoRq"
+          }
+        },
+        "description": "Запрос на оплату услуги ПУ"
+      },
+      "DraftPaymentDtoRs": {
+        "required": [
+          "clientProduct",
+          "commissionSum",
+          "fields",
+          "id",
+          "paySum",
+          "totalSum"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "Id платежа",
+            "example": "4d9065bc-55f7-4317-b728-5097344dc72f"
+          },
+          "fields": {
+            "type": "array",
+            "description": "Набор полей платежа",
+            "items": {
+              "$ref": "#/components/schemas/PaymentFieldDtoRs"
+            }
+          },
+          "clientProduct": {
+            "$ref": "#/components/schemas/ClientProductDtoRs"
+          },
+          "paySum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "commissionSum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "totalSum": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        },
+        "description": "Черновик платежа"
+      },
+      "RequestPaymentDtoRs": {
+        "required": [
+          "payment"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "payment": {
+            "$ref": "#/components/schemas/DraftPaymentDtoRs"
+          }
+        },
+        "description": "Ответ на запрос оплаты услуги ПУ"
+      },
+      "PaymentCheckDtoRs": {
+        "required": [
+          "pdf"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pdf": {
+            "maxLength": 5000000,
+            "type": "string",
+            "description": "Чек в формате pdf, закодированный в base64"
+          }
+        },
+        "description": "Чек платежа"
+      },
+      "StartPaymentDtoRq": {
+        "required": [
+          "providerService"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "providerService": {
+            "$ref": "#/components/schemas/ProviderServiceDtoRq"
+          }
+        },
+        "description": "Информация для старта оплаты"
+      },
+      "DictionaryFieldDtoRs": {
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Значения словаря для выбора",
+            "items": {
+              "$ref": "#/components/schemas/DictionaryFieldValueDtoRs"
+            }
+          }
+        },
+        "description": "Тип поля словарь"
+      },
+      "DictionaryFieldValueDtoRs": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Технический ключ значения словаря"
+          },
+          "value": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Значение поля словаря которые видит и выбирает клиент"
+          }
+        },
+        "description": "Значение поля словаря"
+      },
+      "InputFieldDtoRs": {
+        "required": [
+          "editable",
+          "key",
+          "name",
+          "required",
+          "type"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string",
+            "description": "Ключ поля"
+          },
+          "name": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string",
+            "description": "Название поля"
+          },
+          "description": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string",
+            "description": "Описание поля"
+          },
+          "value": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string",
+            "description": "Значение поля"
+          },
+          "type": {
+            "maxLength": 12,
+            "type": "string",
+            "description": "Тип поля",
+            "enum": [
+              "STRING",
+              "NUMERIC",
+              "NUMBER",
+              "DECIMAL",
+              "BOOLEAN",
+              "MONEY",
+              "DATE",
+              "MONTH_YEAR",
+              "MONTH",
+              "YEAR",
+              "MOBILE_PHONE",
+              "DICTIONARY"
+            ]
+          },
+          "dictionaryField": {
+            "$ref": "#/components/schemas/DictionaryFieldDtoRs"
+          },
+          "lengthRestrict": {
+            "$ref": "#/components/schemas/LengthRestrictDtoRs"
+          },
+          "numberValueRestrict": {
+            "$ref": "#/components/schemas/NumberValueRestrictDtoRs"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "Поле обязательно к заполнению",
+            "example": true
+          },
+          "editable": {
+            "type": "boolean",
+            "description": "Поле можно отредактировать",
+            "example": true
+          },
+          "inputMask": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string",
+            "description": "Маска ввода поля"
+          },
+          "regexpValidators": {
+            "type": "array",
+            "description": "Список валидаторов поля в виде регулярных выражений",
+            "items": {
+              "$ref": "#/components/schemas/RegexpValidatorDtoRs"
+            }
+          }
+        },
+        "description": "Поле ПУ необходимое для платежа"
+      },
+      "LengthRestrictDtoRs": {
+        "required": [
+          "max",
+          "min"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "min": {
+            "minimum": 0,
+            "maximum": 255,
+            "type": "integer",
+            "description": "Минимальное число символов в значении, включительно",
+            "format": "int32"
+          },
+          "max": {
+            "minimum": 0,
+            "maximum": 255,
+            "type": "integer",
+            "description": "Максимальное число символов в строке, включительно",
+            "format": "int32"
+          }
+        },
+        "description": "Ограничение количества символов для значения поля"
+      },
+      "NumberValueRestrictDtoRs": {
+        "required": [
+          "max",
+          "min"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "min": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 999999999,
+            "description": "Минимальное числовое значение, включительно"
+          },
+          "max": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 999999999,
+            "description": "Максимальное числовое значение, включительно"
+          }
+        },
+        "description": "Ограничение для числового значения поля"
+      },
+      "PayLimitDtoRs": {
+        "required": [
+          "max",
+          "min"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "min": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "max": {
+            "$ref": "#/components/schemas/MoneyDto"
+          }
+        },
+        "description": "Лимит суммы платежа"
+      },
+      "PaySumDtoRs": {
+        "required": [
+          "payLimit"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "payLimit": {
+            "$ref": "#/components/schemas/PayLimitDtoRs"
+          },
+          "recommendedSums": {
+            "maxLength": 255,
+            "type": "array",
+            "description": "Список рекомендованных сумм платежа",
+            "items": {
+              "$ref": "#/components/schemas/MoneyDto"
+            }
+          }
+        },
+        "description": "Информация по сумме платежа ответ"
+      },
+      "RegexpValidatorDtoRs": {
+        "required": [
+          "description",
+          "errorMessage",
+          "key",
+          "regexp"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Ключ валидатора по которому фронт может строить доп логику"
+          },
+          "regexp": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Регулярное выражение для валидации",
+            "example": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "description": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Описание валидатора"
+          },
+          "errorMessage": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Сообщение при ошибке"
+          }
+        },
+        "description": "Валидатор платежного поля ответ"
+      },
+      "StartPaymentDtoRs": {
+        "required": [
+          "fields",
+          "paySum"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "fields": {
+            "type": "array",
+            "description": "Список полей необходимый для оплаты услуги ПУ",
+            "items": {
+              "$ref": "#/components/schemas/InputFieldDtoRs"
+            }
+          },
+          "paySum": {
+            "$ref": "#/components/schemas/PaySumDtoRs"
+          }
+        },
+        "description": "Ответ старта оплаты"
+      }
+    },
+    "securitySchemes": {
+      "EpaAuth": {
+        "type": "http",
+        "description": "Авторизация ЕПА",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "x-tyk-configuration": {
+    "application": {
+      "version": "v1",
+      "mw_enable_validate_header_limit_request": false,
+      "mw_enable_validate_header_limit_response": false,
+      "mask_log": [
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/payments/{paymentId}"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/products"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/payments/confirm"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/payments/request"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/payments/{paymentId}/check"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/payments/start"
+        }
+      ],
+      "name": "1234.open-PaymentBasicScenario-s-rest-v1",
+      "providerRisId": "1234",
+      "providerMnemonic": "SUPR",
+      "strip_listen_path": true,
+      "provider_type": "internal",
+      "api_type": "rest",
+      "enable_middlewares": true,
+      "middlewares": {},
+      "global_size_limit": 1048576,
+      "rq_validate_json": [
+        {
+          "path": "/payments/confirm",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "required": [
+              "paymentId"
+            ],
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "paymentId": {
+                "maxLength": 36,
+                "type": "string"
+              },
+              "clientConfirm": {
+                "required": [
+                  "confirmPurpose"
+                ],
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "confirmPurpose": {
+                    "maxLength": 12,
+                    "type": "string",
+                    "enum": [
+                      "REQUEST_CODE",
+                      "CHECK_CODE"
+                    ]
+                  },
+                  "confirmCode": {
+                    "required": [
+                      "code"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "code": {
+                        "maxLength": 36,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "/payments/request",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "required": [
+              "clientProduct",
+              "fields",
+              "paySum",
+              "providerService"
+            ],
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "providerService": {
+                "required": [
+                  "id"
+                ],
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "maxLength": 255,
+                    "type": "string"
+                  }
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "key",
+                    "value"
+                  ],
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "key": {
+                      "maxLength": 32,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "value": {
+                      "maxLength": 255,
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "paySum": {
+                "maxLength": 255,
+                "required": [
+                  "amount"
+                ],
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "amount": {
+                    "maximum": 999999999,
+                    "minimum": -999999999,
+                    "type": "number"
+                  },
+                  "currency": {
+                    "required": [
+                      "code"
+                    ],
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "code": {
+                        "maxLength": 3,
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "clientProduct": {
+                "required": [
+                  "productType",
+                  "publicId"
+                ],
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "publicId": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "productType": {
+                    "maxLength": 7,
+                    "type": "string",
+                    "enum": [
+                      "ACCOUNT",
+                      "CARD",
+                      "ACCOUNT",
+                      "CARD"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "path": "/payments/start",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "required": [
+              "providerService"
+            ],
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "providerService": {
+                "required": [
+                  "id"
+                ],
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "maxLength": 255,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "gateway": {
+      "tyk_lan_MAIN": {
+        "gateway_type": "tyk",
+        "api_typization": "PublicAPI",
+        "application": {
+          "provider_rate_limit": {
+            "LT": {
+              "per": 1,
+              "rate": 50
+            }
+          },
+          "target_url": {
+            "LT": "http://payments-basic-svc.plug.svc"
+          },
+          "middlewares": {},
+          "listen_path": "/api/rb/pmnt/acceptance/universal/hackathon/v1",
+          "auth_type": "JWT",
+          "enforced_timeout": {
+            "LT": 40
+          }
+        },
+        "contour": "LAN",
+        "gatewayRisId": "1474",
+        "segment_mnemonic": "MAIN"
+      }
+    }
+  }
+}

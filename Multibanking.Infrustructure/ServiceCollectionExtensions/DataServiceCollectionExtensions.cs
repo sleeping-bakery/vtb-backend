@@ -5,6 +5,7 @@ using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
 using Multibanking.Data.OpenAPIBankClients.ServiceClient;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
+using Multibanking.Data.OpenAPIBankClients.UniversalPaymentClient;
 using Multibanking.Data.Repositories.Account;
 using Multibanking.Data.Repositories.Card;
 using Multibanking.Data.Repositories.Users;
@@ -68,10 +69,15 @@ public static class DataServiceCollectionExtensions
                 .AddScoped<ICardOperationClient, Data.OpenAPIBankClients.CardClient.Implementations.CardOperationClient>();
 
         if (mockClients.IsServiceClientMock)
-            serviceCollection.AddScoped<IServiceClient>(_ => ServiceClientMock.MockServiceClient().Object); 
+            serviceCollection.AddScoped<IServiceClient>(_ => ServiceClientMock.MockServiceClient().Object);
         else
             serviceCollection.AddScoped<IServiceClient, Data.OpenAPIBankClients.ServiceClient.ServiceClient>();
-        
+
+        if (mockClients.IsUniversalPaymentClientMock)
+            serviceCollection.AddScoped<IUniversalPaymentClient>(_ => UniversalPaymentClientMock.MockUnidentifiedPaymentClient().Object);
+        else
+            serviceCollection.AddScoped<IUniversalPaymentClient, Data.OpenAPIBankClients.UniversalPaymentClient.UniversalPaymentClient>();
+
         return serviceCollection;
     }
 }

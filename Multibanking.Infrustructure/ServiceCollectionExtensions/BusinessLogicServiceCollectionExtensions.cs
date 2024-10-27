@@ -7,6 +7,7 @@ using Multibanking.Services.Cards.MappingProfiles;
 using Multibanking.Services.Services;
 using Multibanking.Services.UnidentifiedPayments;
 using Multibanking.Services.UnidentifiedPayments.MappingProfiles;
+using Multibanking.Services.UniversalPayments;
 using Multibanking.Services.User;
 using Multibanking.Services.User.Implementations;
 using Multibanking.Services.User.MappingProfiles;
@@ -42,7 +43,8 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IStatementService, StatementService>()
             .AddScoped<ICardService, CardService>()
             .AddScoped<IUnidentifiedPaymentService, UnidentifiedPaymentService>()
-            .AddScoped<IServiceSupplierService, ServiceSupplierService>();
+            .AddScoped<IServiceSupplierService, ServiceSupplierService>()
+            .AddScoped<IUniversalPaymentService, UniversalPaymentService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)

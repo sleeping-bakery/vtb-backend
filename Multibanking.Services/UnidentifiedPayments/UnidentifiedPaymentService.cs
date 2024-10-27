@@ -15,10 +15,9 @@ public class UnidentifiedPaymentService(IUnidentifiedPaymentClient unidentifiedP
 
     public async Task CreatePayment(CreateUnidentifiedPaymentDto createUnidentifiedPaymentDto)
     {
-        if (!cardService.UserHasCard(createUnidentifiedPaymentDto.CardGuid))
-            throw new Exception("Взаимодействие с данной картой невозможно (заблокирована или относится к другому пользователю");
+        cardService.ValidateUserCard(createUnidentifiedPaymentDto.CardGuid);
         var createUnidentifiedPaymentModel = mapper.Map<CreateUnidentifiedPaymentModel>(createUnidentifiedPaymentDto);
-        createUnidentifiedPaymentModel.DebtorPan = Encoding.UTF8.GetString(Convert.FromBase64String(cardService.GetCardDetail(createUnidentifiedPaymentDto.CardGuid).EncryptedPan));
+        createUnidentifiedPaymentModel.DebtorPan = cardService.GetDecryptedPan(createUnidentifiedPaymentDto.CardGuid);
 
         await CreatePaymentWithValidation(createUnidentifiedPaymentModel);
     }

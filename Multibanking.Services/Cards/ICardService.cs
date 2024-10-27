@@ -17,5 +17,9 @@ public interface ICardService
 
     void UpdateCard(CardUpdateDto cardUpdateDto);
 
-    bool UserHasCard(Guid cardId);
+    void ValidateUserCard(Guid cardGuid);
+
+    string GetDecryptedPan(Guid cardGuid);
+
+    CardReadDto GetCard(Guid cardId);
 }

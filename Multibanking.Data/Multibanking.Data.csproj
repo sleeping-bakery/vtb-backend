@@ -14,6 +14,7 @@
         <ProjectReference Include="..\Multibanking.Entities\Multibanking.Entities.csproj"/>
         <ProjectReference Include="..\Multibanking.ServiceClient\Multibanking.ServiceClient.csproj" />
         <ProjectReference Include="..\Multibanking.UnidentifiedPaymentClient\Multibanking.UnidentifiedPaymentClient.csproj"/>
+        <ProjectReference Include="..\Multibanking.UniversalPaymentClient\Multibanking.UniversalPaymentClient.csproj" />
     </ItemGroup>
 
 </Project>

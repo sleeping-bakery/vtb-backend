@@ -1,3 +1,4 @@
+using System.Text;
 using AutoMapper;
 using Multibanking.CardEmissionClient.Model;
 using Multibanking.CardInformationClient.Model;
@@ -20,12 +21,23 @@ public class CardService(
     IMapper mapper,
     ICardInformationClient cardInformationClient) : ICardService
 {
-    public bool UserHasCard(Guid cardId)
+    private bool UserHasCard(Guid cardId)
     {
         var userDto = userContextService.GetUserDtoFromHttpContext();
         return cardRepository.Read().SingleOrDefault(card => card.UserId == userDto.Id && card.Id == cardId && card.Status != CardStatus.PermanentBlock) != null;
     }
 
+    public void ValidateUserCard(Guid cardGuid)
+    {
+        if (!UserHasCard(cardGuid))
+            throw new Exception("Взаимодействие с данной картой невозможно (заблокирована или относится к другому пользователю");
+    }
+
+    public string GetDecryptedPan(Guid cardGuid)
+    {
+        return Encoding.UTF8.GetString(Convert.FromBase64String(GetCardDetail(cardGuid).EncryptedPan));
+    }
+    
     public void CreateCard(CardCreateDto cardCreateDto)
     {
         if (!accountService.IsAccountExist(cardCreateDto.AccountId))
@@ -67,6 +79,12 @@ public class CardService(
         var user = userContextService.GetUserDtoFromHttpContext();
         var cards = cardRepository.Read().Where(card => card.UserId == user.Id).ToList();
         return mapper.Map<List<CardReadDto>>(cards);
+    }
+
+    public CardReadDto GetCard(Guid cardId)
+    {
+        ValidateUserCard(cardId);
+        return mapper.Map<CardReadDto>(cardRepository.Read().Single(card => card.Id == cardId));
     }
 
     public void DeleteCard(Guid cardId)
