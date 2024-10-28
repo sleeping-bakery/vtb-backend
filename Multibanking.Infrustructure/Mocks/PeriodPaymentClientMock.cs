@@ -10,6 +10,24 @@ public static class PeriodPaymentClientMock
     {
         var mock = new Mock<IPeriodPaymentClient>();
 
+        mock.Setup(periodPaymentClient => periodPaymentClient.CreateVRPConsentConsentIdFundsConfirmations(It.IsAny<string>(), It.IsAny<VRPFundsConfirmationRequest>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
+            )
+            .Returns(() => new VRPFundsConfirmationResponse(new VRPFundsConfirmationResponseData(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.Now,
+                Guid.NewGuid().ToString(),
+                new VRPFundsConfirmationResponseDataFundsAvailableResult(DateTime.Now, VRPFundsConfirmationResponseDataFundsAvailableResult.FundsAvailableEnum.Available),
+                new VRPFundsConfirmationResponseDataInstructedAmount("123", "RUB"))));
+
+        mock.Setup(periodPaymentClient => periodPaymentClient.CreateVRP(It.IsAny<VRPRequest>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())
+            )
+            .Returns(() => new VRPResponse(
+                new VRPResponseData(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), DateTime.Now, TransactionStatusCode.AcceptedSettlementCompleted, DateTime.Now,
+                    DateTime.Now, DateTime.Now, [], new VRPResponseDataRefund(Guid.NewGuid().ToString(), AccountIdentificationCode.PAN, Guid.NewGuid().ToString()),
+                    new VRPRequestDataInstruction(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), instructedAmount: new VRPInstructionInstructedAmount("123", "RUB")),
+                    new VRPConsentResponseDataInitiation(), new VRPInstructionDebtorAccount(Guid.NewGuid().ToString(), AccountIdentificationCode.PAN, Guid.NewGuid().ToString())),
+                new VRPConsentRequestRisk(), new VRPConsentResponseLinks(""), new VRPConsentResponseMeta()));
+
         return mock;
     }
 
@@ -36,7 +54,8 @@ public static class PeriodPaymentClientMock
                             vrpConsentRequest.Data.Initiation.Creditor,
                             vrpConsentRequest.Data.Initiation.RemittanceInformation
                         ),
-                        new VRPConsentResponseDataDebtorAccount(vrpConsentRequest.Data.Initiation.DebtorAccount.Name, vrpConsentRequest.Data.Initiation.DebtorAccount.SchemeName, vrpConsentRequest.Data.Initiation.DebtorAccount.Identification)
+                        new VRPConsentResponseDataDebtorAccount(vrpConsentRequest.Data.Initiation.DebtorAccount.Name, vrpConsentRequest.Data.Initiation.DebtorAccount.SchemeName,
+                            vrpConsentRequest.Data.Initiation.DebtorAccount.Identification)
                     ),
                     new VRPConsentRequestRisk(),
                     new VRPConsentResponseLinks(""),

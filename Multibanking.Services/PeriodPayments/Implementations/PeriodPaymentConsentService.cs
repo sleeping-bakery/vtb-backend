@@ -105,9 +105,22 @@ public class PeriodPaymentConsentService(
             throw new ArgumentException("Данного согласия не существует");
         if (consent.UserId != userDto.Id)
             throw new ArgumentException("Нельзя взаимодействовать с чужими согласиями");
-        
+
         periodPaymentConsentClient.DeleteVRPConsentsConsentId(consent.ConsentBanking.Data.ConsentId);
         periodPaymentConsentRepository.Delete(consent);
         periodPaymentConsentRepository.SaveChanges();
+    }
+
+    public ReadPeriodPaymentConsentDto GetPeriodPaymentConsent(Guid periodPaymentConsentId)
+    {
+        var periodPaymentConsent = periodPaymentConsentRepository.Read().SingleOrDefault(consent => consent.Id == periodPaymentConsentId);
+
+        if (periodPaymentConsent == null)
+            throw new Exception("Данного согласия не существует");
+
+        if (periodPaymentConsent.UserId != userContextService.GetUserDtoFromHttpContext().Id)
+            throw new Exception("Нельзя получить чужие согласия");
+
+        return mapper.Map<ReadPeriodPaymentConsentDto>(periodPaymentConsent);
     }
 }

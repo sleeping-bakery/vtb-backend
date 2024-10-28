@@ -6,35 +6,16 @@ namespace Multibanking.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PeriodPaymentController(IPeriodPaymentConsentService periodPaymentConsentService) : ControllerBase
+public class PeriodPaymentController(IPeriodPaymentService periodPaymentService) : ControllerBase
 {
     /// <summary>
-    /// Создать согласие на периодические платежи
+    /// Создать периодический платеж
     /// </summary>
-    /// <param name="createPeriodPaymentConsentDto"></param>
+    /// <param name="periodPaymentDto"></param>
     /// <returns></returns>
     [HttpPost]
-    public ActionResult Post([FromBody] CreatePeriodPaymentConsentDto createPeriodPaymentConsentDto)
-    {
-        periodPaymentConsentService.CreatePeriodPaymentConsent(createPeriodPaymentConsentDto);
+    public async Task<ActionResult> Post([FromBody] CreatePeriodPaymentDto periodPaymentDto) {
+        await periodPaymentService.CreatePeriodPayment(periodPaymentDto.PeriodPaymentConsentId, periodPaymentDto.Amount, periodPaymentDto.Currency);
         return Ok();
     }
-
-    /// <summary>
-    /// Получить все согласия на периодические платежи, принадлежащие пользователю
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet]
-    public ActionResult<List<ReadPeriodPaymentConsentDto>> Get()
-    {
-        return periodPaymentConsentService.GetPeriodPaymentConsents();
-    }
-
-    [HttpDelete]
-    public ActionResult Delete([FromQuery] Guid periodPaymentConsentId)
-    {
-        periodPaymentConsentService.DeletePeriodPaymentConsent(periodPaymentConsentId);
-        return Ok();
-    }
-    
 }

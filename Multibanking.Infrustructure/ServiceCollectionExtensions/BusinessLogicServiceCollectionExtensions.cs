@@ -48,7 +48,8 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IUnidentifiedPaymentService, UnidentifiedPaymentService>()
             .AddScoped<IServiceSupplierService, ServiceSupplierService>()
             .AddScoped<IUniversalPaymentService, UniversalPaymentService>()
-            .AddScoped<IPeriodPaymentConsentService, PeriodPaymentConsentService>();
+            .AddScoped<IPeriodPaymentConsentService, PeriodPaymentConsentService>()
+            .AddScoped<IPeriodPaymentService, PeriodPaymentService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)
