@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Services.Account;
 using Multibanking.Services.Account.Implementations;
 using Multibanking.Services.Account.MappingProfiles;
+using Multibanking.Services.BonusPoints;
 using Multibanking.Services.Cards;
 using Multibanking.Services.Cards.MappingProfiles;
 using Multibanking.Services.PeriodPayments;
@@ -49,7 +50,8 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IServiceSupplierService, ServiceSupplierService>()
             .AddScoped<IUniversalPaymentService, UniversalPaymentService>()
             .AddScoped<IPeriodPaymentConsentService, PeriodPaymentConsentService>()
-            .AddScoped<IPeriodPaymentService, PeriodPaymentService>();
+            .AddScoped<IPeriodPaymentService, PeriodPaymentService>()
+            .AddScoped<IBonusPointService, BonusPointService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)

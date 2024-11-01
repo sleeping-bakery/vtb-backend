@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
+using Multibanking.Data.OpenAPIBankClients.BonusPointClient;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
 using Multibanking.Data.OpenAPIBankClients.PeriodPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.ServiceClient;
@@ -91,6 +92,11 @@ public static class DataServiceCollectionExtensions
             serviceCollection.AddScoped<IPeriodPaymentConsentClient, Data.OpenAPIBankClients.PeriodPaymentClient.Implementations.PeriodPaymentConsentClient>();
             serviceCollection.AddScoped<IPeriodPaymentClient, Data.OpenAPIBankClients.PeriodPaymentClient.Implementations.PeriodPaymentClient>();
         }
+
+        if (mockClients.IsBonusPointClientMock)
+            serviceCollection.AddScoped<IBonusPointClient>(_ => BonusPointClientMock.MockBonusPointClient().Object);
+        else
+            serviceCollection.AddScoped<IBonusPointClient, Data.OpenAPIBankClients.BonusPointClient.BonusPointClient>();
         
         return serviceCollection;
     }

@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Multibanking.AccountClient\Multibanking.AccountClient.csproj"/>
+        <ProjectReference Include="..\Multibanking.BonusPointClient\Multibanking.BonusPointClient.csproj" />
         <ProjectReference Include="..\Multibanking.CardEmissionClient\Multibanking.CardEmissionClient.csproj"/>
         <ProjectReference Include="..\Multibanking.CardInformationClient\Multibanking.CardInformationClient.csproj"/>
         <ProjectReference Include="..\Multibanking.CardOperationClient\Multibanking.CardOperationClient.csproj"/>

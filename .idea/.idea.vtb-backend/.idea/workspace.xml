@@ -12,17 +12,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add period payment consent business logic">
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentConsentController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/PeriodPaymentConsent/CreatePeriodPaymentDto.cs" afterDir="false" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add period payment business logic">
+      <change afterPath="$PROJECT_DIR$/.run/BonusPointClientSpecification.json.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/BonusPointController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/BonusPoint/PostBonusPointDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClientSpecification.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/IBonusPointClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/BonusPoints/BonusPointService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/BonusPoints/IBonusPointService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/PeriodPaymentClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/PeriodPaymentClientMock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Devops/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Devops/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentConsentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentConsentService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentConsentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentConsentService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vtb-backend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/vtb-backend.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +71,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.CoreLib/src/System/Random.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.CoreLib/src/System/Runtime/ExceptionServices/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Private.Xml/src/System/Xml/Core/XmlTextReaderImpl.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Runtime.Serialization.Primitives/src/System/Runtime/Serialization/DataMemberAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/211e6f3b24fa438a92f1815153647ce2c8f908/4d/57e865be/IIdentity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/54c2c97bd5bd46e3961ad402640a3dd93818a0/49/dfca84f3/IQueryable`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -72,6 +81,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f8dbf677037c4363bdec07364295385f16908/e3/08ac3917/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/858fa85af8f360fe16f9ac5d211391573dccd769e4c998ad63d6497f469145e1/ISetupList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d253e85623dbcafcda28febe2a37a984ff78a8cab68dbdfe7c1b698d1f5fba/MethodCall.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountsApi.cs" root0="SKIP_HIGHLIGHTING" />
@@ -96,6 +106,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountSubTypeStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceTypeStaticType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CashAccountCompexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/Consent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/ConsentStatusType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditDebitIndicatorStaticType.cs" root0="SKIP_HIGHLIGHTING" />
@@ -104,10 +115,12 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataAccountResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/FinancialInstitutionIdentificationDynamicType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/LinksType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/MetaType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/PeriodPaymentPartyIdentification.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/ServiceProviderComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCashBalanceComplexType.cs" root0="SKIP_HIGHLIGHTING" />
@@ -115,12 +128,21 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexBalance.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCardInstrument.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAccount.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeAmount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorParty.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAccount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Api/DefaultApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/CatalogV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ProgramDetailV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionRequestV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardBalanceDataV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardBalanceV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardSummaryV2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Api/CardEmissionApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardEmissionClient/Client/ClientUtils.cs" root0="SKIP_HIGHLIGHTING" />
@@ -148,7 +170,11 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Model/TykErrorResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Model/UpdateCloseCard400Response.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.CardOperationClient/Model/UpdateCloseCard400ResponseJsonConverter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Card/CardStatus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Card/CardUpdateDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClientSpecification.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/PeriodPaymentClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/ServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
@@ -173,6 +199,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequestData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationDebtorAccount.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionInstructedAmount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequestDataInstruction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
@@ -183,6 +210,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentReceiverDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentSettingsSearchDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Api/UnidentifiedPaymentsApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
@@ -230,36 +258,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Multibanking.API: http.executor&quot;: &quot;Debug&quot;,
-    &quot;OpenAPI/Swagger Code Generator.AccountClientSpecification.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.CardEmissionClientSpecification.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.CardInformationClient.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.CardOpetationClientSpecification.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.PeriodPaymentClientSpecification.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.ServiceClientSpecification.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.UnidentifiedPaymentClient.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.UnitdentifiedPaymentClient.json.executor&quot;: &quot;Run&quot;,
-    &quot;OpenAPI/Swagger Code Generator.UniversalPaymentClientSpecification.json.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.6666667&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CodeInspectionSettingsId&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Multibanking.API: http.executor": "Debug",
+    "OpenAPI/Swagger Code Generator.AccountClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.BonusPointClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.CardEmissionClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.CardInformationClient.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.CardOpetationClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.PeriodPaymentClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.ServiceClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.UnidentifiedPaymentClient.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.UnitdentifiedPaymentClient.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.UniversalPaymentClientSpecification.json.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "XThreadsFramesViewSplitterKey": "0.6666667",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Vadim\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Vadim\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Vadim\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Vadim\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Vadim\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
+      "C:\\Users\\Vadim\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Multibanking.API: http">
     <configuration name="Multibanking.API: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Multibanking.API/Multibanking.API.csproj" />
@@ -318,7 +347,10 @@
       <workItem from="1729964762161" duration="26378000" />
       <workItem from="1729993017067" duration="21980000" />
       <workItem from="1730063639761" duration="940000" />
-      <workItem from="1730118664063" duration="6473000" />
+      <workItem from="1730118664063" duration="9511000" />
+      <workItem from="1730222217686" duration="12064000" />
+      <workItem from="1730479811052" duration="543000" />
+      <workItem from="1730481141957" duration="6440000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -472,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730063978912</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Add period payment business logic">
+      <option name="closed" value="true" />
+      <created>1730126360199</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1730126360199</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -514,7 +554,8 @@
     <MESSAGE value="Add universal payment controller comment" />
     <MESSAGE value="Fill mock" />
     <MESSAGE value="Add period payment consent business logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add period payment consent business logic" />
+    <MESSAGE value="Add period payment business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add period payment business logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

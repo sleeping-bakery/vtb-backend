@@ -1,0 +1,1553 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Оплата баллами бонусов",
+    "description": "Позволяет пользователям просматривать и использовать свои награды.",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.bankingapi.ru/api/rb/rewardsPay/hackathon/v1",
+      "description": "Адрес API в песочнице хакатона"
+    }
+  ],
+  "paths": {
+    "/cards/accounts/external/{externalAccountID}/rewards/balance": {
+      "summary": "Операции с Account ID.",
+      "description": "Операции с Account ID.",
+      "get": {
+        "tags": [
+          "Оплата баллами бонусов"
+        ],
+        "summary": "Получить текущий баланс наград для указанного аккаунта и атрибутов программы, настроенных для конкретного партнера",
+        "description": "Получить текущий баланс наград для данного аккаунта.",
+        "operationId": "getRewardsBalance",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "TIAA-US External token",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw"
+          },
+          {
+            "name": "externalAccountID",
+            "in": "path",
+            "description": "Уникальный идентификатор (аналог UUID), созданный для каждой учетной записи клиента.",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "maxLength": 36,
+              "minLength": 1,
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "example": "0dbcb7ee-6c59-483b-966a-44d11557665b"
+          },
+          {
+            "name": "Correlation-ID",
+            "in": "header",
+            "description": "Уникальный идентификатор для каждого входящего запроса. Вызывающий API должен передать это в заголовке, который будет каскадно передан через стек вызовов API. Это необходимо для обеспечения соответствия текущим стандартам REST.",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "maxLength": 36,
+              "minLength": 36,
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            },
+            "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+          },
+          {
+            "name": "X-Caller-Id",
+            "in": "header",
+            "description": "Идентификатор внешнего объекта, инициирующего вызов. Устанавливается внешним шлюзом API и передается через стек API.",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "maxLength": 20,
+              "minLength": 3,
+              "pattern": "^[A-Za-z0-9\\-_]{3,20}$",
+              "type": "string"
+            },
+            "example": "partner"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Содержит информацию, связанную с балансом вознаграждений для данной учетной записи.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RewardBalanceDataV2"
+                },
+                "examples": {
+                  "RewardPointBalanceResponseV2": {
+                    "$ref": "#/components/examples/RewardBalanceResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Сервер не смог понять запрос из-за неправильного синтаксиса. Клиент НЕ ДОЛЖЕН повторять запрос без изменений.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/example-error-400-bad-request"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователю не удалось пройти аутентификацию для этого запроса.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/example-error-401"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователю не разрешен доступ к запрошенной операции, и она не может быть завершена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/example-error-403"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Серверу не удалось найти ресурс для завершения операции. Это может быть временным или постоянным.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "NotFound": {
+                    "$ref": "#/components/examples/example-error-404"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Сервер получил большое количество запросов от одной стороны за заданный промежуток времени. Клиенту рекомендуется повторить попытку после согласованного периода охлаждения.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "TooManyRequests": {
+                    "$ref": "#/components/examples/example-error-429"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервер обнаружил ошибку при обработке запроса. Это общее сообщение об ошибке, которое выдается, когда более конкретное сообщение недоступно.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "INTERNAL_SERVER_ERROR": {
+                    "$ref": "#/components/examples/example-error-500"
+                  },
+                  "ACCOUNT_INELIGIBLE": {
+                    "$ref": "#/components/examples/example-error-500_ACCOUNT_INELIGIBLE"
+                  },
+                  "BUSINESS_VALIDATION_FAILED": {
+                    "$ref": "#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED"
+                  },
+                  "TEMPORARY_UNPROCESSABLE": {
+                    "$ref": "#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Временное прекращение обслуживания. Повторите попытку позже. Это временное состояние, которое пройдет после некоторой задержки.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "ServiceUnavailable": {
+                    "$ref": "#/components/examples/example-error-503"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/cards/accounts/external/{externalAccountID}/rewards/redemption": {
+      "summary": "Operations by Account ID.",
+      "description": "Operations by Account ID.",
+      "post": {
+        "tags": [
+          "Оплата баллами бонусов"
+        ],
+        "summary": "Выполните выписку по кредиту для данного аккаунта и соответствующих атрибутов программы.",
+        "description": "Списывает вознаграждение с данного счета и публикует выписку по кредиту. Возвращает идентификатор погашения для отслеживания.",
+        "operationId": "processRedemption",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "TIAA-US External token",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "Content-Type",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "maxLength": 35,
+              "minLength": 16,
+              "pattern": "^[a-z0-9A-Z-/;= ]{16,35}$",
+              "type": "string"
+            },
+            "example": "application/json"
+          },
+          {
+            "name": "externalAccountID",
+            "in": "path",
+            "description": "Уникальный идентификатор (аналог UUID), созданный для каждой учетной записи клиента.",
+            "required": true,
+            "deprecated": false,
+            "schema": {
+              "maxLength": 36,
+              "minLength": 1,
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+              "type": "string"
+            },
+            "example": "0dbcb7ee-6c59-483b-966a-44d11557665b"
+          },
+          {
+            "name": "Correlation-ID",
+            "in": "header",
+            "description": "Уникальный идентификатор для каждого входящего запроса. Вызывающий API должен передать это в заголовке, который будет каскадно передан через стек вызовов API. Это необходимо для обеспечения соответствия текущим стандартам REST.",
+            "required": true,
+            "deprecated": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "maxLength": 36,
+              "minLength": 36,
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+              "type": "string"
+            },
+            "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+          },
+          {
+            "name": "X-Caller-Id",
+            "in": "header",
+            "description": "Идентификатор внешнего объекта, инициирующего вызов. Устанавливается внешним шлюзом API и передается через стек API.",
+            "required": false,
+            "deprecated": false,
+            "schema": {
+              "maxLength": 20,
+              "minLength": 3,
+              "pattern": "^[A-Za-z0-9\\-_]{3,20}$",
+              "type": "string"
+            },
+            "example": "partner"
+          }
+        ],
+        "requestBody": {
+          "description": "Содержит информацию, необходимую для операции погашения.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedemptionRequestDataV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Содержит информацию о результате операции погашения для данного аккаунта.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/Cache-Control"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RedemptionResponseDataV2"
+                },
+                "examples": {
+                  "RedemptionResponseV2": {
+                    "$ref": "#/components/examples/RewardRedeemResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Сервер не смог понять запрос из-за неправильного синтаксиса. Клиент НЕ ДОЛЖЕН повторять запрос без изменений.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "BadRequest": {
+                    "$ref": "#/components/examples/example-error-400-bad-request"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Пользователю не удалось пройти аутентификацию для этого запроса.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "$ref": "#/components/examples/example-error-401"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Пользователю не разрешен доступ к запрошенной операции, и она не может быть завершена.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/example-error-403"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Серверу не удалось найти ресурс для завершения операции. Это может быть временным или постоянным.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "NotFound": {
+                    "$ref": "#/components/examples/example-error-404"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Сервер получил большое количество запросов от одной стороны за заданный промежуток времени. Клиенту рекомендуется повторить попытку после согласованного периода охлаждения.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "TooManyRequests": {
+                    "$ref": "#/components/examples/example-error-429"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Сервер обнаружил ошибку при обработке запроса. Это общее сообщение об ошибке, которое выдается, когда более конкретное сообщение недоступно.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "INTERNAL_SERVER_ERROR": {
+                    "$ref": "#/components/examples/example-error-500"
+                  },
+                  "BAD_STATUS_ACCOUNT": {
+                    "$ref": "#/components/examples/example-error-500_BAD_STATUS_ACCOUNT"
+                  },
+                  "INSUFFICIENT_BALANCE": {
+                    "$ref": "#/components/examples/example-error-500_INSUFFICIENT_BALANCE"
+                  },
+                  "ACCOUNT_INELIGIBLE": {
+                    "$ref": "#/components/examples/example-error-500_ACCOUNT_INELIGIBLE"
+                  },
+                  "BUSINESS_VALIDATION_FAILED": {
+                    "$ref": "#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED"
+                  },
+                  "TEMPORARY_UNPROCESSABLE": {
+                    "$ref": "#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE"
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Временное прекращение обслуживания. Повторите попытку позже. Это временное состояние, которое пройдет после некоторой задержки.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseType"
+                },
+                "examples": {
+                  "ServiceUnavailable": {
+                    "$ref": "#/components/examples/example-error-503"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RewardBalanceDataV2": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RewardBalanceV2"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Корневой объект, содержащий баланс вознаграждений и атрибуты программы для данной учетной записи.",
+        "nullable": false,
+        "deprecated": false
+      },
+      "RedemptionResponseDataV2": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RedemptionResponseV2"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Корневой объект, который содержит идентификатор погашения и текущий баланс вознаграждений после успешного погашения.",
+        "nullable": false,
+        "deprecated": false
+      },
+      "ErrorType": {
+        "required": [
+          "code",
+          "id",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "maxLength": 36,
+            "minLength": 36,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string",
+            "description": "Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера.",
+            "example": "1c4717c4-d4a5-e3f3-4a71-b868908763ff"
+          },
+          "code": {
+            "maxLength": 100,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9_]{1,100}$",
+            "type": "string",
+            "description": "Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции.",
+            "example": "ACCOUNT_NUMBER_NOT_FOUND"
+          },
+          "title": {
+            "maxLength": 250,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9\\s\"=,']{1,250}$",
+            "type": "string",
+            "description": "Краткое описание ошибки. Не для демонстрации.",
+            "example": "Учетные данные авторизации, необходимые для этого запроса, недействительны."
+          },
+          "detail": {
+            "maxLength": 250,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9\\s\"=,']{1,250}$",
+            "type": "string",
+            "description": "Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Детали сообщения – дополнительная информация о выполнении операции."
+      },
+      "RewardSummaryV2": {
+        "required": [
+          "availableBalance",
+          "rewardType"
+        ],
+        "type": "object",
+        "properties": {
+          "availableBalance": {
+            "type": "number",
+            "description": "Текущий баланс вознаграждений для данного аккаунта.",
+            "example": 2500
+          },
+          "rewardType": {
+            "maxLength": 16,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z]{1,16}$",
+            "type": "string",
+            "description": "Тип валюты вознаграждения - POINTS/CASH/MILES.",
+            "example": "POINTS"
+          },
+          "currencyCode": {
+            "maxLength": 4,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z]{1,4}$",
+            "type": "string",
+            "description": "Трехбуквенный код, обозначающий валюту вознаграждения.",
+            "example": "USD"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Этот объект содержит текущий баланс вознаграждений и связанные с ним значения."
+      },
+      "RedemptionRequestDataV2": {
+        "required": [
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RedemptionRequestV2"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Корневой объект, содержащий сумму выписки по кредиту и связанные атрибуты программы.",
+        "nullable": false,
+        "deprecated": false
+      },
+      "ErrorResponseType": {
+        "type": "object",
+        "properties": {
+          "meta": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Содержит нестандартную метаинформацию"
+          },
+          "errors": {
+            "maxItems": 50,
+            "minItems": 0,
+            "type": "array",
+            "description": "Содержит одно или несколько сообщений об ошибках и является взаимоисключающим с элементом данных.\n Это не будет возвращено в успешных сценариях.\n",
+            "items": {
+              "$ref": "#/components/schemas/ErrorType"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Ответ об ошибке API\n",
+        "nullable": false,
+        "deprecated": false
+      },
+      "RewardBalanceV2": {
+        "required": [
+          "programDetail",
+          "redemptionEligibility",
+          "rewardSummary"
+        ],
+        "type": "object",
+        "properties": {
+          "redemptionEligibility": {
+            "type": "boolean",
+            "description": "Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи в отношении ожидающих платежей и других статусов учетной записи.",
+            "example": true
+          },
+          "rewardSummary": {
+            "$ref": "#/components/schemas/RewardSummaryV2"
+          },
+          "programDetail": {
+            "$ref": "#/components/schemas/ProgramDetailV2"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Содержит баланс вознаграждений и конфигурацию программы.",
+        "nullable": false,
+        "deprecated": false
+      },
+      "RedemptionInfo": {
+        "type": "object",
+        "properties": {
+          "authorizationCode": {
+            "maxLength": 50,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9]{1,50}$",
+            "type": "string",
+            "description": "Код авторизации, сгенерированный продавцом в точке продаж.",
+            "example": "5R20BK11W6"
+          },
+          "transactionID": {
+            "type": "number",
+            "description": "Идентификатор транзакции, созданный продавцом в точке продаж.",
+            "example": 584922
+          },
+          "transactionDesc": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^.{1,200}$",
+            "type": "string",
+            "description": "Описание транзакции для погашения.",
+            "example": "Онлайн-заказ на Expedia.com для бронирования отеля"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Attributes pertaining to a redemption.",
+        "nullable": true
+      },
+      "CatalogV2": {
+        "required": [
+          "catalogId",
+          "catalogType",
+          "conversionRate",
+          "maxRedeemPoints",
+          "minRedeemPoints"
+        ],
+        "type": "object",
+        "properties": {
+          "catalogId": {
+            "maxLength": 10,
+            "minLength": 10,
+            "pattern": "^[0-9a-zA-Z]{10}$",
+            "type": "string",
+            "description": "Для каталога настроен уникальный идентификатор.",
+            "example": "C9AP78DS9K"
+          },
+          "catalogType": {
+            "maxLength": 32,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z]{1,32}$",
+            "type": "string",
+            "description": "Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT.",
+            "example": "STMTCR"
+          },
+          "conversionRate": {
+            "type": "number",
+            "description": "Обозначает рублевую стоимость вознаграждений (example: 1 point = 1 р.).",
+            "example": 0.01
+          },
+          "description": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z\\s\",.']{1,256}$",
+            "type": "string",
+            "description": "Краткое описание каталога.",
+            "example": "Statement Credit"
+          },
+          "minRedeemPoints": {
+            "type": "number",
+            "description": "Минимальный баланс вознаграждений, необходимый для использования данного каталога.",
+            "example": 2500
+          },
+          "maxRedeemPoints": {
+            "type": "number",
+            "description": "Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений.",
+            "example": 50000
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProgramDetailV2": {
+        "required": [
+          "catalogs",
+          "programId"
+        ],
+        "type": "object",
+        "properties": {
+          "programId": {
+            "maxLength": 7,
+            "minLength": 7,
+            "pattern": "^[0-9a-zA-Z]{7}$",
+            "type": "string",
+            "description": "Уникальный идентификатор, установленный для программы.",
+            "example": "A7DV56B"
+          },
+          "description": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[a-zA-Z\\s\",.']{1,256}$",
+            "type": "string",
+            "description": "Краткое описание программы.",
+            "example": "Program For Statement Credit"
+          },
+          "catalogs": {
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array",
+            "description": "Список каталогов настроенных для программы.",
+            "items": {
+              "$ref": "#/components/schemas/CatalogV2"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Этот объект содержит атрибуты программы, настроенные для конкретного партнера."
+      },
+      "RedemptionResponseV2": {
+        "required": [
+          "redemptionId",
+          "redemptionReferenceNumber",
+          "rewardSummary"
+        ],
+        "type": "object",
+        "properties": {
+          "redemptionReferenceNumber": {
+            "maxLength": 36,
+            "minLength": 36,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string",
+            "description": "UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения.",
+            "example": "1c4717c4-d4a5-e3f3-4a71-b868908763ff"
+          },
+          "redemptionId": {
+            "maxLength": 36,
+            "minLength": 36,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string",
+            "description": "Уникальный идентификатор, создаваемый при успешном погашении.",
+            "example": "1c4717c4-d4a5-e3f3-4a71-b868908763ff"
+          },
+          "rewardSummary": {
+            "$ref": "#/components/schemas/RewardSummaryV2"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Содержит идентификатор погашения и текущий баланс вознаграждений.",
+        "nullable": false,
+        "deprecated": false
+      },
+      "RedemptionRequestV2": {
+        "required": [
+          "catalogId",
+          "programId",
+          "redemptionAmount",
+          "redemptionReferenceNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "redemptionReferenceNumber": {
+            "maxLength": 36,
+            "minLength": 36,
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "type": "string",
+            "description": "UUID для отслеживания каждого запроса на погашение от партнера. Создается партнером и передается в каждом запросе.",
+            "example": "1c4717c4-d4a5-e3f3-4a71-b868908763ff"
+          },
+          "redemptionAmount": {
+            "type": "number",
+            "description": "Долларовая стоимость вознаграждений, подлежащих погашению. Минимальные и максимальные пределы зависят от настроек программы.",
+            "example": 50
+          },
+          "valuePerPoint": {
+            "type": "number",
+            "description": "Обозначает рублевую стоимость вознаграждений. (ex: 1 point = 1 р.).",
+            "example": 0.01
+          },
+          "programId": {
+            "maxLength": 7,
+            "minLength": 7,
+            "pattern": "^[0-9a-zA-Z]{7}$",
+            "type": "string",
+            "description": "Идентификатор программы, полученный из ответа /balance API.",
+            "example": "A7DV56B"
+          },
+          "catalogId": {
+            "maxLength": 10,
+            "minLength": 10,
+            "pattern": "^[0-9a-zA-Z]{10}$",
+            "type": "string",
+            "description": "Идентификатор каталога, полученный из ответа /balance API.",
+            "example": "C9AP78DS9K"
+          },
+          "redemptionInfo": {
+            "$ref": "#/components/schemas/RedemptionInfo"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Выписка суммы кредита и связанных с ней атрибутов программы.",
+        "nullable": false,
+        "deprecated": false
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Сервер не смог понять запрос из-за неправильного синтаксиса. Клиент НЕ ДОЛЖЕН повторять запрос без изменений.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "BadRequest": {
+                "$ref": "#/components/examples/example-error-400-bad-request"
+              }
+            }
+          }
+        }
+      },
+      "RewardPointBalanceResponseV2": {
+        "description": "Содержит информацию, связанную с балансом вознаграждений для данной учетной записи.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RewardBalanceDataV2"
+            },
+            "examples": {
+              "RewardPointBalanceResponseV2": {
+                "$ref": "#/components/examples/RewardBalanceResponse"
+              }
+            }
+          }
+        }
+      },
+      "TooManyRequests": {
+        "description": "Сервер получил большое количество запросов от одной стороны за заданный промежуток времени. Клиенту рекомендуется повторить попытку после согласованного периода охлаждения.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "TooManyRequests": {
+                "$ref": "#/components/examples/example-error-429"
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Пользователю не удалось пройти аутентификацию для этого запроса.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "Unauthorized": {
+                "$ref": "#/components/examples/example-error-401"
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Пользователю не разрешен доступ к запрошенной операции, и она не может быть завершена.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "Forbidden": {
+                "$ref": "#/components/examples/example-error-403"
+              }
+            }
+          }
+        }
+      },
+      "ServiceUnavailable": {
+        "description": "Временное прекращение обслуживания. Повторите попытку позже. Это временное состояние, которое пройдет после некоторой задержки.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "ServiceUnavailable": {
+                "$ref": "#/components/examples/example-error-503"
+              }
+            }
+          }
+        }
+      },
+      "500_redemption": {
+        "description": "Сервер обнаружил ошибку при обработке запроса. Это общее сообщение об ошибке, которое выдается, когда более конкретное сообщение недоступно.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "INTERNAL_SERVER_ERROR": {
+                "$ref": "#/components/examples/example-error-500"
+              },
+              "BAD_STATUS_ACCOUNT": {
+                "$ref": "#/components/examples/example-error-500_BAD_STATUS_ACCOUNT"
+              },
+              "INSUFFICIENT_BALANCE": {
+                "$ref": "#/components/examples/example-error-500_INSUFFICIENT_BALANCE"
+              },
+              "ACCOUNT_INELIGIBLE": {
+                "$ref": "#/components/examples/example-error-500_ACCOUNT_INELIGIBLE"
+              },
+              "BUSINESS_VALIDATION_FAILED": {
+                "$ref": "#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED"
+              },
+              "TEMPORARY_UNPROCESSABLE": {
+                "$ref": "#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE"
+              }
+            }
+          }
+        }
+      },
+      "500_getBalance": {
+        "description": "Сервер обнаружил ошибку при обработке запроса. Это общее сообщение об ошибке, которое выдается, когда более конкретное сообщение недоступно.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "INTERNAL_SERVER_ERROR": {
+                "$ref": "#/components/examples/example-error-500"
+              },
+              "ACCOUNT_INELIGIBLE": {
+                "$ref": "#/components/examples/example-error-500_ACCOUNT_INELIGIBLE"
+              },
+              "BUSINESS_VALIDATION_FAILED": {
+                "$ref": "#/components/examples/example-error-500_BUSINESS_VALIDATION_FAILED"
+              },
+              "TEMPORARY_UNPROCESSABLE": {
+                "$ref": "#/components/examples/example-error-500_TEMPORARY_UNPROCESSABLE"
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Серверу не удалось найти ресурс для завершения операции. Это может быть временным или постоянным.\n",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseType"
+            },
+            "examples": {
+              "NotFound": {
+                "$ref": "#/components/examples/example-error-404"
+              }
+            }
+          }
+        }
+      },
+      "RedemptionResponseV2": {
+        "description": "Содержит информацию о результате операции погашения для данного аккаунта.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/Cache-Control"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RedemptionResponseDataV2"
+            },
+            "examples": {
+              "RedemptionResponseV2": {
+                "$ref": "#/components/examples/RewardRedeemResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Authorization": {
+        "name": "Authorization",
+        "in": "header",
+        "description": "Bearer Token\n",
+        "required": true,
+        "deprecated": false,
+        "allowEmptyValue": false,
+        "schema": {
+          "maxLength": 2048,
+          "minLength": 32,
+          "pattern": "^[A-Za-z0-9\\-_\\.\\ ]{32,2048}$",
+          "type": "string"
+        },
+        "example": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Imctb09kUnc1TWFlTmcwbWpsN1VpczlXT010NCIsInBpLmF0bSI6IjQ2N3YifQ.eyJzY29wZSI6ImFjY291bnRzIiwiY2xpZW50X2lkIjoiR2FwQ2xpZW50IiwiaXNzIjoiVElBQSBERVYiLCJhdWQiOiJCRE4tVVMtREVWIiwianRpIjoia0F0c2JYYW5CdnZOSFBacVd6WEs4TlhzczlPSXozamdBT090IiwiZmlyc3ROYW1lIjoiSm9obiIsImxhc3ROYW1lIjoiU21pdGgiLCJmcmF1ZFRva2VuIjoiOThjYmVlNWEtOTU4MS00NTdlLTk3NTEtZjVlYzNlNWZiYTUwIiwiZnJhdWRUb2tlbklzc3VlVGltZSI6IjE2MzAwMDMyNTQiLCJhY2NvdW50cyI6WyIxMjM0NTY3OCIsIjk4NzY1NDMyIl0sInBhcnR5SWQiOiIxMjM0NTYiLCJ1c2VybmFtZSI6ImJhcmNsYXlzdXNlciIsImV4cCI6MTYzMDAwMTQ1NX0.Jkgb2A2HAOdLKaion8ff097GedtQkxtAV4Qxea538owLS8zaEvTm9kHBWOxmuNHIgP1V8mx3NUflwbY8A823Ut00wWqbUbB-cSV0idDaQJ2pKWHDFYbipvi5I7yPGj2BR-oHhQao1ZGlW6DyxYuZ12q8IK7LpKVWbCSPZ-fFAlD5HgH_FORq6Avc5oLH--Zcww63fI6gtZ48pwnXX2gM1aiSQ3lfvLXWVQ9fooAlP65LOW1MMjh5HOtrNvA7ObBSYepYzef5ykP2YvIz3OOS4hLhTo-3-iEbUDvkPx_mmz_pi7piXrMqQPfPnz5y2VkLOHTYfQJeQmVg60YTG7uPdw"
+      },
+      "Correlation-ID": {
+        "name": "Correlation-ID",
+        "in": "header",
+        "description": "Уникальный идентификатор для каждого входящего запроса. Вызывающий API должен передать это в заголовке, который будет каскадно передан через стек вызовов API.\nЭто необходимо для обеспечения соответствия текущим стандартам REST.\n",
+        "required": true,
+        "deprecated": false,
+        "allowEmptyValue": false,
+        "schema": {
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+          "type": "string"
+        },
+        "example": "7d444840-9dc0-11d1-b245-5ffdce74fad2"
+      },
+      "ExternalAccountIdPath": {
+        "name": "externalAccountID",
+        "in": "path",
+        "description": "Уникальный идентификатор (аналог UUID), созданный для каждой учетной записи клиента.",
+        "required": true,
+        "deprecated": false,
+        "schema": {
+          "maxLength": 36,
+          "minLength": 1,
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+          "type": "string"
+        },
+        "example": "0dbcb7ee-6c59-483b-966a-44d11557665b"
+      },
+      "X-Caller-Id": {
+        "name": "X-Caller-Id",
+        "in": "header",
+        "description": "Идентификатор внешнего объекта, инициирующего вызов. Устанавливается внешним шлюзом API и передается через стек API.\n",
+        "required": false,
+        "deprecated": false,
+        "schema": {
+          "maxLength": 20,
+          "minLength": 3,
+          "pattern": "^[A-Za-z0-9\\-_]{3,20}$",
+          "type": "string"
+        },
+        "example": "partner"
+      },
+      "oauth_clientId": {
+        "name": "oauth_clientId",
+        "in": "header",
+        "description": "Идентификатор клиента OAuth, используемый для проверки прав партнера.\n",
+        "required": true,
+        "deprecated": false,
+        "allowEmptyValue": false,
+        "schema": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9.-]{1,256}$",
+          "type": "string"
+        },
+        "example": "bdn-68EwxNCdDi65Y2FV6wxupfsoD3ilveYxDqok0LD5"
+      },
+      "Content-Type": {
+        "name": "Content-Type",
+        "in": "header",
+        "description": "Content-Type",
+        "required": true,
+        "deprecated": false,
+        "allowEmptyValue": false,
+        "schema": {
+          "maxLength": 35,
+          "minLength": 16,
+          "pattern": "^[a-z0-9A-Z-/;= ]{16,35}$",
+          "type": "string"
+        },
+        "example": "application/json"
+      }
+    },
+    "examples": {
+      "example-error-404": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "RESOURCE_NOT_FOUND",
+              "title": "Запрошенная операция не удалась, поскольку не удалось найти ресурс, связанный с запросом.",
+              "detail": "Не удалось найти аккаунт"
+            }
+          ]
+        }
+      },
+      "example-error-503": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "SERVICE_UNAVAILABLE",
+              "title": "Сервер в данный момент недоступен",
+              "detail": "Запланированное отключение услуг со среды, 4 июля 2050 г., 01:00 по Гринвичу, до среды, 4 июля 2050 г., 05:00 по Гринвичу."
+            }
+          ]
+        }
+      },
+      "example-error-429": {
+        "value": {
+          "errors": [
+            {
+              "id": "9709-4675-2456-7801",
+              "code": "TOO_MANY_REQUESTS",
+              "title": "Too many requests",
+              "detail": "Клиент отправил слишком много запросов, и сервер в данный момент не может обслужить их все."
+            }
+          ]
+        }
+      },
+      "example-error-400-bad-request": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "BAD_REQUEST",
+              "title": "The request is invalid or not properly formed",
+              "detail": "Неверный запрос, имя поля не соответствует спецификации API."
+            }
+          ]
+        }
+      },
+      "example-error-500_BAD_STATUS_ACCOUNT": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "BAD_STATUS_ACCOUNT",
+              "title": "Account is in bad status",
+              "detail": "Аккаунт в статусе ЗАКРЫТ, запрос не может быть обработан"
+            }
+          ]
+        }
+      },
+      "example-error-500_INSUFFICIENT_BALANCE": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "INSUFFICIENT_BALANCE",
+              "title": "Insufficient reward balance on the account",
+              "detail": "Запрос не может быть обработан из-за недостаточного баланса вознаграждения"
+            }
+          ]
+        }
+      },
+      "RewardRedeemRequestV2": {
+        "value": {
+          "data": {
+            "redemptionReferenceNumber": "1c4717c4-e3f3-4a71-8b67-b868908763ff",
+            "redemptionAmount": 50,
+            "valuePerPoint": 0.01,
+            "programId": "A7DV56B",
+            "catalogId": "C9AP78DS9K",
+            "redemptionInfo": {
+              "authorizationCode": "5R20BK11W6",
+              "transactionID": 584922,
+              "transactionDesc": "Онлайн-заказ на Expedia.com для бронирования отеля"
+            }
+          }
+        }
+      },
+      "RewardBalanceResponse": {
+        "value": {
+          "data": {
+            "redemptionEligibility": true,
+            "rewardSummary": {
+              "availableBalance": 2500,
+              "rewardType": "POINTS",
+              "currencyCode": "USD"
+            },
+            "programDetail": {
+              "programId": "A7DV56B",
+              "description": "Программа выписки по кредиту",
+              "catalogs": [
+                {
+                  "catalogId": "C9AP78DS9K",
+                  "catalogType": "STMTCR",
+                  "conversionRate": 0.01,
+                  "description": "Заявление о погашении кредита",
+                  "minRedeemPoints": 2000,
+                  "maxRedeemPoints": 50000
+                }
+              ]
+            }
+          }
+        }
+      },
+      "example-error-500_BUSINESS_VALIDATION_FAILED": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "BUSINESS_VALIDATION_FAILED",
+              "title": "Request failed while validating the account",
+              "detail": "Запрос не может быть обработан, ошибка проверки учетной записи"
+            }
+          ]
+        }
+      },
+      "example-error-500_TEMPORARY_UNPROCESSABLE": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "TEMPORARY_UNPROCESSABLE",
+              "title": "Request unprocessable momentarily",
+              "detail": "Запрос не может быть обработан на данный момент"
+            }
+          ]
+        }
+      },
+      "example-error-500_ACCOUNT_INELIGIBLE": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "ACCOUNT_INELIGIBLE",
+              "title": "Account is not eligible for this program",
+              "detail": "Запрос не может быть обработан, аккаунт не имеет права на участие в этой программе."
+            }
+          ]
+        }
+      },
+      "RewardRedeemResponse": {
+        "value": {
+          "data": {
+            "redemptionReferenceNumber": "1c4717c4-e3f3-4a71-8b67-b868908763ff",
+            "redemptionId": "1c4717c4-e3f3-4a71-8b67-b868908763ff",
+            "rewardSummary": {
+              "availableBalance": 2500,
+              "rewardType": "POINTS",
+              "currencyCode": "USD"
+            }
+          }
+        }
+      },
+      "example-error-401": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "UNAUTHORIZED",
+              "title": "The authorization credentials required for this request are invalid",
+              "detail": "Учетные данные авторизации, необходимые для этого запроса, недействительны."
+            }
+          ]
+        }
+      },
+      "example-error-500": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "INTERNAL_SERVER_ERROR",
+              "title": "The request failed due to an internal error",
+              "detail": "Сбой вызова нисходящей службы при получении баланса вознаграждений"
+            }
+          ]
+        }
+      },
+      "example-error-403": {
+        "value": {
+          "errors": [
+            {
+              "id": "1c4717c4-e3f3-4071-8b86-b868908763ff",
+              "code": "ACCESS_FORBIDDEN",
+              "title": "The user is not permitted to access the requested operation and it cannot be completed",
+              "detail": "Пользователю не разрешен доступ к запрошенной операции, и она не может быть завершена."
+            }
+          ]
+        }
+      }
+    },
+    "requestBodies": {
+      "RedemptionRequestV2": {
+        "description": "Содержит информацию, необходимую для операции погашения.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RedemptionRequestDataV2"
+            },
+            "examples": {
+              "RedemptionRequestV2": {
+                "$ref": "#/components/examples/RewardRedeemRequestV2"
+              }
+            }
+          }
+        },
+        "required": true
+      }
+    },
+    "headers": {
+      "Cache-Control": {
+        "description": "Заголовок обязательного ответа GIS. Это добавляется коляской Cognac.",
+        "schema": {
+          "maxLength": 35,
+          "minLength": 35,
+          "pattern": "^no-cache, no-store, must-revalidate$",
+          "type": "string",
+          "nullable": false,
+          "example": "no-cache, no-store, must-revalidate",
+          "deprecated": false,
+          "default": "no-cache, no-store, must-revalidate"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Оплата баллами бонусов"
+    }
+  ],
+  "x-tyk-configuration": {
+    "application": {
+      "version": "v1",
+      "mw_enable_validate_header_limit_request": false,
+      "mw_enable_validate_header_limit_response": false,
+      "mask_log": [
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rs": {
+              "200": [
+                "*"
+              ]
+            }
+          },
+          "method": "GET",
+          "path": "/cards/accounts/external/{externalAccountID}/rewards/balance"
+        },
+        {
+          "header": {
+            "rq": [
+              "X-TYK-API-KEY",
+              "Authorization",
+              "Cookie"
+            ]
+          },
+          "json": {
+            "rq": [
+              "*"
+            ],
+            "rs": {
+              "200": [
+                "*"
+              ],
+              "201": [
+                "*"
+              ]
+            }
+          },
+          "method": "POST",
+          "path": "/cards/accounts/external/{externalAccountID}/rewards/redemption"
+        }
+      ],
+      "name": "1234.open-PaymentBonusPoints-s-rest-v1",
+      "providerRisId": "1234",
+      "providerMnemonic": "SUPR",
+      "strip_listen_path": true,
+      "provider_type": "internal",
+      "api_type": "rest",
+      "enable_middlewares": true,
+      "middlewares": {},
+      "global_size_limit": 1048576,
+      "rq_validate_json": [
+        {
+          "path": "/cards/accounts/external/{externalAccountID}/rewards/redemption",
+          "method": "POST",
+          "error_response_code": 422,
+          "properties": {
+            "required": [
+              "data"
+            ],
+            "type": "object",
+            "properties": {
+              "data": {
+                "required": [
+                  "catalogId",
+                  "programId",
+                  "redemptionAmount",
+                  "redemptionReferenceNumber"
+                ],
+                "type": "object",
+                "properties": {
+                  "redemptionReferenceNumber": {
+                    "maxLength": 36,
+                    "minLength": 36,
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+                    "type": "string"
+                  },
+                  "redemptionAmount": {
+                    "type": "number"
+                  },
+                  "valuePerPoint": {
+                    "type": "number"
+                  },
+                  "programId": {
+                    "maxLength": 7,
+                    "minLength": 7,
+                    "pattern": "^[0-9a-zA-Z]{7}$",
+                    "type": "string"
+                  },
+                  "catalogId": {
+                    "maxLength": 10,
+                    "minLength": 10,
+                    "pattern": "^[0-9a-zA-Z]{10}$",
+                    "type": "string"
+                  },
+                  "redemptionInfo": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "authorizationCode": {
+                        "maxLength": 50,
+                        "minLength": 1,
+                        "pattern": "^[a-zA-Z0-9]{1,50}$",
+                        "type": "string"
+                      },
+                      "transactionID": {
+                        "type": "number"
+                      },
+                      "transactionDesc": {
+                        "maxLength": 200,
+                        "minLength": 1,
+                        "pattern": "^.{1,200}$",
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false,
+                "nullable": false,
+                "deprecated": false
+              }
+            },
+            "additionalProperties": false,
+            "nullable": false,
+            "deprecated": false
+          }
+        }
+      ]
+    },
+    "gateway": {
+      "tyk_lan_MAIN": {
+        "gateway_type": "tyk",
+        "api_typization": "PublicAPI",
+        "application": {
+          "provider_rate_limit": {
+            "LT": {
+              "per": 1,
+              "rate": 50
+            }
+          },
+          "target_url": {
+            "LT": "http://sandbox-svc.hk2023.svc/api/rb/rewardsPay/hackathon/v1"
+          },
+          "middlewares": {},
+          "listen_path": "/api/rb/rewardsPay/hackathon/v1",
+          "auth_type": "JWT",
+          "enforced_timeout": {
+            "LT": 40
+          }
+        },
+        "contour": "LAN",
+        "gatewayRisId": "1474",
+        "segment_mnemonic": "MAIN"
+      }
+    }
+  }
+}
