@@ -12,60 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add bonus points business logic">
-      <change afterPath="$PROJECT_DIR$/.run/GuaranteeClientSpecification.json.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/GuaranteeCommissionController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/GuaranteeOrderController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Guarantee/ReadGuaranteeOrderDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/GuaranteeClientSpecification.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteeCommissionClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteeOrderClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteePaglClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/Implementations/GuaranteeCommissionClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/Implementations/GuaranteeOrderClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/Implementations/GuaranteePaglClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Guarantee/GuaranteeOrderRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Guarantee/IGuaranteeOrderRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Entities/GuaranteeOrders/GuaranteeOrder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/GuaranteeClientMock.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeCommissionService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeOrderService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteePaglService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeCommissionService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeOrderService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteePaglService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/MappingProfiles/GuaranteeMapperProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Multibanking.Contracts.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Multibanking.Contracts.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Devops/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Devops/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/Generator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/Generator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/ServiceClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/ServiceClientMock.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiResponse.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ClientUtils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IAsynchronousClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ISynchronousClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RequestOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ErrorDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ErrorDtoRs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vtb-backend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/vtb-backend.sln" afterDir="false" />
-    </list>
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add guarantee business logic" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -185,6 +132,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/CatalogV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorResponseType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ProgramDetailV2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionInfo.cs" root0="SKIP_HIGHLIGHTING" />
@@ -229,6 +177,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/OrderApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/PaglApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankGuarantee.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentCountResponseDto.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentResponseDto.cs" root0="SKIP_HIGHLIGHTING" />
@@ -322,6 +271,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/DefaultApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/RequestOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AccountDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/CardDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
@@ -442,7 +392,7 @@
       <workItem from="1730481141957" duration="12348000" />
       <workItem from="1730500110439" duration="2393000" />
       <workItem from="1730502533050" duration="289000" />
-      <workItem from="1730575256346" duration="12926000" />
+      <workItem from="1730575256346" duration="13830000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -612,7 +562,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730492343267</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Add guarantee business logic">
+      <option name="closed" value="true" />
+      <created>1730687070636</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1730687070636</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -632,7 +590,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="New Generated openapi and send to openapi client" />
     <MESSAGE value="Edit codeStyleConfig.xml" />
     <MESSAGE value="Add logging auth errors" />
     <MESSAGE value="Revoke user account consent" />
@@ -657,7 +614,8 @@
     <MESSAGE value="Add period payment business logic" />
     <MESSAGE value="Bonus points add" />
     <MESSAGE value="Add bonus points business logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add bonus points business logic" />
+    <MESSAGE value="Add guarantee business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add guarantee business logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
