@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Multibanking.Entities.Database;
-using Multibanking.PeriodPaymentClient.Model;
+using Multibanking.GuaranteeClient.Model;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -75,7 +75,25 @@ namespace Multibanking.Entities.Database.Migrations
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("Multibanking.Entities.PeriodPayment.PeriodPaymentConsent", b =>
+            modelBuilder.Entity("Multibanking.Entities.GuaranteeOrders.GuaranteeOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<OrderResponse>("ResponseInit")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GuaranteeOrders");
+                });
+
+            modelBuilder.Entity("Multibanking.Entities.PeriodPayments.PeriodPaymentConsent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,7 +102,7 @@ namespace Multibanking.Entities.Database.Migrations
                     b.Property<Guid>("CardId")
                         .HasColumnType("uuid");
 
-                    b.Property<VRPConsentResponse>("ConsentBanking")
+                    b.Property<string>("ConsentBanking")
                         .IsRequired()
                         .HasColumnType("jsonb");
 
@@ -140,7 +158,7 @@ namespace Multibanking.Entities.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Multibanking.Entities.PeriodPayment.PeriodPaymentConsent", b =>
+            modelBuilder.Entity("Multibanking.Entities.PeriodPayments.PeriodPaymentConsent", b =>
                 {
                     b.HasOne("Multibanking.Entities.Cards.Card", "Card")
                         .WithMany()

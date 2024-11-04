@@ -77,7 +77,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуг ПУ по списку ID
         /// </summary>
         /// <remarks>
-        /// Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -89,7 +89,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуг ПУ по списку ID
         /// </summary>
         /// <remarks>
-        /// Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -137,7 +137,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуги ПУ по ID
         /// </summary>
         /// <remarks>
-        /// Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -149,7 +149,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуги ПУ по ID
         /// </summary>
         /// <remarks>
-        /// Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -218,7 +218,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуг ПУ по списку ID
         /// </summary>
         /// <remarks>
-        /// Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -231,7 +231,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуг ПУ по списку ID
         /// </summary>
         /// <remarks>
-        /// Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -282,7 +282,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуги ПУ по ID
         /// </summary>
         /// <remarks>
-        /// Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -295,7 +295,7 @@ namespace Multibanking.ServiceClient.Api
         /// Получение услуги ПУ по ID
         /// </summary>
         /// <remarks>
-        /// Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </remarks>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -483,7 +483,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -626,7 +626,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -708,7 +708,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -721,7 +721,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -749,7 +749,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -779,7 +779,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -793,7 +793,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (type &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
@@ -823,7 +823,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -903,7 +903,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -1016,7 +1016,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -1078,7 +1078,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -1091,7 +1091,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -1119,7 +1119,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
@@ -1149,7 +1149,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -1163,7 +1163,7 @@ namespace Multibanking.ServiceClient.Api
         }
 
         /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (type &#x3D; CONTRACT) услуги ПУ по идентификатору
+        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
         /// </summary>
         /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">Идентификатор услуги</param>
@@ -1193,7 +1193,7 @@ namespace Multibanking.ServiceClient.Api
             var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
             if (localVarContentType != null)
             {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
             }
 
             var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);

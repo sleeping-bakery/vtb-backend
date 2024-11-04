@@ -92,7 +92,7 @@ namespace Multibanking.ServiceClient.Client
         /// Deserialize the JSON string into a proper object.
         /// </summary>
         /// <param name="response">The HTTP response.</param>
-        /// <param name="type">Object type.</param>
+        /// <param name="type">Object serviceType.</param>
         /// <returns>Object representation of the JSON string.</returns>
         internal object Deserialize(RestResponse response, Type type)
         {
@@ -130,7 +130,7 @@ namespace Multibanking.ServiceClient.Client
                 return DateTime.Parse(response.Content, null, System.Globalization.DateTimeStyles.RoundtripKind);
             }
 
-            if (type == typeof(string) || type.Name.StartsWith("System.Nullable")) // return primitive type
+            if (type == typeof(string) || type.Name.StartsWith("System.Nullable")) // return primitive serviceType
             {
                 return Convert.ChangeType(response.Content, type);
             }
@@ -158,7 +158,7 @@ namespace Multibanking.ServiceClient.Client
         public string ContentType
         {
             get { return _contentType; }
-            set { throw new InvalidOperationException("Not allowed to set content type."); }
+            set { throw new InvalidOperationException("Not allowed to set content serviceType."); }
         }
 
         public DataFormat DataFormat => DataFormat.Json;
@@ -338,7 +338,7 @@ namespace Multibanking.ServiceClient.Client
                     var contentType = "application/octet-stream";
                     if (options.HeaderParameters != null)
                     {
-                        var contentTypes = options.HeaderParameters["Content-Type"];
+                        var contentTypes = options.HeaderParameters["Content-ServiceType"];
                         contentType = contentTypes[0];
                     }
 
@@ -349,7 +349,7 @@ namespace Multibanking.ServiceClient.Client
                 {
                     if (options.HeaderParameters != null)
                     {
-                        var contentTypes = options.HeaderParameters["Content-Type"];
+                        var contentTypes = options.HeaderParameters["Content-ServiceType"];
                         if (contentTypes == null || contentTypes.Any(header => header.Contains("application/json")))
                         {
                             request.RequestFormat = DataFormat.Json;
@@ -475,7 +475,7 @@ namespace Multibanking.ServiceClient.Client
                 response = client.Execute<T>(req);
             }
 
-            // if the response type is oneOf/anyOf, call FromJSON to deserialize the data
+            // if the response serviceType is oneOf/anyOf, call FromJSON to deserialize the data
             if (typeof(Multibanking.ServiceClient.Model.AbstractOpenAPISchema).IsAssignableFrom(typeof(T)))
             {
                 try
@@ -570,7 +570,7 @@ namespace Multibanking.ServiceClient.Client
                 response = await client.ExecuteAsync<T>(req, cancellationToken).ConfigureAwait(false);
             }
 
-            // if the response type is oneOf/anyOf, call FromJSON to deserialize the data
+            // if the response serviceType is oneOf/anyOf, call FromJSON to deserialize the data
             if (typeof(Multibanking.ServiceClient.Model.AbstractOpenAPISchema).IsAssignableFrom(typeof(T)))
             {
                 response.Data = (T) typeof(T).GetMethod("FromJson").Invoke(null, new object[] { response.Content });

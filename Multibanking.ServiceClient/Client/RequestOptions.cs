@@ -16,7 +16,7 @@ using System.Net;
 namespace Multibanking.ServiceClient.Client
 {
     /// <summary>
-    /// A container for generalized request inputs. This type allows consumers to extend the request functionality
+    /// A container for generalized request inputs. This serviceType allows consumers to extend the request functionality
     /// by abstracting away from the default (built-in) request framework (e.g. RestSharp).
     /// </summary>
     public class RequestOptions

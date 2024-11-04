@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Multibanking.Contracts\Multibanking.Contracts.csproj"/>
+        <ProjectReference Include="..\Multibanking.GuaranteeClient\Multibanking.GuaranteeClient.csproj" />
     </ItemGroup>
 
     <ItemGroup>

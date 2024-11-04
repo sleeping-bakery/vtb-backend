@@ -4,12 +4,15 @@ using Multibanking.Data.OpenAPIBankClients.AccountClient;
 using Multibanking.Data.OpenAPIBankClients.AccountClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.BonusPointClient;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
+using Multibanking.Data.OpenAPIBankClients.GuaranteeClient;
+using Multibanking.Data.OpenAPIBankClients.GuaranteeClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.PeriodPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.ServiceClient;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.UniversalPaymentClient;
 using Multibanking.Data.Repositories.Account;
 using Multibanking.Data.Repositories.Card;
+using Multibanking.Data.Repositories.Guarantee;
 using Multibanking.Data.Repositories.PeriodPayments;
 using Multibanking.Data.Repositories.Users;
 using Multibanking.Infrustructure.Mocks;
@@ -32,7 +35,8 @@ public static class DataServiceCollectionExtensions
             .AddScoped<IUserRepository, UserRepository>()
             .AddScoped<IAccountConsentRepository, AccountConsentRepository>()
             .AddScoped<ICardRepository, CardRepository>()
-            .AddScoped<IPeriodPaymentConsentRepository, PeriodPaymentConsentRepository>();
+            .AddScoped<IPeriodPaymentConsentRepository, PeriodPaymentConsentRepository>()
+            .AddScoped<IGuaranteeOrderRepository, GuaranteeOrderRepository>();
     }
 
     private static IServiceCollection AddOpenApiBankClients(this IServiceCollection serviceCollection,
@@ -97,6 +101,16 @@ public static class DataServiceCollectionExtensions
             serviceCollection.AddScoped<IBonusPointClient>(_ => BonusPointClientMock.MockBonusPointClient().Object);
         else
             serviceCollection.AddScoped<IBonusPointClient, Data.OpenAPIBankClients.BonusPointClient.BonusPointClient>();
+        
+        if (mockClients.IsGuaranteeClientMock)
+            serviceCollection.AddScoped<IGuaranteeCommissionClient>(_ => GuaranteeClientMock.MockedGuaranteeCommissionClient().Object)
+                .AddScoped<IGuaranteeOrderClient>(_ => GuaranteeClientMock.MockedGuaranteeOrderClient().Object)
+                .AddScoped<IGuaranteePaglClient>(_ => GuaranteeClientMock.MockedGuaranteePaglClient().Object);
+        else
+            serviceCollection.AddScoped<IGuaranteeCommissionClient, GuaranteeCommissionClient>()
+                .AddScoped<IGuaranteeOrderClient, GuaranteeOrderClient>()
+                .AddScoped<IGuaranteePaglClient, GuaranteePaglClient>();
+
         
         return serviceCollection;
     }

@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.PeriodPaymentC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.BonusPointClient", "Multibanking.BonusPointClient\Multibanking.BonusPointClient.csproj", "{D94893D2-4B32-4122-8123-688793AC6559}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multibanking.GuaranteeClient", "Multibanking.GuaranteeClient\Multibanking.GuaranteeClient.csproj", "{F2893314-EE3B-4739-81DA-5BC46B6E13C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,5 +100,9 @@ Global
 		{D94893D2-4B32-4122-8123-688793AC6559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D94893D2-4B32-4122-8123-688793AC6559}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D94893D2-4B32-4122-8123-688793AC6559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2893314-EE3B-4739-81DA-5BC46B6E13C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2893314-EE3B-4739-81DA-5BC46B6E13C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2893314-EE3B-4739-81DA-5BC46B6E13C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2893314-EE3B-4739-81DA-5BC46B6E13C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -27,7 +27,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> GetAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
@@ -38,7 +38,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> PostAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
@@ -49,7 +49,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> PutAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
@@ -60,7 +60,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> DeleteAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
@@ -71,7 +71,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> HeadAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
@@ -82,7 +82,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> OptionsAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
@@ -93,7 +93,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>A task eventually representing the response data, decorated with <see cref="ApiResponse{T}"/></returns>
         Task<ApiResponse<T>> PatchAsync<T>(string path, RequestOptions options, IReadableConfiguration configuration = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }

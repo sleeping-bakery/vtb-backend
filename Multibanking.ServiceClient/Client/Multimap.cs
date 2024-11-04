@@ -17,8 +17,8 @@ namespace Multibanking.ServiceClient.Client
     /// <summary>
     /// A dictionary in which one key has many associated values.
     /// </summary>
-    /// <typeparam name="TKey">The type of the key</typeparam>
-    /// <typeparam name="TValue">The type of the value associated with the key.</typeparam>
+    /// <typeparam name="TKey">The serviceType of the key</typeparam>
+    /// <typeparam name="TValue">The serviceType of the value associated with the key.</typeparam>
     public class Multimap<TKey, TValue> : IDictionary<TKey, IList<TValue>>
     {
         #region Private Fields
@@ -196,7 +196,7 @@ namespace Multibanking.ServiceClient.Client
         /// </summary>
         /// <param name="key">The key whose value to get.</param>
         /// <param name="value">When this method returns, the value associated with the specified key, if the
-        ///     key is found; otherwise, the default value for the type of the value parameter.
+        ///     key is found; otherwise, the default value for the serviceType of the value parameter.
         ///     This parameter is passed uninitialized.</param>
         /// <returns> true if the object that implements Multimap contains
         ///     an item with the specified key; otherwise, false.</returns>

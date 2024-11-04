@@ -51,7 +51,7 @@ namespace Multibanking.ServiceClient.Model
         /// Тип услуги
         /// </summary>
         /// <value>Тип услуги</value>
-        [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
+        [DataMember(Name = "serviceType", IsRequired = true, EmitDefaultValue = true)]
         public TypeEnum Type { get; set; }
         /// <summary>
         /// Подтипы услуги
@@ -273,7 +273,7 @@ namespace Multibanking.ServiceClient.Model
             sb.Append("  OperationCode: ").Append(OperationCode).Append("\n");
             sb.Append("  FacadeOperationCode: ").Append(FacadeOperationCode).Append("\n");
             sb.Append("  ProductId: ").Append(ProductId).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  ServiceType: ").Append(Type).Append("\n");
             sb.Append("  SubTypes: ").Append(SubTypes).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  ShortName: ").Append(ShortName).Append("\n");

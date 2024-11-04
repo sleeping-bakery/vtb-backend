@@ -12,24 +12,58 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add period payment business logic">
-      <change afterPath="$PROJECT_DIR$/.run/BonusPointClientSpecification.json.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/BonusPointController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/BonusPoint/PostBonusPointDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClientSpecification.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/IBonusPointClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/BonusPoints/BonusPointService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/BonusPoints/IBonusPointService.cs" afterDir="false" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add bonus points business logic">
+      <change afterPath="$PROJECT_DIR$/.run/GuaranteeClientSpecification.json.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/GuaranteeCommissionController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/GuaranteeOrderController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Guarantee/ReadGuaranteeOrderDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/GuaranteeClientSpecification.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteeCommissionClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteeOrderClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteePaglClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/Implementations/GuaranteeCommissionClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/Implementations/GuaranteeOrderClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/Implementations/GuaranteePaglClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Guarantee/GuaranteeOrderRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/Guarantee/IGuaranteeOrderRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Entities/GuaranteeOrders/GuaranteeOrder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/GuaranteeClientMock.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeCommissionService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeOrderService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteePaglService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeCommissionService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeOrderService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteePaglService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/MappingProfiles/GuaranteeMapperProfile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/appsettings.Production.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Multibanking.Contracts.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Multibanking.Contracts.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Devops/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Devops/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/MultibankingDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/Generator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/Generator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/ServiceClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/ServiceClientMock.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IAsynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ISynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RequestOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ErrorDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ErrorDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vtb-backend.sln" beforeDir="false" afterPath="$PROJECT_DIR$/vtb-backend.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,6 +109,7 @@
     <setting file="file://$USER_HOME$/AppData/Local/Symbols/src/dotnet/runtime/81cabf2857a01351e5ab578947c7403a5b128ad1/src/libraries/System.Security.Claims/src/System/Security/Claims/ClaimsPrincipal.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/211e6f3b24fa438a92f1815153647ce2c8f908/4d/57e865be/IIdentity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/54c2c97bd5bd46e3961ad402640a3dd93818a0/49/dfca84f3/IQueryable`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6dadd22e019742ce80aaefef99855be0142288/be/51bbc90d/DateTime.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7ca8898b690a4181a32a9cf767cedb1ea9c28/ee/bc3d71a2/Formatting.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cd09a527672c4f27bd06cb028e98e96245c20/7d/229f7ce4/JsonWebKeySet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cd09a527672c4f27bd06cb028e98e96245c20/84/e8507aaf/TokenValidationParameters.cs" root0="SKIP_HIGHLIGHTING" />
@@ -85,8 +120,10 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountsApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountConsentsApiAsync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountConsentsApiSync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/IAccountsApiSync.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/IStatementsApiSync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/ITransactionsApiAsync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/ITransactionsApiSync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/StatementsApi.cs" root0="SKIP_HIGHLIGHTING" />
@@ -105,23 +142,29 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/AccountSubTypeStaticType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/BalanceTypeStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CashAccountCompexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/Consent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/ConsentResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/ConsentStatusType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditDebitIndicatorStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CreditLineStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/CurrencyExchangeComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataAccountResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementInitResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataStatementResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/DataType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/FinancialInstitutionIdentificationDynamicType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/LinksType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/MetaType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/OBRUError.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/OBRUErrorResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/PeriodPaymentPartyIdentification.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/ServiceProviderComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementComplexType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementInitResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/StatementResponse.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionCashBalanceComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplex.cs" root0="SKIP_HIGHLIGHTING" />
@@ -129,6 +172,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCardInstrument.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAccount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexCreditorAgent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexDebtorAccount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeAmount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeCreditorParty.cs" root0="SKIP_HIGHLIGHTING" />
@@ -136,7 +180,12 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Api/DefaultApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ClientUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/CatalogV2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ProgramDetailV2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionRequestV2.cs" root0="SKIP_HIGHLIGHTING" />
@@ -174,6 +223,36 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Card/CardUpdateDto.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClientSpecification.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/CommentApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/CommissionApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/DocumentApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/OrderApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/PaglApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankGuarantee.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentCountResponseDto.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentResponseDto.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommissionRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CompanyHead.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ContactData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ContactPerson.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentAppendRequestDto.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FileDownload.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FileUpload.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FinancialReport.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FounderCompany.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FounderPerson.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/GuaranteeAddress.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/GuaranteeCompanyInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/IdentityDocument.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Order.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderResponse.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderStatus.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PersonAttributes.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Principal.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PrincipalCompanyInfoDto.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Procurement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/SecondLevelFounderCompanyDto.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/PeriodPaymentClientMock.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
@@ -207,24 +286,33 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/BankDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsServiceProviderSearchDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentReceiverDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentSettingsSearchDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeCommissionService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeOrderService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteePaglService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Api/UnidentifiedPaymentsApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Client/Configuration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Client/RequestOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/AbstractOpenAPISchema.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/AmountComplexType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/AppliedAuthenticationApproachStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/AuthorisationStaticType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/ConsentRequestComplexTypeRisk.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/ConsentResponseComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/DataConsentRequestComplexTypeInitiation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/DataConsentRequestComplexTypeSCASupportData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/InitiationComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/InitiationComplexTypeCreditorAccount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/InitiationComplexTypeInstructedAmount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/InitiationComplexTypeRemittanceInformation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/OBRUError.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/PaymentAccountIdentificationDynamicType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/PaymentRequestComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/PaymentRequestComplexTypeData.cs" root0="SKIP_HIGHLIGHTING" />
@@ -266,6 +354,7 @@
     "OpenAPI/Swagger Code Generator.CardEmissionClientSpecification.json.executor": "Run",
     "OpenAPI/Swagger Code Generator.CardInformationClient.json.executor": "Run",
     "OpenAPI/Swagger Code Generator.CardOpetationClientSpecification.json.executor": "Run",
+    "OpenAPI/Swagger Code Generator.GuaranteeClientSpecification.json.executor": "Run",
     "OpenAPI/Swagger Code Generator.PeriodPaymentClientSpecification.json.executor": "Run",
     "OpenAPI/Swagger Code Generator.ServiceClientSpecification.json.executor": "Run",
     "OpenAPI/Swagger Code Generator.UnidentifiedPaymentClient.json.executor": "Run",
@@ -278,7 +367,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "CodeLensConfigurable",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -350,7 +439,10 @@
       <workItem from="1730118664063" duration="9511000" />
       <workItem from="1730222217686" duration="12064000" />
       <workItem from="1730479811052" duration="543000" />
-      <workItem from="1730481141957" duration="6440000" />
+      <workItem from="1730481141957" duration="12348000" />
+      <workItem from="1730500110439" duration="2393000" />
+      <workItem from="1730502533050" duration="289000" />
+      <workItem from="1730575256346" duration="12926000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -512,7 +604,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730126360199</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Add bonus points business logic">
+      <option name="closed" value="true" />
+      <created>1730492343267</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1730492343267</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +655,9 @@
     <MESSAGE value="Fill mock" />
     <MESSAGE value="Add period payment consent business logic" />
     <MESSAGE value="Add period payment business logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add period payment business logic" />
+    <MESSAGE value="Bonus points add" />
+    <MESSAGE value="Add bonus points business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add bonus points business logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

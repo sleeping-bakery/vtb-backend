@@ -1,20 +1,19 @@
+using Multibanking.GuaranteeClient.Model;
+
 namespace Multibanking.Infrustructure.Mocks;
 
 public static class Generator
 {
-    
-    private static readonly Random Random = new Random();
+    private static readonly Random Random = new();
 
     public static string GenerateAccount(int length = 20)
     {
         var accountNumber = new char[length];
-        for (var i = 0; i < length; i++)
-        {
-            accountNumber[i] = (char)('0' + Random.Next(0, 10));
-        }
+        for (var i = 0; i < length; i++) accountNumber[i] = (char)('0' + Random.Next(0, 10));
+
         return new string(accountNumber);
     }
-    
+
     public static string GenerateInn()
     {
         var random = new Random();
@@ -54,4 +53,64 @@ public static class Generator
 
         return new string(kpp);
     }
+
+    public static OrderStatus GenerateRandomOrderStatus()
+    {
+        // Генерируем случайные значения
+        var commission = (decimal)(Random.NextDouble() * 100); // Случайная комиссия от 0 до 100
+        var orderId = Guid.NewGuid().ToString();
+        var orderNumber = GenerateRandomOrderNumber();
+        var legalNumber = GenerateRandomLegalNumber();
+        var label = GenerateRandomLabel();
+        var orderStatus = (OrderStatus.OrderStatusEnum)Random.Next(1, 9); // Значения от 1 до 8
+        var statusDescription = GenerateRandomStatusDescription();
+        var countComments = new CommentCountResponseDto(Random.Next(0, 100), Random.Next(0, 50)); // Случайное количество комментариев
+        var parentId = Guid.NewGuid().ToString(); // Случайный parentId
+        var startDate = DateTime.Now.AddDays(-Random.Next(1, 30)); // Случайная дата начала в пределах последнего месяца
+        var endDate = startDate.AddDays(Random.Next(1, 30)); // Дата окончания позже даты начала
+        var bankGuaranteeSum = (decimal)(Random.NextDouble() * 10000); // Сумма банковской гарантии от 0 до 10000
+        var annualInterestRate = (decimal)(Random.NextDouble() * 15); // Годовая процентная ставка от 0 до 15%
+
+        return new OrderStatus(
+            commission,
+            [],
+            orderId,
+            orderNumber,
+            legalNumber,
+            label,
+            orderStatus,
+            statusDescription,
+            countComments,
+            parentId,
+            startDate,
+            endDate,
+            bankGuaranteeSum,
+            annualInterestRate
+        );
+    }
+
+
+    private static string GenerateRandomOrderNumber() => $"Order-{Random.Next(10000, 99999)}";
+
+
+    private static string GenerateRandomLegalNumber() => $"Legal-{Random.Next(10000, 99999)}";
+
+    private static string GenerateRandomLabel() => $"Label_{Guid.NewGuid().ToString().Substring(0, 8)}";
+
+    private static readonly List<string> Descriptions =
+    [
+        "Status description 1",
+        "Status description 2",
+        "Status description 3",
+        "Status description 4"
+    ];
+    
+    private static string GenerateRandomStatusDescription()
+    {
+        
+        return Descriptions[Random.Next(Descriptions.Count)];
+    }
+
+    public static decimal GenerateRandomCommission(decimal min = 0m, decimal max = 1000000000m, int decimalPlaces = 2) =>
+        Math.Round((decimal)(new Random().NextDouble() * (double)(max - min) + (double)min), decimalPlaces);
 }

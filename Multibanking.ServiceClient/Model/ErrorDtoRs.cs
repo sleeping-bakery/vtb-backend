@@ -46,7 +46,7 @@ namespace Multibanking.ServiceClient.Model
         /// Тип ошибки
         /// </summary>
         /// <value>Тип ошибки</value>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
+        [DataMember(Name = "serviceType", EmitDefaultValue = false)]
         public string Type { get; set; }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Multibanking.ServiceClient.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class ErrorDtoRs {\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  ServiceType: ").Append(Type).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -141,10 +141,10 @@ namespace Multibanking.ServiceClient.Model
         /// <returns>Validation Result</returns>
         public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
         {
-            // Type (string) maxLength
+            // ServiceType (string) maxLength
             if (this.Type != null && this.Type.Length > 64)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, length must be less than 64.", new [] { "Type" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ServiceType, length must be less than 64.", new [] { "ServiceType" });
             }
 
             // Message (string) maxLength

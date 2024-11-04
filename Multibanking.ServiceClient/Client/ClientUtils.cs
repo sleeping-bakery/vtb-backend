@@ -141,12 +141,12 @@ namespace Multibanking.ServiceClient.Client
         }
 
         /// <summary>
-        /// Select the Content-Type header's value from the given content-type array:
-        /// if JSON type exists in the given array, use it;
+        /// Select the Content-ServiceType header's value from the given content-serviceType array:
+        /// if JSON serviceType exists in the given array, use it;
         /// otherwise use the first one defined in 'consumes'
         /// </summary>
-        /// <param name="contentTypes">The Content-Type array to select from.</param>
-        /// <returns>The Content-Type header to use.</returns>
+        /// <param name="contentTypes">The Content-ServiceType array to select from.</param>
+        /// <returns>The Content-ServiceType header to use.</returns>
         public static string SelectHeaderContentType(string[] contentTypes)
         {
             if (contentTypes.Length == 0)
@@ -158,7 +158,7 @@ namespace Multibanking.ServiceClient.Client
                     return contentType;
             }
 
-            return contentTypes[0]; // use the first content type specified in 'consumes'
+            return contentTypes[0]; // use the first content serviceType specified in 'consumes'
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace Multibanking.ServiceClient.Client
         }
 
         /// <summary>
-        /// Provides a case-insensitive check that a provided content type is a known JSON-like content type.
+        /// Provides a case-insensitive check that a provided content serviceType is a known JSON-like content serviceType.
         /// </summary>
         public static readonly Regex JsonRegex = new Regex("(?i)^(application/json|[^;/ \t]+/[^;/ \t]+[+]json)[ \t]*(;.*)?$");
 
@@ -193,7 +193,7 @@ namespace Multibanking.ServiceClient.Client
         ///    application/vnd.company+json
         /// </summary>
         /// <param name="mime">MIME</param>
-        /// <returns>Returns True if MIME type is json.</returns>
+        /// <returns>Returns True if MIME serviceType is json.</returns>
         public static bool IsJsonMime(string mime)
         {
             if (string.IsNullOrWhiteSpace(mime)) return false;

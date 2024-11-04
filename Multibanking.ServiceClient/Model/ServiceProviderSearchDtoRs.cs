@@ -36,7 +36,7 @@ namespace Multibanking.ServiceClient.Model
         /// </summary>
         /// <value>Тип услуги</value>
         [JsonConverter(typeof(StringEnumConverter))]
-        public enum TypeEnum
+        public enum ServiceTypeEnum
         {
             /// <summary>
             /// Enum CONTRACT for value: CONTRACT
@@ -57,8 +57,8 @@ namespace Multibanking.ServiceClient.Model
         /// Тип услуги
         /// </summary>
         /// <value>Тип услуги</value>
-        [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
-        public TypeEnum Type { get; set; }
+        [DataMember(Name = "serviceType", IsRequired = true, EmitDefaultValue = true)]
+        public ServiceTypeEnum ServiceType { get; set; }
         /// <summary>
         /// Подтип услуги (deprecated, см. subTypes)
         /// </summary>
@@ -176,7 +176,7 @@ namespace Multibanking.ServiceClient.Model
         /// <param name="id">Идентификатор услуги (required).</param>
         /// <param name="operationCode">Код операции (услуги) (required).</param>
         /// <param name="productId">Идентификатор продукта.</param>
-        /// <param name="type">Тип услуги (required).</param>
+        /// <param name="serviceType">Тип услуги (required).</param>
         /// <param name="subType">Подтип услуги (deprecated, см. subTypes).</param>
         /// <param name="subTypes">Подтипы услуги.</param>
         /// <param name="name">Наименование услуги (required).</param>
@@ -187,7 +187,7 @@ namespace Multibanking.ServiceClient.Model
         /// <param name="categoryIds">Список идентификаторов категорий, в которых доступна услуга.</param>
         /// <param name="regionIds">Список кодов регионов, в которых доступна услуга.</param>
         /// <param name="pmntSettings">pmntSettings.</param>
-        public ServiceProviderSearchDtoRs(string id = default(string), string operationCode = default(string), string productId = default(string), TypeEnum type = default(TypeEnum), SubTypeEnum? subType = default(SubTypeEnum?), List<SubTypesEnum> subTypes = default(List<SubTypesEnum>), string name = default(string), string shortName = default(string), string description = default(string), PaymentReceiverDtoRs receiver = default(PaymentReceiverDtoRs), List<OperationActionDtoRs> actions = default(List<OperationActionDtoRs>), List<string> categoryIds = default(List<string>), List<string> regionIds = default(List<string>), PaymentSettingsSearchDtoRs pmntSettings = default(PaymentSettingsSearchDtoRs))
+        public ServiceProviderSearchDtoRs(string id = default(string), string operationCode = default(string), string productId = default(string), ServiceTypeEnum serviceType = default(ServiceTypeEnum), SubTypeEnum? subType = default(SubTypeEnum?), List<SubTypesEnum> subTypes = default(List<SubTypesEnum>), string name = default(string), string shortName = default(string), string description = default(string), PaymentReceiverDtoRs receiver = default(PaymentReceiverDtoRs), List<OperationActionDtoRs> actions = default(List<OperationActionDtoRs>), List<string> categoryIds = default(List<string>), List<string> regionIds = default(List<string>), PaymentSettingsSearchDtoRs pmntSettings = default(PaymentSettingsSearchDtoRs))
         {
             // to ensure "id" is required (not null)
             if (id == null)
@@ -201,7 +201,7 @@ namespace Multibanking.ServiceClient.Model
                 throw new ArgumentNullException("operationCode is a required property for ServiceProviderSearchDtoRs and cannot be null");
             }
             this.OperationCode = operationCode;
-            this.Type = type;
+            this.ServiceType = serviceType;
             // to ensure "name" is required (not null)
             if (name == null)
             {
@@ -306,7 +306,7 @@ namespace Multibanking.ServiceClient.Model
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  OperationCode: ").Append(OperationCode).Append("\n");
             sb.Append("  ProductId: ").Append(ProductId).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  ServiceType: ").Append(ServiceType).Append("\n");
             sb.Append("  SubType: ").Append(SubType).Append("\n");
             sb.Append("  SubTypes: ").Append(SubTypes).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
@@ -368,8 +368,8 @@ namespace Multibanking.ServiceClient.Model
                     this.ProductId.Equals(input.ProductId))
                 ) && 
                 (
-                    this.Type == input.Type ||
-                    this.Type.Equals(input.Type)
+                    this.ServiceType == input.ServiceType ||
+                    this.ServiceType.Equals(input.ServiceType)
                 ) && 
                 (
                     this.SubType == input.SubType ||
@@ -445,7 +445,7 @@ namespace Multibanking.ServiceClient.Model
                 {
                     hashCode = (hashCode * 59) + this.ProductId.GetHashCode();
                 }
-                hashCode = (hashCode * 59) + this.Type.GetHashCode();
+                hashCode = (hashCode * 59) + this.ServiceType.GetHashCode();
                 hashCode = (hashCode * 59) + this.SubType.GetHashCode();
                 hashCode = (hashCode * 59) + this.SubTypes.GetHashCode();
                 if (this.Name != null)

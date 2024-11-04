@@ -5,6 +5,9 @@ using Multibanking.Services.Account.MappingProfiles;
 using Multibanking.Services.BonusPoints;
 using Multibanking.Services.Cards;
 using Multibanking.Services.Cards.MappingProfiles;
+using Multibanking.Services.Guarantees;
+using Multibanking.Services.Guarantees.Implementations;
+using Multibanking.Services.Guarantees.MappingProfiles;
 using Multibanking.Services.PeriodPayments;
 using Multibanking.Services.PeriodPayments.Implementations;
 using Multibanking.Services.PeriodPayments.MappingProfiles;
@@ -32,7 +35,7 @@ public static class BusinessLogicServiceCollectionExtensions
     private static IServiceCollection AddMapping(this IServiceCollection serviceCollection)
     {
         return serviceCollection.AddAutoMapper(
-            [typeof(UserMapperProfile), typeof(AccountConsentMapperProfile), typeof(CardMapperProfile), typeof(UnidentifiedPaymentMapperProfile), typeof(PeriodPaymentMapperProfile)]);
+            [typeof(UserMapperProfile), typeof(AccountConsentMapperProfile), typeof(CardMapperProfile), typeof(UnidentifiedPaymentMapperProfile), typeof(PeriodPaymentMapperProfile), typeof(GuaranteeMapperProfile)]);
     }
 
     private static IServiceCollection AddServices(this IServiceCollection serviceCollection)
@@ -51,7 +54,11 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IUniversalPaymentService, UniversalPaymentService>()
             .AddScoped<IPeriodPaymentConsentService, PeriodPaymentConsentService>()
             .AddScoped<IPeriodPaymentService, PeriodPaymentService>()
-            .AddScoped<IBonusPointService, BonusPointService>();
+            .AddScoped<IBonusPointService, BonusPointService>()
+            .AddScoped<IGuaranteeService, GuaranteeService>()
+            .AddScoped<IGuaranteeCommissionService, GuaranteeCommissionService>()
+            .AddScoped<IGuaranteeOrderService, GuaranteeOrderService>()
+            .AddScoped<IGuaranteePaglService, GuaranteePaglService>();
     }
 
     private static IServiceCollection AddMiddlewares(this IServiceCollection serviceCollection)

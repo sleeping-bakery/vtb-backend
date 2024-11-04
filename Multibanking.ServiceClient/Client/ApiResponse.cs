@@ -20,7 +20,7 @@ namespace Multibanking.ServiceClient.Client
     public interface IApiResponse
     {
         /// <summary>
-        /// The data type of <see cref="Content"/>
+        /// The data serviceType of <see cref="Content"/>
         /// </summary>
         Type ResponseType { get; }
 
@@ -101,7 +101,7 @@ namespace Multibanking.ServiceClient.Client
         }
 
         /// <summary>
-        /// The data type of <see cref="Content"/>
+        /// The data serviceType of <see cref="Content"/>
         /// </summary>
         public object Content
         {

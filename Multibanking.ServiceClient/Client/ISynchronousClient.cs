@@ -26,7 +26,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Get<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
 
@@ -36,7 +36,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Post<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
 
@@ -46,7 +46,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Put<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
 
@@ -56,7 +56,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Delete<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
 
@@ -66,7 +66,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Head<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
 
@@ -76,7 +76,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Options<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
 
@@ -86,7 +86,7 @@ namespace Multibanking.ServiceClient.Client
         /// <param name="path">The relative path to invoke.</param>
         /// <param name="options">The request parameters to pass along to the client.</param>
         /// <param name="configuration">Per-request configurable settings.</param>
-        /// <typeparam name="T">The return type.</typeparam>
+        /// <typeparam name="T">The return serviceType.</typeparam>
         /// <returns>The response data, decorated with <see cref="ApiResponse{T}"/></returns>
         ApiResponse<T> Patch<T>(string path, RequestOptions options, IReadableConfiguration configuration = null);
     }

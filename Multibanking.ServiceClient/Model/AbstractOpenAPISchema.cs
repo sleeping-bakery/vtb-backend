@@ -64,7 +64,7 @@ namespace Multibanking.ServiceClient.Model
         public bool IsNullable { get; protected set; }
 
         /// <summary>
-        /// Gets or Sets the schema type, which can be either `oneOf` or `anyOf`
+        /// Gets or Sets the schema serviceType, which can be either `oneOf` or `anyOf`
         /// </summary>
         public string SchemaType { get; protected set; }
 
