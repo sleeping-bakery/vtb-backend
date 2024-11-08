@@ -6,6 +6,7 @@ using Multibanking.Data.OpenAPIBankClients.BonusPointClient;
 using Multibanking.Data.OpenAPIBankClients.CardClient;
 using Multibanking.Data.OpenAPIBankClients.GuaranteeClient;
 using Multibanking.Data.OpenAPIBankClients.GuaranteeClient.Implementations;
+using Multibanking.Data.OpenAPIBankClients.LoanClient;
 using Multibanking.Data.OpenAPIBankClients.PeriodPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.ServiceClient;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
@@ -36,7 +37,8 @@ public static class DataServiceCollectionExtensions
             .AddScoped<IAccountConsentRepository, AccountConsentRepository>()
             .AddScoped<ICardRepository, CardRepository>()
             .AddScoped<IPeriodPaymentConsentRepository, PeriodPaymentConsentRepository>()
-            .AddScoped<IGuaranteeOrderRepository, GuaranteeOrderRepository>();
+            .AddScoped<IGuaranteeOrderRepository, GuaranteeOrderRepository>()
+            .AddScoped<IBankInterestRateClient>(_ => LoanClientMock.MockedBankInterestRateClient().Object);
     }
 
     private static IServiceCollection AddOpenApiBankClients(this IServiceCollection serviceCollection,

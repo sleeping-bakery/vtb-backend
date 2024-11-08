@@ -1,5 +1,4 @@
 using Multibanking.Contracts.Guarantee;
-using Multibanking.Entities.GuaranteeOrders;
 using Multibanking.GuaranteeClient.Model;
 
 namespace Multibanking.Services.Guarantees;

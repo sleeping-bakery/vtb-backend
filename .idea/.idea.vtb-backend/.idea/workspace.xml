@@ -12,7 +12,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add guarantee business logic" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Test VSC">
+      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/LoanCalculatorController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/BankInterestRate.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/LoanCalculationRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/LoanCalculationResult.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/LoanClient/IBankInterestRateClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/LoanClientMock.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Loans/ILoanCalculatorService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Loans/LoanCalculatorService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeService.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,6 +76,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f8dbf677037c4363bdec07364295385f16908/e3/08ac3917/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/858fa85af8f360fe16f9ac5d211391573dccd769e4c998ad63d6497f469145e1/ISetupList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d253e85623dbcafcda28febe2a37a984ff78a8cab68dbdfe7c1b698d1f5fba/MethodCall.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/AccountConsentController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" root0="SKIP_HIGHLIGHTING" />
@@ -317,7 +331,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "CodeLensConfigurable",
+    "settings.editor.selected.configurable": "CodeInspectionSettingsId",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -393,6 +407,7 @@
       <workItem from="1730500110439" duration="2393000" />
       <workItem from="1730502533050" duration="289000" />
       <workItem from="1730575256346" duration="13830000" />
+      <workItem from="1731023981587" duration="4576000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -570,7 +585,31 @@
       <option name="project" value="LOCAL" />
       <updated>1730687070636</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Add VCS">
+      <option name="closed" value="true" />
+      <created>1730688438555</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1730688438555</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Add VCS">
+      <option name="closed" value="true" />
+      <created>1730688674310</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1730688674310</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Test VSC">
+      <option name="closed" value="true" />
+      <created>1730688760718</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1730688760718</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -590,8 +629,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Edit codeStyleConfig.xml" />
-    <MESSAGE value="Add logging auth errors" />
     <MESSAGE value="Revoke user account consent" />
     <MESSAGE value="Hot fix and add business logic" />
     <MESSAGE value="Add accounts business logic" />
@@ -615,7 +652,9 @@
     <MESSAGE value="Bonus points add" />
     <MESSAGE value="Add bonus points business logic" />
     <MESSAGE value="Add guarantee business logic" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add guarantee business logic" />
+    <MESSAGE value="Add VCS" />
+    <MESSAGE value="Test VSC" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test VSC" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
