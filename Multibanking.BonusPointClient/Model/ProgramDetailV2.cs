@@ -9,213 +9,174 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     Этот объект содержит атрибуты программы, настроенные для конкретного партнера.
+/// </summary>
+[DataContract(Name = "ProgramDetailV2")]
+public class ProgramDetailV2 : IEquatable<ProgramDetailV2>, IValidatableObject
 {
     /// <summary>
-    /// Этот объект содержит атрибуты программы, настроенные для конкретного партнера.
+    ///     Initializes a new instance of the <see cref="ProgramDetailV2" /> class.
     /// </summary>
-    [DataContract(Name = "ProgramDetailV2")]
-    public partial class ProgramDetailV2 : IEquatable<ProgramDetailV2>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected ProgramDetailV2()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProgramDetailV2" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ProgramDetailV2() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProgramDetailV2" /> class.
-        /// </summary>
-        /// <param name="programId">Уникальный идентификатор, установленный для программы. (required).</param>
-        /// <param name="description">Краткое описание программы..</param>
-        /// <param name="catalogs">Список каталогов настроенных для программы. (required).</param>
-        public ProgramDetailV2(string programId = default(string), string description = default(string), List<CatalogV2> catalogs = default(List<CatalogV2>))
-        {
-            // to ensure "programId" is required (not null)
-            if (programId == null)
-            {
-                throw new ArgumentNullException("programId is a required property for ProgramDetailV2 and cannot be null");
-            }
-            this.ProgramId = programId;
-            // to ensure "catalogs" is required (not null)
-            if (catalogs == null)
-            {
-                throw new ArgumentNullException("catalogs is a required property for ProgramDetailV2 and cannot be null");
-            }
-            this.Catalogs = catalogs;
-            this.Description = description;
-        }
-
-        /// <summary>
-        /// Уникальный идентификатор, установленный для программы.
-        /// </summary>
-        /// <value>Уникальный идентификатор, установленный для программы.</value>
-        [DataMember(Name = "programId", IsRequired = true, EmitDefaultValue = true)]
-        public string ProgramId { get; set; }
-
-        /// <summary>
-        /// Краткое описание программы.
-        /// </summary>
-        /// <value>Краткое описание программы.</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Список каталогов настроенных для программы.
-        /// </summary>
-        /// <value>Список каталогов настроенных для программы.</value>
-        [DataMember(Name = "catalogs", IsRequired = true, EmitDefaultValue = true)]
-        public List<CatalogV2> Catalogs { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ProgramDetailV2 {\n");
-            sb.Append("  ProgramId: ").Append(ProgramId).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  Catalogs: ").Append(Catalogs).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ProgramDetailV2);
-        }
-
-        /// <summary>
-        /// Returns true if ProgramDetailV2 instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ProgramDetailV2 to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ProgramDetailV2 input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ProgramId == input.ProgramId ||
-                    (this.ProgramId != null &&
-                    this.ProgramId.Equals(input.ProgramId))
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && 
-                (
-                    this.Catalogs == input.Catalogs ||
-                    this.Catalogs != null &&
-                    input.Catalogs != null &&
-                    this.Catalogs.SequenceEqual(input.Catalogs)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ProgramId != null)
-                {
-                    hashCode = (hashCode * 59) + this.ProgramId.GetHashCode();
-                }
-                if (this.Description != null)
-                {
-                    hashCode = (hashCode * 59) + this.Description.GetHashCode();
-                }
-                if (this.Catalogs != null)
-                {
-                    hashCode = (hashCode * 59) + this.Catalogs.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // ProgramId (string) maxLength
-            if (this.ProgramId != null && this.ProgramId.Length > 7)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ProgramId, length must be less than 7.", new [] { "ProgramId" });
-            }
-
-            // ProgramId (string) minLength
-            if (this.ProgramId != null && this.ProgramId.Length < 7)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ProgramId, length must be greater than 7.", new [] { "ProgramId" });
-            }
-
-            // ProgramId (string) pattern
-            Regex regexProgramId = new Regex(@"^[0-9a-zA-Z]{7}$", RegexOptions.CultureInvariant);
-            if (false == regexProgramId.Match(this.ProgramId).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ProgramId, must match a pattern of " + regexProgramId, new [] { "ProgramId" });
-            }
-
-            // Description (string) maxLength
-            if (this.Description != null && this.Description.Length > 256)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 256.", new [] { "Description" });
-            }
-
-            // Description (string) minLength
-            if (this.Description != null && this.Description.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be greater than 1.", new [] { "Description" });
-            }
-
-            // Description (string) pattern
-            Regex regexDescription = new Regex(@"^[a-zA-Z\\s\"",.']{1,256}$", RegexOptions.CultureInvariant);
-            if (false == regexDescription.Match(this.Description).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, must match a pattern of " + regexDescription, new [] { "Description" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ProgramDetailV2" /> class.
+    /// </summary>
+    /// <param name="programId">Уникальный идентификатор, установленный для программы. (required).</param>
+    /// <param name="description">Краткое описание программы..</param>
+    /// <param name="catalogs">Список каталогов настроенных для программы. (required).</param>
+    public ProgramDetailV2(string programId = default, string description = default, List<CatalogV2> catalogs = default)
+    {
+        // to ensure "programId" is required (not null)
+        if (programId == null) throw new ArgumentNullException("programId is a required property for ProgramDetailV2 and cannot be null");
+        ProgramId = programId;
+        // to ensure "catalogs" is required (not null)
+        if (catalogs == null) throw new ArgumentNullException("catalogs is a required property for ProgramDetailV2 and cannot be null");
+        Catalogs = catalogs;
+        Description = description;
+    }
+
+    /// <summary>
+    ///     Уникальный идентификатор, установленный для программы.
+    /// </summary>
+    /// <value>Уникальный идентификатор, установленный для программы.</value>
+    [DataMember(Name = "programId", IsRequired = true, EmitDefaultValue = true)]
+    public string ProgramId { get; set; }
+
+    /// <summary>
+    ///     Краткое описание программы.
+    /// </summary>
+    /// <value>Краткое описание программы.</value>
+    [DataMember(Name = "description", EmitDefaultValue = false)]
+    public string Description { get; set; }
+
+    /// <summary>
+    ///     Список каталогов настроенных для программы.
+    /// </summary>
+    /// <value>Список каталогов настроенных для программы.</value>
+    [DataMember(Name = "catalogs", IsRequired = true, EmitDefaultValue = true)]
+    public List<CatalogV2> Catalogs { get; set; }
+
+    /// <summary>
+    ///     Returns true if ProgramDetailV2 instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ProgramDetailV2 to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ProgramDetailV2 input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ProgramId == input.ProgramId ||
+                (ProgramId != null &&
+                 ProgramId.Equals(input.ProgramId))
+            ) &&
+            (
+                Description == input.Description ||
+                (Description != null &&
+                 Description.Equals(input.Description))
+            ) &&
+            (
+                Catalogs == input.Catalogs ||
+                (Catalogs != null &&
+                 input.Catalogs != null &&
+                 Catalogs.SequenceEqual(input.Catalogs))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // ProgramId (string) maxLength
+        if (ProgramId != null && ProgramId.Length > 7) yield return new ValidationResult("Invalid value for ProgramId, length must be less than 7.", new[] { "ProgramId" });
+
+        // ProgramId (string) minLength
+        if (ProgramId != null && ProgramId.Length < 7) yield return new ValidationResult("Invalid value for ProgramId, length must be greater than 7.", new[] { "ProgramId" });
+
+        // ProgramId (string) pattern
+        var regexProgramId = new Regex(@"^[0-9a-zA-Z]{7}$", RegexOptions.CultureInvariant);
+        if (false == regexProgramId.Match(ProgramId).Success)
+            yield return new ValidationResult("Invalid value for ProgramId, must match a pattern of " + regexProgramId, new[] { "ProgramId" });
+
+        // Description (string) maxLength
+        if (Description != null && Description.Length > 256)
+            yield return new ValidationResult("Invalid value for Description, length must be less than 256.", new[] { "Description" });
+
+        // Description (string) minLength
+        if (Description != null && Description.Length < 1)
+            yield return new ValidationResult("Invalid value for Description, length must be greater than 1.", new[] { "Description" });
+
+        // Description (string) pattern
+        var regexDescription = new Regex(@"^[a-zA-Z\\s\"",.']{1,256}$", RegexOptions.CultureInvariant);
+        if (false == regexDescription.Match(Description).Success)
+            yield return new ValidationResult("Invalid value for Description, must match a pattern of " + regexDescription, new[] { "Description" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ProgramDetailV2 {\n");
+        sb.Append("  ProgramId: ").Append(ProgramId).Append("\n");
+        sb.Append("  Description: ").Append(Description).Append("\n");
+        sb.Append("  Catalogs: ").Append(Catalogs).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ProgramDetailV2);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ProgramId != null) hashCode = hashCode * 59 + ProgramId.GetHashCode();
+            if (Description != null) hashCode = hashCode * 59 + Description.GetHashCode();
+            if (Catalogs != null) hashCode = hashCode * 59 + Catalogs.GetHashCode();
+            return hashCode;
+        }
+    }
 }

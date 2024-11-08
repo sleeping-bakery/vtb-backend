@@ -9,246 +9,236 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Установленные Пользователем при предоставлении Согласия на инициирование ограничения, используемые ППИУ для контроля реквизитов платежного распоряжения при инициирование
+///     периодических переводов средств
+/// </summary>
+[DataContract(Name = "VRPControlParameters")]
+public class VRPControlParameters : IEquatable<VRPControlParameters>, IValidatableObject
 {
     /// <summary>
-    /// Установленные Пользователем при предоставлении Согласия на инициирование ограничения, используемые ППИУ для контроля реквизитов платежного распоряжения при инициирование периодических переводов средств
+    ///     Initializes a new instance of the <see cref="VRPControlParameters" /> class.
     /// </summary>
-    [DataContract(Name = "VRPControlParameters")]
-    public partial class VRPControlParameters : IEquatable<VRPControlParameters>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected VRPControlParameters()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPControlParameters" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected VRPControlParameters() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPControlParameters" /> class.
-        /// </summary>
-        /// <param name="validFromDateTime">Дата и время начала срока действия Согласия на инициирование. Если элемент не представлен, датой и временем начала срока действия согласия будет считаться дата и время авторизации кго Пользователем | ISODateTime.</param>
-        /// <param name="validToDateTime">Дата и время истечения срока действия Согласия на инициирование. Если элемент не представлен, Согласие будет с открытой датой | ISODateTime.</param>
-        /// <param name="maximumIndividualAmount">maximumIndividualAmount.</param>
-        /// <param name="periodicLimits">Максимальная сумма, которая может быть указана во всех платежных инструкциях за определенный период в соответствии с Согласием на инициирование. Если период является календарным, то в первом периоде ограничение пропорционально оставшемуся количеству дней.</param>
-        /// <param name="vRPType">Типы переводов средств, которые могут быть произведены в соответствии с настоящим Согласием на инициирование. | OBVRPConsentType - Namespaced Enumeration (required).</param>
-        /// <param name="pSUAuthenticationMethods">Указывает, какой метод аутентификации Пользователя приемлем при инициации ППДС, которые связанны с данным Согласием на инициирование | VRPAuthenticationMethods.</param>
-        /// <param name="supplementaryData">Дополнительная информация, которая не может быть записана в структурированных полях и/или в любом другом определенном блоке.</param>
-        public VRPControlParameters(DateTime validFromDateTime = default(DateTime), DateTime validToDateTime = default(DateTime), VRPControlParametersMaximumIndividualAmount maximumIndividualAmount = default(VRPControlParametersMaximumIndividualAmount), List<object> periodicLimits = default, List<string> vRPType = default(List<string>), List<string> pSUAuthenticationMethods = default(List<string>), Object supplementaryData = default(Object))
-        {
-            // to ensure "vRPType" is required (not null)
-            if (vRPType == null)
-            {
-                throw new ArgumentNullException("vRPType is a required property for VRPControlParameters and cannot be null");
-            }
-            this.VRPType = vRPType;
-            this.ValidFromDateTime = validFromDateTime;
-            this.ValidToDateTime = validToDateTime;
-            this.MaximumIndividualAmount = maximumIndividualAmount;
-            this.PeriodicLimits = periodicLimits;
-            this.PSUAuthenticationMethods = pSUAuthenticationMethods;
-            this.SupplementaryData = supplementaryData;
-        }
-
-        /// <summary>
-        /// Дата и время начала срока действия Согласия на инициирование. Если элемент не представлен, датой и временем начала срока действия согласия будет считаться дата и время авторизации кго Пользователем | ISODateTime
-        /// </summary>
-        /// <value>Дата и время начала срока действия Согласия на инициирование. Если элемент не представлен, датой и временем начала срока действия согласия будет считаться дата и время авторизации кго Пользователем | ISODateTime</value>
-        [DataMember(Name = "validFromDateTime", EmitDefaultValue = false)]
-        public DateTime ValidFromDateTime { get; set; }
-
-        /// <summary>
-        /// Дата и время истечения срока действия Согласия на инициирование. Если элемент не представлен, Согласие будет с открытой датой | ISODateTime
-        /// </summary>
-        /// <value>Дата и время истечения срока действия Согласия на инициирование. Если элемент не представлен, Согласие будет с открытой датой | ISODateTime</value>
-        [DataMember(Name = "validToDateTime", EmitDefaultValue = false)]
-        public DateTime ValidToDateTime { get; set; }
-
-        /// <summary>
-        /// Gets or Sets MaximumIndividualAmount
-        /// </summary>
-        [DataMember(Name = "MaximumIndividualAmount", EmitDefaultValue = false)]
-        public VRPControlParametersMaximumIndividualAmount MaximumIndividualAmount { get; set; }
-
-        /// <summary>
-        /// Максимальная сумма, которая может быть указана во всех платежных инструкциях за определенный период в соответствии с Согласием на инициирование. Если период является календарным, то в первом периоде ограничение пропорционально оставшемуся количеству дней
-        /// </summary>
-        /// <value>Максимальная сумма, которая может быть указана во всех платежных инструкциях за определенный период в соответствии с Согласием на инициирование. Если период является календарным, то в первом периоде ограничение пропорционально оставшемуся количеству дней</value>
-        [DataMember(Name = "PeriodicLimits", EmitDefaultValue = false)]
-        public List<object> PeriodicLimits { get; set; }
-
-        /// <summary>
-        /// Типы переводов средств, которые могут быть произведены в соответствии с настоящим Согласием на инициирование. | OBVRPConsentType - Namespaced Enumeration
-        /// </summary>
-        /// <value>Типы переводов средств, которые могут быть произведены в соответствии с настоящим Согласием на инициирование. | OBVRPConsentType - Namespaced Enumeration</value>
-        [DataMember(Name = "VrpType", IsRequired = true, EmitDefaultValue = true)]
-        public List<string> VRPType { get; set; }
-
-        /// <summary>
-        /// Указывает, какой метод аутентификации Пользователя приемлем при инициации ППДС, которые связанны с данным Согласием на инициирование | VRPAuthenticationMethods
-        /// </summary>
-        /// <value>Указывает, какой метод аутентификации Пользователя приемлем при инициации ППДС, которые связанны с данным Согласием на инициирование | VRPAuthenticationMethods</value>
-        [DataMember(Name = "PSUAuthenticationMethods", EmitDefaultValue = false)]
-        public List<string> PSUAuthenticationMethods { get; set; }
-
-        /// <summary>
-        /// Дополнительная информация, которая не может быть записана в структурированных полях и/или в любом другом определенном блоке
-        /// </summary>
-        /// <value>Дополнительная информация, которая не может быть записана в структурированных полях и/или в любом другом определенном блоке</value>
-        [DataMember(Name = "SupplementaryData", EmitDefaultValue = false)]
-        public Object SupplementaryData { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPControlParameters {\n");
-            sb.Append("  ValidFromDateTime: ").Append(ValidFromDateTime).Append("\n");
-            sb.Append("  ValidToDateTime: ").Append(ValidToDateTime).Append("\n");
-            sb.Append("  MaximumIndividualAmount: ").Append(MaximumIndividualAmount).Append("\n");
-            sb.Append("  PeriodicLimits: ").Append(PeriodicLimits).Append("\n");
-            sb.Append("  VrpType: ").Append(VRPType).Append("\n");
-            sb.Append("  PSUAuthenticationMethods: ").Append(PSUAuthenticationMethods).Append("\n");
-            sb.Append("  SupplementaryData: ").Append(SupplementaryData).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPControlParameters);
-        }
-
-        /// <summary>
-        /// Returns true if VRPControlParameters instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPControlParameters to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPControlParameters input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ValidFromDateTime == input.ValidFromDateTime ||
-                    (this.ValidFromDateTime != null &&
-                    this.ValidFromDateTime.Equals(input.ValidFromDateTime))
-                ) && 
-                (
-                    this.ValidToDateTime == input.ValidToDateTime ||
-                    (this.ValidToDateTime != null &&
-                    this.ValidToDateTime.Equals(input.ValidToDateTime))
-                ) && 
-                (
-                    this.MaximumIndividualAmount == input.MaximumIndividualAmount ||
-                    (this.MaximumIndividualAmount != null &&
-                    this.MaximumIndividualAmount.Equals(input.MaximumIndividualAmount))
-                ) && 
-                (
-                    this.PeriodicLimits == input.PeriodicLimits ||
-                    (this.PeriodicLimits != null &&
-                    this.PeriodicLimits.Equals(input.PeriodicLimits))
-                ) && 
-                (
-                    this.VRPType == input.VRPType ||
-                    this.VRPType != null &&
-                    input.VRPType != null &&
-                    this.VRPType.SequenceEqual(input.VRPType)
-                ) && 
-                (
-                    this.PSUAuthenticationMethods == input.PSUAuthenticationMethods ||
-                    this.PSUAuthenticationMethods != null &&
-                    input.PSUAuthenticationMethods != null &&
-                    this.PSUAuthenticationMethods.SequenceEqual(input.PSUAuthenticationMethods)
-                ) && 
-                (
-                    this.SupplementaryData == input.SupplementaryData ||
-                    (this.SupplementaryData != null &&
-                    this.SupplementaryData.Equals(input.SupplementaryData))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ValidFromDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.ValidFromDateTime.GetHashCode();
-                }
-                if (this.ValidToDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.ValidToDateTime.GetHashCode();
-                }
-                if (this.MaximumIndividualAmount != null)
-                {
-                    hashCode = (hashCode * 59) + this.MaximumIndividualAmount.GetHashCode();
-                }
-                if (this.PeriodicLimits != null)
-                {
-                    hashCode = (hashCode * 59) + this.PeriodicLimits.GetHashCode();
-                }
-                if (this.VRPType != null)
-                {
-                    hashCode = (hashCode * 59) + this.VRPType.GetHashCode();
-                }
-                if (this.PSUAuthenticationMethods != null)
-                {
-                    hashCode = (hashCode * 59) + this.PSUAuthenticationMethods.GetHashCode();
-                }
-                if (this.SupplementaryData != null)
-                {
-                    hashCode = (hashCode * 59) + this.SupplementaryData.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="VRPControlParameters" /> class.
+    /// </summary>
+    /// <param name="validFromDateTime">
+    ///     Дата и время начала срока действия Согласия на инициирование. Если элемент не представлен, датой и временем начала срока действия согласия будет
+    ///     считаться дата и время авторизации кго Пользователем | ISODateTime.
+    /// </param>
+    /// <param name="validToDateTime">Дата и время истечения срока действия Согласия на инициирование. Если элемент не представлен, Согласие будет с открытой датой | ISODateTime.</param>
+    /// <param name="maximumIndividualAmount">maximumIndividualAmount.</param>
+    /// <param name="periodicLimits">
+    ///     Максимальная сумма, которая может быть указана во всех платежных инструкциях за определенный период в соответствии с Согласием на инициирование. Если
+    ///     период является календарным, то в первом периоде ограничение пропорционально оставшемуся количеству дней.
+    /// </param>
+    /// <param name="vRPType">
+    ///     Типы переводов средств, которые могут быть произведены в соответствии с настоящим Согласием на инициирование. | OBVRPConsentType - Namespaced Enumeration
+    ///     (required).
+    /// </param>
+    /// <param name="pSUAuthenticationMethods">
+    ///     Указывает, какой метод аутентификации Пользователя приемлем при инициации ППДС, которые связанны с данным Согласием на инициирование |
+    ///     VRPAuthenticationMethods.
+    /// </param>
+    /// <param name="supplementaryData">Дополнительная информация, которая не может быть записана в структурированных полях и/или в любом другом определенном блоке.</param>
+    public VRPControlParameters(DateTime validFromDateTime = default, DateTime validToDateTime = default,
+        VRPControlParametersMaximumIndividualAmount maximumIndividualAmount = default, List<object> periodicLimits = default, List<string> vRPType = default,
+        List<string> pSUAuthenticationMethods = default, object supplementaryData = default)
+    {
+        // to ensure "vRPType" is required (not null)
+        if (vRPType == null) throw new ArgumentNullException("vRPType is a required property for VRPControlParameters and cannot be null");
+        VRPType = vRPType;
+        ValidFromDateTime = validFromDateTime;
+        ValidToDateTime = validToDateTime;
+        MaximumIndividualAmount = maximumIndividualAmount;
+        PeriodicLimits = periodicLimits;
+        PSUAuthenticationMethods = pSUAuthenticationMethods;
+        SupplementaryData = supplementaryData;
+    }
+
+    /// <summary>
+    ///     Дата и время начала срока действия Согласия на инициирование. Если элемент не представлен, датой и временем начала срока действия согласия будет считаться дата и время
+    ///     авторизации кго Пользователем | ISODateTime
+    /// </summary>
+    /// <value>
+    ///     Дата и время начала срока действия Согласия на инициирование. Если элемент не представлен, датой и временем начала срока действия согласия будет считаться дата и время
+    ///     авторизации кго Пользователем | ISODateTime
+    /// </value>
+    [DataMember(Name = "validFromDateTime", EmitDefaultValue = false)]
+    public DateTime ValidFromDateTime { get; set; }
+
+    /// <summary>
+    ///     Дата и время истечения срока действия Согласия на инициирование. Если элемент не представлен, Согласие будет с открытой датой | ISODateTime
+    /// </summary>
+    /// <value>Дата и время истечения срока действия Согласия на инициирование. Если элемент не представлен, Согласие будет с открытой датой | ISODateTime</value>
+    [DataMember(Name = "validToDateTime", EmitDefaultValue = false)]
+    public DateTime ValidToDateTime { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets MaximumIndividualAmount
+    /// </summary>
+    [DataMember(Name = "MaximumIndividualAmount", EmitDefaultValue = false)]
+    public VRPControlParametersMaximumIndividualAmount MaximumIndividualAmount { get; set; }
+
+    /// <summary>
+    ///     Максимальная сумма, которая может быть указана во всех платежных инструкциях за определенный период в соответствии с Согласием на инициирование. Если период является
+    ///     календарным, то в первом периоде ограничение пропорционально оставшемуся количеству дней
+    /// </summary>
+    /// <value>
+    ///     Максимальная сумма, которая может быть указана во всех платежных инструкциях за определенный период в соответствии с Согласием на инициирование. Если период является
+    ///     календарным, то в первом периоде ограничение пропорционально оставшемуся количеству дней
+    /// </value>
+    [DataMember(Name = "PeriodicLimits", EmitDefaultValue = false)]
+    public List<object> PeriodicLimits { get; set; }
+
+    /// <summary>
+    ///     Типы переводов средств, которые могут быть произведены в соответствии с настоящим Согласием на инициирование. | OBVRPConsentType - Namespaced Enumeration
+    /// </summary>
+    /// <value>Типы переводов средств, которые могут быть произведены в соответствии с настоящим Согласием на инициирование. | OBVRPConsentType - Namespaced Enumeration</value>
+    [DataMember(Name = "VrpType", IsRequired = true, EmitDefaultValue = true)]
+    public List<string> VRPType { get; set; }
+
+    /// <summary>
+    ///     Указывает, какой метод аутентификации Пользователя приемлем при инициации ППДС, которые связанны с данным Согласием на инициирование | VRPAuthenticationMethods
+    /// </summary>
+    /// <value>Указывает, какой метод аутентификации Пользователя приемлем при инициации ППДС, которые связанны с данным Согласием на инициирование | VRPAuthenticationMethods</value>
+    [DataMember(Name = "PSUAuthenticationMethods", EmitDefaultValue = false)]
+    public List<string> PSUAuthenticationMethods { get; set; }
+
+    /// <summary>
+    ///     Дополнительная информация, которая не может быть записана в структурированных полях и/или в любом другом определенном блоке
+    /// </summary>
+    /// <value>Дополнительная информация, которая не может быть записана в структурированных полях и/или в любом другом определенном блоке</value>
+    [DataMember(Name = "SupplementaryData", EmitDefaultValue = false)]
+    public object SupplementaryData { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPControlParameters instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPControlParameters to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPControlParameters input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ValidFromDateTime == input.ValidFromDateTime ||
+                (ValidFromDateTime != null &&
+                 ValidFromDateTime.Equals(input.ValidFromDateTime))
+            ) &&
+            (
+                ValidToDateTime == input.ValidToDateTime ||
+                (ValidToDateTime != null &&
+                 ValidToDateTime.Equals(input.ValidToDateTime))
+            ) &&
+            (
+                MaximumIndividualAmount == input.MaximumIndividualAmount ||
+                (MaximumIndividualAmount != null &&
+                 MaximumIndividualAmount.Equals(input.MaximumIndividualAmount))
+            ) &&
+            (
+                PeriodicLimits == input.PeriodicLimits ||
+                (PeriodicLimits != null &&
+                 PeriodicLimits.Equals(input.PeriodicLimits))
+            ) &&
+            (
+                VRPType == input.VRPType ||
+                (VRPType != null &&
+                 input.VRPType != null &&
+                 VRPType.SequenceEqual(input.VRPType))
+            ) &&
+            (
+                PSUAuthenticationMethods == input.PSUAuthenticationMethods ||
+                (PSUAuthenticationMethods != null &&
+                 input.PSUAuthenticationMethods != null &&
+                 PSUAuthenticationMethods.SequenceEqual(input.PSUAuthenticationMethods))
+            ) &&
+            (
+                SupplementaryData == input.SupplementaryData ||
+                (SupplementaryData != null &&
+                 SupplementaryData.Equals(input.SupplementaryData))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPControlParameters {\n");
+        sb.Append("  ValidFromDateTime: ").Append(ValidFromDateTime).Append("\n");
+        sb.Append("  ValidToDateTime: ").Append(ValidToDateTime).Append("\n");
+        sb.Append("  MaximumIndividualAmount: ").Append(MaximumIndividualAmount).Append("\n");
+        sb.Append("  PeriodicLimits: ").Append(PeriodicLimits).Append("\n");
+        sb.Append("  VrpType: ").Append(VRPType).Append("\n");
+        sb.Append("  PSUAuthenticationMethods: ").Append(PSUAuthenticationMethods).Append("\n");
+        sb.Append("  SupplementaryData: ").Append(SupplementaryData).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPControlParameters);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ValidFromDateTime != null) hashCode = hashCode * 59 + ValidFromDateTime.GetHashCode();
+            if (ValidToDateTime != null) hashCode = hashCode * 59 + ValidToDateTime.GetHashCode();
+            if (MaximumIndividualAmount != null) hashCode = hashCode * 59 + MaximumIndividualAmount.GetHashCode();
+            if (PeriodicLimits != null) hashCode = hashCode * 59 + PeriodicLimits.GetHashCode();
+            if (VRPType != null) hashCode = hashCode * 59 + VRPType.GetHashCode();
+            if (PSUAuthenticationMethods != null) hashCode = hashCode * 59 + PSUAuthenticationMethods.GetHashCode();
+            if (SupplementaryData != null) hashCode = hashCode * 59 + SupplementaryData.GetHashCode();
+            return hashCode;
+        }
+    }
 }

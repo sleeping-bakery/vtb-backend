@@ -9,7 +9,7 @@ namespace Multibanking.API.Controllers;
 public class ServiceController(IServiceSupplierService serviceSupplierService) : ControllerBase
 {
     /// <summary>
-    /// Получить список услуг
+    ///     Получить список услуг
     /// </summary>
     /// <returns></returns>
     [HttpGet]

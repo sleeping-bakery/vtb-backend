@@ -8,16 +8,16 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Multibanking.AccountClient\Multibanking.AccountClient.csproj"/>
-        <ProjectReference Include="..\Multibanking.BonusPointClient\Multibanking.BonusPointClient.csproj" />
+        <ProjectReference Include="..\Multibanking.BonusPointClient\Multibanking.BonusPointClient.csproj"/>
         <ProjectReference Include="..\Multibanking.CardEmissionClient\Multibanking.CardEmissionClient.csproj"/>
         <ProjectReference Include="..\Multibanking.CardInformationClient\Multibanking.CardInformationClient.csproj"/>
         <ProjectReference Include="..\Multibanking.CardOperationClient\Multibanking.CardOperationClient.csproj"/>
         <ProjectReference Include="..\Multibanking.Entities\Multibanking.Entities.csproj"/>
-        <ProjectReference Include="..\Multibanking.GuaranteeClient\Multibanking.GuaranteeClient.csproj" />
-        <ProjectReference Include="..\Multibanking.PeriodPaymentClient\Multibanking.PeriodPaymentClient.csproj" />
-        <ProjectReference Include="..\Multibanking.ServiceClient\Multibanking.ServiceClient.csproj" />
+        <ProjectReference Include="..\Multibanking.GuaranteeClient\Multibanking.GuaranteeClient.csproj"/>
+        <ProjectReference Include="..\Multibanking.PeriodPaymentClient\Multibanking.PeriodPaymentClient.csproj"/>
+        <ProjectReference Include="..\Multibanking.ServiceClient\Multibanking.ServiceClient.csproj"/>
         <ProjectReference Include="..\Multibanking.UnidentifiedPaymentClient\Multibanking.UnidentifiedPaymentClient.csproj"/>
-        <ProjectReference Include="..\Multibanking.UniversalPaymentClient\Multibanking.UniversalPaymentClient.csproj" />
+        <ProjectReference Include="..\Multibanking.UniversalPaymentClient\Multibanking.UniversalPaymentClient.csproj"/>
     </ItemGroup>
 
 </Project>

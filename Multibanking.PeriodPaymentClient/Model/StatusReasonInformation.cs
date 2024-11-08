@@ -9,142 +9,122 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Информация о причине статуса
+/// </summary>
+[DataContract(Name = "StatusReasonInformation")]
+public class StatusReasonInformation : IEquatable<StatusReasonInformation>, IValidatableObject
 {
     /// <summary>
-    /// Информация о причине статуса
+    ///     Initializes a new instance of the <see cref="StatusReasonInformation" /> class.
     /// </summary>
-    [DataContract(Name = "StatusReasonInformation")]
-    public partial class StatusReasonInformation : IEquatable<StatusReasonInformation>, IValidatableObject
+    /// <param name="reason">Код причины статуса платежа.</param>
+    /// <param name="additionalInformation">Текстовое описание причины присвоения статуса.</param>
+    public StatusReasonInformation(StatusReasonCode? reason = default, string additionalInformation = default)
     {
-
-        /// <summary>
-        /// Код причины статуса платежа
-        /// </summary>
-        /// <value>Код причины статуса платежа</value>
-        [DataMember(Name = "reason", EmitDefaultValue = false)]
-        public StatusReasonCode? Reason { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StatusReasonInformation" /> class.
-        /// </summary>
-        /// <param name="reason">Код причины статуса платежа.</param>
-        /// <param name="additionalInformation">Текстовое описание причины присвоения статуса.</param>
-        public StatusReasonInformation(StatusReasonCode? reason = default(StatusReasonCode?), string additionalInformation = default(string))
-        {
-            this.Reason = reason;
-            this.AdditionalInformation = additionalInformation;
-        }
-
-        /// <summary>
-        /// Текстовое описание причины присвоения статуса
-        /// </summary>
-        /// <value>Текстовое описание причины присвоения статуса</value>
-        [DataMember(Name = "additionalInformation", EmitDefaultValue = false)]
-        public string AdditionalInformation { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class StatusReasonInformation {\n");
-            sb.Append("  Reason: ").Append(Reason).Append("\n");
-            sb.Append("  AdditionalInformation: ").Append(AdditionalInformation).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as StatusReasonInformation);
-        }
-
-        /// <summary>
-        /// Returns true if StatusReasonInformation instances are equal
-        /// </summary>
-        /// <param name="input">Instance of StatusReasonInformation to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(StatusReasonInformation input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Reason == input.Reason ||
-                    this.Reason.Equals(input.Reason)
-                ) && 
-                (
-                    this.AdditionalInformation == input.AdditionalInformation ||
-                    (this.AdditionalInformation != null &&
-                    this.AdditionalInformation.Equals(input.AdditionalInformation))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.Reason.GetHashCode();
-                if (this.AdditionalInformation != null)
-                {
-                    hashCode = (hashCode * 59) + this.AdditionalInformation.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // AdditionalInformation (string) maxLength
-            if (this.AdditionalInformation != null && this.AdditionalInformation.Length > 256)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AdditionalInformation, length must be less than 256.", new [] { "AdditionalInformation" });
-            }
-
-            yield break;
-        }
+        Reason = reason;
+        AdditionalInformation = additionalInformation;
     }
 
+    /// <summary>
+    ///     Код причины статуса платежа
+    /// </summary>
+    /// <value>Код причины статуса платежа</value>
+    [DataMember(Name = "reason", EmitDefaultValue = false)]
+    public StatusReasonCode? Reason { get; set; }
+
+    /// <summary>
+    ///     Текстовое описание причины присвоения статуса
+    /// </summary>
+    /// <value>Текстовое описание причины присвоения статуса</value>
+    [DataMember(Name = "additionalInformation", EmitDefaultValue = false)]
+    public string AdditionalInformation { get; set; }
+
+    /// <summary>
+    ///     Returns true if StatusReasonInformation instances are equal
+    /// </summary>
+    /// <param name="input">Instance of StatusReasonInformation to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(StatusReasonInformation input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Reason == input.Reason ||
+                Reason.Equals(input.Reason)
+            ) &&
+            (
+                AdditionalInformation == input.AdditionalInformation ||
+                (AdditionalInformation != null &&
+                 AdditionalInformation.Equals(input.AdditionalInformation))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // AdditionalInformation (string) maxLength
+        if (AdditionalInformation != null && AdditionalInformation.Length > 256)
+            yield return new ValidationResult("Invalid value for AdditionalInformation, length must be less than 256.", new[] { "AdditionalInformation" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class StatusReasonInformation {\n");
+        sb.Append("  Reason: ").Append(Reason).Append("\n");
+        sb.Append("  AdditionalInformation: ").Append(AdditionalInformation).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as StatusReasonInformation);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + Reason.GetHashCode();
+            if (AdditionalInformation != null) hashCode = hashCode * 59 + AdditionalInformation.GetHashCode();
+            return hashCode;
+        }
+    }
 }

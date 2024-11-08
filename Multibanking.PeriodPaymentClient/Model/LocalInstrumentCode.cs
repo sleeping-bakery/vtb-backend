@@ -8,36 +8,21 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Вид операции или код платежной системы или код платежного инструмента
+/// </summary>
+/// <value>Вид операции или код платежной системы или код платежного инструмента</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum LocalInstrumentCode
 {
     /// <summary>
-    /// Вид операции или код платежной системы или код платежного инструмента
+    ///     Enum _01 for value: 01
     /// </summary>
-    /// <value>Вид операции или код платежной системы или код платежного инструмента</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum LocalInstrumentCode
-    {
-        /// <summary>
-        /// Enum _01 for value: 01
-        /// </summary>
-        [EnumMember(Value = "01")]
-        _01 = 1
-
-    }
-
+    [EnumMember(Value = "01")] _01 = 1
 }

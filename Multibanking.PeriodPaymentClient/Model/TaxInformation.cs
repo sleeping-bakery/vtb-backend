@@ -9,232 +9,195 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Налоговая информация
+/// </summary>
+[DataContract(Name = "TaxInformation")]
+public class TaxInformation : IEquatable<TaxInformation>, IValidatableObject
 {
     /// <summary>
-    /// Налоговая информация
+    ///     Initializes a new instance of the <see cref="TaxInformation" /> class.
     /// </summary>
-    [DataContract(Name = "TaxInformation")]
-    public partial class TaxInformation : IEquatable<TaxInformation>, IValidatableObject
+    /// <param name="administrationZone">Реквизит 105. Код по Общероссийскому классификатору территорий муниципальных образований ОКТМО.</param>
+    /// <param name="referenceNumber">Реквизит 108. Номер налогового документа.</param>
+    /// <param name="date">Реквизит 109. Дата налогового документа.</param>
+    /// <param name="creditor">creditor.</param>
+    /// <param name="debtor">debtor.</param>
+    /// <param name="record">record.</param>
+    public TaxInformation(string administrationZone = default, string referenceNumber = default, DateTime date = default, TaxInformationCreditor creditor = default,
+        TaxInformationDebtor debtor = default, TaxInformationRecord record = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaxInformation" /> class.
-        /// </summary>
-        /// <param name="administrationZone">Реквизит 105. Код по Общероссийскому классификатору территорий муниципальных образований ОКТМО.</param>
-        /// <param name="referenceNumber">Реквизит 108. Номер налогового документа.</param>
-        /// <param name="date">Реквизит 109. Дата налогового документа.</param>
-        /// <param name="creditor">creditor.</param>
-        /// <param name="debtor">debtor.</param>
-        /// <param name="record">record.</param>
-        public TaxInformation(string administrationZone = default(string), string referenceNumber = default(string), DateTime date = default(DateTime), TaxInformationCreditor creditor = default(TaxInformationCreditor), TaxInformationDebtor debtor = default(TaxInformationDebtor), TaxInformationRecord record = default(TaxInformationRecord))
-        {
-            this.AdministrationZone = administrationZone;
-            this.ReferenceNumber = referenceNumber;
-            this.Date = date;
-            this.Creditor = creditor;
-            this.Debtor = debtor;
-            this.Record = record;
-        }
-
-        /// <summary>
-        /// Реквизит 105. Код по Общероссийскому классификатору территорий муниципальных образований ОКТМО
-        /// </summary>
-        /// <value>Реквизит 105. Код по Общероссийскому классификатору территорий муниципальных образований ОКТМО</value>
-        [DataMember(Name = "administrationZone", EmitDefaultValue = false)]
-        public string AdministrationZone { get; set; }
-
-        /// <summary>
-        /// Реквизит 108. Номер налогового документа
-        /// </summary>
-        /// <value>Реквизит 108. Номер налогового документа</value>
-        [DataMember(Name = "referenceNumber", EmitDefaultValue = false)]
-        public string ReferenceNumber { get; set; }
-
-        /// <summary>
-        /// Реквизит 109. Дата налогового документа
-        /// </summary>
-        /// <value>Реквизит 109. Дата налогового документа</value>
-        [DataMember(Name = "date", EmitDefaultValue = false)]
-        public DateTime Date { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Creditor
-        /// </summary>
-        [DataMember(Name = "creditor", EmitDefaultValue = false)]
-        public TaxInformationCreditor Creditor { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Debtor
-        /// </summary>
-        [DataMember(Name = "debtor", EmitDefaultValue = false)]
-        public TaxInformationDebtor Debtor { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Record
-        /// </summary>
-        [DataMember(Name = "Record", EmitDefaultValue = false)]
-        public TaxInformationRecord Record { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class TaxInformation {\n");
-            sb.Append("  AdministrationZone: ").Append(AdministrationZone).Append("\n");
-            sb.Append("  ReferenceNumber: ").Append(ReferenceNumber).Append("\n");
-            sb.Append("  Date: ").Append(Date).Append("\n");
-            sb.Append("  Creditor: ").Append(Creditor).Append("\n");
-            sb.Append("  Debtor: ").Append(Debtor).Append("\n");
-            sb.Append("  Record: ").Append(Record).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as TaxInformation);
-        }
-
-        /// <summary>
-        /// Returns true if TaxInformation instances are equal
-        /// </summary>
-        /// <param name="input">Instance of TaxInformation to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(TaxInformation input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.AdministrationZone == input.AdministrationZone ||
-                    (this.AdministrationZone != null &&
-                    this.AdministrationZone.Equals(input.AdministrationZone))
-                ) && 
-                (
-                    this.ReferenceNumber == input.ReferenceNumber ||
-                    (this.ReferenceNumber != null &&
-                    this.ReferenceNumber.Equals(input.ReferenceNumber))
-                ) && 
-                (
-                    this.Date == input.Date ||
-                    (this.Date != null &&
-                    this.Date.Equals(input.Date))
-                ) && 
-                (
-                    this.Creditor == input.Creditor ||
-                    (this.Creditor != null &&
-                    this.Creditor.Equals(input.Creditor))
-                ) && 
-                (
-                    this.Debtor == input.Debtor ||
-                    (this.Debtor != null &&
-                    this.Debtor.Equals(input.Debtor))
-                ) && 
-                (
-                    this.Record == input.Record ||
-                    (this.Record != null &&
-                    this.Record.Equals(input.Record))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.AdministrationZone != null)
-                {
-                    hashCode = (hashCode * 59) + this.AdministrationZone.GetHashCode();
-                }
-                if (this.ReferenceNumber != null)
-                {
-                    hashCode = (hashCode * 59) + this.ReferenceNumber.GetHashCode();
-                }
-                if (this.Date != null)
-                {
-                    hashCode = (hashCode * 59) + this.Date.GetHashCode();
-                }
-                if (this.Creditor != null)
-                {
-                    hashCode = (hashCode * 59) + this.Creditor.GetHashCode();
-                }
-                if (this.Debtor != null)
-                {
-                    hashCode = (hashCode * 59) + this.Debtor.GetHashCode();
-                }
-                if (this.Record != null)
-                {
-                    hashCode = (hashCode * 59) + this.Record.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // AdministrationZone (string) maxLength
-            if (this.AdministrationZone != null && this.AdministrationZone.Length > 11)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AdministrationZone, length must be less than 11.", new [] { "AdministrationZone" });
-            }
-
-            // AdministrationZone (string) pattern
-            Regex regexAdministrationZone = new Regex(@"^\\d{1,11}$", RegexOptions.CultureInvariant);
-            if (false == regexAdministrationZone.Match(this.AdministrationZone).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AdministrationZone, must match a pattern of " + regexAdministrationZone, new [] { "AdministrationZone" });
-            }
-
-            // ReferenceNumber (string) maxLength
-            if (this.ReferenceNumber != null && this.ReferenceNumber.Length > 140)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ReferenceNumber, length must be less than 140.", new [] { "ReferenceNumber" });
-            }
-
-            yield break;
-        }
+        AdministrationZone = administrationZone;
+        ReferenceNumber = referenceNumber;
+        Date = date;
+        Creditor = creditor;
+        Debtor = debtor;
+        Record = record;
     }
 
+    /// <summary>
+    ///     Реквизит 105. Код по Общероссийскому классификатору территорий муниципальных образований ОКТМО
+    /// </summary>
+    /// <value>Реквизит 105. Код по Общероссийскому классификатору территорий муниципальных образований ОКТМО</value>
+    [DataMember(Name = "administrationZone", EmitDefaultValue = false)]
+    public string AdministrationZone { get; set; }
+
+    /// <summary>
+    ///     Реквизит 108. Номер налогового документа
+    /// </summary>
+    /// <value>Реквизит 108. Номер налогового документа</value>
+    [DataMember(Name = "referenceNumber", EmitDefaultValue = false)]
+    public string ReferenceNumber { get; set; }
+
+    /// <summary>
+    ///     Реквизит 109. Дата налогового документа
+    /// </summary>
+    /// <value>Реквизит 109. Дата налогового документа</value>
+    [DataMember(Name = "date", EmitDefaultValue = false)]
+    public DateTime Date { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Creditor
+    /// </summary>
+    [DataMember(Name = "creditor", EmitDefaultValue = false)]
+    public TaxInformationCreditor Creditor { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Debtor
+    /// </summary>
+    [DataMember(Name = "debtor", EmitDefaultValue = false)]
+    public TaxInformationDebtor Debtor { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Record
+    /// </summary>
+    [DataMember(Name = "Record", EmitDefaultValue = false)]
+    public TaxInformationRecord Record { get; set; }
+
+    /// <summary>
+    ///     Returns true if TaxInformation instances are equal
+    /// </summary>
+    /// <param name="input">Instance of TaxInformation to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(TaxInformation input)
+    {
+        if (input == null) return false;
+        return
+            (
+                AdministrationZone == input.AdministrationZone ||
+                (AdministrationZone != null &&
+                 AdministrationZone.Equals(input.AdministrationZone))
+            ) &&
+            (
+                ReferenceNumber == input.ReferenceNumber ||
+                (ReferenceNumber != null &&
+                 ReferenceNumber.Equals(input.ReferenceNumber))
+            ) &&
+            (
+                Date == input.Date ||
+                (Date != null &&
+                 Date.Equals(input.Date))
+            ) &&
+            (
+                Creditor == input.Creditor ||
+                (Creditor != null &&
+                 Creditor.Equals(input.Creditor))
+            ) &&
+            (
+                Debtor == input.Debtor ||
+                (Debtor != null &&
+                 Debtor.Equals(input.Debtor))
+            ) &&
+            (
+                Record == input.Record ||
+                (Record != null &&
+                 Record.Equals(input.Record))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // AdministrationZone (string) maxLength
+        if (AdministrationZone != null && AdministrationZone.Length > 11)
+            yield return new ValidationResult("Invalid value for AdministrationZone, length must be less than 11.", new[] { "AdministrationZone" });
+
+        // AdministrationZone (string) pattern
+        var regexAdministrationZone = new Regex(@"^\\d{1,11}$", RegexOptions.CultureInvariant);
+        if (false == regexAdministrationZone.Match(AdministrationZone).Success)
+            yield return new ValidationResult("Invalid value for AdministrationZone, must match a pattern of " + regexAdministrationZone, new[] { "AdministrationZone" });
+
+        // ReferenceNumber (string) maxLength
+        if (ReferenceNumber != null && ReferenceNumber.Length > 140)
+            yield return new ValidationResult("Invalid value for ReferenceNumber, length must be less than 140.", new[] { "ReferenceNumber" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class TaxInformation {\n");
+        sb.Append("  AdministrationZone: ").Append(AdministrationZone).Append("\n");
+        sb.Append("  ReferenceNumber: ").Append(ReferenceNumber).Append("\n");
+        sb.Append("  Date: ").Append(Date).Append("\n");
+        sb.Append("  Creditor: ").Append(Creditor).Append("\n");
+        sb.Append("  Debtor: ").Append(Debtor).Append("\n");
+        sb.Append("  Record: ").Append(Record).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as TaxInformation);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (AdministrationZone != null) hashCode = hashCode * 59 + AdministrationZone.GetHashCode();
+            if (ReferenceNumber != null) hashCode = hashCode * 59 + ReferenceNumber.GetHashCode();
+            if (Date != null) hashCode = hashCode * 59 + Date.GetHashCode();
+            if (Creditor != null) hashCode = hashCode * 59 + Creditor.GetHashCode();
+            if (Debtor != null) hashCode = hashCode * 59 + Debtor.GetHashCode();
+            if (Record != null) hashCode = hashCode * 59 + Record.GetHashCode();
+            return hashCode;
+        }
+    }
 }

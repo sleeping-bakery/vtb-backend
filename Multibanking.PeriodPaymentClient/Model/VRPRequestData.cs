@@ -9,207 +9,172 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Полезная нагрузка запроса инициации ППДС
+/// </summary>
+[DataContract(Name = "VRPRequest_Data")]
+public class VRPRequestData : IEquatable<VRPRequestData>, IValidatableObject
 {
     /// <summary>
-    /// Полезная нагрузка запроса инициации ППДС
+    ///     Initializes a new instance of the <see cref="VRPRequestData" /> class.
     /// </summary>
-    [DataContract(Name = "VRPRequest_Data")]
-    public partial class VRPRequestData : IEquatable<VRPRequestData>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected VRPRequestData()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPRequestData" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected VRPRequestData() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPRequestData" /> class.
-        /// </summary>
-        /// <param name="consentId">Уникальный идентификатор, присвоенный ППИУ для однозначной идентификации ресурса Согласия на инициирование (required).</param>
-        /// <param name="pSUAuthenticationMethod">Указывает, какой метод аутентификации Пользователя был использован в случае аутентификации пользователя на стороне СППУ | VRPAuthenticationMethods - Namespaced Enumeration (required).</param>
-        /// <param name="initiation">initiation (required).</param>
-        /// <param name="instruction">instruction (required).</param>
-        public VRPRequestData(string consentId = default(string), string pSUAuthenticationMethod = default(string), VRPConsentResponseDataInitiation initiation = default(VRPConsentResponseDataInitiation), VRPRequestDataInstruction instruction = default(VRPRequestDataInstruction))
-        {
-            // to ensure "consentId" is required (not null)
-            if (consentId == null)
-            {
-                throw new ArgumentNullException("consentId is a required property for VRPRequestData and cannot be null");
-            }
-            this.ConsentId = consentId;
-            // to ensure "pSUAuthenticationMethod" is required (not null)
-            if (pSUAuthenticationMethod == null)
-            {
-                throw new ArgumentNullException("pSUAuthenticationMethod is a required property for VRPRequestData and cannot be null");
-            }
-            this.PSUAuthenticationMethod = pSUAuthenticationMethod;
-            // to ensure "initiation" is required (not null)
-            if (initiation == null)
-            {
-                throw new ArgumentNullException("initiation is a required property for VRPRequestData and cannot be null");
-            }
-            this.Initiation = initiation;
-            // to ensure "instruction" is required (not null)
-            if (instruction == null)
-            {
-                throw new ArgumentNullException("instruction is a required property for VRPRequestData and cannot be null");
-            }
-            this.Instruction = instruction;
-        }
-
-        /// <summary>
-        /// Уникальный идентификатор, присвоенный ППИУ для однозначной идентификации ресурса Согласия на инициирование
-        /// </summary>
-        /// <value>Уникальный идентификатор, присвоенный ППИУ для однозначной идентификации ресурса Согласия на инициирование</value>
-        [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
-        public string ConsentId { get; set; }
-
-        /// <summary>
-        /// Указывает, какой метод аутентификации Пользователя был использован в случае аутентификации пользователя на стороне СППУ | VRPAuthenticationMethods - Namespaced Enumeration
-        /// </summary>
-        /// <value>Указывает, какой метод аутентификации Пользователя был использован в случае аутентификации пользователя на стороне СППУ | VRPAuthenticationMethods - Namespaced Enumeration</value>
-        [DataMember(Name = "PSUAuthenticationMethod", IsRequired = true, EmitDefaultValue = true)]
-        public string PSUAuthenticationMethod { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Initiation
-        /// </summary>
-        [DataMember(Name = "Initiation", IsRequired = true, EmitDefaultValue = true)]
-        public VRPConsentResponseDataInitiation Initiation { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Instruction
-        /// </summary>
-        [DataMember(Name = "Instruction", IsRequired = true, EmitDefaultValue = true)]
-        public VRPRequestDataInstruction Instruction { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPRequestData {\n");
-            sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
-            sb.Append("  PSUAuthenticationMethod: ").Append(PSUAuthenticationMethod).Append("\n");
-            sb.Append("  Initiation: ").Append(Initiation).Append("\n");
-            sb.Append("  Instruction: ").Append(Instruction).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPRequestData);
-        }
-
-        /// <summary>
-        /// Returns true if VRPRequestData instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPRequestData to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPRequestData input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ConsentId == input.ConsentId ||
-                    (this.ConsentId != null &&
-                    this.ConsentId.Equals(input.ConsentId))
-                ) && 
-                (
-                    this.PSUAuthenticationMethod == input.PSUAuthenticationMethod ||
-                    (this.PSUAuthenticationMethod != null &&
-                    this.PSUAuthenticationMethod.Equals(input.PSUAuthenticationMethod))
-                ) && 
-                (
-                    this.Initiation == input.Initiation ||
-                    (this.Initiation != null &&
-                    this.Initiation.Equals(input.Initiation))
-                ) && 
-                (
-                    this.Instruction == input.Instruction ||
-                    (this.Instruction != null &&
-                    this.Instruction.Equals(input.Instruction))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ConsentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.ConsentId.GetHashCode();
-                }
-                if (this.PSUAuthenticationMethod != null)
-                {
-                    hashCode = (hashCode * 59) + this.PSUAuthenticationMethod.GetHashCode();
-                }
-                if (this.Initiation != null)
-                {
-                    hashCode = (hashCode * 59) + this.Initiation.GetHashCode();
-                }
-                if (this.Instruction != null)
-                {
-                    hashCode = (hashCode * 59) + this.Instruction.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // ConsentId (string) maxLength
-            if (this.ConsentId != null && this.ConsentId.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ConsentId, length must be less than 128.", new [] { "ConsentId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="VRPRequestData" /> class.
+    /// </summary>
+    /// <param name="consentId">Уникальный идентификатор, присвоенный ППИУ для однозначной идентификации ресурса Согласия на инициирование (required).</param>
+    /// <param name="pSUAuthenticationMethod">
+    ///     Указывает, какой метод аутентификации Пользователя был использован в случае аутентификации пользователя на стороне СППУ |
+    ///     VRPAuthenticationMethods - Namespaced Enumeration (required).
+    /// </param>
+    /// <param name="initiation">initiation (required).</param>
+    /// <param name="instruction">instruction (required).</param>
+    public VRPRequestData(string consentId = default, string pSUAuthenticationMethod = default, VRPConsentResponseDataInitiation initiation = default,
+        VRPRequestDataInstruction instruction = default)
+    {
+        // to ensure "consentId" is required (not null)
+        if (consentId == null) throw new ArgumentNullException("consentId is a required property for VRPRequestData and cannot be null");
+        ConsentId = consentId;
+        // to ensure "pSUAuthenticationMethod" is required (not null)
+        if (pSUAuthenticationMethod == null) throw new ArgumentNullException("pSUAuthenticationMethod is a required property for VRPRequestData and cannot be null");
+        PSUAuthenticationMethod = pSUAuthenticationMethod;
+        // to ensure "initiation" is required (not null)
+        if (initiation == null) throw new ArgumentNullException("initiation is a required property for VRPRequestData and cannot be null");
+        Initiation = initiation;
+        // to ensure "instruction" is required (not null)
+        if (instruction == null) throw new ArgumentNullException("instruction is a required property for VRPRequestData and cannot be null");
+        Instruction = instruction;
+    }
+
+    /// <summary>
+    ///     Уникальный идентификатор, присвоенный ППИУ для однозначной идентификации ресурса Согласия на инициирование
+    /// </summary>
+    /// <value>Уникальный идентификатор, присвоенный ППИУ для однозначной идентификации ресурса Согласия на инициирование</value>
+    [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
+    public string ConsentId { get; set; }
+
+    /// <summary>
+    ///     Указывает, какой метод аутентификации Пользователя был использован в случае аутентификации пользователя на стороне СППУ | VRPAuthenticationMethods - Namespaced Enumeration
+    /// </summary>
+    /// <value>Указывает, какой метод аутентификации Пользователя был использован в случае аутентификации пользователя на стороне СППУ | VRPAuthenticationMethods - Namespaced Enumeration</value>
+    [DataMember(Name = "PSUAuthenticationMethod", IsRequired = true, EmitDefaultValue = true)]
+    public string PSUAuthenticationMethod { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Initiation
+    /// </summary>
+    [DataMember(Name = "Initiation", IsRequired = true, EmitDefaultValue = true)]
+    public VRPConsentResponseDataInitiation Initiation { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Instruction
+    /// </summary>
+    [DataMember(Name = "Instruction", IsRequired = true, EmitDefaultValue = true)]
+    public VRPRequestDataInstruction Instruction { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPRequestData instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPRequestData to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPRequestData input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ConsentId == input.ConsentId ||
+                (ConsentId != null &&
+                 ConsentId.Equals(input.ConsentId))
+            ) &&
+            (
+                PSUAuthenticationMethod == input.PSUAuthenticationMethod ||
+                (PSUAuthenticationMethod != null &&
+                 PSUAuthenticationMethod.Equals(input.PSUAuthenticationMethod))
+            ) &&
+            (
+                Initiation == input.Initiation ||
+                (Initiation != null &&
+                 Initiation.Equals(input.Initiation))
+            ) &&
+            (
+                Instruction == input.Instruction ||
+                (Instruction != null &&
+                 Instruction.Equals(input.Instruction))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // ConsentId (string) maxLength
+        if (ConsentId != null && ConsentId.Length > 128) yield return new ValidationResult("Invalid value for ConsentId, length must be less than 128.", new[] { "ConsentId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPRequestData {\n");
+        sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
+        sb.Append("  PSUAuthenticationMethod: ").Append(PSUAuthenticationMethod).Append("\n");
+        sb.Append("  Initiation: ").Append(Initiation).Append("\n");
+        sb.Append("  Instruction: ").Append(Instruction).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPRequestData);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ConsentId != null) hashCode = hashCode * 59 + ConsentId.GetHashCode();
+            if (PSUAuthenticationMethod != null) hashCode = hashCode * 59 + PSUAuthenticationMethod.GetHashCode();
+            if (Initiation != null) hashCode = hashCode * 59 + Initiation.GetHashCode();
+            if (Instruction != null) hashCode = hashCode * 59 + Instruction.GetHashCode();
+            return hashCode;
+        }
+    }
 }

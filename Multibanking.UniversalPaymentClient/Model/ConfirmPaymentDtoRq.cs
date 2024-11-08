@@ -9,155 +9,131 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Запрос подтверждения платежа
+/// </summary>
+[DataContract(Name = "ConfirmPaymentDtoRq")]
+public class ConfirmPaymentDtoRq : IEquatable<ConfirmPaymentDtoRq>, IValidatableObject
 {
     /// <summary>
-    /// Запрос подтверждения платежа
+    ///     Initializes a new instance of the <see cref="ConfirmPaymentDtoRq" /> class.
     /// </summary>
-    [DataContract(Name = "ConfirmPaymentDtoRq")]
-    public partial class ConfirmPaymentDtoRq : IEquatable<ConfirmPaymentDtoRq>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected ConfirmPaymentDtoRq()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfirmPaymentDtoRq" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ConfirmPaymentDtoRq() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConfirmPaymentDtoRq" /> class.
-        /// </summary>
-        /// <param name="paymentId">Id подтверждаемого платежа (required).</param>
-        /// <param name="clientConfirm">clientConfirm.</param>
-        public ConfirmPaymentDtoRq(string paymentId = default(string), ClientConfirmDtoRq clientConfirm = default(ClientConfirmDtoRq))
-        {
-            // to ensure "paymentId" is required (not null)
-            if (paymentId == null)
-            {
-                throw new ArgumentNullException("paymentId is a required property for ConfirmPaymentDtoRq and cannot be null");
-            }
-            this.PaymentId = paymentId;
-            this.ClientConfirm = clientConfirm;
-        }
-
-        /// <summary>
-        /// Id подтверждаемого платежа
-        /// </summary>
-        /// <value>Id подтверждаемого платежа</value>
-        [DataMember(Name = "paymentId", IsRequired = true, EmitDefaultValue = true)]
-        public string PaymentId { get; set; }
-
-        /// <summary>
-        /// Gets or Sets ClientConfirm
-        /// </summary>
-        [DataMember(Name = "clientConfirm", EmitDefaultValue = false)]
-        public ClientConfirmDtoRq ClientConfirm { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ConfirmPaymentDtoRq {\n");
-            sb.Append("  PaymentId: ").Append(PaymentId).Append("\n");
-            sb.Append("  ClientConfirm: ").Append(ClientConfirm).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ConfirmPaymentDtoRq);
-        }
-
-        /// <summary>
-        /// Returns true if ConfirmPaymentDtoRq instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ConfirmPaymentDtoRq to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ConfirmPaymentDtoRq input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.PaymentId == input.PaymentId ||
-                    (this.PaymentId != null &&
-                    this.PaymentId.Equals(input.PaymentId))
-                ) && 
-                (
-                    this.ClientConfirm == input.ClientConfirm ||
-                    (this.ClientConfirm != null &&
-                    this.ClientConfirm.Equals(input.ClientConfirm))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.PaymentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.PaymentId.GetHashCode();
-                }
-                if (this.ClientConfirm != null)
-                {
-                    hashCode = (hashCode * 59) + this.ClientConfirm.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // PaymentId (string) maxLength
-            if (this.PaymentId != null && this.PaymentId.Length > 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PaymentId, length must be less than 36.", new [] { "PaymentId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ConfirmPaymentDtoRq" /> class.
+    /// </summary>
+    /// <param name="paymentId">Id подтверждаемого платежа (required).</param>
+    /// <param name="clientConfirm">clientConfirm.</param>
+    public ConfirmPaymentDtoRq(string paymentId = default, ClientConfirmDtoRq clientConfirm = default)
+    {
+        // to ensure "paymentId" is required (not null)
+        if (paymentId == null) throw new ArgumentNullException("paymentId is a required property for ConfirmPaymentDtoRq and cannot be null");
+        PaymentId = paymentId;
+        ClientConfirm = clientConfirm;
+    }
+
+    /// <summary>
+    ///     Id подтверждаемого платежа
+    /// </summary>
+    /// <value>Id подтверждаемого платежа</value>
+    [DataMember(Name = "paymentId", IsRequired = true, EmitDefaultValue = true)]
+    public string PaymentId { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets ClientConfirm
+    /// </summary>
+    [DataMember(Name = "clientConfirm", EmitDefaultValue = false)]
+    public ClientConfirmDtoRq ClientConfirm { get; set; }
+
+    /// <summary>
+    ///     Returns true if ConfirmPaymentDtoRq instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ConfirmPaymentDtoRq to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ConfirmPaymentDtoRq input)
+    {
+        if (input == null) return false;
+        return
+            (
+                PaymentId == input.PaymentId ||
+                (PaymentId != null &&
+                 PaymentId.Equals(input.PaymentId))
+            ) &&
+            (
+                ClientConfirm == input.ClientConfirm ||
+                (ClientConfirm != null &&
+                 ClientConfirm.Equals(input.ClientConfirm))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // PaymentId (string) maxLength
+        if (PaymentId != null && PaymentId.Length > 36) yield return new ValidationResult("Invalid value for PaymentId, length must be less than 36.", new[] { "PaymentId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ConfirmPaymentDtoRq {\n");
+        sb.Append("  PaymentId: ").Append(PaymentId).Append("\n");
+        sb.Append("  ClientConfirm: ").Append(ClientConfirm).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ConfirmPaymentDtoRq);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (PaymentId != null) hashCode = hashCode * 59 + PaymentId.GetHashCode();
+            if (ClientConfirm != null) hashCode = hashCode * 59 + ClientConfirm.GetHashCode();
+            return hashCode;
+        }
+    }
 }

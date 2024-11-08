@@ -9,201 +9,169 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Запрос на оплату услуги ПУ
+/// </summary>
+[DataContract(Name = "RequestPaymentDtoRq")]
+public class RequestPaymentDtoRq : IEquatable<RequestPaymentDtoRq>, IValidatableObject
 {
     /// <summary>
-    /// Запрос на оплату услуги ПУ
+    ///     Initializes a new instance of the <see cref="RequestPaymentDtoRq" /> class.
     /// </summary>
-    [DataContract(Name = "RequestPaymentDtoRq")]
-    public partial class RequestPaymentDtoRq : IEquatable<RequestPaymentDtoRq>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RequestPaymentDtoRq()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestPaymentDtoRq" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RequestPaymentDtoRq() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestPaymentDtoRq" /> class.
-        /// </summary>
-        /// <param name="providerService">providerService (required).</param>
-        /// <param name="fields">Набор полей для оплаты (required).</param>
-        /// <param name="paySum">paySum (required).</param>
-        /// <param name="clientProduct">clientProduct (required).</param>
-        public RequestPaymentDtoRq(ProviderServiceDtoRq providerService = default(ProviderServiceDtoRq), List<InputFieldDtoRq> fields = default(List<InputFieldDtoRq>), MoneyDto paySum = default(MoneyDto), ClientProductDtoRq clientProduct = default(ClientProductDtoRq))
-        {
-            // to ensure "providerService" is required (not null)
-            if (providerService == null)
-            {
-                throw new ArgumentNullException("providerService is a required property for RequestPaymentDtoRq and cannot be null");
-            }
-            this.ProviderService = providerService;
-            // to ensure "fields" is required (not null)
-            if (fields == null)
-            {
-                throw new ArgumentNullException("fields is a required property for RequestPaymentDtoRq and cannot be null");
-            }
-            this.Fields = fields;
-            // to ensure "paySum" is required (not null)
-            if (paySum == null)
-            {
-                throw new ArgumentNullException("paySum is a required property for RequestPaymentDtoRq and cannot be null");
-            }
-            this.PaySum = paySum;
-            // to ensure "clientProduct" is required (not null)
-            if (clientProduct == null)
-            {
-                throw new ArgumentNullException("clientProduct is a required property for RequestPaymentDtoRq and cannot be null");
-            }
-            this.ClientProduct = clientProduct;
-        }
-
-        /// <summary>
-        /// Gets or Sets ProviderService
-        /// </summary>
-        [DataMember(Name = "providerService", IsRequired = true, EmitDefaultValue = true)]
-        public ProviderServiceDtoRq ProviderService { get; set; }
-
-        /// <summary>
-        /// Набор полей для оплаты
-        /// </summary>
-        /// <value>Набор полей для оплаты</value>
-        [DataMember(Name = "fields", IsRequired = true, EmitDefaultValue = true)]
-        public List<InputFieldDtoRq> Fields { get; set; }
-
-        /// <summary>
-        /// Gets or Sets PaySum
-        /// </summary>
-        [DataMember(Name = "paySum", IsRequired = true, EmitDefaultValue = true)]
-        public MoneyDto PaySum { get; set; }
-
-        /// <summary>
-        /// Gets or Sets ClientProduct
-        /// </summary>
-        [DataMember(Name = "clientProduct", IsRequired = true, EmitDefaultValue = true)]
-        public ClientProductDtoRq ClientProduct { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RequestPaymentDtoRq {\n");
-            sb.Append("  ProviderService: ").Append(ProviderService).Append("\n");
-            sb.Append("  Fields: ").Append(Fields).Append("\n");
-            sb.Append("  PaySum: ").Append(PaySum).Append("\n");
-            sb.Append("  ClientProduct: ").Append(ClientProduct).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RequestPaymentDtoRq);
-        }
-
-        /// <summary>
-        /// Returns true if RequestPaymentDtoRq instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RequestPaymentDtoRq to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RequestPaymentDtoRq input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ProviderService == input.ProviderService ||
-                    (this.ProviderService != null &&
-                    this.ProviderService.Equals(input.ProviderService))
-                ) && 
-                (
-                    this.Fields == input.Fields ||
-                    this.Fields != null &&
-                    input.Fields != null &&
-                    this.Fields.SequenceEqual(input.Fields)
-                ) && 
-                (
-                    this.PaySum == input.PaySum ||
-                    (this.PaySum != null &&
-                    this.PaySum.Equals(input.PaySum))
-                ) && 
-                (
-                    this.ClientProduct == input.ClientProduct ||
-                    (this.ClientProduct != null &&
-                    this.ClientProduct.Equals(input.ClientProduct))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ProviderService != null)
-                {
-                    hashCode = (hashCode * 59) + this.ProviderService.GetHashCode();
-                }
-                if (this.Fields != null)
-                {
-                    hashCode = (hashCode * 59) + this.Fields.GetHashCode();
-                }
-                if (this.PaySum != null)
-                {
-                    hashCode = (hashCode * 59) + this.PaySum.GetHashCode();
-                }
-                if (this.ClientProduct != null)
-                {
-                    hashCode = (hashCode * 59) + this.ClientProduct.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RequestPaymentDtoRq" /> class.
+    /// </summary>
+    /// <param name="providerService">providerService (required).</param>
+    /// <param name="fields">Набор полей для оплаты (required).</param>
+    /// <param name="paySum">paySum (required).</param>
+    /// <param name="clientProduct">clientProduct (required).</param>
+    public RequestPaymentDtoRq(ProviderServiceDtoRq providerService = default, List<InputFieldDtoRq> fields = default, MoneyDto paySum = default,
+        ClientProductDtoRq clientProduct = default)
+    {
+        // to ensure "providerService" is required (not null)
+        if (providerService == null) throw new ArgumentNullException("providerService is a required property for RequestPaymentDtoRq and cannot be null");
+        ProviderService = providerService;
+        // to ensure "fields" is required (not null)
+        if (fields == null) throw new ArgumentNullException("fields is a required property for RequestPaymentDtoRq and cannot be null");
+        Fields = fields;
+        // to ensure "paySum" is required (not null)
+        if (paySum == null) throw new ArgumentNullException("paySum is a required property for RequestPaymentDtoRq and cannot be null");
+        PaySum = paySum;
+        // to ensure "clientProduct" is required (not null)
+        if (clientProduct == null) throw new ArgumentNullException("clientProduct is a required property for RequestPaymentDtoRq and cannot be null");
+        ClientProduct = clientProduct;
+    }
+
+    /// <summary>
+    ///     Gets or Sets ProviderService
+    /// </summary>
+    [DataMember(Name = "providerService", IsRequired = true, EmitDefaultValue = true)]
+    public ProviderServiceDtoRq ProviderService { get; set; }
+
+    /// <summary>
+    ///     Набор полей для оплаты
+    /// </summary>
+    /// <value>Набор полей для оплаты</value>
+    [DataMember(Name = "fields", IsRequired = true, EmitDefaultValue = true)]
+    public List<InputFieldDtoRq> Fields { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets PaySum
+    /// </summary>
+    [DataMember(Name = "paySum", IsRequired = true, EmitDefaultValue = true)]
+    public MoneyDto PaySum { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets ClientProduct
+    /// </summary>
+    [DataMember(Name = "clientProduct", IsRequired = true, EmitDefaultValue = true)]
+    public ClientProductDtoRq ClientProduct { get; set; }
+
+    /// <summary>
+    ///     Returns true if RequestPaymentDtoRq instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RequestPaymentDtoRq to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RequestPaymentDtoRq input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ProviderService == input.ProviderService ||
+                (ProviderService != null &&
+                 ProviderService.Equals(input.ProviderService))
+            ) &&
+            (
+                Fields == input.Fields ||
+                (Fields != null &&
+                 input.Fields != null &&
+                 Fields.SequenceEqual(input.Fields))
+            ) &&
+            (
+                PaySum == input.PaySum ||
+                (PaySum != null &&
+                 PaySum.Equals(input.PaySum))
+            ) &&
+            (
+                ClientProduct == input.ClientProduct ||
+                (ClientProduct != null &&
+                 ClientProduct.Equals(input.ClientProduct))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RequestPaymentDtoRq {\n");
+        sb.Append("  ProviderService: ").Append(ProviderService).Append("\n");
+        sb.Append("  Fields: ").Append(Fields).Append("\n");
+        sb.Append("  PaySum: ").Append(PaySum).Append("\n");
+        sb.Append("  ClientProduct: ").Append(ClientProduct).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RequestPaymentDtoRq);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ProviderService != null) hashCode = hashCode * 59 + ProviderService.GetHashCode();
+            if (Fields != null) hashCode = hashCode * 59 + Fields.GetHashCode();
+            if (PaySum != null) hashCode = hashCode * 59 + PaySum.GetHashCode();
+            if (ClientProduct != null) hashCode = hashCode * 59 + ClientProduct.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -9,197 +9,172 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Статус платежа
+/// </summary>
+[DataContract(Name = "PaymentStatusDtoRs")]
+public class PaymentStatusDtoRs : IEquatable<PaymentStatusDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Статус платежа
+    ///     Код статуса платежа
     /// </summary>
-    [DataContract(Name = "PaymentStatusDtoRs")]
-    public partial class PaymentStatusDtoRs : IEquatable<PaymentStatusDtoRs>, IValidatableObject
+    /// <value>Код статуса платежа</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CodeEnum
     {
         /// <summary>
-        /// Код статуса платежа
+        ///     Enum PROCESSING for value: PROCESSING
         /// </summary>
-        /// <value>Код статуса платежа</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum CodeEnum
-        {
-            /// <summary>
-            /// Enum PROCESSING for value: PROCESSING
-            /// </summary>
-            [EnumMember(Value = "PROCESSING")]
-            PROCESSING = 1,
-
-            /// <summary>
-            /// Enum EXECUTED for value: EXECUTED
-            /// </summary>
-            [EnumMember(Value = "EXECUTED")]
-            EXECUTED = 2,
-
-            /// <summary>
-            /// Enum REVIEW for value: REVIEW
-            /// </summary>
-            [EnumMember(Value = "REVIEW")]
-            REVIEW = 3,
-
-            /// <summary>
-            /// Enum REFUSED for value: REFUSED
-            /// </summary>
-            [EnumMember(Value = "REFUSED")]
-            REFUSED = 4,
-
-            /// <summary>
-            /// Enum NEEDCONFIRM for value: NEED_CONFIRM
-            /// </summary>
-            [EnumMember(Value = "NEED_CONFIRM")]
-            NEEDCONFIRM = 5,
-
-            /// <summary>
-            /// Enum ERROR for value: ERROR
-            /// </summary>
-            [EnumMember(Value = "ERROR")]
-            ERROR = 6
-
-        }
-
+        [EnumMember(Value = "PROCESSING")] PROCESSING = 1,
 
         /// <summary>
-        /// Код статуса платежа
+        ///     Enum EXECUTED for value: EXECUTED
         /// </summary>
-        /// <value>Код статуса платежа</value>
-        [DataMember(Name = "code", IsRequired = true, EmitDefaultValue = true)]
-        public CodeEnum Code { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentStatusDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PaymentStatusDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentStatusDtoRs" /> class.
-        /// </summary>
-        /// <param name="code">Код статуса платежа (required).</param>
-        /// <param name="description">Описание статуса платежа (required).</param>
-        public PaymentStatusDtoRs(CodeEnum code = default(CodeEnum), string description = default(string))
-        {
-            this.Code = code;
-            // to ensure "description" is required (not null)
-            if (description == null)
-            {
-                throw new ArgumentNullException("description is a required property for PaymentStatusDtoRs and cannot be null");
-            }
-            this.Description = description;
-        }
+        [EnumMember(Value = "EXECUTED")] EXECUTED = 2,
 
         /// <summary>
-        /// Описание статуса платежа
+        ///     Enum REVIEW for value: REVIEW
         /// </summary>
-        /// <value>Описание статуса платежа</value>
-        [DataMember(Name = "description", IsRequired = true, EmitDefaultValue = true)]
-        public string Description { get; set; }
+        [EnumMember(Value = "REVIEW")] REVIEW = 3,
 
         /// <summary>
-        /// Returns the string presentation of the object
+        ///     Enum REFUSED for value: REFUSED
         /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PaymentStatusDtoRs {\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
+        [EnumMember(Value = "REFUSED")] REFUSED = 4,
 
         /// <summary>
-        /// Returns the JSON string presentation of the object
+        ///     Enum NEEDCONFIRM for value: NEED_CONFIRM
         /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
+        [EnumMember(Value = "NEED_CONFIRM")] NEEDCONFIRM = 5,
 
         /// <summary>
-        /// Returns true if objects are equal
+        ///     Enum ERROR for value: ERROR
         /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentStatusDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentStatusDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentStatusDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentStatusDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Code == input.Code ||
-                    this.Code.Equals(input.Code)
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.Code.GetHashCode();
-                if (this.Description != null)
-                {
-                    hashCode = (hashCode * 59) + this.Description.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Description (string) maxLength
-            if (this.Description != null && this.Description.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 255.", new [] { "Description" });
-            }
-
-            yield break;
-        }
+        [EnumMember(Value = "ERROR")] ERROR = 6
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PaymentStatusDtoRs" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected PaymentStatusDtoRs()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PaymentStatusDtoRs" /> class.
+    /// </summary>
+    /// <param name="code">Код статуса платежа (required).</param>
+    /// <param name="description">Описание статуса платежа (required).</param>
+    public PaymentStatusDtoRs(CodeEnum code = default, string description = default)
+    {
+        Code = code;
+        // to ensure "description" is required (not null)
+        if (description == null) throw new ArgumentNullException("description is a required property for PaymentStatusDtoRs and cannot be null");
+        Description = description;
+    }
+
+
+    /// <summary>
+    ///     Код статуса платежа
+    /// </summary>
+    /// <value>Код статуса платежа</value>
+    [DataMember(Name = "code", IsRequired = true, EmitDefaultValue = true)]
+    public CodeEnum Code { get; set; }
+
+    /// <summary>
+    ///     Описание статуса платежа
+    /// </summary>
+    /// <value>Описание статуса платежа</value>
+    [DataMember(Name = "description", IsRequired = true, EmitDefaultValue = true)]
+    public string Description { get; set; }
+
+    /// <summary>
+    ///     Returns true if PaymentStatusDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PaymentStatusDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PaymentStatusDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Code == input.Code ||
+                Code.Equals(input.Code)
+            ) &&
+            (
+                Description == input.Description ||
+                (Description != null &&
+                 Description.Equals(input.Description))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Description (string) maxLength
+        if (Description != null && Description.Length > 255)
+            yield return new ValidationResult("Invalid value for Description, length must be less than 255.", new[] { "Description" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PaymentStatusDtoRs {\n");
+        sb.Append("  Code: ").Append(Code).Append("\n");
+        sb.Append("  Description: ").Append(Description).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PaymentStatusDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + Code.GetHashCode();
+            if (Description != null) hashCode = hashCode * 59 + Description.GetHashCode();
+            return hashCode;
+        }
+    }
 }

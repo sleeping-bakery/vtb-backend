@@ -9,120 +9,102 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Информация для подтверждения платежа
+/// </summary>
+[DataContract(Name = "ClientConfirmDtoRs")]
+public class ClientConfirmDtoRs : IEquatable<ClientConfirmDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Информация для подтверждения платежа
+    ///     Initializes a new instance of the <see cref="ClientConfirmDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "ClientConfirmDtoRs")]
-    public partial class ClientConfirmDtoRs : IEquatable<ClientConfirmDtoRs>, IValidatableObject
+    /// <param name="confirmCode">confirmCode.</param>
+    public ClientConfirmDtoRs(ConfirmCodeDtoRs confirmCode = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClientConfirmDtoRs" /> class.
-        /// </summary>
-        /// <param name="confirmCode">confirmCode.</param>
-        public ClientConfirmDtoRs(ConfirmCodeDtoRs confirmCode = default(ConfirmCodeDtoRs))
-        {
-            this.ConfirmCode = confirmCode;
-        }
-
-        /// <summary>
-        /// Gets or Sets ConfirmCode
-        /// </summary>
-        [DataMember(Name = "confirmCode", EmitDefaultValue = false)]
-        public ConfirmCodeDtoRs ConfirmCode { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ClientConfirmDtoRs {\n");
-            sb.Append("  ConfirmCode: ").Append(ConfirmCode).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ClientConfirmDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if ClientConfirmDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ClientConfirmDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ClientConfirmDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ConfirmCode == input.ConfirmCode ||
-                    (this.ConfirmCode != null &&
-                    this.ConfirmCode.Equals(input.ConfirmCode))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ConfirmCode != null)
-                {
-                    hashCode = (hashCode * 59) + this.ConfirmCode.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        ConfirmCode = confirmCode;
     }
 
+    /// <summary>
+    ///     Gets or Sets ConfirmCode
+    /// </summary>
+    [DataMember(Name = "confirmCode", EmitDefaultValue = false)]
+    public ConfirmCodeDtoRs ConfirmCode { get; set; }
+
+    /// <summary>
+    ///     Returns true if ClientConfirmDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ClientConfirmDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ClientConfirmDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            ConfirmCode == input.ConfirmCode ||
+            (ConfirmCode != null &&
+             ConfirmCode.Equals(input.ConfirmCode));
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ClientConfirmDtoRs {\n");
+        sb.Append("  ConfirmCode: ").Append(ConfirmCode).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ClientConfirmDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ConfirmCode != null) hashCode = hashCode * 59 + ConfirmCode.GetHashCode();
+            return hashCode;
+        }
+    }
 }

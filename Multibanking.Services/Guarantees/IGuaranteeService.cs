@@ -8,6 +8,5 @@ public interface IGuaranteeService
     void CreateOrder(OrderResponse orderResponse);
     void DeleteOrder(string orderId);
 
-    List<ReadGuaranteeOrderDto>  GetOrdersForUser();
-
+    List<ReadGuaranteeOrderDto> GetOrdersForUser();
 }

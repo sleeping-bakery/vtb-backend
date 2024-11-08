@@ -9,216 +9,176 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     Содержит идентификатор погашения и текущий баланс вознаграждений.
+/// </summary>
+[DataContract(Name = "RedemptionResponseV2")]
+public class RedemptionResponseV2 : IEquatable<RedemptionResponseV2>, IValidatableObject
 {
     /// <summary>
-    /// Содержит идентификатор погашения и текущий баланс вознаграждений.
+    ///     Initializes a new instance of the <see cref="RedemptionResponseV2" /> class.
     /// </summary>
-    [DataContract(Name = "RedemptionResponseV2")]
-    public partial class RedemptionResponseV2 : IEquatable<RedemptionResponseV2>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RedemptionResponseV2()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RedemptionResponseV2" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RedemptionResponseV2() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RedemptionResponseV2" /> class.
-        /// </summary>
-        /// <param name="redemptionReferenceNumber">UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения. (required).</param>
-        /// <param name="redemptionId">Уникальный идентификатор, создаваемый при успешном погашении. (required).</param>
-        /// <param name="rewardSummary">rewardSummary (required).</param>
-        public RedemptionResponseV2(string redemptionReferenceNumber = default(string), string redemptionId = default(string), RewardSummaryV2 rewardSummary = default(RewardSummaryV2))
-        {
-            // to ensure "redemptionReferenceNumber" is required (not null)
-            if (redemptionReferenceNumber == null)
-            {
-                throw new ArgumentNullException("redemptionReferenceNumber is a required property for RedemptionResponseV2 and cannot be null");
-            }
-            this.RedemptionReferenceNumber = redemptionReferenceNumber;
-            // to ensure "redemptionId" is required (not null)
-            if (redemptionId == null)
-            {
-                throw new ArgumentNullException("redemptionId is a required property for RedemptionResponseV2 and cannot be null");
-            }
-            this.RedemptionId = redemptionId;
-            // to ensure "rewardSummary" is required (not null)
-            if (rewardSummary == null)
-            {
-                throw new ArgumentNullException("rewardSummary is a required property for RedemptionResponseV2 and cannot be null");
-            }
-            this.RewardSummary = rewardSummary;
-        }
-
-        /// <summary>
-        /// UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения.
-        /// </summary>
-        /// <value>UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения.</value>
-        [DataMember(Name = "redemptionReferenceNumber", IsRequired = true, EmitDefaultValue = true)]
-        public string RedemptionReferenceNumber { get; set; }
-
-        /// <summary>
-        /// Уникальный идентификатор, создаваемый при успешном погашении.
-        /// </summary>
-        /// <value>Уникальный идентификатор, создаваемый при успешном погашении.</value>
-        [DataMember(Name = "redemptionId", IsRequired = true, EmitDefaultValue = true)]
-        public string RedemptionId { get; set; }
-
-        /// <summary>
-        /// Gets or Sets RewardSummary
-        /// </summary>
-        [DataMember(Name = "rewardSummary", IsRequired = true, EmitDefaultValue = true)]
-        public RewardSummaryV2 RewardSummary { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RedemptionResponseV2 {\n");
-            sb.Append("  RedemptionReferenceNumber: ").Append(RedemptionReferenceNumber).Append("\n");
-            sb.Append("  RedemptionId: ").Append(RedemptionId).Append("\n");
-            sb.Append("  RewardSummary: ").Append(RewardSummary).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RedemptionResponseV2);
-        }
-
-        /// <summary>
-        /// Returns true if RedemptionResponseV2 instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RedemptionResponseV2 to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RedemptionResponseV2 input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.RedemptionReferenceNumber == input.RedemptionReferenceNumber ||
-                    (this.RedemptionReferenceNumber != null &&
-                    this.RedemptionReferenceNumber.Equals(input.RedemptionReferenceNumber))
-                ) && 
-                (
-                    this.RedemptionId == input.RedemptionId ||
-                    (this.RedemptionId != null &&
-                    this.RedemptionId.Equals(input.RedemptionId))
-                ) && 
-                (
-                    this.RewardSummary == input.RewardSummary ||
-                    (this.RewardSummary != null &&
-                    this.RewardSummary.Equals(input.RewardSummary))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.RedemptionReferenceNumber != null)
-                {
-                    hashCode = (hashCode * 59) + this.RedemptionReferenceNumber.GetHashCode();
-                }
-                if (this.RedemptionId != null)
-                {
-                    hashCode = (hashCode * 59) + this.RedemptionId.GetHashCode();
-                }
-                if (this.RewardSummary != null)
-                {
-                    hashCode = (hashCode * 59) + this.RewardSummary.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // RedemptionReferenceNumber (string) maxLength
-            if (this.RedemptionReferenceNumber != null && this.RedemptionReferenceNumber.Length > 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RedemptionReferenceNumber, length must be less than 36.", new [] { "RedemptionReferenceNumber" });
-            }
-
-            // RedemptionReferenceNumber (string) minLength
-            if (this.RedemptionReferenceNumber != null && this.RedemptionReferenceNumber.Length < 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RedemptionReferenceNumber, length must be greater than 36.", new [] { "RedemptionReferenceNumber" });
-            }
-
-            // RedemptionReferenceNumber (string) pattern
-            Regex regexRedemptionReferenceNumber = new Regex(@"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", RegexOptions.CultureInvariant);
-            if (false == regexRedemptionReferenceNumber.Match(this.RedemptionReferenceNumber).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RedemptionReferenceNumber, must match a pattern of " + regexRedemptionReferenceNumber, new [] { "RedemptionReferenceNumber" });
-            }
-
-            // RedemptionId (string) maxLength
-            if (this.RedemptionId != null && this.RedemptionId.Length > 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RedemptionId, length must be less than 36.", new [] { "RedemptionId" });
-            }
-
-            // RedemptionId (string) minLength
-            if (this.RedemptionId != null && this.RedemptionId.Length < 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RedemptionId, length must be greater than 36.", new [] { "RedemptionId" });
-            }
-
-            // RedemptionId (string) pattern
-            Regex regexRedemptionId = new Regex(@"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", RegexOptions.CultureInvariant);
-            if (false == regexRedemptionId.Match(this.RedemptionId).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RedemptionId, must match a pattern of " + regexRedemptionId, new [] { "RedemptionId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RedemptionResponseV2" /> class.
+    /// </summary>
+    /// <param name="redemptionReferenceNumber">UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения. (required).</param>
+    /// <param name="redemptionId">Уникальный идентификатор, создаваемый при успешном погашении. (required).</param>
+    /// <param name="rewardSummary">rewardSummary (required).</param>
+    public RedemptionResponseV2(string redemptionReferenceNumber = default, string redemptionId = default, RewardSummaryV2 rewardSummary = default)
+    {
+        // to ensure "redemptionReferenceNumber" is required (not null)
+        if (redemptionReferenceNumber == null) throw new ArgumentNullException("redemptionReferenceNumber is a required property for RedemptionResponseV2 and cannot be null");
+        RedemptionReferenceNumber = redemptionReferenceNumber;
+        // to ensure "redemptionId" is required (not null)
+        if (redemptionId == null) throw new ArgumentNullException("redemptionId is a required property for RedemptionResponseV2 and cannot be null");
+        RedemptionId = redemptionId;
+        // to ensure "rewardSummary" is required (not null)
+        if (rewardSummary == null) throw new ArgumentNullException("rewardSummary is a required property for RedemptionResponseV2 and cannot be null");
+        RewardSummary = rewardSummary;
+    }
+
+    /// <summary>
+    ///     UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения.
+    /// </summary>
+    /// <value>UUID, полученный в запросе API, будет отправлен обратно в ответе API после успешного погашения.</value>
+    [DataMember(Name = "redemptionReferenceNumber", IsRequired = true, EmitDefaultValue = true)]
+    public string RedemptionReferenceNumber { get; set; }
+
+    /// <summary>
+    ///     Уникальный идентификатор, создаваемый при успешном погашении.
+    /// </summary>
+    /// <value>Уникальный идентификатор, создаваемый при успешном погашении.</value>
+    [DataMember(Name = "redemptionId", IsRequired = true, EmitDefaultValue = true)]
+    public string RedemptionId { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets RewardSummary
+    /// </summary>
+    [DataMember(Name = "rewardSummary", IsRequired = true, EmitDefaultValue = true)]
+    public RewardSummaryV2 RewardSummary { get; set; }
+
+    /// <summary>
+    ///     Returns true if RedemptionResponseV2 instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RedemptionResponseV2 to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RedemptionResponseV2 input)
+    {
+        if (input == null) return false;
+        return
+            (
+                RedemptionReferenceNumber == input.RedemptionReferenceNumber ||
+                (RedemptionReferenceNumber != null &&
+                 RedemptionReferenceNumber.Equals(input.RedemptionReferenceNumber))
+            ) &&
+            (
+                RedemptionId == input.RedemptionId ||
+                (RedemptionId != null &&
+                 RedemptionId.Equals(input.RedemptionId))
+            ) &&
+            (
+                RewardSummary == input.RewardSummary ||
+                (RewardSummary != null &&
+                 RewardSummary.Equals(input.RewardSummary))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // RedemptionReferenceNumber (string) maxLength
+        if (RedemptionReferenceNumber != null && RedemptionReferenceNumber.Length > 36)
+            yield return new ValidationResult("Invalid value for RedemptionReferenceNumber, length must be less than 36.", new[] { "RedemptionReferenceNumber" });
+
+        // RedemptionReferenceNumber (string) minLength
+        if (RedemptionReferenceNumber != null && RedemptionReferenceNumber.Length < 36)
+            yield return new ValidationResult("Invalid value for RedemptionReferenceNumber, length must be greater than 36.", new[] { "RedemptionReferenceNumber" });
+
+        // RedemptionReferenceNumber (string) pattern
+        var regexRedemptionReferenceNumber = new Regex(@"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", RegexOptions.CultureInvariant);
+        if (false == regexRedemptionReferenceNumber.Match(RedemptionReferenceNumber).Success)
+            yield return new ValidationResult("Invalid value for RedemptionReferenceNumber, must match a pattern of " + regexRedemptionReferenceNumber,
+                new[] { "RedemptionReferenceNumber" });
+
+        // RedemptionId (string) maxLength
+        if (RedemptionId != null && RedemptionId.Length > 36)
+            yield return new ValidationResult("Invalid value for RedemptionId, length must be less than 36.", new[] { "RedemptionId" });
+
+        // RedemptionId (string) minLength
+        if (RedemptionId != null && RedemptionId.Length < 36)
+            yield return new ValidationResult("Invalid value for RedemptionId, length must be greater than 36.", new[] { "RedemptionId" });
+
+        // RedemptionId (string) pattern
+        var regexRedemptionId = new Regex(@"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", RegexOptions.CultureInvariant);
+        if (false == regexRedemptionId.Match(RedemptionId).Success)
+            yield return new ValidationResult("Invalid value for RedemptionId, must match a pattern of " + regexRedemptionId, new[] { "RedemptionId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RedemptionResponseV2 {\n");
+        sb.Append("  RedemptionReferenceNumber: ").Append(RedemptionReferenceNumber).Append("\n");
+        sb.Append("  RedemptionId: ").Append(RedemptionId).Append("\n");
+        sb.Append("  RewardSummary: ").Append(RewardSummary).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RedemptionResponseV2);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (RedemptionReferenceNumber != null) hashCode = hashCode * 59 + RedemptionReferenceNumber.GetHashCode();
+            if (RedemptionId != null) hashCode = hashCode * 59 + RedemptionId.GetHashCode();
+            if (RewardSummary != null) hashCode = hashCode * 59 + RewardSummary.GetHashCode();
+            return hashCode;
+        }
+    }
 }

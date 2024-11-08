@@ -9,240 +9,199 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Дополнительные налоговые реквизиты
+/// </summary>
+[DataContract(Name = "TaxRecord")]
+public class TaxRecord : IEquatable<TaxRecord>, IValidatableObject
 {
     /// <summary>
-    /// Дополнительные налоговые реквизиты
+    ///     Initializes a new instance of the <see cref="TaxRecord" /> class.
     /// </summary>
-    [DataContract(Name = "TaxRecord")]
-    public partial class TaxRecord : IEquatable<TaxRecord>, IValidatableObject
+    /// <param name="type">Реквизит 110. Код выплат.</param>
+    /// <param name="category">Реквизит 106. Основание налогового платежа.</param>
+    /// <param name="categoryDetails">Код бюджетной классификации.</param>
+    /// <param name="debtorStatus">Статус налогоплательщика.</param>
+    /// <param name="period">(Номер реквизита 14.2) Налоговый период.</param>
+    /// <param name="taxAmount">taxAmount.</param>
+    public TaxRecord(string type = default, string category = default, string categoryDetails = default, string debtorStatus = default, List<TaxRecordPeriodInner> period = default,
+        TaxRecordTaxAmount taxAmount = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaxRecord" /> class.
-        /// </summary>
-        /// <param name="type">Реквизит 110. Код выплат.</param>
-        /// <param name="category">Реквизит 106. Основание налогового платежа.</param>
-        /// <param name="categoryDetails">Код бюджетной классификации.</param>
-        /// <param name="debtorStatus">Статус налогоплательщика.</param>
-        /// <param name="period">(Номер реквизита 14.2) Налоговый период.</param>
-        /// <param name="taxAmount">taxAmount.</param>
-        public TaxRecord(string type = default(string), string category = default(string), string categoryDetails = default(string), string debtorStatus = default(string), List<TaxRecordPeriodInner> period = default(List<TaxRecordPeriodInner>), TaxRecordTaxAmount taxAmount = default(TaxRecordTaxAmount))
-        {
-            this.Type = type;
-            this.Category = category;
-            this.CategoryDetails = categoryDetails;
-            this.DebtorStatus = debtorStatus;
-            this.Period = period;
-            this.TaxAmount = taxAmount;
-        }
-
-        /// <summary>
-        /// Реквизит 110. Код выплат
-        /// </summary>
-        /// <value>Реквизит 110. Код выплат</value>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Реквизит 106. Основание налогового платежа
-        /// </summary>
-        /// <value>Реквизит 106. Основание налогового платежа</value>
-        [DataMember(Name = "category", EmitDefaultValue = false)]
-        public string Category { get; set; }
-
-        /// <summary>
-        /// Код бюджетной классификации
-        /// </summary>
-        /// <value>Код бюджетной классификации</value>
-        [DataMember(Name = "categoryDetails", EmitDefaultValue = false)]
-        public string CategoryDetails { get; set; }
-
-        /// <summary>
-        /// Статус налогоплательщика
-        /// </summary>
-        /// <value>Статус налогоплательщика</value>
-        [DataMember(Name = "debtorStatus", EmitDefaultValue = false)]
-        public string DebtorStatus { get; set; }
-
-        /// <summary>
-        /// (Номер реквизита 14.2) Налоговый период
-        /// </summary>
-        /// <value>(Номер реквизита 14.2) Налоговый период</value>
-        [DataMember(Name = "Period", EmitDefaultValue = false)]
-        public List<TaxRecordPeriodInner> Period { get; set; }
-
-        /// <summary>
-        /// Gets or Sets TaxAmount
-        /// </summary>
-        [DataMember(Name = "TaxAmount", EmitDefaultValue = false)]
-        public TaxRecordTaxAmount TaxAmount { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class TaxRecord {\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  Category: ").Append(Category).Append("\n");
-            sb.Append("  CategoryDetails: ").Append(CategoryDetails).Append("\n");
-            sb.Append("  DebtorStatus: ").Append(DebtorStatus).Append("\n");
-            sb.Append("  Period: ").Append(Period).Append("\n");
-            sb.Append("  TaxAmount: ").Append(TaxAmount).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as TaxRecord);
-        }
-
-        /// <summary>
-        /// Returns true if TaxRecord instances are equal
-        /// </summary>
-        /// <param name="input">Instance of TaxRecord to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(TaxRecord input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
-                ) && 
-                (
-                    this.Category == input.Category ||
-                    (this.Category != null &&
-                    this.Category.Equals(input.Category))
-                ) && 
-                (
-                    this.CategoryDetails == input.CategoryDetails ||
-                    (this.CategoryDetails != null &&
-                    this.CategoryDetails.Equals(input.CategoryDetails))
-                ) && 
-                (
-                    this.DebtorStatus == input.DebtorStatus ||
-                    (this.DebtorStatus != null &&
-                    this.DebtorStatus.Equals(input.DebtorStatus))
-                ) && 
-                (
-                    this.Period == input.Period ||
-                    this.Period != null &&
-                    input.Period != null &&
-                    this.Period.SequenceEqual(input.Period)
-                ) && 
-                (
-                    this.TaxAmount == input.TaxAmount ||
-                    (this.TaxAmount != null &&
-                    this.TaxAmount.Equals(input.TaxAmount))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Type != null)
-                {
-                    hashCode = (hashCode * 59) + this.Type.GetHashCode();
-                }
-                if (this.Category != null)
-                {
-                    hashCode = (hashCode * 59) + this.Category.GetHashCode();
-                }
-                if (this.CategoryDetails != null)
-                {
-                    hashCode = (hashCode * 59) + this.CategoryDetails.GetHashCode();
-                }
-                if (this.DebtorStatus != null)
-                {
-                    hashCode = (hashCode * 59) + this.DebtorStatus.GetHashCode();
-                }
-                if (this.Period != null)
-                {
-                    hashCode = (hashCode * 59) + this.Period.GetHashCode();
-                }
-                if (this.TaxAmount != null)
-                {
-                    hashCode = (hashCode * 59) + this.TaxAmount.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Type (string) maxLength
-            if (this.Type != null && this.Type.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, length must be less than 35.", new [] { "Type" });
-            }
-
-            // Category (string) maxLength
-            if (this.Category != null && this.Category.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Category, length must be less than 35.", new [] { "Category" });
-            }
-
-            // CategoryDetails (string) maxLength
-            if (this.CategoryDetails != null && this.CategoryDetails.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CategoryDetails, length must be less than 35.", new [] { "CategoryDetails" });
-            }
-
-            // DebtorStatus (string) maxLength
-            if (this.DebtorStatus != null && this.DebtorStatus.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DebtorStatus, length must be less than 35.", new [] { "DebtorStatus" });
-            }
-
-            yield break;
-        }
+        Type = type;
+        Category = category;
+        CategoryDetails = categoryDetails;
+        DebtorStatus = debtorStatus;
+        Period = period;
+        TaxAmount = taxAmount;
     }
 
+    /// <summary>
+    ///     Реквизит 110. Код выплат
+    /// </summary>
+    /// <value>Реквизит 110. Код выплат</value>
+    [DataMember(Name = "type", EmitDefaultValue = false)]
+    public string Type { get; set; }
+
+    /// <summary>
+    ///     Реквизит 106. Основание налогового платежа
+    /// </summary>
+    /// <value>Реквизит 106. Основание налогового платежа</value>
+    [DataMember(Name = "category", EmitDefaultValue = false)]
+    public string Category { get; set; }
+
+    /// <summary>
+    ///     Код бюджетной классификации
+    /// </summary>
+    /// <value>Код бюджетной классификации</value>
+    [DataMember(Name = "categoryDetails", EmitDefaultValue = false)]
+    public string CategoryDetails { get; set; }
+
+    /// <summary>
+    ///     Статус налогоплательщика
+    /// </summary>
+    /// <value>Статус налогоплательщика</value>
+    [DataMember(Name = "debtorStatus", EmitDefaultValue = false)]
+    public string DebtorStatus { get; set; }
+
+    /// <summary>
+    ///     (Номер реквизита 14.2) Налоговый период
+    /// </summary>
+    /// <value>(Номер реквизита 14.2) Налоговый период</value>
+    [DataMember(Name = "Period", EmitDefaultValue = false)]
+    public List<TaxRecordPeriodInner> Period { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets TaxAmount
+    /// </summary>
+    [DataMember(Name = "TaxAmount", EmitDefaultValue = false)]
+    public TaxRecordTaxAmount TaxAmount { get; set; }
+
+    /// <summary>
+    ///     Returns true if TaxRecord instances are equal
+    /// </summary>
+    /// <param name="input">Instance of TaxRecord to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(TaxRecord input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Type == input.Type ||
+                (Type != null &&
+                 Type.Equals(input.Type))
+            ) &&
+            (
+                Category == input.Category ||
+                (Category != null &&
+                 Category.Equals(input.Category))
+            ) &&
+            (
+                CategoryDetails == input.CategoryDetails ||
+                (CategoryDetails != null &&
+                 CategoryDetails.Equals(input.CategoryDetails))
+            ) &&
+            (
+                DebtorStatus == input.DebtorStatus ||
+                (DebtorStatus != null &&
+                 DebtorStatus.Equals(input.DebtorStatus))
+            ) &&
+            (
+                Period == input.Period ||
+                (Period != null &&
+                 input.Period != null &&
+                 Period.SequenceEqual(input.Period))
+            ) &&
+            (
+                TaxAmount == input.TaxAmount ||
+                (TaxAmount != null &&
+                 TaxAmount.Equals(input.TaxAmount))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Type (string) maxLength
+        if (Type != null && Type.Length > 35) yield return new ValidationResult("Invalid value for Type, length must be less than 35.", new[] { "Type" });
+
+        // Category (string) maxLength
+        if (Category != null && Category.Length > 35) yield return new ValidationResult("Invalid value for Category, length must be less than 35.", new[] { "Category" });
+
+        // CategoryDetails (string) maxLength
+        if (CategoryDetails != null && CategoryDetails.Length > 35)
+            yield return new ValidationResult("Invalid value for CategoryDetails, length must be less than 35.", new[] { "CategoryDetails" });
+
+        // DebtorStatus (string) maxLength
+        if (DebtorStatus != null && DebtorStatus.Length > 35)
+            yield return new ValidationResult("Invalid value for DebtorStatus, length must be less than 35.", new[] { "DebtorStatus" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class TaxRecord {\n");
+        sb.Append("  Type: ").Append(Type).Append("\n");
+        sb.Append("  Category: ").Append(Category).Append("\n");
+        sb.Append("  CategoryDetails: ").Append(CategoryDetails).Append("\n");
+        sb.Append("  DebtorStatus: ").Append(DebtorStatus).Append("\n");
+        sb.Append("  Period: ").Append(Period).Append("\n");
+        sb.Append("  TaxAmount: ").Append(TaxAmount).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as TaxRecord);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Type != null) hashCode = hashCode * 59 + Type.GetHashCode();
+            if (Category != null) hashCode = hashCode * 59 + Category.GetHashCode();
+            if (CategoryDetails != null) hashCode = hashCode * 59 + CategoryDetails.GetHashCode();
+            if (DebtorStatus != null) hashCode = hashCode * 59 + DebtorStatus.GetHashCode();
+            if (Period != null) hashCode = hashCode * 59 + Period.GetHashCode();
+            if (TaxAmount != null) hashCode = hashCode * 59 + TaxAmount.GetHashCode();
+            return hashCode;
+        }
+    }
 }

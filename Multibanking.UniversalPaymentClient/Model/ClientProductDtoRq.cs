@@ -9,173 +9,151 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Информация о продукте клиента
+/// </summary>
+[DataContract(Name = "ClientProductDtoRq")]
+public class ClientProductDtoRq : IEquatable<ClientProductDtoRq>, IValidatableObject
 {
     /// <summary>
-    /// Информация о продукте клиента
+    ///     Тип продукта клиента
     /// </summary>
-    [DataContract(Name = "ClientProductDtoRq")]
-    public partial class ClientProductDtoRq : IEquatable<ClientProductDtoRq>, IValidatableObject
+    /// <value>Тип продукта клиента</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ProductTypeEnum
     {
         /// <summary>
-        /// Тип продукта клиента
+        ///     Enum ACCOUNT for value: ACCOUNT
         /// </summary>
-        /// <value>Тип продукта клиента</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum ProductTypeEnum
-        {
-            /// <summary>
-            /// Enum ACCOUNT for value: ACCOUNT
-            /// </summary>
-            [EnumMember(Value = "ACCOUNT")]
-            ACCOUNT = 1,
-
-            /// <summary>
-            /// Enum CARD for value: CARD
-            /// </summary>
-            [EnumMember(Value = "CARD")]
-            CARD = 2
-
-        }
-
+        [EnumMember(Value = "ACCOUNT")] ACCOUNT = 1,
 
         /// <summary>
-        /// Тип продукта клиента
+        ///     Enum CARD for value: CARD
         /// </summary>
-        /// <value>Тип продукта клиента</value>
-        [DataMember(Name = "productType", IsRequired = true, EmitDefaultValue = true)]
-        public ProductTypeEnum ProductType { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClientProductDtoRq" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ClientProductDtoRq() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClientProductDtoRq" /> class.
-        /// </summary>
-        /// <param name="publicId">Id продукта клиента (required).</param>
-        /// <param name="productType">Тип продукта клиента (required).</param>
-        public ClientProductDtoRq(string publicId = default(string), ProductTypeEnum productType = default(ProductTypeEnum))
-        {
-            // to ensure "publicId" is required (not null)
-            if (publicId == null)
-            {
-                throw new ArgumentNullException("publicId is a required property for ClientProductDtoRq and cannot be null");
-            }
-            this.PublicId = publicId;
-            this.ProductType = productType;
-        }
-
-        /// <summary>
-        /// Id продукта клиента
-        /// </summary>
-        /// <value>Id продукта клиента</value>
-        [DataMember(Name = "publicId", IsRequired = true, EmitDefaultValue = true)]
-        public string PublicId { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ClientProductDtoRq {\n");
-            sb.Append("  PublicId: ").Append(PublicId).Append("\n");
-            sb.Append("  ProductType: ").Append(ProductType).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ClientProductDtoRq);
-        }
-
-        /// <summary>
-        /// Returns true if ClientProductDtoRq instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ClientProductDtoRq to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ClientProductDtoRq input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.PublicId == input.PublicId ||
-                    (this.PublicId != null &&
-                    this.PublicId.Equals(input.PublicId))
-                ) && 
-                (
-                    this.ProductType == input.ProductType ||
-                    this.ProductType.Equals(input.ProductType)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.PublicId != null)
-                {
-                    hashCode = (hashCode * 59) + this.PublicId.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.ProductType.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // PublicId (string) maxLength
-            if (this.PublicId != null && this.PublicId.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PublicId, length must be less than 255.", new [] { "PublicId" });
-            }
-
-            yield break;
-        }
+        [EnumMember(Value = "CARD")] CARD = 2
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ClientProductDtoRq" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected ClientProductDtoRq()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ClientProductDtoRq" /> class.
+    /// </summary>
+    /// <param name="publicId">Id продукта клиента (required).</param>
+    /// <param name="productType">Тип продукта клиента (required).</param>
+    public ClientProductDtoRq(string publicId = default, ProductTypeEnum productType = default)
+    {
+        // to ensure "publicId" is required (not null)
+        if (publicId == null) throw new ArgumentNullException("publicId is a required property for ClientProductDtoRq and cannot be null");
+        PublicId = publicId;
+        ProductType = productType;
+    }
+
+
+    /// <summary>
+    ///     Тип продукта клиента
+    /// </summary>
+    /// <value>Тип продукта клиента</value>
+    [DataMember(Name = "productType", IsRequired = true, EmitDefaultValue = true)]
+    public ProductTypeEnum ProductType { get; set; }
+
+    /// <summary>
+    ///     Id продукта клиента
+    /// </summary>
+    /// <value>Id продукта клиента</value>
+    [DataMember(Name = "publicId", IsRequired = true, EmitDefaultValue = true)]
+    public string PublicId { get; set; }
+
+    /// <summary>
+    ///     Returns true if ClientProductDtoRq instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ClientProductDtoRq to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ClientProductDtoRq input)
+    {
+        if (input == null) return false;
+        return
+            (
+                PublicId == input.PublicId ||
+                (PublicId != null &&
+                 PublicId.Equals(input.PublicId))
+            ) &&
+            (
+                ProductType == input.ProductType ||
+                ProductType.Equals(input.ProductType)
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // PublicId (string) maxLength
+        if (PublicId != null && PublicId.Length > 255) yield return new ValidationResult("Invalid value for PublicId, length must be less than 255.", new[] { "PublicId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ClientProductDtoRq {\n");
+        sb.Append("  PublicId: ").Append(PublicId).Append("\n");
+        sb.Append("  ProductType: ").Append(ProductType).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ClientProductDtoRq);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (PublicId != null) hashCode = hashCode * 59 + PublicId.GetHashCode();
+            hashCode = hashCode * 59 + ProductType.GetHashCode();
+            return hashCode;
+        }
+    }
 }

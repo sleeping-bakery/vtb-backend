@@ -9,153 +9,131 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Лимит суммы платежа
+/// </summary>
+[DataContract(Name = "PayLimitDtoRs")]
+public class PayLimitDtoRs : IEquatable<PayLimitDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Лимит суммы платежа
+    ///     Initializes a new instance of the <see cref="PayLimitDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "PayLimitDtoRs")]
-    public partial class PayLimitDtoRs : IEquatable<PayLimitDtoRs>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected PayLimitDtoRs()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PayLimitDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PayLimitDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PayLimitDtoRs" /> class.
-        /// </summary>
-        /// <param name="min">min (required).</param>
-        /// <param name="max">max (required).</param>
-        public PayLimitDtoRs(MoneyDto min = default(MoneyDto), MoneyDto max = default(MoneyDto))
-        {
-            // to ensure "min" is required (not null)
-            if (min == null)
-            {
-                throw new ArgumentNullException("min is a required property for PayLimitDtoRs and cannot be null");
-            }
-            this.Min = min;
-            // to ensure "max" is required (not null)
-            if (max == null)
-            {
-                throw new ArgumentNullException("max is a required property for PayLimitDtoRs and cannot be null");
-            }
-            this.Max = max;
-        }
-
-        /// <summary>
-        /// Gets or Sets Min
-        /// </summary>
-        [DataMember(Name = "min", IsRequired = true, EmitDefaultValue = true)]
-        public MoneyDto Min { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Max
-        /// </summary>
-        [DataMember(Name = "max", IsRequired = true, EmitDefaultValue = true)]
-        public MoneyDto Max { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PayLimitDtoRs {\n");
-            sb.Append("  Min: ").Append(Min).Append("\n");
-            sb.Append("  Max: ").Append(Max).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PayLimitDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if PayLimitDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PayLimitDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PayLimitDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Min == input.Min ||
-                    (this.Min != null &&
-                    this.Min.Equals(input.Min))
-                ) && 
-                (
-                    this.Max == input.Max ||
-                    (this.Max != null &&
-                    this.Max.Equals(input.Max))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Min != null)
-                {
-                    hashCode = (hashCode * 59) + this.Min.GetHashCode();
-                }
-                if (this.Max != null)
-                {
-                    hashCode = (hashCode * 59) + this.Max.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PayLimitDtoRs" /> class.
+    /// </summary>
+    /// <param name="min">min (required).</param>
+    /// <param name="max">max (required).</param>
+    public PayLimitDtoRs(MoneyDto min = default, MoneyDto max = default)
+    {
+        // to ensure "min" is required (not null)
+        if (min == null) throw new ArgumentNullException("min is a required property for PayLimitDtoRs and cannot be null");
+        Min = min;
+        // to ensure "max" is required (not null)
+        if (max == null) throw new ArgumentNullException("max is a required property for PayLimitDtoRs and cannot be null");
+        Max = max;
+    }
+
+    /// <summary>
+    ///     Gets or Sets Min
+    /// </summary>
+    [DataMember(Name = "min", IsRequired = true, EmitDefaultValue = true)]
+    public MoneyDto Min { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Max
+    /// </summary>
+    [DataMember(Name = "max", IsRequired = true, EmitDefaultValue = true)]
+    public MoneyDto Max { get; set; }
+
+    /// <summary>
+    ///     Returns true if PayLimitDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PayLimitDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PayLimitDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Min == input.Min ||
+                (Min != null &&
+                 Min.Equals(input.Min))
+            ) &&
+            (
+                Max == input.Max ||
+                (Max != null &&
+                 Max.Equals(input.Max))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PayLimitDtoRs {\n");
+        sb.Append("  Min: ").Append(Min).Append("\n");
+        sb.Append("  Max: ").Append(Max).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PayLimitDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Min != null) hashCode = hashCode * 59 + Min.GetHashCode();
+            if (Max != null) hashCode = hashCode * 59 + Max.GetHashCode();
+            return hashCode;
+        }
+    }
 }

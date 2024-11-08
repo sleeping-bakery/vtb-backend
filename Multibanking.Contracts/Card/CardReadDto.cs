@@ -11,6 +11,6 @@ public class CardReadDto
     public required string Pan { get; set; }
 
     public required CardStatus Status { get; set; }
-    
+
     public required string PublicId { get; set; }
 }

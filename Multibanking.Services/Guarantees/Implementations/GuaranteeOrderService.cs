@@ -20,5 +20,8 @@ public class GuaranteeOrderService(IGuaranteeOrderClient guaranteeOrderClient, I
         guaranteeService.DeleteOrder(orderId);
     }
 
-    public OrderStatus GetOrder(string orderId) => guaranteeOrderClient.GetOrder(orderId, Guid.NewGuid().ToString());
+    public OrderStatus GetOrder(string orderId)
+    {
+        return guaranteeOrderClient.GetOrder(orderId, Guid.NewGuid().ToString());
+    }
 }

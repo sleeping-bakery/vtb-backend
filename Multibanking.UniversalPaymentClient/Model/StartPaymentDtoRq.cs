@@ -9,130 +9,112 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Информация для старта оплаты
+/// </summary>
+[DataContract(Name = "StartPaymentDtoRq")]
+public class StartPaymentDtoRq : IEquatable<StartPaymentDtoRq>, IValidatableObject
 {
     /// <summary>
-    /// Информация для старта оплаты
+    ///     Initializes a new instance of the <see cref="StartPaymentDtoRq" /> class.
     /// </summary>
-    [DataContract(Name = "StartPaymentDtoRq")]
-    public partial class StartPaymentDtoRq : IEquatable<StartPaymentDtoRq>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected StartPaymentDtoRq()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StartPaymentDtoRq" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected StartPaymentDtoRq() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StartPaymentDtoRq" /> class.
-        /// </summary>
-        /// <param name="providerService">providerService (required).</param>
-        public StartPaymentDtoRq(ProviderServiceDtoRq providerService = default(ProviderServiceDtoRq))
-        {
-            // to ensure "providerService" is required (not null)
-            if (providerService == null)
-            {
-                throw new ArgumentNullException("providerService is a required property for StartPaymentDtoRq and cannot be null");
-            }
-            this.ProviderService = providerService;
-        }
-
-        /// <summary>
-        /// Gets or Sets ProviderService
-        /// </summary>
-        [DataMember(Name = "providerService", IsRequired = true, EmitDefaultValue = true)]
-        public ProviderServiceDtoRq ProviderService { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class StartPaymentDtoRq {\n");
-            sb.Append("  ProviderService: ").Append(ProviderService).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as StartPaymentDtoRq);
-        }
-
-        /// <summary>
-        /// Returns true if StartPaymentDtoRq instances are equal
-        /// </summary>
-        /// <param name="input">Instance of StartPaymentDtoRq to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(StartPaymentDtoRq input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ProviderService == input.ProviderService ||
-                    (this.ProviderService != null &&
-                    this.ProviderService.Equals(input.ProviderService))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ProviderService != null)
-                {
-                    hashCode = (hashCode * 59) + this.ProviderService.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="StartPaymentDtoRq" /> class.
+    /// </summary>
+    /// <param name="providerService">providerService (required).</param>
+    public StartPaymentDtoRq(ProviderServiceDtoRq providerService = default)
+    {
+        // to ensure "providerService" is required (not null)
+        if (providerService == null) throw new ArgumentNullException("providerService is a required property for StartPaymentDtoRq and cannot be null");
+        ProviderService = providerService;
+    }
+
+    /// <summary>
+    ///     Gets or Sets ProviderService
+    /// </summary>
+    [DataMember(Name = "providerService", IsRequired = true, EmitDefaultValue = true)]
+    public ProviderServiceDtoRq ProviderService { get; set; }
+
+    /// <summary>
+    ///     Returns true if StartPaymentDtoRq instances are equal
+    /// </summary>
+    /// <param name="input">Instance of StartPaymentDtoRq to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(StartPaymentDtoRq input)
+    {
+        if (input == null) return false;
+        return
+            ProviderService == input.ProviderService ||
+            (ProviderService != null &&
+             ProviderService.Equals(input.ProviderService));
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class StartPaymentDtoRq {\n");
+        sb.Append("  ProviderService: ").Append(ProviderService).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as StartPaymentDtoRq);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ProviderService != null) hashCode = hashCode * 59 + ProviderService.GetHashCode();
+            return hashCode;
+        }
+    }
 }

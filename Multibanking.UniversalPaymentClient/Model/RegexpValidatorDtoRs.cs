@@ -9,227 +9,181 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Валидатор платежного поля ответ
+/// </summary>
+[DataContract(Name = "RegexpValidatorDtoRs")]
+public class RegexpValidatorDtoRs : IEquatable<RegexpValidatorDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Валидатор платежного поля ответ
+    ///     Initializes a new instance of the <see cref="RegexpValidatorDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "RegexpValidatorDtoRs")]
-    public partial class RegexpValidatorDtoRs : IEquatable<RegexpValidatorDtoRs>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RegexpValidatorDtoRs()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RegexpValidatorDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RegexpValidatorDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RegexpValidatorDtoRs" /> class.
-        /// </summary>
-        /// <param name="key">Ключ валидатора по которому фронт может строить доп логику (required).</param>
-        /// <param name="regexp">Регулярное выражение для валидации (required).</param>
-        /// <param name="description">Описание валидатора (required).</param>
-        /// <param name="errorMessage">Сообщение при ошибке (required).</param>
-        public RegexpValidatorDtoRs(string key = default(string), string regexp = default(string), string description = default(string), string errorMessage = default(string))
-        {
-            // to ensure "key" is required (not null)
-            if (key == null)
-            {
-                throw new ArgumentNullException("key is a required property for RegexpValidatorDtoRs and cannot be null");
-            }
-            this.Key = key;
-            // to ensure "regexp" is required (not null)
-            if (regexp == null)
-            {
-                throw new ArgumentNullException("regexp is a required property for RegexpValidatorDtoRs and cannot be null");
-            }
-            this.Regexp = regexp;
-            // to ensure "description" is required (not null)
-            if (description == null)
-            {
-                throw new ArgumentNullException("description is a required property for RegexpValidatorDtoRs and cannot be null");
-            }
-            this.Description = description;
-            // to ensure "errorMessage" is required (not null)
-            if (errorMessage == null)
-            {
-                throw new ArgumentNullException("errorMessage is a required property for RegexpValidatorDtoRs and cannot be null");
-            }
-            this.ErrorMessage = errorMessage;
-        }
-
-        /// <summary>
-        /// Ключ валидатора по которому фронт может строить доп логику
-        /// </summary>
-        /// <value>Ключ валидатора по которому фронт может строить доп логику</value>
-        [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
-        public string Key { get; set; }
-
-        /// <summary>
-        /// Регулярное выражение для валидации
-        /// </summary>
-        /// <value>Регулярное выражение для валидации</value>
-        [DataMember(Name = "regexp", IsRequired = true, EmitDefaultValue = true)]
-        public string Regexp { get; set; }
-
-        /// <summary>
-        /// Описание валидатора
-        /// </summary>
-        /// <value>Описание валидатора</value>
-        [DataMember(Name = "description", IsRequired = true, EmitDefaultValue = true)]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Сообщение при ошибке
-        /// </summary>
-        /// <value>Сообщение при ошибке</value>
-        [DataMember(Name = "errorMessage", IsRequired = true, EmitDefaultValue = true)]
-        public string ErrorMessage { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RegexpValidatorDtoRs {\n");
-            sb.Append("  Key: ").Append(Key).Append("\n");
-            sb.Append("  Regexp: ").Append(Regexp).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  ErrorMessage: ").Append(ErrorMessage).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RegexpValidatorDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if RegexpValidatorDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RegexpValidatorDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RegexpValidatorDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.Regexp == input.Regexp ||
-                    (this.Regexp != null &&
-                    this.Regexp.Equals(input.Regexp))
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && 
-                (
-                    this.ErrorMessage == input.ErrorMessage ||
-                    (this.ErrorMessage != null &&
-                    this.ErrorMessage.Equals(input.ErrorMessage))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Key != null)
-                {
-                    hashCode = (hashCode * 59) + this.Key.GetHashCode();
-                }
-                if (this.Regexp != null)
-                {
-                    hashCode = (hashCode * 59) + this.Regexp.GetHashCode();
-                }
-                if (this.Description != null)
-                {
-                    hashCode = (hashCode * 59) + this.Description.GetHashCode();
-                }
-                if (this.ErrorMessage != null)
-                {
-                    hashCode = (hashCode * 59) + this.ErrorMessage.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Key (string) maxLength
-            if (this.Key != null && this.Key.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 255.", new [] { "Key" });
-            }
-
-            // Regexp (string) maxLength
-            if (this.Regexp != null && this.Regexp.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Regexp, length must be less than 255.", new [] { "Regexp" });
-            }
-
-            // Description (string) maxLength
-            if (this.Description != null && this.Description.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 255.", new [] { "Description" });
-            }
-
-            // ErrorMessage (string) maxLength
-            if (this.ErrorMessage != null && this.ErrorMessage.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ErrorMessage, length must be less than 255.", new [] { "ErrorMessage" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RegexpValidatorDtoRs" /> class.
+    /// </summary>
+    /// <param name="key">Ключ валидатора по которому фронт может строить доп логику (required).</param>
+    /// <param name="regexp">Регулярное выражение для валидации (required).</param>
+    /// <param name="description">Описание валидатора (required).</param>
+    /// <param name="errorMessage">Сообщение при ошибке (required).</param>
+    public RegexpValidatorDtoRs(string key = default, string regexp = default, string description = default, string errorMessage = default)
+    {
+        // to ensure "key" is required (not null)
+        if (key == null) throw new ArgumentNullException("key is a required property for RegexpValidatorDtoRs and cannot be null");
+        Key = key;
+        // to ensure "regexp" is required (not null)
+        if (regexp == null) throw new ArgumentNullException("regexp is a required property for RegexpValidatorDtoRs and cannot be null");
+        Regexp = regexp;
+        // to ensure "description" is required (not null)
+        if (description == null) throw new ArgumentNullException("description is a required property for RegexpValidatorDtoRs and cannot be null");
+        Description = description;
+        // to ensure "errorMessage" is required (not null)
+        if (errorMessage == null) throw new ArgumentNullException("errorMessage is a required property for RegexpValidatorDtoRs and cannot be null");
+        ErrorMessage = errorMessage;
+    }
+
+    /// <summary>
+    ///     Ключ валидатора по которому фронт может строить доп логику
+    /// </summary>
+    /// <value>Ключ валидатора по которому фронт может строить доп логику</value>
+    [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
+    public string Key { get; set; }
+
+    /// <summary>
+    ///     Регулярное выражение для валидации
+    /// </summary>
+    /// <value>Регулярное выражение для валидации</value>
+    [DataMember(Name = "regexp", IsRequired = true, EmitDefaultValue = true)]
+    public string Regexp { get; set; }
+
+    /// <summary>
+    ///     Описание валидатора
+    /// </summary>
+    /// <value>Описание валидатора</value>
+    [DataMember(Name = "description", IsRequired = true, EmitDefaultValue = true)]
+    public string Description { get; set; }
+
+    /// <summary>
+    ///     Сообщение при ошибке
+    /// </summary>
+    /// <value>Сообщение при ошибке</value>
+    [DataMember(Name = "errorMessage", IsRequired = true, EmitDefaultValue = true)]
+    public string ErrorMessage { get; set; }
+
+    /// <summary>
+    ///     Returns true if RegexpValidatorDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RegexpValidatorDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RegexpValidatorDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Key == input.Key ||
+                (Key != null &&
+                 Key.Equals(input.Key))
+            ) &&
+            (
+                Regexp == input.Regexp ||
+                (Regexp != null &&
+                 Regexp.Equals(input.Regexp))
+            ) &&
+            (
+                Description == input.Description ||
+                (Description != null &&
+                 Description.Equals(input.Description))
+            ) &&
+            (
+                ErrorMessage == input.ErrorMessage ||
+                (ErrorMessage != null &&
+                 ErrorMessage.Equals(input.ErrorMessage))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Key (string) maxLength
+        if (Key != null && Key.Length > 255) yield return new ValidationResult("Invalid value for Key, length must be less than 255.", new[] { "Key" });
+
+        // Regexp (string) maxLength
+        if (Regexp != null && Regexp.Length > 255) yield return new ValidationResult("Invalid value for Regexp, length must be less than 255.", new[] { "Regexp" });
+
+        // Description (string) maxLength
+        if (Description != null && Description.Length > 255)
+            yield return new ValidationResult("Invalid value for Description, length must be less than 255.", new[] { "Description" });
+
+        // ErrorMessage (string) maxLength
+        if (ErrorMessage != null && ErrorMessage.Length > 255)
+            yield return new ValidationResult("Invalid value for ErrorMessage, length must be less than 255.", new[] { "ErrorMessage" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RegexpValidatorDtoRs {\n");
+        sb.Append("  Key: ").Append(Key).Append("\n");
+        sb.Append("  Regexp: ").Append(Regexp).Append("\n");
+        sb.Append("  Description: ").Append(Description).Append("\n");
+        sb.Append("  ErrorMessage: ").Append(ErrorMessage).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RegexpValidatorDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Key != null) hashCode = hashCode * 59 + Key.GetHashCode();
+            if (Regexp != null) hashCode = hashCode * 59 + Regexp.GetHashCode();
+            if (Description != null) hashCode = hashCode * 59 + Description.GetHashCode();
+            if (ErrorMessage != null) hashCode = hashCode * 59 + ErrorMessage.GetHashCode();
+            return hashCode;
+        }
+    }
 }

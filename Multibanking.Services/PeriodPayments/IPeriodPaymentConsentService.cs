@@ -8,5 +8,4 @@ public interface IPeriodPaymentConsentService
     List<ReadPeriodPaymentConsentDto> GetPeriodPaymentConsents();
     void DeletePeriodPaymentConsent(Guid periodPaymentConsentId);
     ReadPeriodPaymentConsentDto GetPeriodPaymentConsent(Guid periodPaymentConsentId);
-
 }

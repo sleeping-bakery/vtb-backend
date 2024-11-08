@@ -8,42 +8,26 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Вид платежа
+/// </summary>
+/// <value>Вид платежа</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum ServiceLevelCode
 {
     /// <summary>
-    /// Вид платежа
+    ///     Enum URGP for value: URGP
     /// </summary>
-    /// <value>Вид платежа</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ServiceLevelCode
-    {
-        /// <summary>
-        /// Enum URGP for value: URGP
-        /// </summary>
-        [EnumMember(Value = "URGP")]
-        URGP = 1,
+    [EnumMember(Value = "URGP")] URGP = 1,
 
-        /// <summary>
-        /// Enum NURG for value: NURG
-        /// </summary>
-        [EnumMember(Value = "NURG")]
-        NURG = 2
-
-    }
-
+    /// <summary>
+    ///     Enum NURG for value: NURG
+    /// </summary>
+    [EnumMember(Value = "NURG")] NURG = 2
 }

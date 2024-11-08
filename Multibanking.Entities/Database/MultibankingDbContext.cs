@@ -20,9 +20,9 @@ public class MultibankingDbContext(DbContextOptions<MultibankingDbContext> optio
     public DbSet<Card> Cards { get; set; }
 
     public DbSet<PeriodPaymentConsent> PeriodPaymentConsents { get; set; }
-    
+
     public DbSet<GuaranteeOrder> GuaranteeOrders { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         var defaultIgnoreSerializerOptions = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
@@ -32,13 +32,13 @@ public class MultibankingDbContext(DbContextOptions<MultibankingDbContext> optio
             .HasConversion(
                 v => JsonSerializer.Serialize(v, defaultIgnoreSerializerOptions),
                 v => JsonSerializer.Deserialize<VRPConsentResponse>(v, caseInsensitiveSerializerOptions)!)
-            .HasColumnType("jsonb"); 
-        
+            .HasColumnType("jsonb");
+
         modelBuilder.Entity<GuaranteeOrder>()
             .Property(u => u.ResponseInit)
             .HasConversion(
                 v => JsonSerializer.Serialize(v, defaultIgnoreSerializerOptions),
                 v => JsonSerializer.Deserialize<OrderResponse>(v, caseInsensitiveSerializerOptions)!)
-            .HasColumnType("jsonb"); 
+            .HasColumnType("jsonb");
     }
 }

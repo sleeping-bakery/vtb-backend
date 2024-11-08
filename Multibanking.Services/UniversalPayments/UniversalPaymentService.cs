@@ -11,10 +11,11 @@ public class UniversalPaymentService(IUniversalPaymentClient universalPaymentCli
     {
         cardService.ValidateUserCard(createUniversalPaymentDto.CardId);
         var card = cardService.GetCard(createUniversalPaymentDto.CardId);
-        
+
         universalPaymentClient.Request(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), [], Guid.NewGuid().ToString(),
             new RequestPaymentDtoRq(
-                new ProviderServiceDtoRq(createUniversalPaymentDto.ServiceId), [], new MoneyDto(createUniversalPaymentDto.Amount, new CurrencyDto(createUniversalPaymentDto.Currency)),
+                new ProviderServiceDtoRq(createUniversalPaymentDto.ServiceId), [],
+                new MoneyDto(createUniversalPaymentDto.Amount, new CurrencyDto(createUniversalPaymentDto.Currency)),
                 new ClientProductDtoRq(card.PublicId, ClientProductDtoRq.ProductTypeEnum.CARD))
         );
     }

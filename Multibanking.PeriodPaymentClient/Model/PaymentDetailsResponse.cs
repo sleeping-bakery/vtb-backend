@@ -9,199 +9,166 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Ответ детального состояния ресурса перевода денежных средств
+/// </summary>
+[DataContract(Name = "PaymentDetailsResponse")]
+public class PaymentDetailsResponse : IEquatable<PaymentDetailsResponse>, IValidatableObject
 {
     /// <summary>
-    /// Ответ детального состояния ресурса перевода денежных средств
+    ///     Initializes a new instance of the <see cref="PaymentDetailsResponse" /> class.
     /// </summary>
-    [DataContract(Name = "PaymentDetailsResponse")]
-    public partial class PaymentDetailsResponse : IEquatable<PaymentDetailsResponse>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected PaymentDetailsResponse()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDetailsResponse" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PaymentDetailsResponse() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDetailsResponse" /> class.
-        /// </summary>
-        /// <param name="data">data (required).</param>
-        /// <param name="risk">risk (required).</param>
-        /// <param name="links">links (required).</param>
-        /// <param name="meta">meta (required).</param>
-        public PaymentDetailsResponse(PaymentDetailsResponseData data = default(PaymentDetailsResponseData), PaymentDetailsResponseRisk risk = default(PaymentDetailsResponseRisk), PaymentDetailsResponseLinks links = default(PaymentDetailsResponseLinks), PaymentDetailsResponseMeta meta = default(PaymentDetailsResponseMeta))
-        {
-            // to ensure "data" is required (not null)
-            if (data == null)
-            {
-                throw new ArgumentNullException("data is a required property for PaymentDetailsResponse and cannot be null");
-            }
-            this.Data = data;
-            // to ensure "risk" is required (not null)
-            if (risk == null)
-            {
-                throw new ArgumentNullException("risk is a required property for PaymentDetailsResponse and cannot be null");
-            }
-            this.Risk = risk;
-            // to ensure "links" is required (not null)
-            if (links == null)
-            {
-                throw new ArgumentNullException("links is a required property for PaymentDetailsResponse and cannot be null");
-            }
-            this.Links = links;
-            // to ensure "meta" is required (not null)
-            if (meta == null)
-            {
-                throw new ArgumentNullException("meta is a required property for PaymentDetailsResponse and cannot be null");
-            }
-            this.Meta = meta;
-        }
-
-        /// <summary>
-        /// Gets or Sets Data
-        /// </summary>
-        [DataMember(Name = "Data", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentDetailsResponseData Data { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Risk
-        /// </summary>
-        [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentDetailsResponseRisk Risk { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Links
-        /// </summary>
-        [DataMember(Name = "Links", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentDetailsResponseLinks Links { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Meta
-        /// </summary>
-        [DataMember(Name = "Meta", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentDetailsResponseMeta Meta { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PaymentDetailsResponse {\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
-            sb.Append("  Risk: ").Append(Risk).Append("\n");
-            sb.Append("  Links: ").Append(Links).Append("\n");
-            sb.Append("  Meta: ").Append(Meta).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentDetailsResponse);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentDetailsResponse instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentDetailsResponse to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentDetailsResponse input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Data == input.Data ||
-                    (this.Data != null &&
-                    this.Data.Equals(input.Data))
-                ) && 
-                (
-                    this.Risk == input.Risk ||
-                    (this.Risk != null &&
-                    this.Risk.Equals(input.Risk))
-                ) && 
-                (
-                    this.Links == input.Links ||
-                    (this.Links != null &&
-                    this.Links.Equals(input.Links))
-                ) && 
-                (
-                    this.Meta == input.Meta ||
-                    (this.Meta != null &&
-                    this.Meta.Equals(input.Meta))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Data != null)
-                {
-                    hashCode = (hashCode * 59) + this.Data.GetHashCode();
-                }
-                if (this.Risk != null)
-                {
-                    hashCode = (hashCode * 59) + this.Risk.GetHashCode();
-                }
-                if (this.Links != null)
-                {
-                    hashCode = (hashCode * 59) + this.Links.GetHashCode();
-                }
-                if (this.Meta != null)
-                {
-                    hashCode = (hashCode * 59) + this.Meta.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PaymentDetailsResponse" /> class.
+    /// </summary>
+    /// <param name="data">data (required).</param>
+    /// <param name="risk">risk (required).</param>
+    /// <param name="links">links (required).</param>
+    /// <param name="meta">meta (required).</param>
+    public PaymentDetailsResponse(PaymentDetailsResponseData data = default, PaymentDetailsResponseRisk risk = default, PaymentDetailsResponseLinks links = default,
+        PaymentDetailsResponseMeta meta = default)
+    {
+        // to ensure "data" is required (not null)
+        if (data == null) throw new ArgumentNullException("data is a required property for PaymentDetailsResponse and cannot be null");
+        Data = data;
+        // to ensure "risk" is required (not null)
+        if (risk == null) throw new ArgumentNullException("risk is a required property for PaymentDetailsResponse and cannot be null");
+        Risk = risk;
+        // to ensure "links" is required (not null)
+        if (links == null) throw new ArgumentNullException("links is a required property for PaymentDetailsResponse and cannot be null");
+        Links = links;
+        // to ensure "meta" is required (not null)
+        if (meta == null) throw new ArgumentNullException("meta is a required property for PaymentDetailsResponse and cannot be null");
+        Meta = meta;
+    }
+
+    /// <summary>
+    ///     Gets or Sets Data
+    /// </summary>
+    [DataMember(Name = "Data", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentDetailsResponseData Data { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Risk
+    /// </summary>
+    [DataMember(Name = "Risk", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentDetailsResponseRisk Risk { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Links
+    /// </summary>
+    [DataMember(Name = "Links", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentDetailsResponseLinks Links { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Meta
+    /// </summary>
+    [DataMember(Name = "Meta", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentDetailsResponseMeta Meta { get; set; }
+
+    /// <summary>
+    ///     Returns true if PaymentDetailsResponse instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PaymentDetailsResponse to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PaymentDetailsResponse input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Data == input.Data ||
+                (Data != null &&
+                 Data.Equals(input.Data))
+            ) &&
+            (
+                Risk == input.Risk ||
+                (Risk != null &&
+                 Risk.Equals(input.Risk))
+            ) &&
+            (
+                Links == input.Links ||
+                (Links != null &&
+                 Links.Equals(input.Links))
+            ) &&
+            (
+                Meta == input.Meta ||
+                (Meta != null &&
+                 Meta.Equals(input.Meta))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PaymentDetailsResponse {\n");
+        sb.Append("  Data: ").Append(Data).Append("\n");
+        sb.Append("  Risk: ").Append(Risk).Append("\n");
+        sb.Append("  Links: ").Append(Links).Append("\n");
+        sb.Append("  Meta: ").Append(Meta).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PaymentDetailsResponse);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Data != null) hashCode = hashCode * 59 + Data.GetHashCode();
+            if (Risk != null) hashCode = hashCode * 59 + Risk.GetHashCode();
+            if (Links != null) hashCode = hashCode * 59 + Links.GetHashCode();
+            if (Meta != null) hashCode = hashCode * 59 + Meta.GetHashCode();
+            return hashCode;
+        }
+    }
 }

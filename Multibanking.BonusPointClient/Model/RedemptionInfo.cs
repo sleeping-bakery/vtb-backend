@@ -9,193 +9,161 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     Attributes pertaining to a redemption.
+/// </summary>
+[DataContract(Name = "RedemptionInfo")]
+public class RedemptionInfo : IEquatable<RedemptionInfo>, IValidatableObject
 {
     /// <summary>
-    /// Attributes pertaining to a redemption.
+    ///     Initializes a new instance of the <see cref="RedemptionInfo" /> class.
     /// </summary>
-    [DataContract(Name = "RedemptionInfo")]
-    public partial class RedemptionInfo : IEquatable<RedemptionInfo>, IValidatableObject
+    /// <param name="authorizationCode">Код авторизации, сгенерированный продавцом в точке продаж..</param>
+    /// <param name="transactionID">Идентификатор транзакции, созданный продавцом в точке продаж..</param>
+    /// <param name="transactionDesc">Описание транзакции для погашения..</param>
+    public RedemptionInfo(string authorizationCode = default, decimal transactionID = default, string transactionDesc = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RedemptionInfo" /> class.
-        /// </summary>
-        /// <param name="authorizationCode">Код авторизации, сгенерированный продавцом в точке продаж..</param>
-        /// <param name="transactionID">Идентификатор транзакции, созданный продавцом в точке продаж..</param>
-        /// <param name="transactionDesc">Описание транзакции для погашения..</param>
-        public RedemptionInfo(string authorizationCode = default(string), decimal transactionID = default(decimal), string transactionDesc = default(string))
-        {
-            this.AuthorizationCode = authorizationCode;
-            this.TransactionID = transactionID;
-            this.TransactionDesc = transactionDesc;
-        }
-
-        /// <summary>
-        /// Код авторизации, сгенерированный продавцом в точке продаж.
-        /// </summary>
-        /// <value>Код авторизации, сгенерированный продавцом в точке продаж.</value>
-        [DataMember(Name = "authorizationCode", EmitDefaultValue = false)]
-        public string AuthorizationCode { get; set; }
-
-        /// <summary>
-        /// Идентификатор транзакции, созданный продавцом в точке продаж.
-        /// </summary>
-        /// <value>Идентификатор транзакции, созданный продавцом в точке продаж.</value>
-        [DataMember(Name = "transactionID", EmitDefaultValue = false)]
-        public decimal TransactionID { get; set; }
-
-        /// <summary>
-        /// Описание транзакции для погашения.
-        /// </summary>
-        /// <value>Описание транзакции для погашения.</value>
-        [DataMember(Name = "transactionDesc", EmitDefaultValue = false)]
-        public string TransactionDesc { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RedemptionInfo {\n");
-            sb.Append("  AuthorizationCode: ").Append(AuthorizationCode).Append("\n");
-            sb.Append("  TransactionID: ").Append(TransactionID).Append("\n");
-            sb.Append("  TransactionDesc: ").Append(TransactionDesc).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RedemptionInfo);
-        }
-
-        /// <summary>
-        /// Returns true if RedemptionInfo instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RedemptionInfo to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RedemptionInfo input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.AuthorizationCode == input.AuthorizationCode ||
-                    (this.AuthorizationCode != null &&
-                    this.AuthorizationCode.Equals(input.AuthorizationCode))
-                ) && 
-                (
-                    this.TransactionID == input.TransactionID ||
-                    this.TransactionID.Equals(input.TransactionID)
-                ) && 
-                (
-                    this.TransactionDesc == input.TransactionDesc ||
-                    (this.TransactionDesc != null &&
-                    this.TransactionDesc.Equals(input.TransactionDesc))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.AuthorizationCode != null)
-                {
-                    hashCode = (hashCode * 59) + this.AuthorizationCode.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.TransactionID.GetHashCode();
-                if (this.TransactionDesc != null)
-                {
-                    hashCode = (hashCode * 59) + this.TransactionDesc.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // AuthorizationCode (string) maxLength
-            if (this.AuthorizationCode != null && this.AuthorizationCode.Length > 50)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AuthorizationCode, length must be less than 50.", new [] { "AuthorizationCode" });
-            }
-
-            // AuthorizationCode (string) minLength
-            if (this.AuthorizationCode != null && this.AuthorizationCode.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AuthorizationCode, length must be greater than 1.", new [] { "AuthorizationCode" });
-            }
-
-            // AuthorizationCode (string) pattern
-            Regex regexAuthorizationCode = new Regex(@"^[a-zA-Z0-9]{1,50}$", RegexOptions.CultureInvariant);
-            if (false == regexAuthorizationCode.Match(this.AuthorizationCode).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for AuthorizationCode, must match a pattern of " + regexAuthorizationCode, new [] { "AuthorizationCode" });
-            }
-
-            // TransactionDesc (string) maxLength
-            if (this.TransactionDesc != null && this.TransactionDesc.Length > 200)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionDesc, length must be less than 200.", new [] { "TransactionDesc" });
-            }
-
-            // TransactionDesc (string) minLength
-            if (this.TransactionDesc != null && this.TransactionDesc.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionDesc, length must be greater than 1.", new [] { "TransactionDesc" });
-            }
-
-            // TransactionDesc (string) pattern
-            Regex regexTransactionDesc = new Regex(@"^.{1,200}$", RegexOptions.CultureInvariant);
-            if (false == regexTransactionDesc.Match(this.TransactionDesc).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TransactionDesc, must match a pattern of " + regexTransactionDesc, new [] { "TransactionDesc" });
-            }
-
-            yield break;
-        }
+        AuthorizationCode = authorizationCode;
+        TransactionID = transactionID;
+        TransactionDesc = transactionDesc;
     }
 
+    /// <summary>
+    ///     Код авторизации, сгенерированный продавцом в точке продаж.
+    /// </summary>
+    /// <value>Код авторизации, сгенерированный продавцом в точке продаж.</value>
+    [DataMember(Name = "authorizationCode", EmitDefaultValue = false)]
+    public string AuthorizationCode { get; set; }
+
+    /// <summary>
+    ///     Идентификатор транзакции, созданный продавцом в точке продаж.
+    /// </summary>
+    /// <value>Идентификатор транзакции, созданный продавцом в точке продаж.</value>
+    [DataMember(Name = "transactionID", EmitDefaultValue = false)]
+    public decimal TransactionID { get; set; }
+
+    /// <summary>
+    ///     Описание транзакции для погашения.
+    /// </summary>
+    /// <value>Описание транзакции для погашения.</value>
+    [DataMember(Name = "transactionDesc", EmitDefaultValue = false)]
+    public string TransactionDesc { get; set; }
+
+    /// <summary>
+    ///     Returns true if RedemptionInfo instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RedemptionInfo to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RedemptionInfo input)
+    {
+        if (input == null) return false;
+        return
+            (
+                AuthorizationCode == input.AuthorizationCode ||
+                (AuthorizationCode != null &&
+                 AuthorizationCode.Equals(input.AuthorizationCode))
+            ) &&
+            (
+                TransactionID == input.TransactionID ||
+                TransactionID.Equals(input.TransactionID)
+            ) &&
+            (
+                TransactionDesc == input.TransactionDesc ||
+                (TransactionDesc != null &&
+                 TransactionDesc.Equals(input.TransactionDesc))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // AuthorizationCode (string) maxLength
+        if (AuthorizationCode != null && AuthorizationCode.Length > 50)
+            yield return new ValidationResult("Invalid value for AuthorizationCode, length must be less than 50.", new[] { "AuthorizationCode" });
+
+        // AuthorizationCode (string) minLength
+        if (AuthorizationCode != null && AuthorizationCode.Length < 1)
+            yield return new ValidationResult("Invalid value for AuthorizationCode, length must be greater than 1.", new[] { "AuthorizationCode" });
+
+        // AuthorizationCode (string) pattern
+        var regexAuthorizationCode = new Regex(@"^[a-zA-Z0-9]{1,50}$", RegexOptions.CultureInvariant);
+        if (false == regexAuthorizationCode.Match(AuthorizationCode).Success)
+            yield return new ValidationResult("Invalid value for AuthorizationCode, must match a pattern of " + regexAuthorizationCode, new[] { "AuthorizationCode" });
+
+        // TransactionDesc (string) maxLength
+        if (TransactionDesc != null && TransactionDesc.Length > 200)
+            yield return new ValidationResult("Invalid value for TransactionDesc, length must be less than 200.", new[] { "TransactionDesc" });
+
+        // TransactionDesc (string) minLength
+        if (TransactionDesc != null && TransactionDesc.Length < 1)
+            yield return new ValidationResult("Invalid value for TransactionDesc, length must be greater than 1.", new[] { "TransactionDesc" });
+
+        // TransactionDesc (string) pattern
+        var regexTransactionDesc = new Regex(@"^.{1,200}$", RegexOptions.CultureInvariant);
+        if (false == regexTransactionDesc.Match(TransactionDesc).Success)
+            yield return new ValidationResult("Invalid value for TransactionDesc, must match a pattern of " + regexTransactionDesc, new[] { "TransactionDesc" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RedemptionInfo {\n");
+        sb.Append("  AuthorizationCode: ").Append(AuthorizationCode).Append("\n");
+        sb.Append("  TransactionID: ").Append(TransactionID).Append("\n");
+        sb.Append("  TransactionDesc: ").Append(TransactionDesc).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RedemptionInfo);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (AuthorizationCode != null) hashCode = hashCode * 59 + AuthorizationCode.GetHashCode();
+            hashCode = hashCode * 59 + TransactionID.GetHashCode();
+            if (TransactionDesc != null) hashCode = hashCode * 59 + TransactionDesc.GetHashCode();
+            return hashCode;
+        }
+    }
 }

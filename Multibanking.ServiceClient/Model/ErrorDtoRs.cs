@@ -9,152 +9,125 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.ServiceClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.ServiceClient.Model
+namespace Multibanking.ServiceClient.Model;
+
+/// <summary>
+///     Ответ о неуспешности запроса
+/// </summary>
+[DataContract(Name = "ErrorDtoRs")]
+public class ErrorDtoRs : IEquatable<ErrorDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Ответ о неуспешности запроса
+    ///     Initializes a new instance of the <see cref="ErrorDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "ErrorDtoRs")]
-    public partial class ErrorDtoRs : IEquatable<ErrorDtoRs>, IValidatableObject
+    /// <param name="type">Тип ошибки.</param>
+    /// <param name="message">Сообщение об ошибке.</param>
+    public ErrorDtoRs(string type = default, string message = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorDtoRs" /> class.
-        /// </summary>
-        /// <param name="type">Тип ошибки.</param>
-        /// <param name="message">Сообщение об ошибке.</param>
-        public ErrorDtoRs(string type = default(string), string message = default(string))
-        {
-            this.Type = type;
-            this.Message = message;
-        }
-
-        /// <summary>
-        /// Тип ошибки
-        /// </summary>
-        /// <value>Тип ошибки</value>
-        [DataMember(Name = "serviceType", EmitDefaultValue = false)]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// Сообщение об ошибке
-        /// </summary>
-        /// <value>Сообщение об ошибке</value>
-        [DataMember(Name = "message", EmitDefaultValue = false)]
-        public string Message { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ErrorDtoRs {\n");
-            sb.Append("  ServiceType: ").Append(Type).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ErrorDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if ErrorDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ErrorDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ErrorDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
-                ) && 
-                (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Type != null)
-                {
-                    hashCode = (hashCode * 59) + this.Type.GetHashCode();
-                }
-                if (this.Message != null)
-                {
-                    hashCode = (hashCode * 59) + this.Message.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // ServiceType (string) maxLength
-            if (this.Type != null && this.Type.Length > 64)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ServiceType, length must be less than 64.", new [] { "ServiceType" });
-            }
-
-            // Message (string) maxLength
-            if (this.Message != null && this.Message.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Message, length must be less than 255.", new [] { "Message" });
-            }
-
-            yield break;
-        }
+        Type = type;
+        Message = message;
     }
 
+    /// <summary>
+    ///     Тип ошибки
+    /// </summary>
+    /// <value>Тип ошибки</value>
+    [DataMember(Name = "serviceType", EmitDefaultValue = false)]
+    public string Type { get; set; }
+
+    /// <summary>
+    ///     Сообщение об ошибке
+    /// </summary>
+    /// <value>Сообщение об ошибке</value>
+    [DataMember(Name = "message", EmitDefaultValue = false)]
+    public string Message { get; set; }
+
+    /// <summary>
+    ///     Returns true if ErrorDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ErrorDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ErrorDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Type == input.Type ||
+                (Type != null &&
+                 Type.Equals(input.Type))
+            ) &&
+            (
+                Message == input.Message ||
+                (Message != null &&
+                 Message.Equals(input.Message))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // ServiceType (string) maxLength
+        if (Type != null && Type.Length > 64) yield return new ValidationResult("Invalid value for ServiceType, length must be less than 64.", new[] { "ServiceType" });
+
+        // Message (string) maxLength
+        if (Message != null && Message.Length > 255) yield return new ValidationResult("Invalid value for Message, length must be less than 255.", new[] { "Message" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ErrorDtoRs {\n");
+        sb.Append("  ServiceType: ").Append(Type).Append("\n");
+        sb.Append("  Message: ").Append(Message).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ErrorDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Type != null) hashCode = hashCode * 59 + Type.GetHashCode();
+            if (Message != null) hashCode = hashCode * 59 + Message.GetHashCode();
+            return hashCode;
+        }
+    }
 }

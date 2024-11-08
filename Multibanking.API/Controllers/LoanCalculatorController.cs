@@ -16,5 +16,8 @@ public class LoanCalculatorController(ILoanCalculatorService loanCalculatorServi
     }
 
     [HttpGet("BankInterestRate")]
-    public ActionResult<List<BankInterestRate>> Get() => loanCalculatorService.GetBankInterestRate();
+    public ActionResult<List<BankInterestRate>> Get()
+    {
+        return loanCalculatorService.GetBankInterestRate();
+    }
 }

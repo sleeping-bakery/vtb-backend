@@ -9,176 +9,162 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.ServiceClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.ServiceClient.Model
+namespace Multibanking.ServiceClient.Model;
+
+/// <summary>
+///     Информация о канале ПУ
+/// </summary>
+[DataContract(Name = "ChannelDtoRs")]
+public class ChannelDtoRs : IEquatable<ChannelDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Информация о канале ПУ
+    ///     Наименование канала
     /// </summary>
-    [DataContract(Name = "ChannelDtoRs")]
-    public partial class ChannelDtoRs : IEquatable<ChannelDtoRs>, IValidatableObject
+    /// <value>Наименование канала</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum NameEnum
     {
         /// <summary>
-        /// Наименование канала
+        ///     Enum MOBILE for value: MOBILE
         /// </summary>
-        /// <value>Наименование канала</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum NameEnum
-        {
-            /// <summary>
-            /// Enum MOBILE for value: MOBILE
-            /// </summary>
-            [EnumMember(Value = "MOBILE")]
-            MOBILE = 1,
-
-            /// <summary>
-            /// Enum WEB for value: WEB
-            /// </summary>
-            [EnumMember(Value = "WEB")]
-            WEB = 2,
-
-            /// <summary>
-            /// Enum ATM for value: ATM
-            /// </summary>
-            [EnumMember(Value = "ATM")]
-            ATM = 3,
-
-            /// <summary>
-            /// Enum MOBILELITE for value: MOBILE_LITE
-            /// </summary>
-            [EnumMember(Value = "MOBILE_LITE")]
-            MOBILELITE = 4,
-
-            /// <summary>
-            /// Enum WEBLITE for value: WEB_LITE
-            /// </summary>
-            [EnumMember(Value = "WEB_LITE")]
-            WEBLITE = 5
-
-        }
-
+        [EnumMember(Value = "MOBILE")] MOBILE = 1,
 
         /// <summary>
-        /// Наименование канала
+        ///     Enum WEB for value: WEB
         /// </summary>
-        /// <value>Наименование канала</value>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
-        public NameEnum Name { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ChannelDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ChannelDtoRs" /> class.
-        /// </summary>
-        /// <param name="name">Наименование канала (required).</param>
-        /// <param name="visible">Видимость канала (required).</param>
-        public ChannelDtoRs(NameEnum name = default(NameEnum), bool visible = default(bool))
-        {
-            this.Name = name;
-            this.Visible = visible;
-        }
+        [EnumMember(Value = "WEB")] WEB = 2,
 
         /// <summary>
-        /// Видимость канала
+        ///     Enum ATM for value: ATM
         /// </summary>
-        /// <value>Видимость канала</value>
-        [DataMember(Name = "visible", IsRequired = true, EmitDefaultValue = true)]
-        public bool Visible { get; set; }
+        [EnumMember(Value = "ATM")] ATM = 3,
 
         /// <summary>
-        /// Returns the string presentation of the object
+        ///     Enum MOBILELITE for value: MOBILE_LITE
         /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ChannelDtoRs {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Visible: ").Append(Visible).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
+        [EnumMember(Value = "MOBILE_LITE")] MOBILELITE = 4,
 
         /// <summary>
-        /// Returns the JSON string presentation of the object
+        ///     Enum WEBLITE for value: WEB_LITE
         /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ChannelDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if ChannelDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ChannelDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ChannelDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Name == input.Name ||
-                    this.Name.Equals(input.Name)
-                ) && 
-                (
-                    this.Visible == input.Visible ||
-                    this.Visible.Equals(input.Visible)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.Name.GetHashCode();
-                hashCode = (hashCode * 59) + this.Visible.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        [EnumMember(Value = "WEB_LITE")] WEBLITE = 5
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ChannelDtoRs" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected ChannelDtoRs()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ChannelDtoRs" /> class.
+    /// </summary>
+    /// <param name="name">Наименование канала (required).</param>
+    /// <param name="visible">Видимость канала (required).</param>
+    public ChannelDtoRs(NameEnum name = default, bool visible = default)
+    {
+        Name = name;
+        Visible = visible;
+    }
+
+
+    /// <summary>
+    ///     Наименование канала
+    /// </summary>
+    /// <value>Наименование канала</value>
+    [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
+    public NameEnum Name { get; set; }
+
+    /// <summary>
+    ///     Видимость канала
+    /// </summary>
+    /// <value>Видимость канала</value>
+    [DataMember(Name = "visible", IsRequired = true, EmitDefaultValue = true)]
+    public bool Visible { get; set; }
+
+    /// <summary>
+    ///     Returns true if ChannelDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ChannelDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ChannelDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Name == input.Name ||
+                Name.Equals(input.Name)
+            ) &&
+            (
+                Visible == input.Visible ||
+                Visible.Equals(input.Visible)
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ChannelDtoRs {\n");
+        sb.Append("  Name: ").Append(Name).Append("\n");
+        sb.Append("  Visible: ").Append(Visible).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ChannelDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + Name.GetHashCode();
+            hashCode = hashCode * 59 + Visible.GetHashCode();
+            return hashCode;
+        }
+    }
 }

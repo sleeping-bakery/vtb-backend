@@ -9,262 +9,210 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Полезная нагрузка ответа подтверждения наличия доступных средств
+/// </summary>
+[DataContract(Name = "VRPFundsConfirmationResponse_Data")]
+public class VRPFundsConfirmationResponseData : IEquatable<VRPFundsConfirmationResponseData>, IValidatableObject
 {
     /// <summary>
-    /// Полезная нагрузка ответа подтверждения наличия доступных средств
+    ///     Initializes a new instance of the <see cref="VRPFundsConfirmationResponseData" /> class.
     /// </summary>
-    [DataContract(Name = "VRPFundsConfirmationResponse_Data")]
-    public partial class VRPFundsConfirmationResponseData : IEquatable<VRPFundsConfirmationResponseData>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected VRPFundsConfirmationResponseData()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPFundsConfirmationResponseData" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected VRPFundsConfirmationResponseData() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPFundsConfirmationResponseData" /> class.
-        /// </summary>
-        /// <param name="fundsConfirmationId">Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса подтверждения наличия средств (required).</param>
-        /// <param name="consentId">Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса согласия наличия денежных срелств (required).</param>
-        /// <param name="creationDateTime">Дата и время создания ресурса. (required).</param>
-        /// <param name="reference">Уникальная идентификатор, определенный СППУ, однозначно ссылающийся на запрос, связанный с платежной инструкцией (required).</param>
-        /// <param name="fundsAvailableResult">fundsAvailableResult (required).</param>
-        /// <param name="instructedAmount">instructedAmount (required).</param>
-        public VRPFundsConfirmationResponseData(string fundsConfirmationId = default(string), string consentId = default(string), DateTime creationDateTime = default(DateTime), string reference = default(string), VRPFundsConfirmationResponseDataFundsAvailableResult fundsAvailableResult = default(VRPFundsConfirmationResponseDataFundsAvailableResult), VRPFundsConfirmationResponseDataInstructedAmount instructedAmount = default(VRPFundsConfirmationResponseDataInstructedAmount))
-        {
-            // to ensure "fundsConfirmationId" is required (not null)
-            if (fundsConfirmationId == null)
-            {
-                throw new ArgumentNullException("fundsConfirmationId is a required property for VRPFundsConfirmationResponseData and cannot be null");
-            }
-            this.FundsConfirmationId = fundsConfirmationId;
-            // to ensure "consentId" is required (not null)
-            if (consentId == null)
-            {
-                throw new ArgumentNullException("consentId is a required property for VRPFundsConfirmationResponseData and cannot be null");
-            }
-            this.ConsentId = consentId;
-            this.CreationDateTime = creationDateTime;
-            // to ensure "reference" is required (not null)
-            if (reference == null)
-            {
-                throw new ArgumentNullException("reference is a required property for VRPFundsConfirmationResponseData and cannot be null");
-            }
-            this.Reference = reference;
-            // to ensure "fundsAvailableResult" is required (not null)
-            if (fundsAvailableResult == null)
-            {
-                throw new ArgumentNullException("fundsAvailableResult is a required property for VRPFundsConfirmationResponseData and cannot be null");
-            }
-            this.FundsAvailableResult = fundsAvailableResult;
-            // to ensure "instructedAmount" is required (not null)
-            if (instructedAmount == null)
-            {
-                throw new ArgumentNullException("instructedAmount is a required property for VRPFundsConfirmationResponseData and cannot be null");
-            }
-            this.InstructedAmount = instructedAmount;
-        }
-
-        /// <summary>
-        /// Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса подтверждения наличия средств
-        /// </summary>
-        /// <value>Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса подтверждения наличия средств</value>
-        [DataMember(Name = "fundsConfirmationId", IsRequired = true, EmitDefaultValue = true)]
-        public string FundsConfirmationId { get; set; }
-
-        /// <summary>
-        /// Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса согласия наличия денежных срелств
-        /// </summary>
-        /// <value>Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса согласия наличия денежных срелств</value>
-        [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
-        public string ConsentId { get; set; }
-
-        /// <summary>
-        /// Дата и время создания ресурса.
-        /// </summary>
-        /// <value>Дата и время создания ресурса.</value>
-        [DataMember(Name = "creationDateTime", IsRequired = true, EmitDefaultValue = true)]
-        public DateTime CreationDateTime { get; set; }
-
-        /// <summary>
-        /// Уникальная идентификатор, определенный СППУ, однозначно ссылающийся на запрос, связанный с платежной инструкцией
-        /// </summary>
-        /// <value>Уникальная идентификатор, определенный СППУ, однозначно ссылающийся на запрос, связанный с платежной инструкцией</value>
-        [DataMember(Name = "reference", IsRequired = true, EmitDefaultValue = true)]
-        public string Reference { get; set; }
-
-        /// <summary>
-        /// Gets or Sets FundsAvailableResult
-        /// </summary>
-        [DataMember(Name = "FundsAvailableResult", IsRequired = true, EmitDefaultValue = true)]
-        public VRPFundsConfirmationResponseDataFundsAvailableResult FundsAvailableResult { get; set; }
-
-        /// <summary>
-        /// Gets or Sets InstructedAmount
-        /// </summary>
-        [DataMember(Name = "InstructedAmount", IsRequired = true, EmitDefaultValue = true)]
-        public VRPFundsConfirmationResponseDataInstructedAmount InstructedAmount { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPFundsConfirmationResponseData {\n");
-            sb.Append("  FundsConfirmationId: ").Append(FundsConfirmationId).Append("\n");
-            sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
-            sb.Append("  CreationDateTime: ").Append(CreationDateTime).Append("\n");
-            sb.Append("  Reference: ").Append(Reference).Append("\n");
-            sb.Append("  FundsAvailableResult: ").Append(FundsAvailableResult).Append("\n");
-            sb.Append("  InstructedAmount: ").Append(InstructedAmount).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPFundsConfirmationResponseData);
-        }
-
-        /// <summary>
-        /// Returns true if VRPFundsConfirmationResponseData instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPFundsConfirmationResponseData to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPFundsConfirmationResponseData input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.FundsConfirmationId == input.FundsConfirmationId ||
-                    (this.FundsConfirmationId != null &&
-                    this.FundsConfirmationId.Equals(input.FundsConfirmationId))
-                ) && 
-                (
-                    this.ConsentId == input.ConsentId ||
-                    (this.ConsentId != null &&
-                    this.ConsentId.Equals(input.ConsentId))
-                ) && 
-                (
-                    this.CreationDateTime == input.CreationDateTime ||
-                    (this.CreationDateTime != null &&
-                    this.CreationDateTime.Equals(input.CreationDateTime))
-                ) && 
-                (
-                    this.Reference == input.Reference ||
-                    (this.Reference != null &&
-                    this.Reference.Equals(input.Reference))
-                ) && 
-                (
-                    this.FundsAvailableResult == input.FundsAvailableResult ||
-                    (this.FundsAvailableResult != null &&
-                    this.FundsAvailableResult.Equals(input.FundsAvailableResult))
-                ) && 
-                (
-                    this.InstructedAmount == input.InstructedAmount ||
-                    (this.InstructedAmount != null &&
-                    this.InstructedAmount.Equals(input.InstructedAmount))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.FundsConfirmationId != null)
-                {
-                    hashCode = (hashCode * 59) + this.FundsConfirmationId.GetHashCode();
-                }
-                if (this.ConsentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.ConsentId.GetHashCode();
-                }
-                if (this.CreationDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreationDateTime.GetHashCode();
-                }
-                if (this.Reference != null)
-                {
-                    hashCode = (hashCode * 59) + this.Reference.GetHashCode();
-                }
-                if (this.FundsAvailableResult != null)
-                {
-                    hashCode = (hashCode * 59) + this.FundsAvailableResult.GetHashCode();
-                }
-                if (this.InstructedAmount != null)
-                {
-                    hashCode = (hashCode * 59) + this.InstructedAmount.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // FundsConfirmationId (string) maxLength
-            if (this.FundsConfirmationId != null && this.FundsConfirmationId.Length > 40)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FundsConfirmationId, length must be less than 40.", new [] { "FundsConfirmationId" });
-            }
-
-            // ConsentId (string) maxLength
-            if (this.ConsentId != null && this.ConsentId.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for ConsentId, length must be less than 128.", new [] { "ConsentId" });
-            }
-
-            // Reference (string) maxLength
-            if (this.Reference != null && this.Reference.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Reference, length must be less than 35.", new [] { "Reference" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="VRPFundsConfirmationResponseData" /> class.
+    /// </summary>
+    /// <param name="fundsConfirmationId">Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса подтверждения наличия средств (required).</param>
+    /// <param name="consentId">Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса согласия наличия денежных срелств (required).</param>
+    /// <param name="creationDateTime">Дата и время создания ресурса. (required).</param>
+    /// <param name="reference">Уникальная идентификатор, определенный СППУ, однозначно ссылающийся на запрос, связанный с платежной инструкцией (required).</param>
+    /// <param name="fundsAvailableResult">fundsAvailableResult (required).</param>
+    /// <param name="instructedAmount">instructedAmount (required).</param>
+    public VRPFundsConfirmationResponseData(string fundsConfirmationId = default, string consentId = default, DateTime creationDateTime = default, string reference = default,
+        VRPFundsConfirmationResponseDataFundsAvailableResult fundsAvailableResult = default, VRPFundsConfirmationResponseDataInstructedAmount instructedAmount = default)
+    {
+        // to ensure "fundsConfirmationId" is required (not null)
+        if (fundsConfirmationId == null) throw new ArgumentNullException("fundsConfirmationId is a required property for VRPFundsConfirmationResponseData and cannot be null");
+        FundsConfirmationId = fundsConfirmationId;
+        // to ensure "consentId" is required (not null)
+        if (consentId == null) throw new ArgumentNullException("consentId is a required property for VRPFundsConfirmationResponseData and cannot be null");
+        ConsentId = consentId;
+        CreationDateTime = creationDateTime;
+        // to ensure "reference" is required (not null)
+        if (reference == null) throw new ArgumentNullException("reference is a required property for VRPFundsConfirmationResponseData and cannot be null");
+        Reference = reference;
+        // to ensure "fundsAvailableResult" is required (not null)
+        if (fundsAvailableResult == null) throw new ArgumentNullException("fundsAvailableResult is a required property for VRPFundsConfirmationResponseData and cannot be null");
+        FundsAvailableResult = fundsAvailableResult;
+        // to ensure "instructedAmount" is required (not null)
+        if (instructedAmount == null) throw new ArgumentNullException("instructedAmount is a required property for VRPFundsConfirmationResponseData and cannot be null");
+        InstructedAmount = instructedAmount;
+    }
+
+    /// <summary>
+    ///     Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса подтверждения наличия средств
+    /// </summary>
+    /// <value>Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса подтверждения наличия средств</value>
+    [DataMember(Name = "fundsConfirmationId", IsRequired = true, EmitDefaultValue = true)]
+    public string FundsConfirmationId { get; set; }
+
+    /// <summary>
+    ///     Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса согласия наличия денежных срелств
+    /// </summary>
+    /// <value>Уникальный идентификатор, определенный ППИУ для однозначного определения ресурса согласия наличия денежных срелств</value>
+    [DataMember(Name = "consentId", IsRequired = true, EmitDefaultValue = true)]
+    public string ConsentId { get; set; }
+
+    /// <summary>
+    ///     Дата и время создания ресурса.
+    /// </summary>
+    /// <value>Дата и время создания ресурса.</value>
+    [DataMember(Name = "creationDateTime", IsRequired = true, EmitDefaultValue = true)]
+    public DateTime CreationDateTime { get; set; }
+
+    /// <summary>
+    ///     Уникальная идентификатор, определенный СППУ, однозначно ссылающийся на запрос, связанный с платежной инструкцией
+    /// </summary>
+    /// <value>Уникальная идентификатор, определенный СППУ, однозначно ссылающийся на запрос, связанный с платежной инструкцией</value>
+    [DataMember(Name = "reference", IsRequired = true, EmitDefaultValue = true)]
+    public string Reference { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets FundsAvailableResult
+    /// </summary>
+    [DataMember(Name = "FundsAvailableResult", IsRequired = true, EmitDefaultValue = true)]
+    public VRPFundsConfirmationResponseDataFundsAvailableResult FundsAvailableResult { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets InstructedAmount
+    /// </summary>
+    [DataMember(Name = "InstructedAmount", IsRequired = true, EmitDefaultValue = true)]
+    public VRPFundsConfirmationResponseDataInstructedAmount InstructedAmount { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPFundsConfirmationResponseData instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPFundsConfirmationResponseData to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPFundsConfirmationResponseData input)
+    {
+        if (input == null) return false;
+        return
+            (
+                FundsConfirmationId == input.FundsConfirmationId ||
+                (FundsConfirmationId != null &&
+                 FundsConfirmationId.Equals(input.FundsConfirmationId))
+            ) &&
+            (
+                ConsentId == input.ConsentId ||
+                (ConsentId != null &&
+                 ConsentId.Equals(input.ConsentId))
+            ) &&
+            (
+                CreationDateTime == input.CreationDateTime ||
+                (CreationDateTime != null &&
+                 CreationDateTime.Equals(input.CreationDateTime))
+            ) &&
+            (
+                Reference == input.Reference ||
+                (Reference != null &&
+                 Reference.Equals(input.Reference))
+            ) &&
+            (
+                FundsAvailableResult == input.FundsAvailableResult ||
+                (FundsAvailableResult != null &&
+                 FundsAvailableResult.Equals(input.FundsAvailableResult))
+            ) &&
+            (
+                InstructedAmount == input.InstructedAmount ||
+                (InstructedAmount != null &&
+                 InstructedAmount.Equals(input.InstructedAmount))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // FundsConfirmationId (string) maxLength
+        if (FundsConfirmationId != null && FundsConfirmationId.Length > 40)
+            yield return new ValidationResult("Invalid value for FundsConfirmationId, length must be less than 40.", new[] { "FundsConfirmationId" });
+
+        // ConsentId (string) maxLength
+        if (ConsentId != null && ConsentId.Length > 128) yield return new ValidationResult("Invalid value for ConsentId, length must be less than 128.", new[] { "ConsentId" });
+
+        // Reference (string) maxLength
+        if (Reference != null && Reference.Length > 35) yield return new ValidationResult("Invalid value for Reference, length must be less than 35.", new[] { "Reference" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPFundsConfirmationResponseData {\n");
+        sb.Append("  FundsConfirmationId: ").Append(FundsConfirmationId).Append("\n");
+        sb.Append("  ConsentId: ").Append(ConsentId).Append("\n");
+        sb.Append("  CreationDateTime: ").Append(CreationDateTime).Append("\n");
+        sb.Append("  Reference: ").Append(Reference).Append("\n");
+        sb.Append("  FundsAvailableResult: ").Append(FundsAvailableResult).Append("\n");
+        sb.Append("  InstructedAmount: ").Append(InstructedAmount).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPFundsConfirmationResponseData);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (FundsConfirmationId != null) hashCode = hashCode * 59 + FundsConfirmationId.GetHashCode();
+            if (ConsentId != null) hashCode = hashCode * 59 + ConsentId.GetHashCode();
+            if (CreationDateTime != null) hashCode = hashCode * 59 + CreationDateTime.GetHashCode();
+            if (Reference != null) hashCode = hashCode * 59 + Reference.GetHashCode();
+            if (FundsAvailableResult != null) hashCode = hashCode * 59 + FundsAvailableResult.GetHashCode();
+            if (InstructedAmount != null) hashCode = hashCode * 59 + InstructedAmount.GetHashCode();
+            return hashCode;
+        }
+    }
 }

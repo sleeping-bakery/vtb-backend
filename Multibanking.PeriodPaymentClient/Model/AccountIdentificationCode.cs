@@ -8,60 +8,41 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Схема идентификации счета
+/// </summary>
+/// <value>Схема идентификации счета</value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum AccountIdentificationCode
 {
     /// <summary>
-    /// Схема идентификации счета
+    ///     Enum BBAN for value: RU.CBR.BBAN
     /// </summary>
-    /// <value>Схема идентификации счета</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum AccountIdentificationCode
-    {
-        /// <summary>
-        /// Enum BBAN for value: RU.CBR.BBAN
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.BBAN")]
-        BBAN = 1,
+    [EnumMember(Value = "RU.CBR.BBAN")] BBAN = 1,
 
-        /// <summary>
-        /// Enum EPID for value: RU.CBR.EPID
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.EPID")]
-        EPID = 2,
+    /// <summary>
+    ///     Enum EPID for value: RU.CBR.EPID
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.EPID")] EPID = 2,
 
-        /// <summary>
-        /// Enum ORID for value: RU.CBR.ORID
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.ORID")]
-        ORID = 3,
+    /// <summary>
+    ///     Enum ORID for value: RU.CBR.ORID
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.ORID")] ORID = 3,
 
-        /// <summary>
-        /// Enum PAN for value: RU.CBR.PAN
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.PAN")]
-        PAN = 4,
+    /// <summary>
+    ///     Enum PAN for value: RU.CBR.PAN
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.PAN")] PAN = 4,
 
-        /// <summary>
-        /// Enum MTEL for value: RU.CBR.MTEL
-        /// </summary>
-        [EnumMember(Value = "RU.CBR.MTEL")]
-        MTEL = 5
-
-    }
-
+    /// <summary>
+    ///     Enum MTEL for value: RU.CBR.MTEL
+    /// </summary>
+    [EnumMember(Value = "RU.CBR.MTEL")] MTEL = 5
 }

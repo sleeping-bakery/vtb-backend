@@ -9,130 +9,112 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Ответ на запрос оплаты услуги ПУ
+/// </summary>
+[DataContract(Name = "RequestPaymentDtoRs")]
+public class RequestPaymentDtoRs : IEquatable<RequestPaymentDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Ответ на запрос оплаты услуги ПУ
+    ///     Initializes a new instance of the <see cref="RequestPaymentDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "RequestPaymentDtoRs")]
-    public partial class RequestPaymentDtoRs : IEquatable<RequestPaymentDtoRs>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RequestPaymentDtoRs()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestPaymentDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RequestPaymentDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequestPaymentDtoRs" /> class.
-        /// </summary>
-        /// <param name="payment">payment (required).</param>
-        public RequestPaymentDtoRs(DraftPaymentDtoRs payment = default(DraftPaymentDtoRs))
-        {
-            // to ensure "payment" is required (not null)
-            if (payment == null)
-            {
-                throw new ArgumentNullException("payment is a required property for RequestPaymentDtoRs and cannot be null");
-            }
-            this.Payment = payment;
-        }
-
-        /// <summary>
-        /// Gets or Sets Payment
-        /// </summary>
-        [DataMember(Name = "payment", IsRequired = true, EmitDefaultValue = true)]
-        public DraftPaymentDtoRs Payment { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RequestPaymentDtoRs {\n");
-            sb.Append("  Payment: ").Append(Payment).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RequestPaymentDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if RequestPaymentDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RequestPaymentDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RequestPaymentDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Payment == input.Payment ||
-                    (this.Payment != null &&
-                    this.Payment.Equals(input.Payment))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Payment != null)
-                {
-                    hashCode = (hashCode * 59) + this.Payment.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RequestPaymentDtoRs" /> class.
+    /// </summary>
+    /// <param name="payment">payment (required).</param>
+    public RequestPaymentDtoRs(DraftPaymentDtoRs payment = default)
+    {
+        // to ensure "payment" is required (not null)
+        if (payment == null) throw new ArgumentNullException("payment is a required property for RequestPaymentDtoRs and cannot be null");
+        Payment = payment;
+    }
+
+    /// <summary>
+    ///     Gets or Sets Payment
+    /// </summary>
+    [DataMember(Name = "payment", IsRequired = true, EmitDefaultValue = true)]
+    public DraftPaymentDtoRs Payment { get; set; }
+
+    /// <summary>
+    ///     Returns true if RequestPaymentDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RequestPaymentDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RequestPaymentDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            Payment == input.Payment ||
+            (Payment != null &&
+             Payment.Equals(input.Payment));
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RequestPaymentDtoRs {\n");
+        sb.Append("  Payment: ").Append(Payment).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RequestPaymentDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Payment != null) hashCode = hashCode * 59 + Payment.GetHashCode();
+            return hashCode;
+        }
+    }
 }

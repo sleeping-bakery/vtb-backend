@@ -9,204 +9,168 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     OBRUErrorResponseErrorsInner
+/// </summary>
+[DataContract(Name = "OBRUErrorResponse_Errors_inner")]
+public class OBRUErrorResponseErrorsInner : IEquatable<OBRUErrorResponseErrorsInner>, IValidatableObject
 {
     /// <summary>
-    /// OBRUErrorResponseErrorsInner
+    ///     Initializes a new instance of the <see cref="OBRUErrorResponseErrorsInner" /> class.
     /// </summary>
-    [DataContract(Name = "OBRUErrorResponse_Errors_inner")]
-    public partial class OBRUErrorResponseErrorsInner : IEquatable<OBRUErrorResponseErrorsInner>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected OBRUErrorResponseErrorsInner()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OBRUErrorResponseErrorsInner" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected OBRUErrorResponseErrorsInner() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OBRUErrorResponseErrorsInner" /> class.
-        /// </summary>
-        /// <param name="errorCode">errorCode (required).</param>
-        /// <param name="message">Описание ошибки. Например, &#39;Обязательное поле не указано&#39; (required).</param>
-        /// <param name="path">Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле.</param>
-        /// <param name="url">URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию.</param>
-        public OBRUErrorResponseErrorsInner(string errorCode = default(string), string message = default(string), string path = default(string), string url = default(string))
-        {
-            // to ensure "errorCode" is required (not null)
-            if (errorCode == null)
-            {
-                throw new ArgumentNullException("errorCode is a required property for OBRUErrorResponseErrorsInner and cannot be null");
-            }
-            this.ErrorCode = errorCode;
-            // to ensure "message" is required (not null)
-            if (message == null)
-            {
-                throw new ArgumentNullException("message is a required property for OBRUErrorResponseErrorsInner and cannot be null");
-            }
-            this.Message = message;
-            this.Path = path;
-            this.Url = url;
-        }
-
-        /// <summary>
-        /// Gets or Sets ErrorCode
-        /// </summary>
-        [DataMember(Name = "errorCode", IsRequired = true, EmitDefaultValue = true)]
-        public string ErrorCode { get; set; }
-
-        /// <summary>
-        /// Описание ошибки. Например, &#39;Обязательное поле не указано&#39;
-        /// </summary>
-        /// <value>Описание ошибки. Например, &#39;Обязательное поле не указано&#39;</value>
-        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
-        public string Message { get; set; }
-
-        /// <summary>
-        /// Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле
-        /// </summary>
-        /// <value>Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле</value>
-        [DataMember(Name = "path", EmitDefaultValue = false)]
-        public string Path { get; set; }
-
-        /// <summary>
-        /// URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию
-        /// </summary>
-        /// <value>URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию</value>
-        [DataMember(Name = "url", EmitDefaultValue = false)]
-        public string Url { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class OBRUErrorResponseErrorsInner {\n");
-            sb.Append("  ErrorCode: ").Append(ErrorCode).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
-            sb.Append("  Path: ").Append(Path).Append("\n");
-            sb.Append("  Url: ").Append(Url).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as OBRUErrorResponseErrorsInner);
-        }
-
-        /// <summary>
-        /// Returns true if OBRUErrorResponseErrorsInner instances are equal
-        /// </summary>
-        /// <param name="input">Instance of OBRUErrorResponseErrorsInner to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(OBRUErrorResponseErrorsInner input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ErrorCode == input.ErrorCode ||
-                    (this.ErrorCode != null &&
-                    this.ErrorCode.Equals(input.ErrorCode))
-                ) && 
-                (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
-                ) && 
-                (
-                    this.Path == input.Path ||
-                    (this.Path != null &&
-                    this.Path.Equals(input.Path))
-                ) && 
-                (
-                    this.Url == input.Url ||
-                    (this.Url != null &&
-                    this.Url.Equals(input.Url))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.ErrorCode != null)
-                {
-                    hashCode = (hashCode * 59) + this.ErrorCode.GetHashCode();
-                }
-                if (this.Message != null)
-                {
-                    hashCode = (hashCode * 59) + this.Message.GetHashCode();
-                }
-                if (this.Path != null)
-                {
-                    hashCode = (hashCode * 59) + this.Path.GetHashCode();
-                }
-                if (this.Url != null)
-                {
-                    hashCode = (hashCode * 59) + this.Url.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Message (string) maxLength
-            if (this.Message != null && this.Message.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Message, length must be less than 500.", new [] { "Message" });
-            }
-
-            // Path (string) maxLength
-            if (this.Path != null && this.Path.Length > 500)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Path, length must be less than 500.", new [] { "Path" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="OBRUErrorResponseErrorsInner" /> class.
+    /// </summary>
+    /// <param name="errorCode">errorCode (required).</param>
+    /// <param name="message">Описание ошибки. Например, &#39;Обязательное поле не указано&#39; (required).</param>
+    /// <param name="path">Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле.</param>
+    /// <param name="url">URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию.</param>
+    public OBRUErrorResponseErrorsInner(string errorCode = default, string message = default, string path = default, string url = default)
+    {
+        // to ensure "errorCode" is required (not null)
+        if (errorCode == null) throw new ArgumentNullException("errorCode is a required property for OBRUErrorResponseErrorsInner and cannot be null");
+        ErrorCode = errorCode;
+        // to ensure "message" is required (not null)
+        if (message == null) throw new ArgumentNullException("message is a required property for OBRUErrorResponseErrorsInner and cannot be null");
+        Message = message;
+        Path = path;
+        Url = url;
+    }
+
+    /// <summary>
+    ///     Gets or Sets ErrorCode
+    /// </summary>
+    [DataMember(Name = "errorCode", IsRequired = true, EmitDefaultValue = true)]
+    public string ErrorCode { get; set; }
+
+    /// <summary>
+    ///     Описание ошибки. Например, &#39;Обязательное поле не указано&#39;
+    /// </summary>
+    /// <value>Описание ошибки. Например, &#39;Обязательное поле не указано&#39;</value>
+    [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
+    public string Message { get; set; }
+
+    /// <summary>
+    ///     Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле
+    /// </summary>
+    /// <value>Путь к элементу с ошибкой в JSON объекте. Рекомендуемое, но не обязательное поле</value>
+    [DataMember(Name = "path", EmitDefaultValue = false)]
+    public string Path { get; set; }
+
+    /// <summary>
+    ///     URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию
+    /// </summary>
+    /// <value>URL для помощи в устранении проблемы, Также через URL можно предоставлять дополнительную информацию</value>
+    [DataMember(Name = "url", EmitDefaultValue = false)]
+    public string Url { get; set; }
+
+    /// <summary>
+    ///     Returns true if OBRUErrorResponseErrorsInner instances are equal
+    /// </summary>
+    /// <param name="input">Instance of OBRUErrorResponseErrorsInner to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(OBRUErrorResponseErrorsInner input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ErrorCode == input.ErrorCode ||
+                (ErrorCode != null &&
+                 ErrorCode.Equals(input.ErrorCode))
+            ) &&
+            (
+                Message == input.Message ||
+                (Message != null &&
+                 Message.Equals(input.Message))
+            ) &&
+            (
+                Path == input.Path ||
+                (Path != null &&
+                 Path.Equals(input.Path))
+            ) &&
+            (
+                Url == input.Url ||
+                (Url != null &&
+                 Url.Equals(input.Url))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Message (string) maxLength
+        if (Message != null && Message.Length > 500) yield return new ValidationResult("Invalid value for Message, length must be less than 500.", new[] { "Message" });
+
+        // Path (string) maxLength
+        if (Path != null && Path.Length > 500) yield return new ValidationResult("Invalid value for Path, length must be less than 500.", new[] { "Path" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class OBRUErrorResponseErrorsInner {\n");
+        sb.Append("  ErrorCode: ").Append(ErrorCode).Append("\n");
+        sb.Append("  Message: ").Append(Message).Append("\n");
+        sb.Append("  Path: ").Append(Path).Append("\n");
+        sb.Append("  Url: ").Append(Url).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as OBRUErrorResponseErrorsInner);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (ErrorCode != null) hashCode = hashCode * 59 + ErrorCode.GetHashCode();
+            if (Message != null) hashCode = hashCode * 59 + Message.GetHashCode();
+            if (Path != null) hashCode = hashCode * 59 + Path.GetHashCode();
+            if (Url != null) hashCode = hashCode * 59 + Url.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -9,7 +9,7 @@ namespace Multibanking.API.Controllers;
 public class PeriodPaymentConsentController(IPeriodPaymentConsentService periodPaymentConsentService) : ControllerBase
 {
     /// <summary>
-    /// Создать согласие на периодические платежи
+    ///     Создать согласие на периодические платежи
     /// </summary>
     /// <param name="createPeriodPaymentConsentDto"></param>
     /// <returns></returns>
@@ -21,7 +21,7 @@ public class PeriodPaymentConsentController(IPeriodPaymentConsentService periodP
     }
 
     /// <summary>
-    /// Получить все согласия на периодические платежи, принадлежащие пользователю
+    ///     Получить все согласия на периодические платежи, принадлежащие пользователю
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -36,5 +36,4 @@ public class PeriodPaymentConsentController(IPeriodPaymentConsentService periodP
         periodPaymentConsentService.DeletePeriodPaymentConsent(periodPaymentConsentId);
         return Ok();
     }
-    
 }

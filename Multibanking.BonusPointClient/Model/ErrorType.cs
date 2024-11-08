@@ -9,274 +9,206 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     Детали сообщения – дополнительная информация о выполнении операции.
+/// </summary>
+[DataContract(Name = "ErrorType")]
+public class ErrorType : IEquatable<ErrorType>, IValidatableObject
 {
     /// <summary>
-    /// Детали сообщения – дополнительная информация о выполнении операции.
+    ///     Initializes a new instance of the <see cref="ErrorType" /> class.
     /// </summary>
-    [DataContract(Name = "ErrorType")]
-    public partial class ErrorType : IEquatable<ErrorType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected ErrorType()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ErrorType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorType" /> class.
-        /// </summary>
-        /// <param name="id">Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера. (required).</param>
-        /// <param name="code">Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции. (required).</param>
-        /// <param name="title">Краткое описание ошибки. Не для демонстрации. (required).</param>
-        /// <param name="detail">Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации..</param>
-        public ErrorType(string id = default(string), string code = default(string), string title = default(string), string detail = default(string))
-        {
-            // to ensure "id" is required (not null)
-            if (id == null)
-            {
-                throw new ArgumentNullException("id is a required property for ErrorType and cannot be null");
-            }
-            this.Id = id;
-            // to ensure "code" is required (not null)
-            if (code == null)
-            {
-                throw new ArgumentNullException("code is a required property for ErrorType and cannot be null");
-            }
-            this.Code = code;
-            // to ensure "title" is required (not null)
-            if (title == null)
-            {
-                throw new ArgumentNullException("title is a required property for ErrorType and cannot be null");
-            }
-            this.Title = title;
-            this.Detail = detail;
-        }
-
-        /// <summary>
-        /// Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера.
-        /// </summary>
-        /// <value>Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера.</value>
-        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции.
-        /// </summary>
-        /// <value>Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции.</value>
-        [DataMember(Name = "code", IsRequired = true, EmitDefaultValue = true)]
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Краткое описание ошибки. Не для демонстрации.
-        /// </summary>
-        /// <value>Краткое описание ошибки. Не для демонстрации.</value>
-        [DataMember(Name = "title", IsRequired = true, EmitDefaultValue = true)]
-        public string Title { get; set; }
-
-        /// <summary>
-        /// Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации.
-        /// </summary>
-        /// <value>Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации.</value>
-        [DataMember(Name = "detail", EmitDefaultValue = false)]
-        public string Detail { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ErrorType {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Code: ").Append(Code).Append("\n");
-            sb.Append("  Title: ").Append(Title).Append("\n");
-            sb.Append("  Detail: ").Append(Detail).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ErrorType);
-        }
-
-        /// <summary>
-        /// Returns true if ErrorType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ErrorType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ErrorType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Code == input.Code ||
-                    (this.Code != null &&
-                    this.Code.Equals(input.Code))
-                ) && 
-                (
-                    this.Title == input.Title ||
-                    (this.Title != null &&
-                    this.Title.Equals(input.Title))
-                ) && 
-                (
-                    this.Detail == input.Detail ||
-                    (this.Detail != null &&
-                    this.Detail.Equals(input.Detail))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                {
-                    hashCode = (hashCode * 59) + this.Id.GetHashCode();
-                }
-                if (this.Code != null)
-                {
-                    hashCode = (hashCode * 59) + this.Code.GetHashCode();
-                }
-                if (this.Title != null)
-                {
-                    hashCode = (hashCode * 59) + this.Title.GetHashCode();
-                }
-                if (this.Detail != null)
-                {
-                    hashCode = (hashCode * 59) + this.Detail.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Id (string) maxLength
-            if (this.Id != null && this.Id.Length > 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Id, length must be less than 36.", new [] { "Id" });
-            }
-
-            // Id (string) minLength
-            if (this.Id != null && this.Id.Length < 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Id, length must be greater than 36.", new [] { "Id" });
-            }
-
-            // Id (string) pattern
-            Regex regexId = new Regex(@"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", RegexOptions.CultureInvariant);
-            if (false == regexId.Match(this.Id).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Id, must match a pattern of " + regexId, new [] { "Id" });
-            }
-
-            // Code (string) maxLength
-            if (this.Code != null && this.Code.Length > 100)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be less than 100.", new [] { "Code" });
-            }
-
-            // Code (string) minLength
-            if (this.Code != null && this.Code.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, length must be greater than 1.", new [] { "Code" });
-            }
-
-            // Code (string) pattern
-            Regex regexCode = new Regex(@"^[a-zA-Z0-9_]{1,100}$", RegexOptions.CultureInvariant);
-            if (false == regexCode.Match(this.Code).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Code, must match a pattern of " + regexCode, new [] { "Code" });
-            }
-
-            // Title (string) maxLength
-            if (this.Title != null && this.Title.Length > 250)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Title, length must be less than 250.", new [] { "Title" });
-            }
-
-            // Title (string) minLength
-            if (this.Title != null && this.Title.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Title, length must be greater than 1.", new [] { "Title" });
-            }
-
-            // Title (string) pattern
-            Regex regexTitle = new Regex(@"^[a-zA-Z0-9\\s\""=,']{1,250}$", RegexOptions.CultureInvariant);
-            if (false == regexTitle.Match(this.Title).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Title, must match a pattern of " + regexTitle, new [] { "Title" });
-            }
-
-            // Detail (string) maxLength
-            if (this.Detail != null && this.Detail.Length > 250)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Detail, length must be less than 250.", new [] { "Detail" });
-            }
-
-            // Detail (string) minLength
-            if (this.Detail != null && this.Detail.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Detail, length must be greater than 1.", new [] { "Detail" });
-            }
-
-            // Detail (string) pattern
-            Regex regexDetail = new Regex(@"^[a-zA-Z0-9\\s\""=,']{1,250}$", RegexOptions.CultureInvariant);
-            if (false == regexDetail.Match(this.Detail).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Detail, must match a pattern of " + regexDetail, new [] { "Detail" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ErrorType" /> class.
+    /// </summary>
+    /// <param name="id">Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера. (required).</param>
+    /// <param name="code">Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции. (required).</param>
+    /// <param name="title">Краткое описание ошибки. Не для демонстрации. (required).</param>
+    /// <param name="detail">Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации..</param>
+    public ErrorType(string id = default, string code = default, string title = default, string detail = default)
+    {
+        // to ensure "id" is required (not null)
+        if (id == null) throw new ArgumentNullException("id is a required property for ErrorType and cannot be null");
+        Id = id;
+        // to ensure "code" is required (not null)
+        if (code == null) throw new ArgumentNullException("code is a required property for ErrorType and cannot be null");
+        Code = code;
+        // to ensure "title" is required (not null)
+        if (title == null) throw new ArgumentNullException("title is a required property for ErrorType and cannot be null");
+        Title = title;
+        Detail = detail;
+    }
+
+    /// <summary>
+    ///     Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера.
+    /// </summary>
+    /// <value>Генерируемый идентификатор сообщения для конкретного запроса, помогающий найти журналы сервера.</value>
+    [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
+    public string Id { get; set; }
+
+    /// <summary>
+    ///     Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции.
+    /// </summary>
+    /// <value>Машиночитаемый уникальный код сообщения, относящийся к конкретному случаю при выполнении операции.</value>
+    [DataMember(Name = "code", IsRequired = true, EmitDefaultValue = true)]
+    public string Code { get; set; }
+
+    /// <summary>
+    ///     Краткое описание ошибки. Не для демонстрации.
+    /// </summary>
+    /// <value>Краткое описание ошибки. Не для демонстрации.</value>
+    [DataMember(Name = "title", IsRequired = true, EmitDefaultValue = true)]
+    public string Title { get; set; }
+
+    /// <summary>
+    ///     Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации.
+    /// </summary>
+    /// <value>Предоставляет дополнительные низкоуровневые сведения об ошибке для помощи в устранении неполадок. Не для демонстрации.</value>
+    [DataMember(Name = "detail", EmitDefaultValue = false)]
+    public string Detail { get; set; }
+
+    /// <summary>
+    ///     Returns true if ErrorType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ErrorType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ErrorType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Id == input.Id ||
+                (Id != null &&
+                 Id.Equals(input.Id))
+            ) &&
+            (
+                Code == input.Code ||
+                (Code != null &&
+                 Code.Equals(input.Code))
+            ) &&
+            (
+                Title == input.Title ||
+                (Title != null &&
+                 Title.Equals(input.Title))
+            ) &&
+            (
+                Detail == input.Detail ||
+                (Detail != null &&
+                 Detail.Equals(input.Detail))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Id (string) maxLength
+        if (Id != null && Id.Length > 36) yield return new ValidationResult("Invalid value for Id, length must be less than 36.", new[] { "Id" });
+
+        // Id (string) minLength
+        if (Id != null && Id.Length < 36) yield return new ValidationResult("Invalid value for Id, length must be greater than 36.", new[] { "Id" });
+
+        // Id (string) pattern
+        var regexId = new Regex(@"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", RegexOptions.CultureInvariant);
+        if (false == regexId.Match(Id).Success) yield return new ValidationResult("Invalid value for Id, must match a pattern of " + regexId, new[] { "Id" });
+
+        // Code (string) maxLength
+        if (Code != null && Code.Length > 100) yield return new ValidationResult("Invalid value for Code, length must be less than 100.", new[] { "Code" });
+
+        // Code (string) minLength
+        if (Code != null && Code.Length < 1) yield return new ValidationResult("Invalid value for Code, length must be greater than 1.", new[] { "Code" });
+
+        // Code (string) pattern
+        var regexCode = new Regex(@"^[a-zA-Z0-9_]{1,100}$", RegexOptions.CultureInvariant);
+        if (false == regexCode.Match(Code).Success) yield return new ValidationResult("Invalid value for Code, must match a pattern of " + regexCode, new[] { "Code" });
+
+        // Title (string) maxLength
+        if (Title != null && Title.Length > 250) yield return new ValidationResult("Invalid value for Title, length must be less than 250.", new[] { "Title" });
+
+        // Title (string) minLength
+        if (Title != null && Title.Length < 1) yield return new ValidationResult("Invalid value for Title, length must be greater than 1.", new[] { "Title" });
+
+        // Title (string) pattern
+        var regexTitle = new Regex(@"^[a-zA-Z0-9\\s\""=,']{1,250}$", RegexOptions.CultureInvariant);
+        if (false == regexTitle.Match(Title).Success) yield return new ValidationResult("Invalid value for Title, must match a pattern of " + regexTitle, new[] { "Title" });
+
+        // Detail (string) maxLength
+        if (Detail != null && Detail.Length > 250) yield return new ValidationResult("Invalid value for Detail, length must be less than 250.", new[] { "Detail" });
+
+        // Detail (string) minLength
+        if (Detail != null && Detail.Length < 1) yield return new ValidationResult("Invalid value for Detail, length must be greater than 1.", new[] { "Detail" });
+
+        // Detail (string) pattern
+        var regexDetail = new Regex(@"^[a-zA-Z0-9\\s\""=,']{1,250}$", RegexOptions.CultureInvariant);
+        if (false == regexDetail.Match(Detail).Success) yield return new ValidationResult("Invalid value for Detail, must match a pattern of " + regexDetail, new[] { "Detail" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ErrorType {\n");
+        sb.Append("  Id: ").Append(Id).Append("\n");
+        sb.Append("  Code: ").Append(Code).Append("\n");
+        sb.Append("  Title: ").Append(Title).Append("\n");
+        sb.Append("  Detail: ").Append(Detail).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ErrorType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Id != null) hashCode = hashCode * 59 + Id.GetHashCode();
+            if (Code != null) hashCode = hashCode * 59 + Code.GetHashCode();
+            if (Title != null) hashCode = hashCode * 59 + Title.GetHashCode();
+            if (Detail != null) hashCode = hashCode * 59 + Detail.GetHashCode();
+            return hashCode;
+        }
+    }
 }

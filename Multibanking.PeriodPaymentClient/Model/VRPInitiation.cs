@@ -9,210 +9,181 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Реквизиты платежного распоряжения, которые должны быть привязаны к Согласию на инициирование и оставаться неизменными для каждого ППДС
+/// </summary>
+[DataContract(Name = "VRPInitiation")]
+public class VRPInitiation : IEquatable<VRPInitiation>, IValidatableObject
 {
     /// <summary>
-    /// Реквизиты платежного распоряжения, которые должны быть привязаны к Согласию на инициирование и оставаться неизменными для каждого ППДС
+    ///     Initializes a new instance of the <see cref="VRPInitiation" /> class.
     /// </summary>
-    [DataContract(Name = "VRPInitiation")]
-    public partial class VRPInitiation : IEquatable<VRPInitiation>, IValidatableObject
+    /// <param name="debtorAccount">debtorAccount.</param>
+    /// <param name="creditorAgent">creditorAgent.</param>
+    /// <param name="creditorAccount">creditorAccount.</param>
+    /// <param name="creditorAgentAccount">creditorAgentAccount.</param>
+    /// <param name="creditor">creditor.</param>
+    /// <param name="remittanceInformation">remittanceInformation.</param>
+    public VRPInitiation(VRPInitiationDebtorAccount debtorAccount = default, VRPInitiationCreditorAgent creditorAgent = default,
+        VRPInitiationCreditorAccount creditorAccount = default, VRPInitiationCreditorAgentAccount creditorAgentAccount = default, VRPInitiationCreditor creditor = default,
+        VRPInitiationRemittanceInformation remittanceInformation = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPInitiation" /> class.
-        /// </summary>
-        /// <param name="debtorAccount">debtorAccount.</param>
-        /// <param name="creditorAgent">creditorAgent.</param>
-        /// <param name="creditorAccount">creditorAccount.</param>
-        /// <param name="creditorAgentAccount">creditorAgentAccount.</param>
-        /// <param name="creditor">creditor.</param>
-        /// <param name="remittanceInformation">remittanceInformation.</param>
-        public VRPInitiation(VRPInitiationDebtorAccount debtorAccount = default(VRPInitiationDebtorAccount), VRPInitiationCreditorAgent creditorAgent = default(VRPInitiationCreditorAgent), VRPInitiationCreditorAccount creditorAccount = default(VRPInitiationCreditorAccount), VRPInitiationCreditorAgentAccount creditorAgentAccount = default(VRPInitiationCreditorAgentAccount), VRPInitiationCreditor creditor = default(VRPInitiationCreditor), VRPInitiationRemittanceInformation remittanceInformation = default(VRPInitiationRemittanceInformation))
-        {
-            this.DebtorAccount = debtorAccount;
-            this.CreditorAgent = creditorAgent;
-            this.CreditorAccount = creditorAccount;
-            this.CreditorAgentAccount = creditorAgentAccount;
-            this.Creditor = creditor;
-            this.RemittanceInformation = remittanceInformation;
-        }
-
-        /// <summary>
-        /// Gets or Sets DebtorAccount
-        /// </summary>
-        [DataMember(Name = "DebtorAccount", EmitDefaultValue = false)]
-        public VRPInitiationDebtorAccount DebtorAccount { get; set; }
-
-        /// <summary>
-        /// Gets or Sets CreditorAgent
-        /// </summary>
-        [DataMember(Name = "CreditorAgent", EmitDefaultValue = false)]
-        public VRPInitiationCreditorAgent CreditorAgent { get; set; }
-
-        /// <summary>
-        /// Gets or Sets CreditorAccount
-        /// </summary>
-        [DataMember(Name = "CreditorAccount", EmitDefaultValue = false)]
-        public VRPInitiationCreditorAccount CreditorAccount { get; set; }
-
-        /// <summary>
-        /// Gets or Sets CreditorAgentAccount
-        /// </summary>
-        [DataMember(Name = "CreditorAgentAccount", EmitDefaultValue = false)]
-        public VRPInitiationCreditorAgentAccount CreditorAgentAccount { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Creditor
-        /// </summary>
-        [DataMember(Name = "Creditor", EmitDefaultValue = false)]
-        public VRPInitiationCreditor Creditor { get; set; }
-
-        /// <summary>
-        /// Gets or Sets RemittanceInformation
-        /// </summary>
-        [DataMember(Name = "RemittanceInformation", EmitDefaultValue = false)]
-        public VRPInitiationRemittanceInformation RemittanceInformation { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPInitiation {\n");
-            sb.Append("  DebtorAccount: ").Append(DebtorAccount).Append("\n");
-            sb.Append("  CreditorAgent: ").Append(CreditorAgent).Append("\n");
-            sb.Append("  CreditorAccount: ").Append(CreditorAccount).Append("\n");
-            sb.Append("  CreditorAgentAccount: ").Append(CreditorAgentAccount).Append("\n");
-            sb.Append("  Creditor: ").Append(Creditor).Append("\n");
-            sb.Append("  RemittanceInformation: ").Append(RemittanceInformation).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPInitiation);
-        }
-
-        /// <summary>
-        /// Returns true if VRPInitiation instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPInitiation to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPInitiation input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.DebtorAccount == input.DebtorAccount ||
-                    (this.DebtorAccount != null &&
-                    this.DebtorAccount.Equals(input.DebtorAccount))
-                ) && 
-                (
-                    this.CreditorAgent == input.CreditorAgent ||
-                    (this.CreditorAgent != null &&
-                    this.CreditorAgent.Equals(input.CreditorAgent))
-                ) && 
-                (
-                    this.CreditorAccount == input.CreditorAccount ||
-                    (this.CreditorAccount != null &&
-                    this.CreditorAccount.Equals(input.CreditorAccount))
-                ) && 
-                (
-                    this.CreditorAgentAccount == input.CreditorAgentAccount ||
-                    (this.CreditorAgentAccount != null &&
-                    this.CreditorAgentAccount.Equals(input.CreditorAgentAccount))
-                ) && 
-                (
-                    this.Creditor == input.Creditor ||
-                    (this.Creditor != null &&
-                    this.Creditor.Equals(input.Creditor))
-                ) && 
-                (
-                    this.RemittanceInformation == input.RemittanceInformation ||
-                    (this.RemittanceInformation != null &&
-                    this.RemittanceInformation.Equals(input.RemittanceInformation))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.DebtorAccount != null)
-                {
-                    hashCode = (hashCode * 59) + this.DebtorAccount.GetHashCode();
-                }
-                if (this.CreditorAgent != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreditorAgent.GetHashCode();
-                }
-                if (this.CreditorAccount != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreditorAccount.GetHashCode();
-                }
-                if (this.CreditorAgentAccount != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreditorAgentAccount.GetHashCode();
-                }
-                if (this.Creditor != null)
-                {
-                    hashCode = (hashCode * 59) + this.Creditor.GetHashCode();
-                }
-                if (this.RemittanceInformation != null)
-                {
-                    hashCode = (hashCode * 59) + this.RemittanceInformation.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        DebtorAccount = debtorAccount;
+        CreditorAgent = creditorAgent;
+        CreditorAccount = creditorAccount;
+        CreditorAgentAccount = creditorAgentAccount;
+        Creditor = creditor;
+        RemittanceInformation = remittanceInformation;
     }
 
+    /// <summary>
+    ///     Gets or Sets DebtorAccount
+    /// </summary>
+    [DataMember(Name = "DebtorAccount", EmitDefaultValue = false)]
+    public VRPInitiationDebtorAccount DebtorAccount { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets CreditorAgent
+    /// </summary>
+    [DataMember(Name = "CreditorAgent", EmitDefaultValue = false)]
+    public VRPInitiationCreditorAgent CreditorAgent { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets CreditorAccount
+    /// </summary>
+    [DataMember(Name = "CreditorAccount", EmitDefaultValue = false)]
+    public VRPInitiationCreditorAccount CreditorAccount { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets CreditorAgentAccount
+    /// </summary>
+    [DataMember(Name = "CreditorAgentAccount", EmitDefaultValue = false)]
+    public VRPInitiationCreditorAgentAccount CreditorAgentAccount { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Creditor
+    /// </summary>
+    [DataMember(Name = "Creditor", EmitDefaultValue = false)]
+    public VRPInitiationCreditor Creditor { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets RemittanceInformation
+    /// </summary>
+    [DataMember(Name = "RemittanceInformation", EmitDefaultValue = false)]
+    public VRPInitiationRemittanceInformation RemittanceInformation { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPInitiation instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPInitiation to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPInitiation input)
+    {
+        if (input == null) return false;
+        return
+            (
+                DebtorAccount == input.DebtorAccount ||
+                (DebtorAccount != null &&
+                 DebtorAccount.Equals(input.DebtorAccount))
+            ) &&
+            (
+                CreditorAgent == input.CreditorAgent ||
+                (CreditorAgent != null &&
+                 CreditorAgent.Equals(input.CreditorAgent))
+            ) &&
+            (
+                CreditorAccount == input.CreditorAccount ||
+                (CreditorAccount != null &&
+                 CreditorAccount.Equals(input.CreditorAccount))
+            ) &&
+            (
+                CreditorAgentAccount == input.CreditorAgentAccount ||
+                (CreditorAgentAccount != null &&
+                 CreditorAgentAccount.Equals(input.CreditorAgentAccount))
+            ) &&
+            (
+                Creditor == input.Creditor ||
+                (Creditor != null &&
+                 Creditor.Equals(input.Creditor))
+            ) &&
+            (
+                RemittanceInformation == input.RemittanceInformation ||
+                (RemittanceInformation != null &&
+                 RemittanceInformation.Equals(input.RemittanceInformation))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPInitiation {\n");
+        sb.Append("  DebtorAccount: ").Append(DebtorAccount).Append("\n");
+        sb.Append("  CreditorAgent: ").Append(CreditorAgent).Append("\n");
+        sb.Append("  CreditorAccount: ").Append(CreditorAccount).Append("\n");
+        sb.Append("  CreditorAgentAccount: ").Append(CreditorAgentAccount).Append("\n");
+        sb.Append("  Creditor: ").Append(Creditor).Append("\n");
+        sb.Append("  RemittanceInformation: ").Append(RemittanceInformation).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPInitiation);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (DebtorAccount != null) hashCode = hashCode * 59 + DebtorAccount.GetHashCode();
+            if (CreditorAgent != null) hashCode = hashCode * 59 + CreditorAgent.GetHashCode();
+            if (CreditorAccount != null) hashCode = hashCode * 59 + CreditorAccount.GetHashCode();
+            if (CreditorAgentAccount != null) hashCode = hashCode * 59 + CreditorAgentAccount.GetHashCode();
+            if (Creditor != null) hashCode = hashCode * 59 + Creditor.GetHashCode();
+            if (RemittanceInformation != null) hashCode = hashCode * 59 + RemittanceInformation.GetHashCode();
+            return hashCode;
+        }
+    }
 }

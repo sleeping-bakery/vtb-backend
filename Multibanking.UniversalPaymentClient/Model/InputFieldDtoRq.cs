@@ -9,173 +9,140 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Платежное поле запрос
+/// </summary>
+[DataContract(Name = "InputFieldDtoRq")]
+public class InputFieldDtoRq : IEquatable<InputFieldDtoRq>, IValidatableObject
 {
     /// <summary>
-    /// Платежное поле запрос
+    ///     Initializes a new instance of the <see cref="InputFieldDtoRq" /> class.
     /// </summary>
-    [DataContract(Name = "InputFieldDtoRq")]
-    public partial class InputFieldDtoRq : IEquatable<InputFieldDtoRq>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected InputFieldDtoRq()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InputFieldDtoRq" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected InputFieldDtoRq() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InputFieldDtoRq" /> class.
-        /// </summary>
-        /// <param name="key">Ключ поля (required).</param>
-        /// <param name="value">Значение поля (required).</param>
-        public InputFieldDtoRq(string key = default(string), string value = default(string))
-        {
-            // to ensure "key" is required (not null)
-            if (key == null)
-            {
-                throw new ArgumentNullException("key is a required property for InputFieldDtoRq and cannot be null");
-            }
-            this.Key = key;
-            // to ensure "value" is required (not null)
-            if (value == null)
-            {
-                throw new ArgumentNullException("value is a required property for InputFieldDtoRq and cannot be null");
-            }
-            this.Value = value;
-        }
-
-        /// <summary>
-        /// Ключ поля
-        /// </summary>
-        /// <value>Ключ поля</value>
-        [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
-        public string Key { get; set; }
-
-        /// <summary>
-        /// Значение поля
-        /// </summary>
-        /// <value>Значение поля</value>
-        [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
-        public string Value { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class InputFieldDtoRq {\n");
-            sb.Append("  Key: ").Append(Key).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as InputFieldDtoRq);
-        }
-
-        /// <summary>
-        /// Returns true if InputFieldDtoRq instances are equal
-        /// </summary>
-        /// <param name="input">Instance of InputFieldDtoRq to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(InputFieldDtoRq input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Key != null)
-                {
-                    hashCode = (hashCode * 59) + this.Key.GetHashCode();
-                }
-                if (this.Value != null)
-                {
-                    hashCode = (hashCode * 59) + this.Value.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Key (string) maxLength
-            if (this.Key != null && this.Key.Length > 32)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 32.", new [] { "Key" });
-            }
-
-            // Key (string) minLength
-            if (this.Key != null && this.Key.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be greater than 1.", new [] { "Key" });
-            }
-
-            // Value (string) maxLength
-            if (this.Value != null && this.Value.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, length must be less than 255.", new [] { "Value" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="InputFieldDtoRq" /> class.
+    /// </summary>
+    /// <param name="key">Ключ поля (required).</param>
+    /// <param name="value">Значение поля (required).</param>
+    public InputFieldDtoRq(string key = default, string value = default)
+    {
+        // to ensure "key" is required (not null)
+        if (key == null) throw new ArgumentNullException("key is a required property for InputFieldDtoRq and cannot be null");
+        Key = key;
+        // to ensure "value" is required (not null)
+        if (value == null) throw new ArgumentNullException("value is a required property for InputFieldDtoRq and cannot be null");
+        Value = value;
+    }
+
+    /// <summary>
+    ///     Ключ поля
+    /// </summary>
+    /// <value>Ключ поля</value>
+    [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
+    public string Key { get; set; }
+
+    /// <summary>
+    ///     Значение поля
+    /// </summary>
+    /// <value>Значение поля</value>
+    [DataMember(Name = "value", IsRequired = true, EmitDefaultValue = true)]
+    public string Value { get; set; }
+
+    /// <summary>
+    ///     Returns true if InputFieldDtoRq instances are equal
+    /// </summary>
+    /// <param name="input">Instance of InputFieldDtoRq to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(InputFieldDtoRq input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Key == input.Key ||
+                (Key != null &&
+                 Key.Equals(input.Key))
+            ) &&
+            (
+                Value == input.Value ||
+                (Value != null &&
+                 Value.Equals(input.Value))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Key (string) maxLength
+        if (Key != null && Key.Length > 32) yield return new ValidationResult("Invalid value for Key, length must be less than 32.", new[] { "Key" });
+
+        // Key (string) minLength
+        if (Key != null && Key.Length < 1) yield return new ValidationResult("Invalid value for Key, length must be greater than 1.", new[] { "Key" });
+
+        // Value (string) maxLength
+        if (Value != null && Value.Length > 255) yield return new ValidationResult("Invalid value for Value, length must be less than 255.", new[] { "Value" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class InputFieldDtoRq {\n");
+        sb.Append("  Key: ").Append(Key).Append("\n");
+        sb.Append("  Value: ").Append(Value).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as InputFieldDtoRq);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Key != null) hashCode = hashCode * 59 + Key.GetHashCode();
+            if (Value != null) hashCode = hashCode * 59 + Value.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -9,203 +9,169 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     Этот объект содержит текущий баланс вознаграждений и связанные с ним значения.
+/// </summary>
+[DataContract(Name = "RewardSummaryV2")]
+public class RewardSummaryV2 : IEquatable<RewardSummaryV2>, IValidatableObject
 {
     /// <summary>
-    /// Этот объект содержит текущий баланс вознаграждений и связанные с ним значения.
+    ///     Initializes a new instance of the <see cref="RewardSummaryV2" /> class.
     /// </summary>
-    [DataContract(Name = "RewardSummaryV2")]
-    public partial class RewardSummaryV2 : IEquatable<RewardSummaryV2>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RewardSummaryV2()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RewardSummaryV2" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RewardSummaryV2() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RewardSummaryV2" /> class.
-        /// </summary>
-        /// <param name="availableBalance">Текущий баланс вознаграждений для данного аккаунта. (required).</param>
-        /// <param name="rewardType">Тип валюты вознаграждения - POINTS/CASH/MILES. (required).</param>
-        /// <param name="currencyCode">Трехбуквенный код, обозначающий валюту вознаграждения..</param>
-        public RewardSummaryV2(decimal availableBalance = default(decimal), string rewardType = default(string), string currencyCode = default(string))
-        {
-            this.AvailableBalance = availableBalance;
-            // to ensure "rewardType" is required (not null)
-            if (rewardType == null)
-            {
-                throw new ArgumentNullException("rewardType is a required property for RewardSummaryV2 and cannot be null");
-            }
-            this.RewardType = rewardType;
-            this.CurrencyCode = currencyCode;
-        }
-
-        /// <summary>
-        /// Текущий баланс вознаграждений для данного аккаунта.
-        /// </summary>
-        /// <value>Текущий баланс вознаграждений для данного аккаунта.</value>
-        [DataMember(Name = "availableBalance", IsRequired = true, EmitDefaultValue = true)]
-        public decimal AvailableBalance { get; set; }
-
-        /// <summary>
-        /// Тип валюты вознаграждения - POINTS/CASH/MILES.
-        /// </summary>
-        /// <value>Тип валюты вознаграждения - POINTS/CASH/MILES.</value>
-        [DataMember(Name = "rewardType", IsRequired = true, EmitDefaultValue = true)]
-        public string RewardType { get; set; }
-
-        /// <summary>
-        /// Трехбуквенный код, обозначающий валюту вознаграждения.
-        /// </summary>
-        /// <value>Трехбуквенный код, обозначающий валюту вознаграждения.</value>
-        [DataMember(Name = "currencyCode", EmitDefaultValue = false)]
-        public string CurrencyCode { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RewardSummaryV2 {\n");
-            sb.Append("  AvailableBalance: ").Append(AvailableBalance).Append("\n");
-            sb.Append("  RewardType: ").Append(RewardType).Append("\n");
-            sb.Append("  CurrencyCode: ").Append(CurrencyCode).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RewardSummaryV2);
-        }
-
-        /// <summary>
-        /// Returns true if RewardSummaryV2 instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RewardSummaryV2 to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RewardSummaryV2 input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.AvailableBalance == input.AvailableBalance ||
-                    this.AvailableBalance.Equals(input.AvailableBalance)
-                ) && 
-                (
-                    this.RewardType == input.RewardType ||
-                    (this.RewardType != null &&
-                    this.RewardType.Equals(input.RewardType))
-                ) && 
-                (
-                    this.CurrencyCode == input.CurrencyCode ||
-                    (this.CurrencyCode != null &&
-                    this.CurrencyCode.Equals(input.CurrencyCode))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.AvailableBalance.GetHashCode();
-                if (this.RewardType != null)
-                {
-                    hashCode = (hashCode * 59) + this.RewardType.GetHashCode();
-                }
-                if (this.CurrencyCode != null)
-                {
-                    hashCode = (hashCode * 59) + this.CurrencyCode.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // RewardType (string) maxLength
-            if (this.RewardType != null && this.RewardType.Length > 16)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RewardType, length must be less than 16.", new [] { "RewardType" });
-            }
-
-            // RewardType (string) minLength
-            if (this.RewardType != null && this.RewardType.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RewardType, length must be greater than 1.", new [] { "RewardType" });
-            }
-
-            // RewardType (string) pattern
-            Regex regexRewardType = new Regex(@"^[a-zA-Z]{1,16}$", RegexOptions.CultureInvariant);
-            if (false == regexRewardType.Match(this.RewardType).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for RewardType, must match a pattern of " + regexRewardType, new [] { "RewardType" });
-            }
-
-            // CurrencyCode (string) maxLength
-            if (this.CurrencyCode != null && this.CurrencyCode.Length > 4)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CurrencyCode, length must be less than 4.", new [] { "CurrencyCode" });
-            }
-
-            // CurrencyCode (string) minLength
-            if (this.CurrencyCode != null && this.CurrencyCode.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CurrencyCode, length must be greater than 1.", new [] { "CurrencyCode" });
-            }
-
-            // CurrencyCode (string) pattern
-            Regex regexCurrencyCode = new Regex(@"^[a-zA-Z]{1,4}$", RegexOptions.CultureInvariant);
-            if (false == regexCurrencyCode.Match(this.CurrencyCode).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CurrencyCode, must match a pattern of " + regexCurrencyCode, new [] { "CurrencyCode" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RewardSummaryV2" /> class.
+    /// </summary>
+    /// <param name="availableBalance">Текущий баланс вознаграждений для данного аккаунта. (required).</param>
+    /// <param name="rewardType">Тип валюты вознаграждения - POINTS/CASH/MILES. (required).</param>
+    /// <param name="currencyCode">Трехбуквенный код, обозначающий валюту вознаграждения..</param>
+    public RewardSummaryV2(decimal availableBalance = default, string rewardType = default, string currencyCode = default)
+    {
+        AvailableBalance = availableBalance;
+        // to ensure "rewardType" is required (not null)
+        if (rewardType == null) throw new ArgumentNullException("rewardType is a required property for RewardSummaryV2 and cannot be null");
+        RewardType = rewardType;
+        CurrencyCode = currencyCode;
+    }
+
+    /// <summary>
+    ///     Текущий баланс вознаграждений для данного аккаунта.
+    /// </summary>
+    /// <value>Текущий баланс вознаграждений для данного аккаунта.</value>
+    [DataMember(Name = "availableBalance", IsRequired = true, EmitDefaultValue = true)]
+    public decimal AvailableBalance { get; set; }
+
+    /// <summary>
+    ///     Тип валюты вознаграждения - POINTS/CASH/MILES.
+    /// </summary>
+    /// <value>Тип валюты вознаграждения - POINTS/CASH/MILES.</value>
+    [DataMember(Name = "rewardType", IsRequired = true, EmitDefaultValue = true)]
+    public string RewardType { get; set; }
+
+    /// <summary>
+    ///     Трехбуквенный код, обозначающий валюту вознаграждения.
+    /// </summary>
+    /// <value>Трехбуквенный код, обозначающий валюту вознаграждения.</value>
+    [DataMember(Name = "currencyCode", EmitDefaultValue = false)]
+    public string CurrencyCode { get; set; }
+
+    /// <summary>
+    ///     Returns true if RewardSummaryV2 instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RewardSummaryV2 to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RewardSummaryV2 input)
+    {
+        if (input == null) return false;
+        return
+            (
+                AvailableBalance == input.AvailableBalance ||
+                AvailableBalance.Equals(input.AvailableBalance)
+            ) &&
+            (
+                RewardType == input.RewardType ||
+                (RewardType != null &&
+                 RewardType.Equals(input.RewardType))
+            ) &&
+            (
+                CurrencyCode == input.CurrencyCode ||
+                (CurrencyCode != null &&
+                 CurrencyCode.Equals(input.CurrencyCode))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // RewardType (string) maxLength
+        if (RewardType != null && RewardType.Length > 16) yield return new ValidationResult("Invalid value for RewardType, length must be less than 16.", new[] { "RewardType" });
+
+        // RewardType (string) minLength
+        if (RewardType != null && RewardType.Length < 1) yield return new ValidationResult("Invalid value for RewardType, length must be greater than 1.", new[] { "RewardType" });
+
+        // RewardType (string) pattern
+        var regexRewardType = new Regex(@"^[a-zA-Z]{1,16}$", RegexOptions.CultureInvariant);
+        if (false == regexRewardType.Match(RewardType).Success)
+            yield return new ValidationResult("Invalid value for RewardType, must match a pattern of " + regexRewardType, new[] { "RewardType" });
+
+        // CurrencyCode (string) maxLength
+        if (CurrencyCode != null && CurrencyCode.Length > 4)
+            yield return new ValidationResult("Invalid value for CurrencyCode, length must be less than 4.", new[] { "CurrencyCode" });
+
+        // CurrencyCode (string) minLength
+        if (CurrencyCode != null && CurrencyCode.Length < 1)
+            yield return new ValidationResult("Invalid value for CurrencyCode, length must be greater than 1.", new[] { "CurrencyCode" });
+
+        // CurrencyCode (string) pattern
+        var regexCurrencyCode = new Regex(@"^[a-zA-Z]{1,4}$", RegexOptions.CultureInvariant);
+        if (false == regexCurrencyCode.Match(CurrencyCode).Success)
+            yield return new ValidationResult("Invalid value for CurrencyCode, must match a pattern of " + regexCurrencyCode, new[] { "CurrencyCode" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RewardSummaryV2 {\n");
+        sb.Append("  AvailableBalance: ").Append(AvailableBalance).Append("\n");
+        sb.Append("  RewardType: ").Append(RewardType).Append("\n");
+        sb.Append("  CurrencyCode: ").Append(CurrencyCode).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RewardSummaryV2);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + AvailableBalance.GetHashCode();
+            if (RewardType != null) hashCode = hashCode * 59 + RewardType.GetHashCode();
+            if (CurrencyCode != null) hashCode = hashCode * 59 + CurrencyCode.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -9,161 +9,137 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Ограничение для числового значения поля
+/// </summary>
+[DataContract(Name = "NumberValueRestrictDtoRs")]
+public class NumberValueRestrictDtoRs : IEquatable<NumberValueRestrictDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Ограничение для числового значения поля
+    ///     Initializes a new instance of the <see cref="NumberValueRestrictDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "NumberValueRestrictDtoRs")]
-    public partial class NumberValueRestrictDtoRs : IEquatable<NumberValueRestrictDtoRs>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected NumberValueRestrictDtoRs()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NumberValueRestrictDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected NumberValueRestrictDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NumberValueRestrictDtoRs" /> class.
-        /// </summary>
-        /// <param name="min">Минимальное числовое значение, включительно (required).</param>
-        /// <param name="max">Максимальное числовое значение, включительно (required).</param>
-        public NumberValueRestrictDtoRs(decimal min = default(decimal), decimal max = default(decimal))
-        {
-            this.Min = min;
-            this.Max = max;
-        }
-
-        /// <summary>
-        /// Минимальное числовое значение, включительно
-        /// </summary>
-        /// <value>Минимальное числовое значение, включительно</value>
-        [DataMember(Name = "min", IsRequired = true, EmitDefaultValue = true)]
-        public decimal Min { get; set; }
-
-        /// <summary>
-        /// Максимальное числовое значение, включительно
-        /// </summary>
-        /// <value>Максимальное числовое значение, включительно</value>
-        [DataMember(Name = "max", IsRequired = true, EmitDefaultValue = true)]
-        public decimal Max { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class NumberValueRestrictDtoRs {\n");
-            sb.Append("  Min: ").Append(Min).Append("\n");
-            sb.Append("  Max: ").Append(Max).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as NumberValueRestrictDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if NumberValueRestrictDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of NumberValueRestrictDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(NumberValueRestrictDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Min == input.Min ||
-                    this.Min.Equals(input.Min)
-                ) && 
-                (
-                    this.Max == input.Max ||
-                    this.Max.Equals(input.Max)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.Min.GetHashCode();
-                hashCode = (hashCode * 59) + this.Max.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Min (decimal) maximum
-            if (this.Min > (decimal)999999999)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Min, must be a value less than or equal to 999999999.", new [] { "Min" });
-            }
-
-            // Min (decimal) minimum
-            if (this.Min < (decimal)0)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Min, must be a value greater than or equal to 0.", new [] { "Min" });
-            }
-
-            // Max (decimal) maximum
-            if (this.Max > (decimal)999999999)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Max, must be a value less than or equal to 999999999.", new [] { "Max" });
-            }
-
-            // Max (decimal) minimum
-            if (this.Max < (decimal)0)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Max, must be a value greater than or equal to 0.", new [] { "Max" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="NumberValueRestrictDtoRs" /> class.
+    /// </summary>
+    /// <param name="min">Минимальное числовое значение, включительно (required).</param>
+    /// <param name="max">Максимальное числовое значение, включительно (required).</param>
+    public NumberValueRestrictDtoRs(decimal min = default, decimal max = default)
+    {
+        Min = min;
+        Max = max;
+    }
+
+    /// <summary>
+    ///     Минимальное числовое значение, включительно
+    /// </summary>
+    /// <value>Минимальное числовое значение, включительно</value>
+    [DataMember(Name = "min", IsRequired = true, EmitDefaultValue = true)]
+    public decimal Min { get; set; }
+
+    /// <summary>
+    ///     Максимальное числовое значение, включительно
+    /// </summary>
+    /// <value>Максимальное числовое значение, включительно</value>
+    [DataMember(Name = "max", IsRequired = true, EmitDefaultValue = true)]
+    public decimal Max { get; set; }
+
+    /// <summary>
+    ///     Returns true if NumberValueRestrictDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of NumberValueRestrictDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(NumberValueRestrictDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Min == input.Min ||
+                Min.Equals(input.Min)
+            ) &&
+            (
+                Max == input.Max ||
+                Max.Equals(input.Max)
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Min (decimal) maximum
+        if (Min > 999999999) yield return new ValidationResult("Invalid value for Min, must be a value less than or equal to 999999999.", new[] { "Min" });
+
+        // Min (decimal) minimum
+        if (Min < 0) yield return new ValidationResult("Invalid value for Min, must be a value greater than or equal to 0.", new[] { "Min" });
+
+        // Max (decimal) maximum
+        if (Max > 999999999) yield return new ValidationResult("Invalid value for Max, must be a value less than or equal to 999999999.", new[] { "Max" });
+
+        // Max (decimal) minimum
+        if (Max < 0) yield return new ValidationResult("Invalid value for Max, must be a value greater than or equal to 0.", new[] { "Max" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class NumberValueRestrictDtoRs {\n");
+        sb.Append("  Min: ").Append(Min).Append("\n");
+        sb.Append("  Max: ").Append(Max).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as NumberValueRestrictDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + Min.GetHashCode();
+            hashCode = hashCode * 59 + Max.GetHashCode();
+            return hashCode;
+        }
+    }
 }

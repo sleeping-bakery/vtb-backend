@@ -9,147 +9,142 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Информация о типе платежа
+/// </summary>
+[DataContract(Name = "VRPInstruction_PaymentTypeInformation")]
+public class VRPInstructionPaymentTypeInformation : IEquatable<VRPInstructionPaymentTypeInformation>, IValidatableObject
 {
     /// <summary>
-    /// Информация о типе платежа
+    ///     Initializes a new instance of the <see cref="VRPInstructionPaymentTypeInformation" /> class.
     /// </summary>
-    [DataContract(Name = "VRPInstruction_PaymentTypeInformation")]
-    public partial class VRPInstructionPaymentTypeInformation : IEquatable<VRPInstructionPaymentTypeInformation>, IValidatableObject
+    /// <param name="localInstrument">
+    ///     (Номер реквизита 5) Вид распоряжения. Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей
+    ///     квалификации услуги или уровня обслуживания или Вид платежного распоряжения. .
+    /// </param>
+    /// <param name="categoryPurpose">(Номер реквизита 15.3) Категория назначения. Очередность платежа.</param>
+    /// <param name="serviceLevel">(Номер реквизита 15.1) Вид платежа.</param>
+    public VRPInstructionPaymentTypeInformation(LocalInstrumentCode? localInstrument = default, CBRFCategoryPurpose1? categoryPurpose = default,
+        ServiceLevelCode? serviceLevel = default)
     {
-
-        /// <summary>
-        /// (Номер реквизита 5) Вид распоряжения. Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания или Вид платежного распоряжения. 
-        /// </summary>
-        /// <value>(Номер реквизита 5) Вид распоряжения. Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания или Вид платежного распоряжения. </value>
-        [DataMember(Name = "localInstrument", EmitDefaultValue = false)]
-        public LocalInstrumentCode? LocalInstrument { get; set; }
-
-        /// <summary>
-        /// (Номер реквизита 15.3) Категория назначения. Очередность платежа
-        /// </summary>
-        /// <value>(Номер реквизита 15.3) Категория назначения. Очередность платежа</value>
-        [DataMember(Name = "categoryPurpose", EmitDefaultValue = false)]
-        public CBRFCategoryPurpose1? CategoryPurpose { get; set; }
-
-        /// <summary>
-        /// (Номер реквизита 15.1) Вид платежа
-        /// </summary>
-        /// <value>(Номер реквизита 15.1) Вид платежа</value>
-        [DataMember(Name = "serviceLevel", EmitDefaultValue = false)]
-        public ServiceLevelCode? ServiceLevel { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPInstructionPaymentTypeInformation" /> class.
-        /// </summary>
-        /// <param name="localInstrument">(Номер реквизита 5) Вид распоряжения. Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или уровня обслуживания или Вид платежного распоряжения. .</param>
-        /// <param name="categoryPurpose">(Номер реквизита 15.3) Категория назначения. Очередность платежа.</param>
-        /// <param name="serviceLevel">(Номер реквизита 15.1) Вид платежа.</param>
-        public VRPInstructionPaymentTypeInformation(LocalInstrumentCode? localInstrument = default(LocalInstrumentCode?), CBRFCategoryPurpose1? categoryPurpose = default(CBRFCategoryPurpose1?), ServiceLevelCode? serviceLevel = default(ServiceLevelCode?))
-        {
-            this.LocalInstrument = localInstrument;
-            this.CategoryPurpose = categoryPurpose;
-            this.ServiceLevel = serviceLevel;
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPInstructionPaymentTypeInformation {\n");
-            sb.Append("  LocalInstrument: ").Append(LocalInstrument).Append("\n");
-            sb.Append("  CategoryPurpose: ").Append(CategoryPurpose).Append("\n");
-            sb.Append("  ServiceLevel: ").Append(ServiceLevel).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPInstructionPaymentTypeInformation);
-        }
-
-        /// <summary>
-        /// Returns true if VRPInstructionPaymentTypeInformation instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPInstructionPaymentTypeInformation to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPInstructionPaymentTypeInformation input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.LocalInstrument == input.LocalInstrument ||
-                    this.LocalInstrument.Equals(input.LocalInstrument)
-                ) && 
-                (
-                    this.CategoryPurpose == input.CategoryPurpose ||
-                    this.CategoryPurpose.Equals(input.CategoryPurpose)
-                ) && 
-                (
-                    this.ServiceLevel == input.ServiceLevel ||
-                    this.ServiceLevel.Equals(input.ServiceLevel)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.LocalInstrument.GetHashCode();
-                hashCode = (hashCode * 59) + this.CategoryPurpose.GetHashCode();
-                hashCode = (hashCode * 59) + this.ServiceLevel.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        LocalInstrument = localInstrument;
+        CategoryPurpose = categoryPurpose;
+        ServiceLevel = serviceLevel;
     }
 
+    /// <summary>
+    ///     (Номер реквизита 5) Вид распоряжения. Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или
+    ///     уровня обслуживания или Вид платежного распоряжения.
+    /// </summary>
+    /// <value>
+    ///     (Номер реквизита 5) Вид распоряжения. Этот элемент используется для указания локального инструмента, опции локального клиринга и / или дальнейшей квалификации услуги или
+    ///     уровня обслуживания или Вид платежного распоряжения.
+    /// </value>
+    [DataMember(Name = "localInstrument", EmitDefaultValue = false)]
+    public LocalInstrumentCode? LocalInstrument { get; set; }
+
+    /// <summary>
+    ///     (Номер реквизита 15.3) Категория назначения. Очередность платежа
+    /// </summary>
+    /// <value>(Номер реквизита 15.3) Категория назначения. Очередность платежа</value>
+    [DataMember(Name = "categoryPurpose", EmitDefaultValue = false)]
+    public CBRFCategoryPurpose1? CategoryPurpose { get; set; }
+
+    /// <summary>
+    ///     (Номер реквизита 15.1) Вид платежа
+    /// </summary>
+    /// <value>(Номер реквизита 15.1) Вид платежа</value>
+    [DataMember(Name = "serviceLevel", EmitDefaultValue = false)]
+    public ServiceLevelCode? ServiceLevel { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPInstructionPaymentTypeInformation instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPInstructionPaymentTypeInformation to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPInstructionPaymentTypeInformation input)
+    {
+        if (input == null) return false;
+        return
+            (
+                LocalInstrument == input.LocalInstrument ||
+                LocalInstrument.Equals(input.LocalInstrument)
+            ) &&
+            (
+                CategoryPurpose == input.CategoryPurpose ||
+                CategoryPurpose.Equals(input.CategoryPurpose)
+            ) &&
+            (
+                ServiceLevel == input.ServiceLevel ||
+                ServiceLevel.Equals(input.ServiceLevel)
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPInstructionPaymentTypeInformation {\n");
+        sb.Append("  LocalInstrument: ").Append(LocalInstrument).Append("\n");
+        sb.Append("  CategoryPurpose: ").Append(CategoryPurpose).Append("\n");
+        sb.Append("  ServiceLevel: ").Append(ServiceLevel).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPInstructionPaymentTypeInformation);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + LocalInstrument.GetHashCode();
+            hashCode = hashCode * 59 + CategoryPurpose.GetHashCode();
+            hashCode = hashCode * 59 + ServiceLevel.GetHashCode();
+            return hashCode;
+        }
+    }
 }

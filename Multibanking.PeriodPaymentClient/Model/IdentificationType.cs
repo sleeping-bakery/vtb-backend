@@ -9,152 +9,132 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Идентификация юридического или физического лица
+/// </summary>
+[DataContract(Name = "IdentificationType")]
+public class IdentificationType : IEquatable<IdentificationType>, IValidatableObject
 {
     /// <summary>
-    /// Идентификация юридического или физического лица
+    ///     Initializes a new instance of the <see cref="IdentificationType" /> class.
     /// </summary>
-    [DataContract(Name = "IdentificationType")]
-    public partial class IdentificationType : IEquatable<IdentificationType>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected IdentificationType()
     {
-
-        /// <summary>
-        /// Наименование идентификационной схемы юридического или физического лица
-        /// </summary>
-        /// <value>Наименование идентификационной схемы юридического или физического лица</value>
-        [DataMember(Name = "schemeName", IsRequired = true, EmitDefaultValue = true)]
-        public PeriodPaymentPartyIdentificationCode SchemeName { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IdentificationType" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected IdentificationType() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IdentificationType" /> class.
-        /// </summary>
-        /// <param name="schemeName">Наименование идентификационной схемы юридического или физического лица (required).</param>
-        /// <param name="identification">Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией. (required).</param>
-        public IdentificationType(PeriodPaymentPartyIdentificationCode schemeName = default(PeriodPaymentPartyIdentificationCode), string identification = default(string))
-        {
-            this.SchemeName = schemeName;
-            // to ensure "identification" is required (not null)
-            if (identification == null)
-            {
-                throw new ArgumentNullException("identification is a required property for IdentificationType and cannot be null");
-            }
-            this.Identification = identification;
-        }
-
-        /// <summary>
-        /// Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией.
-        /// </summary>
-        /// <value>Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией.</value>
-        [DataMember(Name = "identification", IsRequired = true, EmitDefaultValue = true)]
-        public string Identification { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class IdentificationType {\n");
-            sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
-            sb.Append("  Identification: ").Append(Identification).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as IdentificationType);
-        }
-
-        /// <summary>
-        /// Returns true if IdentificationType instances are equal
-        /// </summary>
-        /// <param name="input">Instance of IdentificationType to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(IdentificationType input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.SchemeName == input.SchemeName ||
-                    this.SchemeName.Equals(input.SchemeName)
-                ) && 
-                (
-                    this.Identification == input.Identification ||
-                    (this.Identification != null &&
-                    this.Identification.Equals(input.Identification))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.SchemeName.GetHashCode();
-                if (this.Identification != null)
-                {
-                    hashCode = (hashCode * 59) + this.Identification.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Identification (string) maxLength
-            if (this.Identification != null && this.Identification.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identification, length must be less than 35.", new [] { "Identification" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="IdentificationType" /> class.
+    /// </summary>
+    /// <param name="schemeName">Наименование идентификационной схемы юридического или физического лица (required).</param>
+    /// <param name="identification">Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией. (required).</param>
+    public IdentificationType(PeriodPaymentPartyIdentificationCode schemeName = default, string identification = default)
+    {
+        SchemeName = schemeName;
+        // to ensure "identification" is required (not null)
+        if (identification == null) throw new ArgumentNullException("identification is a required property for IdentificationType and cannot be null");
+        Identification = identification;
+    }
+
+    /// <summary>
+    ///     Наименование идентификационной схемы юридического или физического лица
+    /// </summary>
+    /// <value>Наименование идентификационной схемы юридического или физического лица</value>
+    [DataMember(Name = "schemeName", IsRequired = true, EmitDefaultValue = true)]
+    public PeriodPaymentPartyIdentificationCode SchemeName { get; set; }
+
+    /// <summary>
+    ///     Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией.
+    /// </summary>
+    /// <value>Уникальный и однозначный идентификатор участника, присвоенный идентифицирующей организацией.</value>
+    [DataMember(Name = "identification", IsRequired = true, EmitDefaultValue = true)]
+    public string Identification { get; set; }
+
+    /// <summary>
+    ///     Returns true if IdentificationType instances are equal
+    /// </summary>
+    /// <param name="input">Instance of IdentificationType to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(IdentificationType input)
+    {
+        if (input == null) return false;
+        return
+            (
+                SchemeName == input.SchemeName ||
+                SchemeName.Equals(input.SchemeName)
+            ) &&
+            (
+                Identification == input.Identification ||
+                (Identification != null &&
+                 Identification.Equals(input.Identification))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Identification (string) maxLength
+        if (Identification != null && Identification.Length > 35)
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 35.", new[] { "Identification" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class IdentificationType {\n");
+        sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
+        sb.Append("  Identification: ").Append(Identification).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as IdentificationType);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + SchemeName.GetHashCode();
+            if (Identification != null) hashCode = hashCode * 59 + Identification.GetHashCode();
+            return hashCode;
+        }
+    }
 }

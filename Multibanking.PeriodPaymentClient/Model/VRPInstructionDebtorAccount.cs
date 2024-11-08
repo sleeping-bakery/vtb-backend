@@ -9,177 +9,154 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Однозначная идентификация счета плательщика, по которому будет отражена дебетовая запись в результате операции
+/// </summary>
+[DataContract(Name = "VRPInstruction_DebtorAccount")]
+public class VRPInstructionDebtorAccount : IEquatable<VRPInstructionDebtorAccount>, IValidatableObject
 {
     /// <summary>
-    /// Однозначная идентификация счета плательщика, по которому будет отражена дебетовая запись в результате операции
+    ///     Initializes a new instance of the <see cref="VRPInstructionDebtorAccount" /> class.
     /// </summary>
-    [DataContract(Name = "VRPInstruction_DebtorAccount")]
-    public partial class VRPInstructionDebtorAccount : IEquatable<VRPInstructionDebtorAccount>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected VRPInstructionDebtorAccount()
     {
-
-        /// <summary>
-        /// Наименование схемы идентификации счета
-        /// </summary>
-        /// <value>Наименование схемы идентификации счета</value>
-        [DataMember(Name = "schemeName", IsRequired = true, EmitDefaultValue = true)]
-        public AccountIdentificationCode SchemeName { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPInstructionDebtorAccount" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected VRPInstructionDebtorAccount() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPInstructionDebtorAccount" /> class.
-        /// </summary>
-        /// <param name="name">Наименование счета, присвоенное учреждением, обслуживающим счет, по согласованию с владельцем счета  для обеспечения дополнительных средств идентификации счета.</param>
-        /// <param name="schemeName">Наименование схемы идентификации счета (required).</param>
-        /// <param name="identification">Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...) (required).</param>
-        public VRPInstructionDebtorAccount(string name = default(string), AccountIdentificationCode schemeName = default(AccountIdentificationCode), string identification = default(string))
-        {
-            this.SchemeName = schemeName;
-            // to ensure "identification" is required (not null)
-            if (identification == null)
-            {
-                throw new ArgumentNullException("identification is a required property for VRPInstructionDebtorAccount and cannot be null");
-            }
-            this.Identification = identification;
-            this.Name = name;
-        }
-
-        /// <summary>
-        /// Наименование счета, присвоенное учреждением, обслуживающим счет, по согласованию с владельцем счета  для обеспечения дополнительных средств идентификации счета
-        /// </summary>
-        /// <value>Наименование счета, присвоенное учреждением, обслуживающим счет, по согласованию с владельцем счета  для обеспечения дополнительных средств идентификации счета</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...)
-        /// </summary>
-        /// <value>Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...)</value>
-        [DataMember(Name = "identification", IsRequired = true, EmitDefaultValue = true)]
-        public string Identification { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPInstructionDebtorAccount {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
-            sb.Append("  Identification: ").Append(Identification).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPInstructionDebtorAccount);
-        }
-
-        /// <summary>
-        /// Returns true if VRPInstructionDebtorAccount instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPInstructionDebtorAccount to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPInstructionDebtorAccount input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && 
-                (
-                    this.SchemeName == input.SchemeName ||
-                    this.SchemeName.Equals(input.SchemeName)
-                ) && 
-                (
-                    this.Identification == input.Identification ||
-                    (this.Identification != null &&
-                    this.Identification.Equals(input.Identification))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Name != null)
-                {
-                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.SchemeName.GetHashCode();
-                if (this.Identification != null)
-                {
-                    hashCode = (hashCode * 59) + this.Identification.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Name (string) maxLength
-            if (this.Name != null && this.Name.Length > 70)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be less than 70.", new [] { "Name" });
-            }
-
-            // Identification (string) maxLength
-            if (this.Identification != null && this.Identification.Length > 256)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Identification, length must be less than 256.", new [] { "Identification" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="VRPInstructionDebtorAccount" /> class.
+    /// </summary>
+    /// <param name="name">Наименование счета, присвоенное учреждением, обслуживающим счет, по согласованию с владельцем счета  для обеспечения дополнительных средств идентификации счета.</param>
+    /// <param name="schemeName">Наименование схемы идентификации счета (required).</param>
+    /// <param name="identification">
+    ///     Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...)
+    ///     (required).
+    /// </param>
+    public VRPInstructionDebtorAccount(string name = default, AccountIdentificationCode schemeName = default, string identification = default)
+    {
+        SchemeName = schemeName;
+        // to ensure "identification" is required (not null)
+        if (identification == null) throw new ArgumentNullException("identification is a required property for VRPInstructionDebtorAccount and cannot be null");
+        Identification = identification;
+        Name = name;
+    }
+
+    /// <summary>
+    ///     Наименование схемы идентификации счета
+    /// </summary>
+    /// <value>Наименование схемы идентификации счета</value>
+    [DataMember(Name = "schemeName", IsRequired = true, EmitDefaultValue = true)]
+    public AccountIdentificationCode SchemeName { get; set; }
+
+    /// <summary>
+    ///     Наименование счета, присвоенное учреждением, обслуживающим счет, по согласованию с владельцем счета  для обеспечения дополнительных средств идентификации счета
+    /// </summary>
+    /// <value>Наименование счета, присвоенное учреждением, обслуживающим счет, по согласованию с владельцем счета  для обеспечения дополнительных средств идентификации счета</value>
+    [DataMember(Name = "name", EmitDefaultValue = false)]
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...)
+    /// </summary>
+    /// <value>Идентификатор счета соответствующий схеме идентификации, известный владельцу счета (номер банковского счета, номер карты, номер телефона ...)</value>
+    [DataMember(Name = "identification", IsRequired = true, EmitDefaultValue = true)]
+    public string Identification { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPInstructionDebtorAccount instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPInstructionDebtorAccount to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPInstructionDebtorAccount input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Name == input.Name ||
+                (Name != null &&
+                 Name.Equals(input.Name))
+            ) &&
+            (
+                SchemeName == input.SchemeName ||
+                SchemeName.Equals(input.SchemeName)
+            ) &&
+            (
+                Identification == input.Identification ||
+                (Identification != null &&
+                 Identification.Equals(input.Identification))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Name (string) maxLength
+        if (Name != null && Name.Length > 70) yield return new ValidationResult("Invalid value for Name, length must be less than 70.", new[] { "Name" });
+
+        // Identification (string) maxLength
+        if (Identification != null && Identification.Length > 256)
+            yield return new ValidationResult("Invalid value for Identification, length must be less than 256.", new[] { "Identification" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPInstructionDebtorAccount {\n");
+        sb.Append("  Name: ").Append(Name).Append("\n");
+        sb.Append("  SchemeName: ").Append(SchemeName).Append("\n");
+        sb.Append("  Identification: ").Append(Identification).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPInstructionDebtorAccount);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Name != null) hashCode = hashCode * 59 + Name.GetHashCode();
+            hashCode = hashCode * 59 + SchemeName.GetHashCode();
+            if (Identification != null) hashCode = hashCode * 59 + Identification.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -6,6 +6,14 @@ public static class Generator
 {
     private static readonly Random Random = new();
 
+    private static readonly List<string> Descriptions =
+    [
+        "Status description 1",
+        "Status description 2",
+        "Status description 3",
+        "Status description 4"
+    ];
+
     public static string GenerateAccount(int length = 20)
     {
         var accountNumber = new char[length];
@@ -90,27 +98,29 @@ public static class Generator
     }
 
 
-    private static string GenerateRandomOrderNumber() => $"Order-{Random.Next(10000, 99999)}";
+    private static string GenerateRandomOrderNumber()
+    {
+        return $"Order-{Random.Next(10000, 99999)}";
+    }
 
 
-    private static string GenerateRandomLegalNumber() => $"Legal-{Random.Next(10000, 99999)}";
+    private static string GenerateRandomLegalNumber()
+    {
+        return $"Legal-{Random.Next(10000, 99999)}";
+    }
 
-    private static string GenerateRandomLabel() => $"Label_{Guid.NewGuid().ToString().Substring(0, 8)}";
+    private static string GenerateRandomLabel()
+    {
+        return $"Label_{Guid.NewGuid().ToString().Substring(0, 8)}";
+    }
 
-    private static readonly List<string> Descriptions =
-    [
-        "Status description 1",
-        "Status description 2",
-        "Status description 3",
-        "Status description 4"
-    ];
-    
     private static string GenerateRandomStatusDescription()
     {
-        
         return Descriptions[Random.Next(Descriptions.Count)];
     }
 
-    public static decimal GenerateRandomCommission(decimal min = 0m, decimal max = 1000000000m, int decimalPlaces = 2) =>
-        Math.Round((decimal)(new Random().NextDouble() * (double)(max - min) + (double)min), decimalPlaces);
+    public static decimal GenerateRandomCommission(decimal min = 0m, decimal max = 1000000000m, int decimalPlaces = 2)
+    {
+        return Math.Round((decimal)(new Random().NextDouble() * (double)(max - min) + (double)min), decimalPlaces);
+    }
 }

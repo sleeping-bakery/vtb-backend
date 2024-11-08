@@ -9,12 +9,13 @@ namespace Multibanking.API.Controllers;
 public class PeriodPaymentController(IPeriodPaymentService periodPaymentService) : ControllerBase
 {
     /// <summary>
-    /// Создать периодический платеж
+    ///     Создать периодический платеж
     /// </summary>
     /// <param name="periodPaymentDto"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] CreatePeriodPaymentDto periodPaymentDto) {
+    public async Task<ActionResult> Post([FromBody] CreatePeriodPaymentDto periodPaymentDto)
+    {
         await periodPaymentService.CreatePeriodPayment(periodPaymentDto.PeriodPaymentConsentId, periodPaymentDto.Amount, periodPaymentDto.Currency);
         return Ok();
     }

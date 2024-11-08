@@ -5,4 +5,4 @@ namespace Multibanking.Services.Services;
 public interface IServiceSupplierService
 {
     PageDtoRsServiceProviderSearchDtoRs GetServices();
-};
+}

@@ -8,6 +8,7 @@ using Multibanking.Data.OpenAPIBankClients.GuaranteeClient;
 using Multibanking.Data.OpenAPIBankClients.GuaranteeClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.LoanClient;
 using Multibanking.Data.OpenAPIBankClients.PeriodPaymentClient;
+using Multibanking.Data.OpenAPIBankClients.PeriodPaymentClient.Implementations;
 using Multibanking.Data.OpenAPIBankClients.ServiceClient;
 using Multibanking.Data.OpenAPIBankClients.UnidentifiedPaymentClient;
 using Multibanking.Data.OpenAPIBankClients.UniversalPaymentClient;
@@ -95,7 +96,7 @@ public static class DataServiceCollectionExtensions
         }
         else
         {
-            serviceCollection.AddScoped<IPeriodPaymentConsentClient, Data.OpenAPIBankClients.PeriodPaymentClient.Implementations.PeriodPaymentConsentClient>();
+            serviceCollection.AddScoped<IPeriodPaymentConsentClient, PeriodPaymentConsentClient>();
             serviceCollection.AddScoped<IPeriodPaymentClient, Data.OpenAPIBankClients.PeriodPaymentClient.Implementations.PeriodPaymentClient>();
         }
 
@@ -103,7 +104,7 @@ public static class DataServiceCollectionExtensions
             serviceCollection.AddScoped<IBonusPointClient>(_ => BonusPointClientMock.MockBonusPointClient().Object);
         else
             serviceCollection.AddScoped<IBonusPointClient, Data.OpenAPIBankClients.BonusPointClient.BonusPointClient>();
-        
+
         if (mockClients.IsGuaranteeClientMock)
             serviceCollection.AddScoped<IGuaranteeCommissionClient>(_ => GuaranteeClientMock.MockedGuaranteeCommissionClient().Object)
                 .AddScoped<IGuaranteeOrderClient>(_ => GuaranteeClientMock.MockedGuaranteeOrderClient().Object)
@@ -113,7 +114,7 @@ public static class DataServiceCollectionExtensions
                 .AddScoped<IGuaranteeOrderClient, GuaranteeOrderClient>()
                 .AddScoped<IGuaranteePaglClient, GuaranteePaglClient>();
 
-        
+
         return serviceCollection;
     }
 }

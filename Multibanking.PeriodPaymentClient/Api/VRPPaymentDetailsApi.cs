@@ -9,440 +9,351 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
+using System.Threading;
+using System.Threading.Tasks;
 using Multibanking.PeriodPaymentClient.Client;
-using Multibanking.PeriodPaymentClient.Client.Auth;
 using Multibanking.PeriodPaymentClient.Model;
 
-namespace Multibanking.PeriodPaymentClient.Api
+namespace Multibanking.PeriodPaymentClient.Api;
+
+/// <summary>
+///     Represents a collection of functions to interact with the API endpoints
+/// </summary>
+public class VRPPaymentDetailsApi : IVRPPaymentDetailsApi
 {
+    private ExceptionFactory _exceptionFactory = (name, response) => null;
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="VRPPaymentDetailsApi" /> class.
     /// </summary>
-    public interface IVRPPaymentDetailsApiSync : IApiAccessor
+    /// <returns></returns>
+    public VRPPaymentDetailsApi() : this((string)null)
     {
-        #region Synchronous Operations
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств
-        /// </summary>
-        /// <remarks>
-        /// Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PaymentDetailsResponse</returns>
-        PaymentDetailsResponse GetVRPVRPIDPaymentDetails(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств
-        /// </summary>
-        /// <remarks>
-        /// Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PaymentDetailsResponse</returns>
-        ApiResponse<PaymentDetailsResponse> GetVRPVRPIDPaymentDetailsWithHttpInfo(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-        #endregion Synchronous Operations
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="VRPPaymentDetailsApi" /> class.
     /// </summary>
-    public interface IVRPPaymentDetailsApiAsync : IApiAccessor
+    /// <returns></returns>
+    public VRPPaymentDetailsApi(string basePath)
     {
-        #region Asynchronous Operations
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств
-        /// </summary>
-        /// <remarks>
-        /// Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaymentDetailsResponse</returns>
-        System.Threading.Tasks.Task<PaymentDetailsResponse> GetVRPVRPIDPaymentDetailsAsync(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств
-        /// </summary>
-        /// <remarks>
-        /// Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaymentDetailsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PaymentDetailsResponse>> GetVRPVRPIDPaymentDetailsWithHttpInfoAsync(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        #endregion Asynchronous Operations
+        Configuration = PeriodPaymentClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            new Configuration { BasePath = basePath }
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="VRPPaymentDetailsApi" /> class
+    ///     using Configuration object
     /// </summary>
-    public interface IVRPPaymentDetailsApi : IVRPPaymentDetailsApiSync, IVRPPaymentDetailsApiAsync
+    /// <param name="configuration">An instance of Configuration</param>
+    /// <returns></returns>
+    public VRPPaymentDetailsApi(Configuration configuration)
     {
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
+        Configuration = PeriodPaymentClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            configuration
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="VRPPaymentDetailsApi" /> class
+    ///     using a Configuration object and client instance.
     /// </summary>
-    public partial class VRPPaymentDetailsApi : IVRPPaymentDetailsApi
+    /// <param name="client">The client interface for synchronous API access.</param>
+    /// <param name="asyncClient">The client interface for asynchronous API access.</param>
+    /// <param name="configuration">The configuration object.</param>
+    public VRPPaymentDetailsApi(ISynchronousClient client, IAsynchronousClient asyncClient, IReadableConfiguration configuration)
     {
-        private Multibanking.PeriodPaymentClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        if (client == null) throw new ArgumentNullException("client");
+        if (asyncClient == null) throw new ArgumentNullException("asyncClient");
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPPaymentDetailsApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public VRPPaymentDetailsApi() : this((string)null)
+        Client = client;
+        AsynchronousClient = asyncClient;
+        Configuration = configuration;
+        ExceptionFactory = PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+    }
+
+    /// <summary>
+    ///     The client for accessing this underlying API asynchronously.
+    /// </summary>
+    public IAsynchronousClient AsynchronousClient { get; set; }
+
+    /// <summary>
+    ///     The client for accessing this underlying API synchronously.
+    /// </summary>
+    public ISynchronousClient Client { get; set; }
+
+    /// <summary>
+    ///     Gets the base path of the API client.
+    /// </summary>
+    /// <value>The base path</value>
+    public string GetBasePath()
+    {
+        return Configuration.BasePath;
+    }
+
+    /// <summary>
+    ///     Gets or sets the configuration object
+    /// </summary>
+    /// <value>An instance of the Configuration</value>
+    public IReadableConfiguration Configuration { get; set; }
+
+    /// <summary>
+    ///     Provides a factory method hook for the creation of exceptions.
+    /// </summary>
+    public ExceptionFactory ExceptionFactory
+    {
+        get
         {
+            if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
+                throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
+            return _exceptionFactory;
+        }
+        set => _exceptionFactory = value;
+    }
+
+    /// <summary>
+    ///     Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPId"></param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>PaymentDetailsResponse</returns>
+    public PaymentDetailsResponse GetVRPVRPIDPaymentDetails(string vRPId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        var localVarResponse = GetVRPVRPIDPaymentDetailsWithHttpInfo(vRPId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPId"></param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of PaymentDetailsResponse</returns>
+    public ApiResponse<PaymentDetailsResponse> GetVRPVRPIDPaymentDetailsWithHttpInfo(string vRPId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        // verify the required parameter 'vRPId' is set
+        if (vRPId == null) throw new ApiException(400, "Missing required parameter 'vRPId' when calling VRPPaymentDetailsApi->GetVRPVRPIDPaymentDetails");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("VRPId", ClientUtils.ParameterToString(vRPId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+
+        localVarRequestOptions.Operation = "VRPPaymentDetailsApi.GetVRPVRPIDPaymentDetails";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPPaymentDetailsApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public VRPPaymentDetailsApi(string basePath)
+        // make the HTTP request
+        var localVarResponse = Client.Get<PaymentDetailsResponse>("/vrp-payments/{VRPId}/payment-details", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
         {
-            this.Configuration = Multibanking.PeriodPaymentClient.Client.Configuration.MergeConfigurations(
-                Multibanking.PeriodPaymentClient.Client.GlobalConfiguration.Instance,
-                new Multibanking.PeriodPaymentClient.Client.Configuration { BasePath = basePath }
-            );
-            this.Client = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Multibanking.PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+            var _exception = ExceptionFactory("GetVRPVRPIDPaymentDetails", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPPaymentDetailsApi"/> class
-        /// using Configuration object
-        /// </summary>
-        /// <param name="configuration">An instance of Configuration</param>
-        /// <returns></returns>
-        public VRPPaymentDetailsApi(Multibanking.PeriodPaymentClient.Client.Configuration configuration)
-        {
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        return localVarResponse;
+    }
 
-            this.Configuration = Multibanking.PeriodPaymentClient.Client.Configuration.MergeConfigurations(
-                Multibanking.PeriodPaymentClient.Client.GlobalConfiguration.Instance,
-                configuration
-            );
-            this.Client = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Multibanking.PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+    /// <summary>
+    ///     Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPId"></param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of PaymentDetailsResponse</returns>
+    public async Task<PaymentDetailsResponse> GetVRPVRPIDPaymentDetailsAsync(string vRPId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarResponse =
+            await GetVRPVRPIDPaymentDetailsWithHttpInfoAsync(vRPId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex,
+                cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPId"></param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (PaymentDetailsResponse)</returns>
+    public async Task<ApiResponse<PaymentDetailsResponse>> GetVRPVRPIDPaymentDetailsWithHttpInfoAsync(string vRPId, string xFapiAuthDate = default,
+        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'vRPId' is set
+        if (vRPId == null) throw new ApiException(400, "Missing required parameter 'vRPId' when calling VRPPaymentDetailsApi->GetVRPVRPIDPaymentDetails");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("VRPId", ClientUtils.ParameterToString(vRPId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+
+        localVarRequestOptions.Operation = "VRPPaymentDetailsApi.GetVRPVRPIDPaymentDetails";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPPaymentDetailsApi"/> class
-        /// using a Configuration object and client instance.
-        /// </summary>
-        /// <param name="client">The client interface for synchronous API access.</param>
-        /// <param name="asyncClient">The client interface for asynchronous API access.</param>
-        /// <param name="configuration">The configuration object.</param>
-        public VRPPaymentDetailsApi(Multibanking.PeriodPaymentClient.Client.ISynchronousClient client, Multibanking.PeriodPaymentClient.Client.IAsynchronousClient asyncClient, Multibanking.PeriodPaymentClient.Client.IReadableConfiguration configuration)
-        {
-            if (client == null) throw new ArgumentNullException("client");
-            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient
+            .GetAsync<PaymentDetailsResponse>("/vrp-payments/{VRPId}/payment-details", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
 
-            this.Client = client;
-            this.AsynchronousClient = asyncClient;
-            this.Configuration = configuration;
-            this.ExceptionFactory = Multibanking.PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetVRPVRPIDPaymentDetails", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// The client for accessing this underlying API asynchronously.
-        /// </summary>
-        public Multibanking.PeriodPaymentClient.Client.IAsynchronousClient AsynchronousClient { get; set; }
-
-        /// <summary>
-        /// The client for accessing this underlying API synchronously.
-        /// </summary>
-        public Multibanking.PeriodPaymentClient.Client.ISynchronousClient Client { get; set; }
-
-        /// <summary>
-        /// Gets the base path of the API client.
-        /// </summary>
-        /// <value>The base path</value>
-        public string GetBasePath()
-        {
-            return this.Configuration.BasePath;
-        }
-
-        /// <summary>
-        /// Gets or sets the configuration object
-        /// </summary>
-        /// <value>An instance of the Configuration</value>
-        public Multibanking.PeriodPaymentClient.Client.IReadableConfiguration Configuration { get; set; }
-
-        /// <summary>
-        /// Provides a factory method hook for the creation of exceptions.
-        /// </summary>
-        public Multibanking.PeriodPaymentClient.Client.ExceptionFactory ExceptionFactory
-        {
-            get
-            {
-                if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
-                {
-                    throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
-                }
-                return _exceptionFactory;
-            }
-            set { _exceptionFactory = value; }
-        }
-
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PaymentDetailsResponse</returns>
-        public PaymentDetailsResponse GetVRPVRPIDPaymentDetails(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
-        {
-            Multibanking.PeriodPaymentClient.Client.ApiResponse<PaymentDetailsResponse> localVarResponse = GetVRPVRPIDPaymentDetailsWithHttpInfo(vRPId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PaymentDetailsResponse</returns>
-        public Multibanking.PeriodPaymentClient.Client.ApiResponse<PaymentDetailsResponse> GetVRPVRPIDPaymentDetailsWithHttpInfo(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
-        {
-            // verify the required parameter 'vRPId' is set
-            if (vRPId == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'vRPId' when calling VRPPaymentDetailsApi->GetVRPVRPIDPaymentDetails");
-            }
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("VRPId", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(vRPId)); // path parameter
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "VRPPaymentDetailsApi.GetVRPVRPIDPaymentDetails";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<PaymentDetailsResponse>("/vrp-payments/{VRPId}/payment-details", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetVRPVRPIDPaymentDetails", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PaymentDetailsResponse</returns>
-        public async System.Threading.Tasks.Task<PaymentDetailsResponse> GetVRPVRPIDPaymentDetailsAsync(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.PeriodPaymentClient.Client.ApiResponse<PaymentDetailsResponse> localVarResponse = await GetVRPVRPIDPaymentDetailsWithHttpInfoAsync(vRPId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Детальное описание состояния ресурса  перевода денежных средств Детальное описание состояния ресурса  перевода денежных средств по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPId"></param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PaymentDetailsResponse)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.PeriodPaymentClient.Client.ApiResponse<PaymentDetailsResponse>> GetVRPVRPIDPaymentDetailsWithHttpInfoAsync(string vRPId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'vRPId' is set
-            if (vRPId == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'vRPId' when calling VRPPaymentDetailsApi->GetVRPVRPIDPaymentDetails");
-            }
-
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("VRPId", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(vRPId)); // path parameter
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "VRPPaymentDetailsApi.GetVRPVRPIDPaymentDetails";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PaymentDetailsResponse>("/vrp-payments/{VRPId}/payment-details", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetVRPVRPIDPaymentDetails", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
+        return localVarResponse;
     }
 }

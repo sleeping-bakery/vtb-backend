@@ -9,152 +9,125 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.ServiceClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.ServiceClient.Model
+namespace Multibanking.ServiceClient.Model;
+
+/// <summary>
+///     Информация о банке
+/// </summary>
+[DataContract(Name = "BankDtoRs")]
+public class BankDtoRs : IEquatable<BankDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Информация о банке
+    ///     Initializes a new instance of the <see cref="BankDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "BankDtoRs")]
-    public partial class BankDtoRs : IEquatable<BankDtoRs>, IValidatableObject
+    /// <param name="name">Наименование банка.</param>
+    /// <param name="bic">БИК банка.</param>
+    public BankDtoRs(string name = default, string bic = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BankDtoRs" /> class.
-        /// </summary>
-        /// <param name="name">Наименование банка.</param>
-        /// <param name="bic">БИК банка.</param>
-        public BankDtoRs(string name = default(string), string bic = default(string))
-        {
-            this.Name = name;
-            this.Bic = bic;
-        }
-
-        /// <summary>
-        /// Наименование банка
-        /// </summary>
-        /// <value>Наименование банка</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// БИК банка
-        /// </summary>
-        /// <value>БИК банка</value>
-        [DataMember(Name = "bic", EmitDefaultValue = false)]
-        public string Bic { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class BankDtoRs {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Bic: ").Append(Bic).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as BankDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if BankDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of BankDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(BankDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && 
-                (
-                    this.Bic == input.Bic ||
-                    (this.Bic != null &&
-                    this.Bic.Equals(input.Bic))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Name != null)
-                {
-                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
-                }
-                if (this.Bic != null)
-                {
-                    hashCode = (hashCode * 59) + this.Bic.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Name (string) maxLength
-            if (this.Name != null && this.Name.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be less than 255.", new [] { "Name" });
-            }
-
-            // Bic (string) maxLength
-            if (this.Bic != null && this.Bic.Length > 9)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Bic, length must be less than 9.", new [] { "Bic" });
-            }
-
-            yield break;
-        }
+        Name = name;
+        Bic = bic;
     }
 
+    /// <summary>
+    ///     Наименование банка
+    /// </summary>
+    /// <value>Наименование банка</value>
+    [DataMember(Name = "name", EmitDefaultValue = false)]
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     БИК банка
+    /// </summary>
+    /// <value>БИК банка</value>
+    [DataMember(Name = "bic", EmitDefaultValue = false)]
+    public string Bic { get; set; }
+
+    /// <summary>
+    ///     Returns true if BankDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of BankDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(BankDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Name == input.Name ||
+                (Name != null &&
+                 Name.Equals(input.Name))
+            ) &&
+            (
+                Bic == input.Bic ||
+                (Bic != null &&
+                 Bic.Equals(input.Bic))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Name (string) maxLength
+        if (Name != null && Name.Length > 255) yield return new ValidationResult("Invalid value for Name, length must be less than 255.", new[] { "Name" });
+
+        // Bic (string) maxLength
+        if (Bic != null && Bic.Length > 9) yield return new ValidationResult("Invalid value for Bic, length must be less than 9.", new[] { "Bic" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class BankDtoRs {\n");
+        sb.Append("  Name: ").Append(Name).Append("\n");
+        sb.Append("  Bic: ").Append(Bic).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as BankDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Name != null) hashCode = hashCode * 59 + Name.GetHashCode();
+            if (Bic != null) hashCode = hashCode * 59 + Bic.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -14,11 +14,10 @@ public class BonusPointController(IBonusPointService bonusPointService)
     {
         return bonusPointService.GetBonusPoints(accountId);
     }
-    
+
     [HttpPost]
     public void Post(PostBonusPointDto postBonusPointDto)
     {
         bonusPointService.PostBonusPoints(postBonusPointDto);
     }
-    
 }

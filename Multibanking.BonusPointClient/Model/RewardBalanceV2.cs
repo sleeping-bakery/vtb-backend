@@ -9,168 +9,153 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     Содержит баланс вознаграждений и конфигурацию программы.
+/// </summary>
+[DataContract(Name = "RewardBalanceV2")]
+public class RewardBalanceV2 : IEquatable<RewardBalanceV2>, IValidatableObject
 {
     /// <summary>
-    /// Содержит баланс вознаграждений и конфигурацию программы.
+    ///     Initializes a new instance of the <see cref="RewardBalanceV2" /> class.
     /// </summary>
-    [DataContract(Name = "RewardBalanceV2")]
-    public partial class RewardBalanceV2 : IEquatable<RewardBalanceV2>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RewardBalanceV2()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RewardBalanceV2" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RewardBalanceV2() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RewardBalanceV2" /> class.
-        /// </summary>
-        /// <param name="redemptionEligibility">Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи в отношении ожидающих платежей и других статусов учетной записи. (required).</param>
-        /// <param name="rewardSummary">rewardSummary (required).</param>
-        /// <param name="programDetail">programDetail (required).</param>
-        public RewardBalanceV2(bool redemptionEligibility = default(bool), RewardSummaryV2 rewardSummary = default(RewardSummaryV2), ProgramDetailV2 programDetail = default(ProgramDetailV2))
-        {
-            this.RedemptionEligibility = redemptionEligibility;
-            // to ensure "rewardSummary" is required (not null)
-            if (rewardSummary == null)
-            {
-                throw new ArgumentNullException("rewardSummary is a required property for RewardBalanceV2 and cannot be null");
-            }
-            this.RewardSummary = rewardSummary;
-            // to ensure "programDetail" is required (not null)
-            if (programDetail == null)
-            {
-                throw new ArgumentNullException("programDetail is a required property for RewardBalanceV2 and cannot be null");
-            }
-            this.ProgramDetail = programDetail;
-        }
-
-        /// <summary>
-        /// Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи в отношении ожидающих платежей и других статусов учетной записи.
-        /// </summary>
-        /// <value>Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи в отношении ожидающих платежей и других статусов учетной записи.</value>
-        [DataMember(Name = "redemptionEligibility", IsRequired = true, EmitDefaultValue = true)]
-        public bool RedemptionEligibility { get; set; }
-
-        /// <summary>
-        /// Gets or Sets RewardSummary
-        /// </summary>
-        [DataMember(Name = "rewardSummary", IsRequired = true, EmitDefaultValue = true)]
-        public RewardSummaryV2 RewardSummary { get; set; }
-
-        /// <summary>
-        /// Gets or Sets ProgramDetail
-        /// </summary>
-        [DataMember(Name = "programDetail", IsRequired = true, EmitDefaultValue = true)]
-        public ProgramDetailV2 ProgramDetail { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RewardBalanceV2 {\n");
-            sb.Append("  RedemptionEligibility: ").Append(RedemptionEligibility).Append("\n");
-            sb.Append("  RewardSummary: ").Append(RewardSummary).Append("\n");
-            sb.Append("  ProgramDetail: ").Append(ProgramDetail).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RewardBalanceV2);
-        }
-
-        /// <summary>
-        /// Returns true if RewardBalanceV2 instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RewardBalanceV2 to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RewardBalanceV2 input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.RedemptionEligibility == input.RedemptionEligibility ||
-                    this.RedemptionEligibility.Equals(input.RedemptionEligibility)
-                ) && 
-                (
-                    this.RewardSummary == input.RewardSummary ||
-                    (this.RewardSummary != null &&
-                    this.RewardSummary.Equals(input.RewardSummary))
-                ) && 
-                (
-                    this.ProgramDetail == input.ProgramDetail ||
-                    (this.ProgramDetail != null &&
-                    this.ProgramDetail.Equals(input.ProgramDetail))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.RedemptionEligibility.GetHashCode();
-                if (this.RewardSummary != null)
-                {
-                    hashCode = (hashCode * 59) + this.RewardSummary.GetHashCode();
-                }
-                if (this.ProgramDetail != null)
-                {
-                    hashCode = (hashCode * 59) + this.ProgramDetail.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RewardBalanceV2" /> class.
+    /// </summary>
+    /// <param name="redemptionEligibility">
+    ///     Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи
+    ///     в отношении ожидающих платежей и других статусов учетной записи. (required).
+    /// </param>
+    /// <param name="rewardSummary">rewardSummary (required).</param>
+    /// <param name="programDetail">programDetail (required).</param>
+    public RewardBalanceV2(bool redemptionEligibility = default, RewardSummaryV2 rewardSummary = default, ProgramDetailV2 programDetail = default)
+    {
+        RedemptionEligibility = redemptionEligibility;
+        // to ensure "rewardSummary" is required (not null)
+        if (rewardSummary == null) throw new ArgumentNullException("rewardSummary is a required property for RewardBalanceV2 and cannot be null");
+        RewardSummary = rewardSummary;
+        // to ensure "programDetail" is required (not null)
+        if (programDetail == null) throw new ArgumentNullException("programDetail is a required property for RewardBalanceV2 and cannot be null");
+        ProgramDetail = programDetail;
+    }
+
+    /// <summary>
+    ///     Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи в отношении ожидающих платежей
+    ///     и других статусов учетной записи.
+    /// </summary>
+    /// <value>
+    ///     Истинно, если учетная запись имеет право на погашение текущего остатка вознаграждений, определяемого на основе хорошей репутации учетной записи в отношении ожидающих
+    ///     платежей и других статусов учетной записи.
+    /// </value>
+    [DataMember(Name = "redemptionEligibility", IsRequired = true, EmitDefaultValue = true)]
+    public bool RedemptionEligibility { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets RewardSummary
+    /// </summary>
+    [DataMember(Name = "rewardSummary", IsRequired = true, EmitDefaultValue = true)]
+    public RewardSummaryV2 RewardSummary { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets ProgramDetail
+    /// </summary>
+    [DataMember(Name = "programDetail", IsRequired = true, EmitDefaultValue = true)]
+    public ProgramDetailV2 ProgramDetail { get; set; }
+
+    /// <summary>
+    ///     Returns true if RewardBalanceV2 instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RewardBalanceV2 to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RewardBalanceV2 input)
+    {
+        if (input == null) return false;
+        return
+            (
+                RedemptionEligibility == input.RedemptionEligibility ||
+                RedemptionEligibility.Equals(input.RedemptionEligibility)
+            ) &&
+            (
+                RewardSummary == input.RewardSummary ||
+                (RewardSummary != null &&
+                 RewardSummary.Equals(input.RewardSummary))
+            ) &&
+            (
+                ProgramDetail == input.ProgramDetail ||
+                (ProgramDetail != null &&
+                 ProgramDetail.Equals(input.ProgramDetail))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RewardBalanceV2 {\n");
+        sb.Append("  RedemptionEligibility: ").Append(RedemptionEligibility).Append("\n");
+        sb.Append("  RewardSummary: ").Append(RewardSummary).Append("\n");
+        sb.Append("  ProgramDetail: ").Append(ProgramDetail).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RewardBalanceV2);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + RedemptionEligibility.GetHashCode();
+            if (RewardSummary != null) hashCode = hashCode * 59 + RewardSummary.GetHashCode();
+            if (ProgramDetail != null) hashCode = hashCode * 59 + ProgramDetail.GetHashCode();
+            return hashCode;
+        }
+    }
 }

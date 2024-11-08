@@ -9,472 +9,391 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Поле ПУ необходимое для платежа
+/// </summary>
+[DataContract(Name = "InputFieldDtoRs")]
+public class InputFieldDtoRs : IEquatable<InputFieldDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Поле ПУ необходимое для платежа
+    ///     Тип поля
     /// </summary>
-    [DataContract(Name = "InputFieldDtoRs")]
-    public partial class InputFieldDtoRs : IEquatable<InputFieldDtoRs>, IValidatableObject
+    /// <value>Тип поля</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TypeEnum
     {
         /// <summary>
-        /// Тип поля
+        ///     Enum STRING for value: STRING
         /// </summary>
-        /// <value>Тип поля</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum TypeEnum
-        {
-            /// <summary>
-            /// Enum STRING for value: STRING
-            /// </summary>
-            [EnumMember(Value = "STRING")]
-            STRING = 1,
-
-            /// <summary>
-            /// Enum NUMERIC for value: NUMERIC
-            /// </summary>
-            [EnumMember(Value = "NUMERIC")]
-            NUMERIC = 2,
-
-            /// <summary>
-            /// Enum NUMBER for value: NUMBER
-            /// </summary>
-            [EnumMember(Value = "NUMBER")]
-            NUMBER = 3,
-
-            /// <summary>
-            /// Enum DECIMAL for value: DECIMAL
-            /// </summary>
-            [EnumMember(Value = "DECIMAL")]
-            DECIMAL = 4,
-
-            /// <summary>
-            /// Enum BOOLEAN for value: BOOLEAN
-            /// </summary>
-            [EnumMember(Value = "BOOLEAN")]
-            BOOLEAN = 5,
-
-            /// <summary>
-            /// Enum MONEY for value: MONEY
-            /// </summary>
-            [EnumMember(Value = "MONEY")]
-            MONEY = 6,
-
-            /// <summary>
-            /// Enum DATE for value: DATE
-            /// </summary>
-            [EnumMember(Value = "DATE")]
-            DATE = 7,
-
-            /// <summary>
-            /// Enum MONTHYEAR for value: MONTH_YEAR
-            /// </summary>
-            [EnumMember(Value = "MONTH_YEAR")]
-            MONTHYEAR = 8,
-
-            /// <summary>
-            /// Enum MONTH for value: MONTH
-            /// </summary>
-            [EnumMember(Value = "MONTH")]
-            MONTH = 9,
-
-            /// <summary>
-            /// Enum YEAR for value: YEAR
-            /// </summary>
-            [EnumMember(Value = "YEAR")]
-            YEAR = 10,
-
-            /// <summary>
-            /// Enum MOBILEPHONE for value: MOBILE_PHONE
-            /// </summary>
-            [EnumMember(Value = "MOBILE_PHONE")]
-            MOBILEPHONE = 11,
-
-            /// <summary>
-            /// Enum DICTIONARY for value: DICTIONARY
-            /// </summary>
-            [EnumMember(Value = "DICTIONARY")]
-            DICTIONARY = 12
-
-        }
-
+        [EnumMember(Value = "STRING")] STRING = 1,
 
         /// <summary>
-        /// Тип поля
+        ///     Enum NUMERIC for value: NUMERIC
         /// </summary>
-        /// <value>Тип поля</value>
-        [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
-        public TypeEnum Type { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InputFieldDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected InputFieldDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InputFieldDtoRs" /> class.
-        /// </summary>
-        /// <param name="key">Ключ поля (required).</param>
-        /// <param name="name">Название поля (required).</param>
-        /// <param name="description">Описание поля.</param>
-        /// <param name="value">Значение поля.</param>
-        /// <param name="type">Тип поля (required).</param>
-        /// <param name="dictionaryField">dictionaryField.</param>
-        /// <param name="lengthRestrict">lengthRestrict.</param>
-        /// <param name="numberValueRestrict">numberValueRestrict.</param>
-        /// <param name="required">Поле обязательно к заполнению (required).</param>
-        /// <param name="editable">Поле можно отредактировать (required).</param>
-        /// <param name="inputMask">Маска ввода поля.</param>
-        /// <param name="regexpValidators">Список валидаторов поля в виде регулярных выражений.</param>
-        public InputFieldDtoRs(string key = default(string), string name = default(string), string description = default(string), string value = default(string), TypeEnum type = default(TypeEnum), DictionaryFieldDtoRs dictionaryField = default(DictionaryFieldDtoRs), LengthRestrictDtoRs lengthRestrict = default(LengthRestrictDtoRs), NumberValueRestrictDtoRs numberValueRestrict = default(NumberValueRestrictDtoRs), bool required = default(bool), bool editable = default(bool), string inputMask = default(string), List<RegexpValidatorDtoRs> regexpValidators = default(List<RegexpValidatorDtoRs>))
-        {
-            // to ensure "key" is required (not null)
-            if (key == null)
-            {
-                throw new ArgumentNullException("key is a required property for InputFieldDtoRs and cannot be null");
-            }
-            this.Key = key;
-            // to ensure "name" is required (not null)
-            if (name == null)
-            {
-                throw new ArgumentNullException("name is a required property for InputFieldDtoRs and cannot be null");
-            }
-            this.Name = name;
-            this.Type = type;
-            this.Required = required;
-            this.Editable = editable;
-            this.Description = description;
-            this.Value = value;
-            this.DictionaryField = dictionaryField;
-            this.LengthRestrict = lengthRestrict;
-            this.NumberValueRestrict = numberValueRestrict;
-            this.InputMask = inputMask;
-            this.RegexpValidators = regexpValidators;
-        }
+        [EnumMember(Value = "NUMERIC")] NUMERIC = 2,
 
         /// <summary>
-        /// Ключ поля
+        ///     Enum NUMBER for value: NUMBER
         /// </summary>
-        /// <value>Ключ поля</value>
-        [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
-        public string Key { get; set; }
+        [EnumMember(Value = "NUMBER")] NUMBER = 3,
 
         /// <summary>
-        /// Название поля
+        ///     Enum DECIMAL for value: DECIMAL
         /// </summary>
-        /// <value>Название поля</value>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
-        public string Name { get; set; }
+        [EnumMember(Value = "DECIMAL")] DECIMAL = 4,
 
         /// <summary>
-        /// Описание поля
+        ///     Enum BOOLEAN for value: BOOLEAN
         /// </summary>
-        /// <value>Описание поля</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; }
+        [EnumMember(Value = "BOOLEAN")] BOOLEAN = 5,
 
         /// <summary>
-        /// Значение поля
+        ///     Enum MONEY for value: MONEY
         /// </summary>
-        /// <value>Значение поля</value>
-        [DataMember(Name = "value", EmitDefaultValue = false)]
-        public string Value { get; set; }
+        [EnumMember(Value = "MONEY")] MONEY = 6,
 
         /// <summary>
-        /// Gets or Sets DictionaryField
+        ///     Enum DATE for value: DATE
         /// </summary>
-        [DataMember(Name = "dictionaryField", EmitDefaultValue = false)]
-        public DictionaryFieldDtoRs DictionaryField { get; set; }
+        [EnumMember(Value = "DATE")] DATE = 7,
 
         /// <summary>
-        /// Gets or Sets LengthRestrict
+        ///     Enum MONTHYEAR for value: MONTH_YEAR
         /// </summary>
-        [DataMember(Name = "lengthRestrict", EmitDefaultValue = false)]
-        public LengthRestrictDtoRs LengthRestrict { get; set; }
+        [EnumMember(Value = "MONTH_YEAR")] MONTHYEAR = 8,
 
         /// <summary>
-        /// Gets or Sets NumberValueRestrict
+        ///     Enum MONTH for value: MONTH
         /// </summary>
-        [DataMember(Name = "numberValueRestrict", EmitDefaultValue = false)]
-        public NumberValueRestrictDtoRs NumberValueRestrict { get; set; }
+        [EnumMember(Value = "MONTH")] MONTH = 9,
 
         /// <summary>
-        /// Поле обязательно к заполнению
+        ///     Enum YEAR for value: YEAR
         /// </summary>
-        /// <value>Поле обязательно к заполнению</value>
-        [DataMember(Name = "required", IsRequired = true, EmitDefaultValue = true)]
-        public bool Required { get; set; }
+        [EnumMember(Value = "YEAR")] YEAR = 10,
 
         /// <summary>
-        /// Поле можно отредактировать
+        ///     Enum MOBILEPHONE for value: MOBILE_PHONE
         /// </summary>
-        /// <value>Поле можно отредактировать</value>
-        [DataMember(Name = "editable", IsRequired = true, EmitDefaultValue = true)]
-        public bool Editable { get; set; }
+        [EnumMember(Value = "MOBILE_PHONE")] MOBILEPHONE = 11,
 
         /// <summary>
-        /// Маска ввода поля
+        ///     Enum DICTIONARY for value: DICTIONARY
         /// </summary>
-        /// <value>Маска ввода поля</value>
-        [DataMember(Name = "inputMask", EmitDefaultValue = false)]
-        public string InputMask { get; set; }
-
-        /// <summary>
-        /// Список валидаторов поля в виде регулярных выражений
-        /// </summary>
-        /// <value>Список валидаторов поля в виде регулярных выражений</value>
-        [DataMember(Name = "regexpValidators", EmitDefaultValue = false)]
-        public List<RegexpValidatorDtoRs> RegexpValidators { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class InputFieldDtoRs {\n");
-            sb.Append("  Key: ").Append(Key).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  Value: ").Append(Value).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  DictionaryField: ").Append(DictionaryField).Append("\n");
-            sb.Append("  LengthRestrict: ").Append(LengthRestrict).Append("\n");
-            sb.Append("  NumberValueRestrict: ").Append(NumberValueRestrict).Append("\n");
-            sb.Append("  Required: ").Append(Required).Append("\n");
-            sb.Append("  Editable: ").Append(Editable).Append("\n");
-            sb.Append("  InputMask: ").Append(InputMask).Append("\n");
-            sb.Append("  RegexpValidators: ").Append(RegexpValidators).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as InputFieldDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if InputFieldDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of InputFieldDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(InputFieldDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
-                ) && 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && 
-                (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
-                ) && 
-                (
-                    this.Type == input.Type ||
-                    this.Type.Equals(input.Type)
-                ) && 
-                (
-                    this.DictionaryField == input.DictionaryField ||
-                    (this.DictionaryField != null &&
-                    this.DictionaryField.Equals(input.DictionaryField))
-                ) && 
-                (
-                    this.LengthRestrict == input.LengthRestrict ||
-                    (this.LengthRestrict != null &&
-                    this.LengthRestrict.Equals(input.LengthRestrict))
-                ) && 
-                (
-                    this.NumberValueRestrict == input.NumberValueRestrict ||
-                    (this.NumberValueRestrict != null &&
-                    this.NumberValueRestrict.Equals(input.NumberValueRestrict))
-                ) && 
-                (
-                    this.Required == input.Required ||
-                    this.Required.Equals(input.Required)
-                ) && 
-                (
-                    this.Editable == input.Editable ||
-                    this.Editable.Equals(input.Editable)
-                ) && 
-                (
-                    this.InputMask == input.InputMask ||
-                    (this.InputMask != null &&
-                    this.InputMask.Equals(input.InputMask))
-                ) && 
-                (
-                    this.RegexpValidators == input.RegexpValidators ||
-                    this.RegexpValidators != null &&
-                    input.RegexpValidators != null &&
-                    this.RegexpValidators.SequenceEqual(input.RegexpValidators)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Key != null)
-                {
-                    hashCode = (hashCode * 59) + this.Key.GetHashCode();
-                }
-                if (this.Name != null)
-                {
-                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
-                }
-                if (this.Description != null)
-                {
-                    hashCode = (hashCode * 59) + this.Description.GetHashCode();
-                }
-                if (this.Value != null)
-                {
-                    hashCode = (hashCode * 59) + this.Value.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.Type.GetHashCode();
-                if (this.DictionaryField != null)
-                {
-                    hashCode = (hashCode * 59) + this.DictionaryField.GetHashCode();
-                }
-                if (this.LengthRestrict != null)
-                {
-                    hashCode = (hashCode * 59) + this.LengthRestrict.GetHashCode();
-                }
-                if (this.NumberValueRestrict != null)
-                {
-                    hashCode = (hashCode * 59) + this.NumberValueRestrict.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.Required.GetHashCode();
-                hashCode = (hashCode * 59) + this.Editable.GetHashCode();
-                if (this.InputMask != null)
-                {
-                    hashCode = (hashCode * 59) + this.InputMask.GetHashCode();
-                }
-                if (this.RegexpValidators != null)
-                {
-                    hashCode = (hashCode * 59) + this.RegexpValidators.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Key (string) maxLength
-            if (this.Key != null && this.Key.Length > 32)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be less than 32.", new [] { "Key" });
-            }
-
-            // Key (string) minLength
-            if (this.Key != null && this.Key.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Key, length must be greater than 1.", new [] { "Key" });
-            }
-
-            // Name (string) maxLength
-            if (this.Name != null && this.Name.Length > 64)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be less than 64.", new [] { "Name" });
-            }
-
-            // Name (string) minLength
-            if (this.Name != null && this.Name.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be greater than 1.", new [] { "Name" });
-            }
-
-            // Description (string) maxLength
-            if (this.Description != null && this.Description.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 255.", new [] { "Description" });
-            }
-
-            // Description (string) minLength
-            if (this.Description != null && this.Description.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be greater than 1.", new [] { "Description" });
-            }
-
-            // Value (string) maxLength
-            if (this.Value != null && this.Value.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, length must be less than 255.", new [] { "Value" });
-            }
-
-            // Value (string) minLength
-            if (this.Value != null && this.Value.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Value, length must be greater than 1.", new [] { "Value" });
-            }
-
-            // InputMask (string) maxLength
-            if (this.InputMask != null && this.InputMask.Length > 128)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for InputMask, length must be less than 128.", new [] { "InputMask" });
-            }
-
-            // InputMask (string) minLength
-            if (this.InputMask != null && this.InputMask.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for InputMask, length must be greater than 1.", new [] { "InputMask" });
-            }
-
-            yield break;
-        }
+        [EnumMember(Value = "DICTIONARY")] DICTIONARY = 12
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="InputFieldDtoRs" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected InputFieldDtoRs()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="InputFieldDtoRs" /> class.
+    /// </summary>
+    /// <param name="key">Ключ поля (required).</param>
+    /// <param name="name">Название поля (required).</param>
+    /// <param name="description">Описание поля.</param>
+    /// <param name="value">Значение поля.</param>
+    /// <param name="type">Тип поля (required).</param>
+    /// <param name="dictionaryField">dictionaryField.</param>
+    /// <param name="lengthRestrict">lengthRestrict.</param>
+    /// <param name="numberValueRestrict">numberValueRestrict.</param>
+    /// <param name="required">Поле обязательно к заполнению (required).</param>
+    /// <param name="editable">Поле можно отредактировать (required).</param>
+    /// <param name="inputMask">Маска ввода поля.</param>
+    /// <param name="regexpValidators">Список валидаторов поля в виде регулярных выражений.</param>
+    public InputFieldDtoRs(string key = default, string name = default, string description = default, string value = default, TypeEnum type = default,
+        DictionaryFieldDtoRs dictionaryField = default, LengthRestrictDtoRs lengthRestrict = default, NumberValueRestrictDtoRs numberValueRestrict = default,
+        bool required = default, bool editable = default, string inputMask = default, List<RegexpValidatorDtoRs> regexpValidators = default)
+    {
+        // to ensure "key" is required (not null)
+        if (key == null) throw new ArgumentNullException("key is a required property for InputFieldDtoRs and cannot be null");
+        Key = key;
+        // to ensure "name" is required (not null)
+        if (name == null) throw new ArgumentNullException("name is a required property for InputFieldDtoRs and cannot be null");
+        Name = name;
+        Type = type;
+        Required = required;
+        Editable = editable;
+        Description = description;
+        Value = value;
+        DictionaryField = dictionaryField;
+        LengthRestrict = lengthRestrict;
+        NumberValueRestrict = numberValueRestrict;
+        InputMask = inputMask;
+        RegexpValidators = regexpValidators;
+    }
+
+
+    /// <summary>
+    ///     Тип поля
+    /// </summary>
+    /// <value>Тип поля</value>
+    [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
+    public TypeEnum Type { get; set; }
+
+    /// <summary>
+    ///     Ключ поля
+    /// </summary>
+    /// <value>Ключ поля</value>
+    [DataMember(Name = "key", IsRequired = true, EmitDefaultValue = true)]
+    public string Key { get; set; }
+
+    /// <summary>
+    ///     Название поля
+    /// </summary>
+    /// <value>Название поля</value>
+    [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     Описание поля
+    /// </summary>
+    /// <value>Описание поля</value>
+    [DataMember(Name = "description", EmitDefaultValue = false)]
+    public string Description { get; set; }
+
+    /// <summary>
+    ///     Значение поля
+    /// </summary>
+    /// <value>Значение поля</value>
+    [DataMember(Name = "value", EmitDefaultValue = false)]
+    public string Value { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets DictionaryField
+    /// </summary>
+    [DataMember(Name = "dictionaryField", EmitDefaultValue = false)]
+    public DictionaryFieldDtoRs DictionaryField { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets LengthRestrict
+    /// </summary>
+    [DataMember(Name = "lengthRestrict", EmitDefaultValue = false)]
+    public LengthRestrictDtoRs LengthRestrict { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets NumberValueRestrict
+    /// </summary>
+    [DataMember(Name = "numberValueRestrict", EmitDefaultValue = false)]
+    public NumberValueRestrictDtoRs NumberValueRestrict { get; set; }
+
+    /// <summary>
+    ///     Поле обязательно к заполнению
+    /// </summary>
+    /// <value>Поле обязательно к заполнению</value>
+    [DataMember(Name = "required", IsRequired = true, EmitDefaultValue = true)]
+    public bool Required { get; set; }
+
+    /// <summary>
+    ///     Поле можно отредактировать
+    /// </summary>
+    /// <value>Поле можно отредактировать</value>
+    [DataMember(Name = "editable", IsRequired = true, EmitDefaultValue = true)]
+    public bool Editable { get; set; }
+
+    /// <summary>
+    ///     Маска ввода поля
+    /// </summary>
+    /// <value>Маска ввода поля</value>
+    [DataMember(Name = "inputMask", EmitDefaultValue = false)]
+    public string InputMask { get; set; }
+
+    /// <summary>
+    ///     Список валидаторов поля в виде регулярных выражений
+    /// </summary>
+    /// <value>Список валидаторов поля в виде регулярных выражений</value>
+    [DataMember(Name = "regexpValidators", EmitDefaultValue = false)]
+    public List<RegexpValidatorDtoRs> RegexpValidators { get; set; }
+
+    /// <summary>
+    ///     Returns true if InputFieldDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of InputFieldDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(InputFieldDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Key == input.Key ||
+                (Key != null &&
+                 Key.Equals(input.Key))
+            ) &&
+            (
+                Name == input.Name ||
+                (Name != null &&
+                 Name.Equals(input.Name))
+            ) &&
+            (
+                Description == input.Description ||
+                (Description != null &&
+                 Description.Equals(input.Description))
+            ) &&
+            (
+                Value == input.Value ||
+                (Value != null &&
+                 Value.Equals(input.Value))
+            ) &&
+            (
+                Type == input.Type ||
+                Type.Equals(input.Type)
+            ) &&
+            (
+                DictionaryField == input.DictionaryField ||
+                (DictionaryField != null &&
+                 DictionaryField.Equals(input.DictionaryField))
+            ) &&
+            (
+                LengthRestrict == input.LengthRestrict ||
+                (LengthRestrict != null &&
+                 LengthRestrict.Equals(input.LengthRestrict))
+            ) &&
+            (
+                NumberValueRestrict == input.NumberValueRestrict ||
+                (NumberValueRestrict != null &&
+                 NumberValueRestrict.Equals(input.NumberValueRestrict))
+            ) &&
+            (
+                Required == input.Required ||
+                Required.Equals(input.Required)
+            ) &&
+            (
+                Editable == input.Editable ||
+                Editable.Equals(input.Editable)
+            ) &&
+            (
+                InputMask == input.InputMask ||
+                (InputMask != null &&
+                 InputMask.Equals(input.InputMask))
+            ) &&
+            (
+                RegexpValidators == input.RegexpValidators ||
+                (RegexpValidators != null &&
+                 input.RegexpValidators != null &&
+                 RegexpValidators.SequenceEqual(input.RegexpValidators))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Key (string) maxLength
+        if (Key != null && Key.Length > 32) yield return new ValidationResult("Invalid value for Key, length must be less than 32.", new[] { "Key" });
+
+        // Key (string) minLength
+        if (Key != null && Key.Length < 1) yield return new ValidationResult("Invalid value for Key, length must be greater than 1.", new[] { "Key" });
+
+        // Name (string) maxLength
+        if (Name != null && Name.Length > 64) yield return new ValidationResult("Invalid value for Name, length must be less than 64.", new[] { "Name" });
+
+        // Name (string) minLength
+        if (Name != null && Name.Length < 1) yield return new ValidationResult("Invalid value for Name, length must be greater than 1.", new[] { "Name" });
+
+        // Description (string) maxLength
+        if (Description != null && Description.Length > 255)
+            yield return new ValidationResult("Invalid value for Description, length must be less than 255.", new[] { "Description" });
+
+        // Description (string) minLength
+        if (Description != null && Description.Length < 1)
+            yield return new ValidationResult("Invalid value for Description, length must be greater than 1.", new[] { "Description" });
+
+        // Value (string) maxLength
+        if (Value != null && Value.Length > 255) yield return new ValidationResult("Invalid value for Value, length must be less than 255.", new[] { "Value" });
+
+        // Value (string) minLength
+        if (Value != null && Value.Length < 1) yield return new ValidationResult("Invalid value for Value, length must be greater than 1.", new[] { "Value" });
+
+        // InputMask (string) maxLength
+        if (InputMask != null && InputMask.Length > 128) yield return new ValidationResult("Invalid value for InputMask, length must be less than 128.", new[] { "InputMask" });
+
+        // InputMask (string) minLength
+        if (InputMask != null && InputMask.Length < 1) yield return new ValidationResult("Invalid value for InputMask, length must be greater than 1.", new[] { "InputMask" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class InputFieldDtoRs {\n");
+        sb.Append("  Key: ").Append(Key).Append("\n");
+        sb.Append("  Name: ").Append(Name).Append("\n");
+        sb.Append("  Description: ").Append(Description).Append("\n");
+        sb.Append("  Value: ").Append(Value).Append("\n");
+        sb.Append("  Type: ").Append(Type).Append("\n");
+        sb.Append("  DictionaryField: ").Append(DictionaryField).Append("\n");
+        sb.Append("  LengthRestrict: ").Append(LengthRestrict).Append("\n");
+        sb.Append("  NumberValueRestrict: ").Append(NumberValueRestrict).Append("\n");
+        sb.Append("  Required: ").Append(Required).Append("\n");
+        sb.Append("  Editable: ").Append(Editable).Append("\n");
+        sb.Append("  InputMask: ").Append(InputMask).Append("\n");
+        sb.Append("  RegexpValidators: ").Append(RegexpValidators).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as InputFieldDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Key != null) hashCode = hashCode * 59 + Key.GetHashCode();
+            if (Name != null) hashCode = hashCode * 59 + Name.GetHashCode();
+            if (Description != null) hashCode = hashCode * 59 + Description.GetHashCode();
+            if (Value != null) hashCode = hashCode * 59 + Value.GetHashCode();
+            hashCode = hashCode * 59 + Type.GetHashCode();
+            if (DictionaryField != null) hashCode = hashCode * 59 + DictionaryField.GetHashCode();
+            if (LengthRestrict != null) hashCode = hashCode * 59 + LengthRestrict.GetHashCode();
+            if (NumberValueRestrict != null) hashCode = hashCode * 59 + NumberValueRestrict.GetHashCode();
+            hashCode = hashCode * 59 + Required.GetHashCode();
+            hashCode = hashCode * 59 + Editable.GetHashCode();
+            if (InputMask != null) hashCode = hashCode * 59 + InputMask.GetHashCode();
+            if (RegexpValidators != null) hashCode = hashCode * 59 + RegexpValidators.GetHashCode();
+            return hashCode;
+        }
+    }
 }

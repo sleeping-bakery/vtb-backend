@@ -12,5 +12,4 @@ public class PeriodPaymentMapperProfile : Profile
         CreateMap<CreatePeriodPaymentConsentDto, CreatePeriodPaymentConsentModel>();
         CreateMap<PeriodPaymentConsent, ReadPeriodPaymentConsentDto>();
     }
-    
 }

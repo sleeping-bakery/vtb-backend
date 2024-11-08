@@ -9,1219 +9,757 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
+using System.Threading;
+using System.Threading.Tasks;
 using Multibanking.ServiceClient.Client;
 using Multibanking.ServiceClient.Model;
 
-namespace Multibanking.ServiceClient.Api
+namespace Multibanking.ServiceClient.Api;
+
+/// <summary>
+///     Represents a collection of functions to interact with the API endpoints
+/// </summary>
+public class ServiceApi : IServiceApi
 {
+    private ExceptionFactory _exceptionFactory = (name, response) => null;
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="ServiceApi" /> class.
     /// </summary>
-    public interface IAPIApiSync : IApiAccessor
+    /// <returns></returns>
+    public ServiceApi() : this((string)null)
     {
-        #region Synchronous Operations
-        /// <summary>
-        /// Поиск услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Поиск услуг по фильтрам
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PageDtoRsServiceProviderSearchDtoRs</returns>
-        PageDtoRsServiceProviderSearchDtoRs FindOperations(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0);
-
-        /// <summary>
-        /// Поиск услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Поиск услуг по фильтрам
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PageDtoRsServiceProviderSearchDtoRs</returns>
-        ApiResponse<PageDtoRsServiceProviderSearchDtoRs> FindOperationsWithHttpInfo(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0);
-        /// <summary>
-        /// Получение услуг ПУ по списку ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PageDtoRsServiceProviderDetailDtoRs</returns>
-        PageDtoRsServiceProviderDetailDtoRs FindOperations1(string ids, int operationIndex = 0);
-
-        /// <summary>
-        /// Получение услуг ПУ по списку ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PageDtoRsServiceProviderDetailDtoRs</returns>
-        ApiResponse<PageDtoRsServiceProviderDetailDtoRs> FindOperations1WithHttpInfo(string ids, int operationIndex = 0);
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Получение доступных категорий услуг ПУ
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PageDtoRsCategoryDtoRs</returns>
-        PageDtoRsCategoryDtoRs GetCategories(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0);
-
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Получение доступных категорий услуг ПУ
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PageDtoRsCategoryDtoRs</returns>
-        ApiResponse<PageDtoRsCategoryDtoRs> GetCategoriesWithHttpInfo(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0);
-        /// <summary>
-        /// Получение услуги ПУ по ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ServiceProviderDetailDtoRs</returns>
-        ServiceProviderDetailDtoRs GetOperation(string id, int operationIndex = 0);
-
-        /// <summary>
-        /// Получение услуги ПУ по ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of ServiceProviderDetailDtoRs</returns>
-        ApiResponse<ServiceProviderDetailDtoRs> GetOperationWithHttpInfo(string id, int operationIndex = 0);
-        #endregion Synchronous Operations
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="ServiceApi" /> class.
     /// </summary>
-    public interface IAPIApiAsync : IApiAccessor
+    /// <returns></returns>
+    public ServiceApi(string basePath)
     {
-        #region Asynchronous Operations
-        /// <summary>
-        /// Поиск услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Поиск услуг по фильтрам
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PageDtoRsServiceProviderSearchDtoRs</returns>
-        System.Threading.Tasks.Task<PageDtoRsServiceProviderSearchDtoRs> FindOperationsAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Поиск услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Поиск услуг по фильтрам
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PageDtoRsServiceProviderSearchDtoRs)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PageDtoRsServiceProviderSearchDtoRs>> FindOperationsWithHttpInfoAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Получение услуг ПУ по списку ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PageDtoRsServiceProviderDetailDtoRs</returns>
-        System.Threading.Tasks.Task<PageDtoRsServiceProviderDetailDtoRs> FindOperations1Async(string ids, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение услуг ПУ по списку ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PageDtoRsServiceProviderDetailDtoRs)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PageDtoRsServiceProviderDetailDtoRs>> FindOperations1WithHttpInfoAsync(string ids, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Получение доступных категорий услуг ПУ
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PageDtoRsCategoryDtoRs</returns>
-        System.Threading.Tasks.Task<PageDtoRsCategoryDtoRs> GetCategoriesAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <remarks>
-        /// Получение доступных категорий услуг ПУ
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PageDtoRsCategoryDtoRs)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PageDtoRsCategoryDtoRs>> GetCategoriesWithHttpInfoAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Получение услуги ПУ по ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ServiceProviderDetailDtoRs</returns>
-        System.Threading.Tasks.Task<ServiceProviderDetailDtoRs> GetOperationAsync(string id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение услуги ПУ по ID
-        /// </summary>
-        /// <remarks>
-        /// Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (ServiceProviderDetailDtoRs)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ServiceProviderDetailDtoRs>> GetOperationWithHttpInfoAsync(string id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        #endregion Asynchronous Operations
+        Configuration = ServiceClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            new Configuration { BasePath = basePath }
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = ServiceClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="ServiceApi" /> class
+    ///     using Configuration object
     /// </summary>
-    public interface IServiceApi : IAPIApiSync, IAPIApiAsync
+    /// <param name="configuration">An instance of Configuration</param>
+    /// <returns></returns>
+    public ServiceApi(Configuration configuration)
     {
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
+        Configuration = ServiceClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            configuration
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = ServiceClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="ServiceApi" /> class
+    ///     using a Configuration object and client instance.
     /// </summary>
-    public partial class ServiceApi : IServiceApi
+    /// <param name="client">The client interface for synchronous API access.</param>
+    /// <param name="asyncClient">The client interface for asynchronous API access.</param>
+    /// <param name="configuration">The configuration object.</param>
+    public ServiceApi(ISynchronousClient client, IAsynchronousClient asyncClient, IReadableConfiguration configuration)
     {
-        private Multibanking.ServiceClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        if (client == null) throw new ArgumentNullException("client");
+        if (asyncClient == null) throw new ArgumentNullException("asyncClient");
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public ServiceApi() : this((string)null)
+        Client = client;
+        AsynchronousClient = asyncClient;
+        Configuration = configuration;
+        ExceptionFactory = ServiceClient.Client.Configuration.DefaultExceptionFactory;
+    }
+
+    /// <summary>
+    ///     The client for accessing this underlying API asynchronously.
+    /// </summary>
+    public IAsynchronousClient AsynchronousClient { get; set; }
+
+    /// <summary>
+    ///     The client for accessing this underlying API synchronously.
+    /// </summary>
+    public ISynchronousClient Client { get; set; }
+
+    /// <summary>
+    ///     Gets the base path of the API client.
+    /// </summary>
+    /// <value>The base path</value>
+    public string GetBasePath()
+    {
+        return Configuration.BasePath;
+    }
+
+    /// <summary>
+    ///     Gets or sets the configuration object
+    /// </summary>
+    /// <value>An instance of the Configuration</value>
+    public IReadableConfiguration Configuration { get; set; }
+
+    /// <summary>
+    ///     Provides a factory method hook for the creation of exceptions.
+    /// </summary>
+    public ExceptionFactory ExceptionFactory
+    {
+        get
         {
+            if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
+                throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
+            return _exceptionFactory;
+        }
+        set => _exceptionFactory = value;
+    }
+
+    /// <summary>
+    ///     Поиск услуг ПУ Поиск услуг по фильтрам
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="categoryId">Фильтр по категории (optional)</param>
+    /// <param name="regionId">Фильтр по региону (optional)</param>
+    /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
+    /// <param name="subTypes">Фильтр по подтипам (optional)</param>
+    /// <param name="actions">
+    ///     Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND,
+    ///     SUBSCRIPTION (optional)
+    /// </param>
+    /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
+    /// <param name="pageSize">Размер страницы результата (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>PageDtoRsServiceProviderSearchDtoRs</returns>
+    public PageDtoRsServiceProviderSearchDtoRs FindOperations(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default, string X_LOGIN_MODE = default,
+        string X_ROLES = default, string X_PARTNER_ID = default, string categoryId = default, string regionId = default, string filter = default, string subTypes = default,
+        string actions = default, string pageNumber = default, string pageSize = default, int operationIndex = 0)
+    {
+        var localVarResponse = FindOperationsWithHttpInfo(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, categoryId, regionId, filter, subTypes, actions,
+            pageNumber, pageSize);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Поиск услуг ПУ Поиск услуг по фильтрам
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="categoryId">Фильтр по категории (optional)</param>
+    /// <param name="regionId">Фильтр по региону (optional)</param>
+    /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
+    /// <param name="subTypes">Фильтр по подтипам (optional)</param>
+    /// <param name="actions">
+    ///     Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND,
+    ///     SUBSCRIPTION (optional)
+    /// </param>
+    /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
+    /// <param name="pageSize">Размер страницы результата (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of PageDtoRsServiceProviderSearchDtoRs</returns>
+    public ApiResponse<PageDtoRsServiceProviderSearchDtoRs> FindOperationsWithHttpInfo(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default,
+        string X_LOGIN_MODE = default, string X_ROLES = default, string X_PARTNER_ID = default, string categoryId = default, string regionId = default, string filter = default,
+        string subTypes = default, string actions = default, string pageNumber = default, string pageSize = default, int operationIndex = 0)
+    {
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        if (clientUnc != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
+        if (categoryId != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "categoryId", categoryId));
+        if (regionId != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "regionId", regionId));
+        if (filter != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "filter", filter));
+        if (subTypes != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "subTypes", subTypes));
+        if (actions != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "actions", actions));
+        if (pageNumber != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "pageNumber", pageNumber));
+        if (pageSize != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
+        if (X_UNC != null) localVarRequestOptions.HeaderParameters.Add("X-UNC", ClientUtils.ParameterToString(X_UNC)); // header parameter
+        if (X_CLIENT_CHANNEL != null) localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
+        if (X_LOGIN_MODE != null) localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
+        if (X_ROLES != null) localVarRequestOptions.HeaderParameters.Add("X-ROLES", ClientUtils.ParameterToString(X_ROLES)); // header parameter
+        if (X_PARTNER_ID != null) localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "ServiceApi.FindOperations";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<PageDtoRsServiceProviderSearchDtoRs>("/catalog/operations", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("FindOperations", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public ServiceApi(string basePath)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Поиск услуг ПУ Поиск услуг по фильтрам
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="categoryId">Фильтр по категории (optional)</param>
+    /// <param name="regionId">Фильтр по региону (optional)</param>
+    /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
+    /// <param name="subTypes">Фильтр по подтипам (optional)</param>
+    /// <param name="actions">
+    ///     Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND,
+    ///     SUBSCRIPTION (optional)
+    /// </param>
+    /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
+    /// <param name="pageSize">Размер страницы результата (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of PageDtoRsServiceProviderSearchDtoRs</returns>
+    public async Task<PageDtoRsServiceProviderSearchDtoRs> FindOperationsAsync(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default,
+        string X_LOGIN_MODE = default, string X_ROLES = default, string X_PARTNER_ID = default, string categoryId = default, string regionId = default, string filter = default,
+        string subTypes = default, string actions = default, string pageNumber = default, string pageSize = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await FindOperationsWithHttpInfoAsync(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, categoryId, regionId, filter,
+            subTypes, actions, pageNumber, pageSize, operationIndex, cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Поиск услуг ПУ Поиск услуг по фильтрам
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="categoryId">Фильтр по категории (optional)</param>
+    /// <param name="regionId">Фильтр по региону (optional)</param>
+    /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
+    /// <param name="subTypes">Фильтр по подтипам (optional)</param>
+    /// <param name="actions">
+    ///     Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND,
+    ///     SUBSCRIPTION (optional)
+    /// </param>
+    /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
+    /// <param name="pageSize">Размер страницы результата (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (PageDtoRsServiceProviderSearchDtoRs)</returns>
+    public async Task<ApiResponse<PageDtoRsServiceProviderSearchDtoRs>> FindOperationsWithHttpInfoAsync(string X_UNC = default, string clientUnc = default,
+        string X_CLIENT_CHANNEL = default, string X_LOGIN_MODE = default, string X_ROLES = default, string X_PARTNER_ID = default, string categoryId = default,
+        string regionId = default, string filter = default, string subTypes = default, string actions = default, string pageNumber = default, string pageSize = default,
+        int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            this.Configuration = Multibanking.ServiceClient.Client.Configuration.MergeConfigurations(
-                Multibanking.ServiceClient.Client.GlobalConfiguration.Instance,
-                new Multibanking.ServiceClient.Client.Configuration { BasePath = basePath }
-            );
-            this.Client = new Multibanking.ServiceClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.ServiceClient.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Multibanking.ServiceClient.Client.Configuration.DefaultExceptionFactory;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        if (clientUnc != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
+        if (categoryId != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "categoryId", categoryId));
+        if (regionId != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "regionId", regionId));
+        if (filter != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "filter", filter));
+        if (subTypes != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "subTypes", subTypes));
+        if (actions != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "actions", actions));
+        if (pageNumber != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "pageNumber", pageNumber));
+        if (pageSize != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
+        if (X_UNC != null) localVarRequestOptions.HeaderParameters.Add("X-UNC", ClientUtils.ParameterToString(X_UNC)); // header parameter
+        if (X_CLIENT_CHANNEL != null) localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
+        if (X_LOGIN_MODE != null) localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
+        if (X_ROLES != null) localVarRequestOptions.HeaderParameters.Add("X-ROLES", ClientUtils.ParameterToString(X_ROLES)); // header parameter
+        if (X_PARTNER_ID != null) localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "ServiceApi.FindOperations";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient
+            .GetAsync<PageDtoRsServiceProviderSearchDtoRs>("/catalog/operations", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("FindOperations", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceApi"/> class
-        /// using Configuration object
-        /// </summary>
-        /// <param name="configuration">An instance of Configuration</param>
-        /// <returns></returns>
-        public ServiceApi(Multibanking.ServiceClient.Client.Configuration configuration)
-        {
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        return localVarResponse;
+    }
 
-            this.Configuration = Multibanking.ServiceClient.Client.Configuration.MergeConfigurations(
-                Multibanking.ServiceClient.Client.GlobalConfiguration.Instance,
-                configuration
-            );
-            this.Client = new Multibanking.ServiceClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.ServiceClient.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Multibanking.ServiceClient.Client.Configuration.DefaultExceptionFactory;
+    /// <summary>
+    ///     Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>PageDtoRsServiceProviderDetailDtoRs</returns>
+    public PageDtoRsServiceProviderDetailDtoRs FindOperations1(string ids, int operationIndex = 0)
+    {
+        var localVarResponse = FindOperations1WithHttpInfo(ids);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of PageDtoRsServiceProviderDetailDtoRs</returns>
+    public ApiResponse<PageDtoRsServiceProviderDetailDtoRs> FindOperations1WithHttpInfo(string ids, int operationIndex = 0)
+    {
+        // verify the required parameter 'ids' is set
+        if (ids == null) throw new ApiException(400, "Missing required parameter 'ids' when calling ServiceApi->FindOperations1");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "ids", ids));
+
+        localVarRequestOptions.Operation = "ServiceApi.FindOperations1";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<PageDtoRsServiceProviderDetailDtoRs>("/catalog/operations/list", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("FindOperations1", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceApi"/> class
-        /// using a Configuration object and client instance.
-        /// </summary>
-        /// <param name="client">The client interface for synchronous API access.</param>
-        /// <param name="asyncClient">The client interface for asynchronous API access.</param>
-        /// <param name="configuration">The configuration object.</param>
-        public ServiceApi(Multibanking.ServiceClient.Client.ISynchronousClient client, Multibanking.ServiceClient.Client.IAsynchronousClient asyncClient, Multibanking.ServiceClient.Client.IReadableConfiguration configuration)
-        {
-            if (client == null) throw new ArgumentNullException("client");
-            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        return localVarResponse;
+    }
 
-            this.Client = client;
-            this.AsynchronousClient = asyncClient;
-            this.Configuration = configuration;
-            this.ExceptionFactory = Multibanking.ServiceClient.Client.Configuration.DefaultExceptionFactory;
+    /// <summary>
+    ///     Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of PageDtoRsServiceProviderDetailDtoRs</returns>
+    public async Task<PageDtoRsServiceProviderDetailDtoRs> FindOperations1Async(string ids, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await FindOperations1WithHttpInfoAsync(ids, operationIndex, cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (PageDtoRsServiceProviderDetailDtoRs)</returns>
+    public async Task<ApiResponse<PageDtoRsServiceProviderDetailDtoRs>> FindOperations1WithHttpInfoAsync(string ids, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'ids' is set
+        if (ids == null) throw new ApiException(400, "Missing required parameter 'ids' when calling ServiceApi->FindOperations1");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "ids", ids));
+
+        localVarRequestOptions.Operation = "ServiceApi.FindOperations1";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient
+            .GetAsync<PageDtoRsServiceProviderDetailDtoRs>("/catalog/operations/list", localVarRequestOptions, Configuration, cancellationToken).ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("FindOperations1", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// The client for accessing this underlying API asynchronously.
-        /// </summary>
-        public Multibanking.ServiceClient.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        return localVarResponse;
+    }
 
-        /// <summary>
-        /// The client for accessing this underlying API synchronously.
-        /// </summary>
-        public Multibanking.ServiceClient.Client.ISynchronousClient Client { get; set; }
+    /// <summary>
+    ///     Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
+    /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>PageDtoRsCategoryDtoRs</returns>
+    public PageDtoRsCategoryDtoRs GetCategories(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default, string X_LOGIN_MODE = default,
+        string X_ROLES = default, string X_PARTNER_ID = default, int? operationPageSize = default, string regionId = default, int operationIndex = 0)
+    {
+        var localVarResponse = GetCategoriesWithHttpInfo(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, operationPageSize, regionId);
+        return localVarResponse.Data;
+    }
 
-        /// <summary>
-        /// Gets the base path of the API client.
-        /// </summary>
-        /// <value>The base path</value>
-        public string GetBasePath()
+    /// <summary>
+    ///     Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
+    /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of PageDtoRsCategoryDtoRs</returns>
+    public ApiResponse<PageDtoRsCategoryDtoRs> GetCategoriesWithHttpInfo(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default,
+        string X_LOGIN_MODE = default, string X_ROLES = default, string X_PARTNER_ID = default, int? operationPageSize = default, string regionId = default, int operationIndex = 0)
+    {
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            return this.Configuration.BasePath;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        if (clientUnc != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
+        if (operationPageSize != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "operationPageSize", operationPageSize));
+        if (regionId != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "regionId", regionId));
+        if (X_UNC != null) localVarRequestOptions.HeaderParameters.Add("X-UNC", ClientUtils.ParameterToString(X_UNC)); // header parameter
+        if (X_CLIENT_CHANNEL != null) localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
+        if (X_LOGIN_MODE != null) localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
+        if (X_ROLES != null) localVarRequestOptions.HeaderParameters.Add("X-ROLES", ClientUtils.ParameterToString(X_ROLES)); // header parameter
+        if (X_PARTNER_ID != null) localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "ServiceApi.GetCategories";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<PageDtoRsCategoryDtoRs>("/catalog/categories", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetCategories", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Gets or sets the configuration object
-        /// </summary>
-        /// <value>An instance of the Configuration</value>
-        public Multibanking.ServiceClient.Client.IReadableConfiguration Configuration { get; set; }
+        return localVarResponse;
+    }
 
-        /// <summary>
-        /// Provides a factory method hook for the creation of exceptions.
-        /// </summary>
-        public Multibanking.ServiceClient.Client.ExceptionFactory ExceptionFactory
+    /// <summary>
+    ///     Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
+    /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of PageDtoRsCategoryDtoRs</returns>
+    public async Task<PageDtoRsCategoryDtoRs> GetCategoriesAsync(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default,
+        string X_LOGIN_MODE = default, string X_ROLES = default, string X_PARTNER_ID = default, int? operationPageSize = default, string regionId = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await GetCategoriesWithHttpInfoAsync(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, operationPageSize, regionId,
+            operationIndex, cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="X_UNC">УНК (optional)</param>
+    /// <param name="clientUnc">УНК (optional)</param>
+    /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
+    /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
+    /// <param name="X_ROLES">Роли клиента (optional)</param>
+    /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
+    /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
+    /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (PageDtoRsCategoryDtoRs)</returns>
+    public async Task<ApiResponse<PageDtoRsCategoryDtoRs>> GetCategoriesWithHttpInfoAsync(string X_UNC = default, string clientUnc = default, string X_CLIENT_CHANNEL = default,
+        string X_LOGIN_MODE = default, string X_ROLES = default, string X_PARTNER_ID = default, int? operationPageSize = default, string regionId = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            get
-            {
-                if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
-                {
-                    throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
-                }
-                return _exceptionFactory;
-            }
-            set { _exceptionFactory = value; }
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        if (clientUnc != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
+        if (operationPageSize != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "operationPageSize", operationPageSize));
+        if (regionId != null) localVarRequestOptions.QueryParameters.Add(ClientUtils.ParameterToMultiMap("", "regionId", regionId));
+        if (X_UNC != null) localVarRequestOptions.HeaderParameters.Add("X-UNC", ClientUtils.ParameterToString(X_UNC)); // header parameter
+        if (X_CLIENT_CHANNEL != null) localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
+        if (X_LOGIN_MODE != null) localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
+        if (X_ROLES != null) localVarRequestOptions.HeaderParameters.Add("X-ROLES", ClientUtils.ParameterToString(X_ROLES)); // header parameter
+        if (X_PARTNER_ID != null) localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
+
+        localVarRequestOptions.Operation = "ServiceApi.GetCategories";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.GetAsync<PageDtoRsCategoryDtoRs>("/catalog/categories", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetCategories", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Поиск услуг ПУ Поиск услуг по фильтрам
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PageDtoRsServiceProviderSearchDtoRs</returns>
-        public PageDtoRsServiceProviderSearchDtoRs FindOperations(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="id">Идентификатор услуги</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ServiceProviderDetailDtoRs</returns>
+    public ServiceProviderDetailDtoRs GetOperation(string id, int operationIndex = 0)
+    {
+        var localVarResponse = GetOperationWithHttpInfo(id);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="id">Идентификатор услуги</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of ServiceProviderDetailDtoRs</returns>
+    public ApiResponse<ServiceProviderDetailDtoRs> GetOperationWithHttpInfo(string id, int operationIndex = 0)
+    {
+        // verify the required parameter 'id' is set
+        if (id == null) throw new ApiException(400, "Missing required parameter 'id' when calling ServiceApi->GetOperation");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderSearchDtoRs> localVarResponse = FindOperationsWithHttpInfo(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, categoryId, regionId, filter, subTypes, actions, pageNumber, pageSize);
-            return localVarResponse.Data;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("id", ClientUtils.ParameterToString(id)); // path parameter
+
+        localVarRequestOptions.Operation = "ServiceApi.GetOperation";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+
+        // make the HTTP request
+        var localVarResponse = Client.Get<ServiceProviderDetailDtoRs>("/catalog/operations/{id}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetOperation", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Поиск услуг ПУ Поиск услуг по фильтрам
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PageDtoRsServiceProviderSearchDtoRs</returns>
-        public Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderSearchDtoRs> FindOperationsWithHttpInfo(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="id">Идентификатор услуги</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ServiceProviderDetailDtoRs</returns>
+    public async Task<ServiceProviderDetailDtoRs> GetOperationAsync(string id, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await GetOperationWithHttpInfoAsync(id, operationIndex, cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="id">Идентификатор услуги</param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (ServiceProviderDetailDtoRs)</returns>
+    public async Task<ApiResponse<ServiceProviderDetailDtoRs>> GetOperationWithHttpInfoAsync(string id, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'id' is set
+        if (id == null) throw new ApiException(400, "Missing required parameter 'id' when calling ServiceApi->GetOperation");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
+        };
 
-            string[] _contentTypes = new string[] {
-            };
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json",
+            "*/*"
+        };
 
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
 
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
+        localVarRequestOptions.PathParameters.Add("id", ClientUtils.ParameterToString(id)); // path parameter
 
-            if (clientUnc != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
-            }
-            if (categoryId != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "categoryId", categoryId));
-            }
-            if (regionId != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "regionId", regionId));
-            }
-            if (filter != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "filter", filter));
-            }
-            if (subTypes != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "subTypes", subTypes));
-            }
-            if (actions != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "actions", actions));
-            }
-            if (pageNumber != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "pageNumber", pageNumber));
-            }
-            if (pageSize != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
-            }
-            if (X_UNC != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-UNC", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_UNC)); // header parameter
-            }
-            if (X_CLIENT_CHANNEL != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
-            }
-            if (X_LOGIN_MODE != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
-            }
-            if (X_ROLES != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-ROLES", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_ROLES)); // header parameter
-            }
-            if (X_PARTNER_ID != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "ServiceApi.FindOperations";
-            localVarRequestOptions.OperationIndex = operationIndex;
+        localVarRequestOptions.Operation = "ServiceApi.GetOperation";
+        localVarRequestOptions.OperationIndex = operationIndex;
 
 
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<PageDtoRsServiceProviderSearchDtoRs>("/catalog/operations", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("FindOperations", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.GetAsync<ServiceProviderDetailDtoRs>("/catalog/operations/{id}", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
 
-            return localVarResponse;
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("GetOperation", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Поиск услуг ПУ Поиск услуг по фильтрам
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PageDtoRsServiceProviderSearchDtoRs</returns>
-        public async System.Threading.Tasks.Task<PageDtoRsServiceProviderSearchDtoRs> FindOperationsAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderSearchDtoRs> localVarResponse = await FindOperationsWithHttpInfoAsync(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, categoryId, regionId, filter, subTypes, actions, pageNumber, pageSize, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Поиск услуг ПУ Поиск услуг по фильтрам
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="categoryId">Фильтр по категории (optional)</param>
-        /// <param name="regionId">Фильтр по региону (optional)</param>
-        /// <param name="filter">Фильтр по наименованию или ИНН (optional)</param>
-        /// <param name="subTypes">Фильтр по подтипам (optional)</param>
-        /// <param name="actions">Фильтр по поддерживаемым действиям услуги, возможные действия - PAYMENT, TEMPLATE, AUTOPAYMENT_BY_DATE, AUTOPAYMENT_BY_BALANCE, INVOICE, REPEAT, REMIND, SUBSCRIPTION (optional)</param>
-        /// <param name="pageNumber">Номер страницы результата (страницы нумеруются с 0) (optional)</param>
-        /// <param name="pageSize">Размер страницы результата (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PageDtoRsServiceProviderSearchDtoRs)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderSearchDtoRs>> FindOperationsWithHttpInfoAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), string categoryId = default(string), string regionId = default(string), string filter = default(string), string subTypes = default(string), string actions = default(string), string pageNumber = default(string), string pageSize = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            if (clientUnc != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
-            }
-            if (categoryId != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "categoryId", categoryId));
-            }
-            if (regionId != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "regionId", regionId));
-            }
-            if (filter != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "filter", filter));
-            }
-            if (subTypes != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "subTypes", subTypes));
-            }
-            if (actions != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "actions", actions));
-            }
-            if (pageNumber != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "pageNumber", pageNumber));
-            }
-            if (pageSize != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "pageSize", pageSize));
-            }
-            if (X_UNC != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-UNC", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_UNC)); // header parameter
-            }
-            if (X_CLIENT_CHANNEL != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
-            }
-            if (X_LOGIN_MODE != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
-            }
-            if (X_ROLES != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-ROLES", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_ROLES)); // header parameter
-            }
-            if (X_PARTNER_ID != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "ServiceApi.FindOperations";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PageDtoRsServiceProviderSearchDtoRs>("/catalog/operations", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("FindOperations", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PageDtoRsServiceProviderDetailDtoRs</returns>
-        public PageDtoRsServiceProviderDetailDtoRs FindOperations1(string ids, int operationIndex = 0)
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderDetailDtoRs> localVarResponse = FindOperations1WithHttpInfo(ids);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PageDtoRsServiceProviderDetailDtoRs</returns>
-        public Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderDetailDtoRs> FindOperations1WithHttpInfo(string ids, int operationIndex = 0)
-        {
-            // verify the required parameter 'ids' is set
-            if (ids == null)
-            {
-                throw new Multibanking.ServiceClient.Client.ApiException(400, "Missing required parameter 'ids' when calling ServiceApi->FindOperations1");
-            }
-
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "ids", ids));
-
-            localVarRequestOptions.Operation = "ServiceApi.FindOperations1";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<PageDtoRsServiceProviderDetailDtoRs>("/catalog/operations/list", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("FindOperations1", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PageDtoRsServiceProviderDetailDtoRs</returns>
-        public async System.Threading.Tasks.Task<PageDtoRsServiceProviderDetailDtoRs> FindOperations1Async(string ids, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderDetailDtoRs> localVarResponse = await FindOperations1WithHttpInfoAsync(ids, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение услуг ПУ по списку ID Получение договорных (serviceType &#x3D; CONTRACT) услуг ПУ по списку идентфикаторов
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="ids">Список идентификаторов услуг (через \&quot;,\&quot;)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PageDtoRsServiceProviderDetailDtoRs)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsServiceProviderDetailDtoRs>> FindOperations1WithHttpInfoAsync(string ids, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'ids' is set
-            if (ids == null)
-            {
-                throw new Multibanking.ServiceClient.Client.ApiException(400, "Missing required parameter 'ids' when calling ServiceApi->FindOperations1");
-            }
-
-
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "ids", ids));
-
-            localVarRequestOptions.Operation = "ServiceApi.FindOperations1";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PageDtoRsServiceProviderDetailDtoRs>("/catalog/operations/list", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("FindOperations1", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>PageDtoRsCategoryDtoRs</returns>
-        public PageDtoRsCategoryDtoRs GetCategories(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0)
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsCategoryDtoRs> localVarResponse = GetCategoriesWithHttpInfo(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, operationPageSize, regionId);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of PageDtoRsCategoryDtoRs</returns>
-        public Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsCategoryDtoRs> GetCategoriesWithHttpInfo(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0)
-        {
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            if (clientUnc != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
-            }
-            if (operationPageSize != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "operationPageSize", operationPageSize));
-            }
-            if (regionId != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "regionId", regionId));
-            }
-            if (X_UNC != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-UNC", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_UNC)); // header parameter
-            }
-            if (X_CLIENT_CHANNEL != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
-            }
-            if (X_LOGIN_MODE != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
-            }
-            if (X_ROLES != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-ROLES", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_ROLES)); // header parameter
-            }
-            if (X_PARTNER_ID != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "ServiceApi.GetCategories";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<PageDtoRsCategoryDtoRs>("/catalog/categories", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetCategories", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of PageDtoRsCategoryDtoRs</returns>
-        public async System.Threading.Tasks.Task<PageDtoRsCategoryDtoRs> GetCategoriesAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsCategoryDtoRs> localVarResponse = await GetCategoriesWithHttpInfoAsync(X_UNC, clientUnc, X_CLIENT_CHANNEL, X_LOGIN_MODE, X_ROLES, X_PARTNER_ID, operationPageSize, regionId, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение доступных категорий услуг ПУ Получение доступных категорий услуг ПУ
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="X_UNC">УНК (optional)</param>
-        /// <param name="clientUnc">УНК (optional)</param>
-        /// <param name="X_CLIENT_CHANNEL">Идентификатор канала клиента (optional)</param>
-        /// <param name="X_LOGIN_MODE">Режим входа клиента (optional)</param>
-        /// <param name="X_ROLES">Роли клиента (optional)</param>
-        /// <param name="X_PARTNER_ID">Идентификатор партнера (optional)</param>
-        /// <param name="operationPageSize">Количество услуг для каждой категории (optional, default to 0)</param>
-        /// <param name="regionId">Регион пользователя для формирования услуг ПУ в категориях (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (PageDtoRsCategoryDtoRs)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.ServiceClient.Client.ApiResponse<PageDtoRsCategoryDtoRs>> GetCategoriesWithHttpInfoAsync(string X_UNC = default(string), string clientUnc = default(string), string X_CLIENT_CHANNEL = default(string), string X_LOGIN_MODE = default(string), string X_ROLES = default(string), string X_PARTNER_ID = default(string), int? operationPageSize = default(int?), string regionId = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            if (clientUnc != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "clientUnc", clientUnc));
-            }
-            if (operationPageSize != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "operationPageSize", operationPageSize));
-            }
-            if (regionId != null)
-            {
-                localVarRequestOptions.QueryParameters.Add(Multibanking.ServiceClient.Client.ClientUtils.ParameterToMultiMap("", "regionId", regionId));
-            }
-            if (X_UNC != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-UNC", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_UNC)); // header parameter
-            }
-            if (X_CLIENT_CHANNEL != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-CLIENT-CHANNEL", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_CLIENT_CHANNEL)); // header parameter
-            }
-            if (X_LOGIN_MODE != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-LOGIN-MODE", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_LOGIN_MODE)); // header parameter
-            }
-            if (X_ROLES != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-ROLES", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_ROLES)); // header parameter
-            }
-            if (X_PARTNER_ID != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-PARTNER-ID", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(X_PARTNER_ID)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "ServiceApi.GetCategories";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<PageDtoRsCategoryDtoRs>("/catalog/categories", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetCategories", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ServiceProviderDetailDtoRs</returns>
-        public ServiceProviderDetailDtoRs GetOperation(string id, int operationIndex = 0)
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<ServiceProviderDetailDtoRs> localVarResponse = GetOperationWithHttpInfo(id);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of ServiceProviderDetailDtoRs</returns>
-        public Multibanking.ServiceClient.Client.ApiResponse<ServiceProviderDetailDtoRs> GetOperationWithHttpInfo(string id, int operationIndex = 0)
-        {
-            // verify the required parameter 'id' is set
-            if (id == null)
-            {
-                throw new Multibanking.ServiceClient.Client.ApiException(400, "Missing required parameter 'id' when calling ServiceApi->GetOperation");
-            }
-
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("id", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(id)); // path parameter
-
-            localVarRequestOptions.Operation = "ServiceApi.GetOperation";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<ServiceProviderDetailDtoRs>("/catalog/operations/{id}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetOperation", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ServiceProviderDetailDtoRs</returns>
-        public async System.Threading.Tasks.Task<ServiceProviderDetailDtoRs> GetOperationAsync(string id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.ServiceClient.Client.ApiResponse<ServiceProviderDetailDtoRs> localVarResponse = await GetOperationWithHttpInfoAsync(id, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение услуги ПУ по ID Получение договорной (serviceType &#x3D; CONTRACT) услуги ПУ по идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.ServiceClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">Идентификатор услуги</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (ServiceProviderDetailDtoRs)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.ServiceClient.Client.ApiResponse<ServiceProviderDetailDtoRs>> GetOperationWithHttpInfoAsync(string id, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'id' is set
-            if (id == null)
-            {
-                throw new Multibanking.ServiceClient.Client.ApiException(400, "Missing required parameter 'id' when calling ServiceApi->GetOperation");
-            }
-
-
-            Multibanking.ServiceClient.Client.RequestOptions localVarRequestOptions = new Multibanking.ServiceClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json",
-                "*/*"
-            };
-
-            var localVarContentType = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-ServiceType", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.ServiceClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("id", Multibanking.ServiceClient.Client.ClientUtils.ParameterToString(id)); // path parameter
-
-            localVarRequestOptions.Operation = "ServiceApi.GetOperation";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<ServiceProviderDetailDtoRs>("/catalog/operations/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetOperation", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
+        return localVarResponse;
     }
 }

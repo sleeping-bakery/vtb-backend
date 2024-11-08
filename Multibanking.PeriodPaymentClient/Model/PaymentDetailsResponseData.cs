@@ -9,189 +9,164 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Полезная нагрузка ответа инициации платежа
+/// </summary>
+[DataContract(Name = "PaymentDetailsResponse_Data")]
+public class PaymentDetailsResponseData : IEquatable<PaymentDetailsResponseData>, IValidatableObject
 {
     /// <summary>
-    /// Полезная нагрузка ответа инициации платежа
+    ///     Initializes a new instance of the <see cref="PaymentDetailsResponseData" /> class.
     /// </summary>
-    [DataContract(Name = "PaymentDetailsResponse_Data")]
-    public partial class PaymentDetailsResponseData : IEquatable<PaymentDetailsResponseData>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected PaymentDetailsResponseData()
     {
-
-        /// <summary>
-        /// Статус операции (платежа)
-        /// </summary>
-        /// <value>Статус операции (платежа)</value>
-        [DataMember(Name = "transactionStatus", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentTransactionStatusCode TransactionStatus { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDetailsResponseData" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PaymentDetailsResponseData() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDetailsResponseData" /> class.
-        /// </summary>
-        /// <param name="paymentTransactionId">Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным (required).</param>
-        /// <param name="transactionStatus">Статус операции (платежа) (required).</param>
-        /// <param name="statusUpdateDateTime">Дата и время, когда статус был присвоен (required).</param>
-        /// <param name="statusReasonInformation">statusReasonInformation.</param>
-        public PaymentDetailsResponseData(string paymentTransactionId = default(string), PaymentTransactionStatusCode transactionStatus = default(PaymentTransactionStatusCode), DateTime statusUpdateDateTime = default(DateTime), StatusDetailsStatusReasonInformation statusReasonInformation = default(StatusDetailsStatusReasonInformation))
-        {
-            // to ensure "paymentTransactionId" is required (not null)
-            if (paymentTransactionId == null)
-            {
-                throw new ArgumentNullException("paymentTransactionId is a required property for PaymentDetailsResponseData and cannot be null");
-            }
-            this.PaymentTransactionId = paymentTransactionId;
-            this.TransactionStatus = transactionStatus;
-            this.StatusUpdateDateTime = statusUpdateDateTime;
-            this.StatusReasonInformation = statusReasonInformation;
-        }
-
-        /// <summary>
-        /// Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным
-        /// </summary>
-        /// <value>Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным</value>
-        [DataMember(Name = "paymentTransactionId", IsRequired = true, EmitDefaultValue = true)]
-        public string PaymentTransactionId { get; set; }
-
-        /// <summary>
-        /// Дата и время, когда статус был присвоен
-        /// </summary>
-        /// <value>Дата и время, когда статус был присвоен</value>
-        [DataMember(Name = "statusUpdateDateTime", IsRequired = true, EmitDefaultValue = true)]
-        public DateTime StatusUpdateDateTime { get; set; }
-
-        /// <summary>
-        /// Gets or Sets StatusReasonInformation
-        /// </summary>
-        [DataMember(Name = "StatusReasonInformation", EmitDefaultValue = false)]
-        public StatusDetailsStatusReasonInformation StatusReasonInformation { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PaymentDetailsResponseData {\n");
-            sb.Append("  PaymentTransactionId: ").Append(PaymentTransactionId).Append("\n");
-            sb.Append("  TransactionStatus: ").Append(TransactionStatus).Append("\n");
-            sb.Append("  StatusUpdateDateTime: ").Append(StatusUpdateDateTime).Append("\n");
-            sb.Append("  StatusReasonInformation: ").Append(StatusReasonInformation).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentDetailsResponseData);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentDetailsResponseData instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentDetailsResponseData to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentDetailsResponseData input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.PaymentTransactionId == input.PaymentTransactionId ||
-                    (this.PaymentTransactionId != null &&
-                    this.PaymentTransactionId.Equals(input.PaymentTransactionId))
-                ) && 
-                (
-                    this.TransactionStatus == input.TransactionStatus ||
-                    this.TransactionStatus.Equals(input.TransactionStatus)
-                ) && 
-                (
-                    this.StatusUpdateDateTime == input.StatusUpdateDateTime ||
-                    (this.StatusUpdateDateTime != null &&
-                    this.StatusUpdateDateTime.Equals(input.StatusUpdateDateTime))
-                ) && 
-                (
-                    this.StatusReasonInformation == input.StatusReasonInformation ||
-                    (this.StatusReasonInformation != null &&
-                    this.StatusReasonInformation.Equals(input.StatusReasonInformation))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.PaymentTransactionId != null)
-                {
-                    hashCode = (hashCode * 59) + this.PaymentTransactionId.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.TransactionStatus.GetHashCode();
-                if (this.StatusUpdateDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.StatusUpdateDateTime.GetHashCode();
-                }
-                if (this.StatusReasonInformation != null)
-                {
-                    hashCode = (hashCode * 59) + this.StatusReasonInformation.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // PaymentTransactionId (string) maxLength
-            if (this.PaymentTransactionId != null && this.PaymentTransactionId.Length > 210)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PaymentTransactionId, length must be less than 210.", new [] { "PaymentTransactionId" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PaymentDetailsResponseData" /> class.
+    /// </summary>
+    /// <param name="paymentTransactionId">Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным (required).</param>
+    /// <param name="transactionStatus">Статус операции (платежа) (required).</param>
+    /// <param name="statusUpdateDateTime">Дата и время, когда статус был присвоен (required).</param>
+    /// <param name="statusReasonInformation">statusReasonInformation.</param>
+    public PaymentDetailsResponseData(string paymentTransactionId = default, PaymentTransactionStatusCode transactionStatus = default, DateTime statusUpdateDateTime = default,
+        StatusDetailsStatusReasonInformation statusReasonInformation = default)
+    {
+        // to ensure "paymentTransactionId" is required (not null)
+        if (paymentTransactionId == null) throw new ArgumentNullException("paymentTransactionId is a required property for PaymentDetailsResponseData and cannot be null");
+        PaymentTransactionId = paymentTransactionId;
+        TransactionStatus = transactionStatus;
+        StatusUpdateDateTime = statusUpdateDateTime;
+        StatusReasonInformation = statusReasonInformation;
+    }
+
+    /// <summary>
+    ///     Статус операции (платежа)
+    /// </summary>
+    /// <value>Статус операции (платежа)</value>
+    [DataMember(Name = "transactionStatus", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentTransactionStatusCode TransactionStatus { get; set; }
+
+    /// <summary>
+    ///     Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным
+    /// </summary>
+    /// <value>Уникальный идентификатор транзакции внутри обслуживающего учреждения. Этот идентификатор является уникальным и неизменным</value>
+    [DataMember(Name = "paymentTransactionId", IsRequired = true, EmitDefaultValue = true)]
+    public string PaymentTransactionId { get; set; }
+
+    /// <summary>
+    ///     Дата и время, когда статус был присвоен
+    /// </summary>
+    /// <value>Дата и время, когда статус был присвоен</value>
+    [DataMember(Name = "statusUpdateDateTime", IsRequired = true, EmitDefaultValue = true)]
+    public DateTime StatusUpdateDateTime { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets StatusReasonInformation
+    /// </summary>
+    [DataMember(Name = "StatusReasonInformation", EmitDefaultValue = false)]
+    public StatusDetailsStatusReasonInformation StatusReasonInformation { get; set; }
+
+    /// <summary>
+    ///     Returns true if PaymentDetailsResponseData instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PaymentDetailsResponseData to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PaymentDetailsResponseData input)
+    {
+        if (input == null) return false;
+        return
+            (
+                PaymentTransactionId == input.PaymentTransactionId ||
+                (PaymentTransactionId != null &&
+                 PaymentTransactionId.Equals(input.PaymentTransactionId))
+            ) &&
+            (
+                TransactionStatus == input.TransactionStatus ||
+                TransactionStatus.Equals(input.TransactionStatus)
+            ) &&
+            (
+                StatusUpdateDateTime == input.StatusUpdateDateTime ||
+                (StatusUpdateDateTime != null &&
+                 StatusUpdateDateTime.Equals(input.StatusUpdateDateTime))
+            ) &&
+            (
+                StatusReasonInformation == input.StatusReasonInformation ||
+                (StatusReasonInformation != null &&
+                 StatusReasonInformation.Equals(input.StatusReasonInformation))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // PaymentTransactionId (string) maxLength
+        if (PaymentTransactionId != null && PaymentTransactionId.Length > 210)
+            yield return new ValidationResult("Invalid value for PaymentTransactionId, length must be less than 210.", new[] { "PaymentTransactionId" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PaymentDetailsResponseData {\n");
+        sb.Append("  PaymentTransactionId: ").Append(PaymentTransactionId).Append("\n");
+        sb.Append("  TransactionStatus: ").Append(TransactionStatus).Append("\n");
+        sb.Append("  StatusUpdateDateTime: ").Append(StatusUpdateDateTime).Append("\n");
+        sb.Append("  StatusReasonInformation: ").Append(StatusReasonInformation).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PaymentDetailsResponseData);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (PaymentTransactionId != null) hashCode = hashCode * 59 + PaymentTransactionId.GetHashCode();
+            hashCode = hashCode * 59 + TransactionStatus.GetHashCode();
+            if (StatusUpdateDateTime != null) hashCode = hashCode * 59 + StatusUpdateDateTime.GetHashCode();
+            if (StatusReasonInformation != null) hashCode = hashCode * 59 + StatusReasonInformation.GetHashCode();
+            return hashCode;
+        }
+    }
 }

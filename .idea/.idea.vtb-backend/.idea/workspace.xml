@@ -12,19 +12,431 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Test VSC">
-      <change afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/LoanCalculatorController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/BankInterestRate.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/LoanCalculationRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/LoanCalculationResult.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/LoanClient/IBankInterestRateClient.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/LoanClientMock.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Loans/ILoanCalculatorService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Multibanking.Services/Loans/LoanCalculatorService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.vtb-backend/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="ff81af26-c139-48ea-b3ef-b15a5dbc2cce" name="Changes" comment="Add loan business logic">
+      <change afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Api/IBonusPointApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Api/IDefaultApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Api/IDefaultApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/CustomJsonCodec.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IApiResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/PeriodPayments/IPeriodPaymentConsentRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/ICommentApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/ICommentApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/ICommissionApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/ICommissionApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IDocumentApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IDocumentApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IGuaranteeCommentApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IGuaranteeCommissionApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IGuaranteeDocumentApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IGuaranteeOrderApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IGuaranteePaglApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IOrderApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IOrderApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IPaglApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/IPaglApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/CustomJsonCodec.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IApiResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IPeriodPaymentApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IPeriodPaymentConsentApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPConsentApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPConsentApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPPaymentDetailsApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPPaymentDetailsApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPPaymentDetailsApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPPaymentsApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPPaymentsApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/CustomJsonCodec.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IApiResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/IAPIApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/IAPIApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/IServiceApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/CustomJsonCodec.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IApiResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/IDefaultApiAsync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/IDefaultApiSync.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/IUniversalPaymentApi.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/CustomJsonCodec.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/AccountConsentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/BonusPointController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/BonusPointController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/GuaranteeOrderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/GuaranteeOrderController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/LoanCalculatorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/LoanCalculatorController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentConsentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentConsentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/ServiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/ServiceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.API/Controllers/UniversalPaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.API/Controllers/UniversalPaymentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.AccountClient/Model/Party.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Api/DefaultApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Api/BonusPointApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Configuration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ExceptionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ExceptionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/GlobalConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/GlobalConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/HttpMethod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/HttpMethod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IApiAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IApiAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IAsynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IReadableConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/IReadableConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ISynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Multimap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/OpenAPIDateConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/OpenAPIDateConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/RequestOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/RetryConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Client/RetryConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/CatalogV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/CatalogV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorResponseType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorResponseType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ErrorType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ProgramDetailV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/ProgramDetailV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionRequestDataV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionRequestDataV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionRequestV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionRequestV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionResponseDataV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionResponseDataV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionResponseV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RedemptionResponseV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardBalanceDataV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardBalanceDataV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardBalanceV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardBalanceV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardSummaryV2.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Model/RewardSummaryV2.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.BonusPointClient/Multibanking.BonusPointClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.BonusPointClient/Multibanking.BonusPointClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/BonusPoint/PostBonusPointDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/BonusPoint/PostBonusPointDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardReadDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Card/CardReadDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Guarantee/ReadGuaranteeOrderDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Guarantee/ReadGuaranteeOrderDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Loan/LoanCalculationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Loan/LoanCalculationRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/Multibanking.Contracts.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/Multibanking.Contracts.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/PeriodPaymentConsent/ReadPeriodPaymentConsentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/PeriodPaymentConsent/ReadPeriodPaymentConsentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Contracts/UniversalPayment/CreateUniversalPaymentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Contracts/UniversalPayment/CreateUniversalPaymentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Multibanking.Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteeCommissionClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/GuaranteeClient/IGuaranteeCommissionClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/PeriodPaymentClient/IPeriodPaymentConsentClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/PeriodPaymentClient/IPeriodPaymentConsentClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/PeriodPaymentClient/Implementations/PeriodPaymentConsentClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/PeriodPaymentClient/Implementations/PeriodPaymentConsentClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/ServiceClient/IServiceClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/ServiceClient/IServiceClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/ServiceClient/ServiceClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/ServiceClient/ServiceClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/UniversalPaymentClient/UniversalPaymentClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/UniversalPaymentClient/UniversalPaymentClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Data/Repositories/PeriodPayments/PeriodPaymentConsentRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Data/Repositories/PeriodPayments/PeriodPaymentConsentRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/20241027205210_AddPeriodPaymentConsent.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/AddPeriodPaymentConsent.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/20241027205210_AddPeriodPaymentConsent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/AddPeriodPaymentConsent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/20241104001312_AddGuaranteeOrder.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/AddGuaranteeOrder.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/20241104001312_AddGuaranteeOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/Migrations/AddGuaranteeOrder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Database/MultibankingDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/GuaranteeOrders/GuaranteeOrder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/GuaranteeOrders/GuaranteeOrder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/Multibanking.Entities.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Entities/PeriodPayments/PeriodPaymentConsent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Entities/PeriodPayments/PeriodPaymentConsent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/CommentApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeCommentApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/CommissionApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeCommissionApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/DocumentApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeDocumentApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/OrderApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeOrderApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/PaglApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteePaglApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/Configuration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ExceptionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ExceptionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/GlobalConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/GlobalConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/HttpMethod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/HttpMethod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IApiAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IApiAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IAsynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IReadableConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/IReadableConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ISynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/Multimap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/OpenAPIDateConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/OpenAPIDateConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/RequestOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/RetryConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/RetryConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ApplicationDetailsResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ApplicationDetailsResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Bank.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankGuarantee.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankGuarantee.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Beneficiary.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Beneficiary.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ClientCommentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ClientCommentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentCountResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentCountResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentFileDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentFileDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentFileInfoDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentFileInfoDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommentResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommissionRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommissionRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommissionResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CommissionResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CompanyHead.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CompanyHead.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ContactData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ContactData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ContactPerson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ContactPerson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CreateRequestResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/CreateRequestResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DeclineOrderDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DeclineOrderDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DetachedSignature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DetachedSignature.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DiscountRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DiscountRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DiscountResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DiscountResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentAppendRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentAppendRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentDownloadDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentDownloadDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentResponseDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentResponseDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentsAppendRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DocumentsAppendRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DownloadConfirmDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DownloadConfirmDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DownloadRequestDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/DownloadRequestDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Error.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Error.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FileDownload.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FileDownload.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FileUpload.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FileUpload.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FinancialReport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FinancialReport.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FinancialStatement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FinancialStatement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FounderCompany.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FounderCompany.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FounderPerson.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/FounderPerson.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Founders.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Founders.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/GuaranteeAddress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/GuaranteeAddress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/GuaranteeCompanyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/GuaranteeCompanyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/IdentityDocument.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/IdentityDocument.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/MarkReadCommentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/MarkReadCommentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OfferDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OfferDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Okpd.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Okpd.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Order.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Order.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderIdCommentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderIdCommentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/OrderStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PaglDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PaglDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PaglRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PaglRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PersonAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PersonAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PersonData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PersonData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Principal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Principal.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PrincipalCompanyInfoDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/PrincipalCompanyInfoDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Procurement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/Procurement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ReadCommentDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/ReadCommentDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/SecondLevelFounderCompanyDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/SecondLevelFounderCompanyDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/SignOfferDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/SignOfferDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/UploadExpect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/UploadExpect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Multibanking.GuaranteeClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.GuaranteeClient/Multibanking.GuaranteeClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/AccountClientMock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/BonusPointClientMock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/Generator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Mocks/Generator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/Models/MockOpenApiBankClientsSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/DataServiceCollectionExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/PeriodPaymentApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/PeriodPaymentApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/PeriodPaymentConsentApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/PeriodPaymentConsentApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/VRPPaymentDetailsApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/VRPPaymentDetailsApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ApiException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ApiException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Auth/OAuthAuthenticator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Auth/OAuthAuthenticator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Auth/OAuthFlow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Auth/OAuthFlow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Auth/TokenResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Auth/TokenResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Configuration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ExceptionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ExceptionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/GlobalConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/GlobalConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/HttpMethod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/HttpMethod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IApiAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IApiAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IAsynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IReadableConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/IReadableConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/ISynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/Multimap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/OpenAPIDateConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/OpenAPIDateConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/RequestOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/RetryConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Client/RetryConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/AccountIdentificationCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/AccountIdentificationCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ActiveOrHistoricCurrencyAndAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ActiveOrHistoricCurrencyAndAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/AddressTypeCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/AddressTypeCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/BranchAndFinancialInstitutionIdentification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/BranchAndFinancialInstitutionIdentification.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/CBRFCategoryPurpose1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/CBRFCategoryPurpose1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/CashAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/CashAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Charge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Charge.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ChargeAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ChargeAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ChargeBearerTypeCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ChargeBearerTypeCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ConsentStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ConsentStatus.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/CreditorReferenceInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/CreditorReferenceInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/FinancialInstitutionIdentificationCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/FinancialInstitutionIdentificationCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/IdentificationType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/IdentificationType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Links.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Links.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/LocalInstrumentCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/LocalInstrumentCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Meta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Meta.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/OBRUError.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/OBRUError.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/OBRUErrorResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/OBRUErrorResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/OBRUErrorResponseErrorsInner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/OBRUErrorResponseErrorsInner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PAFundsAvailableResult1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PAFundsAvailableResult1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PartyIdentification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PartyIdentification.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PartyIdentificationIdentificationInner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PartyIdentificationIdentificationInner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PartyIdentificationPostalAddress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PartyIdentificationPostalAddress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentContextCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentContextCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseLinks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseLinks.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseMeta.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseRisk.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentDetailsResponseRisk.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentTransactionStatusCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentTransactionStatusCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentTypeInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PaymentTypeInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PeriodPaymentPartyIdentificationCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PeriodPaymentPartyIdentificationCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PeriodicLimitsInner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PeriodicLimitsInner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PeriodicLimitsInnerAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PeriodicLimitsInnerAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PostalAddress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PostalAddress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PurposeCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/PurposeCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RemittanceInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RemittanceInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RemittanceInformationCreditorReferenceInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RemittanceInformationCreditorReferenceInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RemittanceInformationTaxRemittance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RemittanceInformationTaxRemittance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Risk.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/Risk.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RiskDeliveryAddressInner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/RiskDeliveryAddressInner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ServiceLevelCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/ServiceLevelCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusDetails.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusDetailsStatusReasonInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusDetailsStatusReasonInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusReasonCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusReasonCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusReasonInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/StatusReasonInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformationCreditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformationCreditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformationDebtor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformationDebtor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformationRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxInformationRecord.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxParty.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxParty.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxPeriod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxPeriod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecord.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecordPeriodCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecordPeriodCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecordPeriodInner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecordPeriodInner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecordTaxAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TaxRecordTaxAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TransactionStatusCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/TransactionStatusCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequestData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequestData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequestDataInitiation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequestDataInitiation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequestRisk.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentRequestRisk.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseDataDebtorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseDataDebtorAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseDataInitiation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseDataInitiation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseLinks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseLinks.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseMeta.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPConsentResponseMeta.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPControlParameters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPControlParameters.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPControlParametersMaximumIndividualAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPControlParametersMaximumIndividualAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequestData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequestData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequestDataInstructedAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationRequestDataInstructedAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponseData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponseData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponseDataFundsAvailableResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponseDataFundsAvailableResult.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponseDataInstructedAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPFundsConfirmationResponseDataInstructedAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAgent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAgentAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationCreditorAgentAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationDebtorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationDebtorAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationRemittanceInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInitiationRemittanceInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstruction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstruction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionCreditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionCreditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionCreditorAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionCreditorAgent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtorAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtorAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtorAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtorAgent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtorAgentAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionDebtorAgentAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionInstructedAmount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionInstructedAmount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionIntermediaryAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionIntermediaryAgent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionIntermediaryAgentAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionIntermediaryAgentAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionPaymentTypeInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionPaymentTypeInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionRemittanceInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionRemittanceInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionUltimateCreditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionUltimateCreditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionUltimateDebtor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPInstructionUltimateDebtor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequestData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequestData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequestDataInstruction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPRequestDataInstruction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponseData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponseData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponseDataChargesInner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponseDataChargesInner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponseDataRefund.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Model/VRPResponseDataRefund.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Multibanking.PeriodPaymentClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Multibanking.PeriodPaymentClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Api/ServiceApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Configuration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ExceptionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ExceptionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/GlobalConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/GlobalConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/HttpMethod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/HttpMethod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IApiAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IApiAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IAsynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IReadableConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/IReadableConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/ISynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/Multimap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/OpenAPIDateConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/OpenAPIDateConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RequestOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RetryConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Client/RetryConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/BankDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/BankDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/CategoryDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/CategoryDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ChannelDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ChannelDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ErrorDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ErrorDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/OperationActionDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/OperationActionDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsCategoryDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsCategoryDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsServiceProviderDetailDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsServiceProviderDetailDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsServiceProviderSearchDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PageDtoRsServiceProviderSearchDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentReceiverDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentReceiverDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentSettingsDetailDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentSettingsDetailDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentSettingsSearchDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/PaymentSettingsSearchDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderDetailDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Model/ServiceProviderSearchDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.ServiceClient/Multibanking.ServiceClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.ServiceClient/Multibanking.ServiceClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/BonusPoints/BonusPointService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/BonusPoints/BonusPointService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Cards/CardService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Cards/CardService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/IGuaranteeService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeCommissionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeCommissionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeOrderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteeOrderService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteePaglService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Guarantees/Implementations/GuaranteePaglService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Loans/LoanCalculatorService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Loans/LoanCalculatorService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentConsentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/IPeriodPaymentConsentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentConsentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentConsentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/Implementations/PeriodPaymentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/MappingProfiles/PeriodPaymentMapperProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/PeriodPayments/MappingProfiles/PeriodPaymentMapperProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Services/IServiceSupplierService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Services/IServiceSupplierService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/Services/ServiceSupplierService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/Services/ServiceSupplierService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.Services/UniversalPayments/UniversalPaymentService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.Services/UniversalPayments/UniversalPaymentService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/DefaultApi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/UniversalPaymentApi.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ClientUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ClientUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Configuration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Configuration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ExceptionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ExceptionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/GlobalConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/GlobalConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/HttpMethod.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/HttpMethod.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IApiAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IApiAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IAsynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IAsynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IReadableConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/IReadableConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ISynchronousClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ISynchronousClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Multimap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Multimap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/OpenAPIDateConverter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/OpenAPIDateConverter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/RequestOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/RequestOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/RetryConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/RetryConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AbstractOpenAPISchema.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AbstractOpenAPISchema.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AccountDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/AccountDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/CardDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/CardDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientConfirmCodeDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientConfirmCodeDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientConfirmDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientConfirmDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientConfirmDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientConfirmDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductsDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ClientProductsDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ConfirmCodeDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ConfirmCodeDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ConfirmPaymentDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ConfirmPaymentDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ConfirmPaymentDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ConfirmPaymentDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/CurrencyDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/CurrencyDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/DictionaryFieldDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/DictionaryFieldDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/DictionaryFieldValueDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/DictionaryFieldValueDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/DraftPaymentDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/DraftPaymentDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ErrorDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ErrorDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ErrorFieldDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ErrorFieldDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/InputFieldDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/InputFieldDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/InputFieldDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/InputFieldDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/LengthRestrictDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/LengthRestrictDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/MoneyDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/MoneyDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/NumberValueRestrictDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/NumberValueRestrictDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PayLimitDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PayLimitDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaySumDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaySumDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentActionDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentActionDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentCheckDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentCheckDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentFieldDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentFieldDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentStatusDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/PaymentStatusDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ProviderServiceDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ProviderServiceDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ProviderServiceDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/ProviderServiceDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/RegexpValidatorDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/RegexpValidatorDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/RequestPaymentDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/RequestPaymentDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/RequestPaymentDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/RequestPaymentDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/StartPaymentDtoRq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/StartPaymentDtoRq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/StartPaymentDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/StartPaymentDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/StatusDtoRs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Model/StatusDtoRs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Multibanking.UniversalPaymentClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Multibanking.UniversalPaymentClient.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +488,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f8dbf677037c4363bdec07364295385f16908/e3/08ac3917/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/858fa85af8f360fe16f9ac5d211391573dccd769e4c998ad63d6497f469145e1/ISetupList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d253e85623dbcafcda28febe2a37a984ff78a8cab68dbdfe7c1b698d1f5fba/MethodCall.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/Vadim/RiderProjects/vtb-backend/Multibanking.API/Controllers/AccountConsentController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Controllers/PeriodPaymentController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.API/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Api/AccountConsentsApi.cs" root0="SKIP_HIGHLIGHTING" />
@@ -140,7 +551,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAccount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionComplexTypeDebtorAgent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.AccountClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Api/DefaultApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Api/BonusPointApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/ClientUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.BonusPointClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
@@ -185,11 +596,11 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Card/CardUpdateDto.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Contracts/Consent/UserAccountConsentDto.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Data/OpenAPIBankClients/BonusPointClient/BonusPointClientSpecification.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/CommentApi.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/CommissionApi.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/DocumentApi.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/OrderApi.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/PaglApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeCommentApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeCommissionApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeDocumentApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteeOrderApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Api/GuaranteePaglApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.GuaranteeClient/Model/BankGuarantee.cs" root0="SKIP_HIGHLIGHTING" />
@@ -220,6 +631,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/BusinessLogicServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/InfrastructureServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.Infrustructure/ServiceCollectionExtensions/ServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/IVRPPaymentsApiAsync.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/PeriodPaymentApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/PeriodPaymentConsentApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.PeriodPaymentClient/Api/VRPPaymentDetailsApi.cs" root0="SKIP_HIGHLIGHTING" />
@@ -282,7 +694,7 @@
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/RemittanceInformationComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/SCASupportDataComplexType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UnidentifiedPaymentClient/Model/TransactionStatusStaticType.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/DefaultApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Api/UniversalPaymentApi.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/ApiClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/Multimap.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Multibanking.UniversalPaymentClient/Client/RequestOptions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -407,7 +819,7 @@
       <workItem from="1730500110439" duration="2393000" />
       <workItem from="1730502533050" duration="289000" />
       <workItem from="1730575256346" duration="13830000" />
-      <workItem from="1731023981587" duration="4576000" />
+      <workItem from="1731023981587" duration="5378000" />
     </task>
     <task id="LOCAL-00004" summary="Revoke user account consent">
       <option name="closed" value="true" />
@@ -609,7 +1021,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730688760718</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Add loan business logic">
+      <option name="closed" value="true" />
+      <created>1731029866782</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1731029866782</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -629,7 +1049,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Revoke user account consent" />
     <MESSAGE value="Hot fix and add business logic" />
     <MESSAGE value="Add accounts business logic" />
     <MESSAGE value="Add balances business logic" />
@@ -654,7 +1073,8 @@
     <MESSAGE value="Add guarantee business logic" />
     <MESSAGE value="Add VCS" />
     <MESSAGE value="Test VSC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test VSC" />
+    <MESSAGE value="Add loan business logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add loan business logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

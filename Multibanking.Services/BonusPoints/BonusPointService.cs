@@ -8,14 +8,6 @@ namespace Multibanking.Services.BonusPoints;
 
 public class BonusPointService(IBonusPointClient bonusPointClient, IAccountService accountService) : IBonusPointService
 {
-    private RewardBalanceDataV2 GetBonusPoints(AccountComplexType account)
-    {
-        var bonusPoint = bonusPointClient.GetRewardsBalance(Guid.NewGuid().ToString(), account.AccountId, Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
-        if (bonusPoint == null)
-            throw new Exception("Со стороны банкинга не пришло ответа, попробуйте позже");
-        return bonusPoint;
-    }
-
     public void PostBonusPoints(PostBonusPointDto postBonusPointDto)
     {
         var account = accountService.GetAccountDetail(postBonusPointDto.AccountId).Data.Account.Single(account => account.AccountId == postBonusPointDto.AccountId);
@@ -37,5 +29,13 @@ public class BonusPointService(IBonusPointClient bonusPointClient, IAccountServi
     {
         var account = accountService.GetAccountDetail(accountId).Data.Account.Single(account => account.AccountId == accountId);
         return GetBonusPoints(account);
+    }
+
+    private RewardBalanceDataV2 GetBonusPoints(AccountComplexType account)
+    {
+        var bonusPoint = bonusPointClient.GetRewardsBalance(Guid.NewGuid().ToString(), account.AccountId, Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
+        if (bonusPoint == null)
+            throw new Exception("Со стороны банкинга не пришло ответа, попробуйте позже");
+        return bonusPoint;
     }
 }

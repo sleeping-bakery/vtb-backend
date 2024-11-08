@@ -9,258 +9,219 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Информация о услуге ПУ ответ
+/// </summary>
+[DataContract(Name = "ProviderServiceDtoRs")]
+public class ProviderServiceDtoRs : IEquatable<ProviderServiceDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Информация о услуге ПУ ответ
+    ///     Подтипы услуги ПУ
     /// </summary>
-    [DataContract(Name = "ProviderServiceDtoRs")]
-    public partial class ProviderServiceDtoRs : IEquatable<ProviderServiceDtoRs>, IValidatableObject
+    /// <value>Подтипы услуги ПУ</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SubTypesEnum
     {
         /// <summary>
-        /// Тип услуги ПУ
+        ///     Enum MOBILEBYPHONE for value: MOBILE_BY_PHONE
         /// </summary>
-        /// <value>Тип услуги ПУ</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum TypeEnum
-        {
-            /// <summary>
-            /// Enum CONTRACT for value: CONTRACT
-            /// </summary>
-            [EnumMember(Value = "CONTRACT")]
-            CONTRACT = 1,
-
-            /// <summary>
-            /// Enum GISHCS for value: GIS_HCS
-            /// </summary>
-            [EnumMember(Value = "GIS_HCS")]
-            GISHCS = 2
-
-        }
-
-
-        /// <summary>
-        /// Тип услуги ПУ
-        /// </summary>
-        /// <value>Тип услуги ПУ</value>
-        [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
-        public TypeEnum Type { get; set; }
-        /// <summary>
-        /// Подтипы услуги ПУ
-        /// </summary>
-        /// <value>Подтипы услуги ПУ</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum SubTypesEnum
-        {
-            /// <summary>
-            /// Enum MOBILEBYPHONE for value: MOBILE_BY_PHONE
-            /// </summary>
-            [EnumMember(Value = "MOBILE_BY_PHONE")]
-            MOBILEBYPHONE = 1
-
-        }
-
-
-
-        /// <summary>
-        /// Подтипы услуги ПУ
-        /// </summary>
-        /// <value>Подтипы услуги ПУ</value>
-        [DataMember(Name = "subTypes", EmitDefaultValue = false)]
-        public SubTypesEnum SubTypes { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderServiceDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected ProviderServiceDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProviderServiceDtoRs" /> class.
-        /// </summary>
-        /// <param name="id">Id услуги ПУ (required).</param>
-        /// <param name="name">Наименование услуги поставщика (required).</param>
-        /// <param name="type">Тип услуги ПУ (required).</param>
-        /// <param name="subTypes">Подтипы услуги ПУ.</param>
-        /// <param name="categoryIds">Список Id категорий, в которых доступна услуга ПУ (required).</param>
-        public ProviderServiceDtoRs(string id = default(string), string name = default(string), TypeEnum type = default(TypeEnum), SubTypesEnum subTypes = default(SubTypesEnum), List<string> categoryIds = default(List<string>))
-        {
-            // to ensure "id" is required (not null)
-            if (id == null)
-            {
-                throw new ArgumentNullException("id is a required property for ProviderServiceDtoRs and cannot be null");
-            }
-            this.Id = id;
-            // to ensure "name" is required (not null)
-            if (name == null)
-            {
-                throw new ArgumentNullException("name is a required property for ProviderServiceDtoRs and cannot be null");
-            }
-            this.Name = name;
-            this.Type = type;
-            // to ensure "categoryIds" is required (not null)
-            if (categoryIds == null)
-            {
-                throw new ArgumentNullException("categoryIds is a required property for ProviderServiceDtoRs and cannot be null");
-            }
-            this.CategoryIds = categoryIds;
-            this.SubTypes = subTypes;
-        }
-
-        /// <summary>
-        /// Id услуги ПУ
-        /// </summary>
-        /// <value>Id услуги ПУ</value>
-        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Наименование услуги поставщика
-        /// </summary>
-        /// <value>Наименование услуги поставщика</value>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Список Id категорий, в которых доступна услуга ПУ
-        /// </summary>
-        /// <value>Список Id категорий, в которых доступна услуга ПУ</value>
-        [DataMember(Name = "categoryIds", IsRequired = true, EmitDefaultValue = true)]
-        public List<string> CategoryIds { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class ProviderServiceDtoRs {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  SubTypes: ").Append(SubTypes).Append("\n");
-            sb.Append("  CategoryIds: ").Append(CategoryIds).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as ProviderServiceDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if ProviderServiceDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of ProviderServiceDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(ProviderServiceDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && 
-                (
-                    this.Type == input.Type ||
-                    this.Type.Equals(input.Type)
-                ) && 
-                (
-                    this.SubTypes == input.SubTypes
-                ) && 
-                (
-                    this.CategoryIds == input.CategoryIds ||
-                    this.CategoryIds != null &&
-                    input.CategoryIds != null &&
-                    this.CategoryIds.SequenceEqual(input.CategoryIds)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                {
-                    hashCode = (hashCode * 59) + this.Id.GetHashCode();
-                }
-                if (this.Name != null)
-                {
-                    hashCode = (hashCode * 59) + this.Name.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.Type.GetHashCode();
-                hashCode = (hashCode * 59) + this.SubTypes.GetHashCode();
-                if (this.CategoryIds != null)
-                {
-                    hashCode = (hashCode * 59) + this.CategoryIds.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Id (string) maxLength
-            if (this.Id != null && this.Id.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Id, length must be less than 255.", new [] { "Id" });
-            }
-
-            // Name (string) maxLength
-            if (this.Name != null && this.Name.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Name, length must be less than 255.", new [] { "Name" });
-            }
-
-            yield break;
-        }
+        [EnumMember(Value = "MOBILE_BY_PHONE")]
+        MOBILEBYPHONE = 1
     }
 
+    /// <summary>
+    ///     Тип услуги ПУ
+    /// </summary>
+    /// <value>Тип услуги ПУ</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TypeEnum
+    {
+        /// <summary>
+        ///     Enum CONTRACT for value: CONTRACT
+        /// </summary>
+        [EnumMember(Value = "CONTRACT")] CONTRACT = 1,
+
+        /// <summary>
+        ///     Enum GISHCS for value: GIS_HCS
+        /// </summary>
+        [EnumMember(Value = "GIS_HCS")] GISHCS = 2
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ProviderServiceDtoRs" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected ProviderServiceDtoRs()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="ProviderServiceDtoRs" /> class.
+    /// </summary>
+    /// <param name="id">Id услуги ПУ (required).</param>
+    /// <param name="name">Наименование услуги поставщика (required).</param>
+    /// <param name="type">Тип услуги ПУ (required).</param>
+    /// <param name="subTypes">Подтипы услуги ПУ.</param>
+    /// <param name="categoryIds">Список Id категорий, в которых доступна услуга ПУ (required).</param>
+    public ProviderServiceDtoRs(string id = default, string name = default, TypeEnum type = default, SubTypesEnum subTypes = default, List<string> categoryIds = default)
+    {
+        // to ensure "id" is required (not null)
+        if (id == null) throw new ArgumentNullException("id is a required property for ProviderServiceDtoRs and cannot be null");
+        Id = id;
+        // to ensure "name" is required (not null)
+        if (name == null) throw new ArgumentNullException("name is a required property for ProviderServiceDtoRs and cannot be null");
+        Name = name;
+        Type = type;
+        // to ensure "categoryIds" is required (not null)
+        if (categoryIds == null) throw new ArgumentNullException("categoryIds is a required property for ProviderServiceDtoRs and cannot be null");
+        CategoryIds = categoryIds;
+        SubTypes = subTypes;
+    }
+
+
+    /// <summary>
+    ///     Тип услуги ПУ
+    /// </summary>
+    /// <value>Тип услуги ПУ</value>
+    [DataMember(Name = "type", IsRequired = true, EmitDefaultValue = true)]
+    public TypeEnum Type { get; set; }
+
+
+    /// <summary>
+    ///     Подтипы услуги ПУ
+    /// </summary>
+    /// <value>Подтипы услуги ПУ</value>
+    [DataMember(Name = "subTypes", EmitDefaultValue = false)]
+    public SubTypesEnum SubTypes { get; set; }
+
+    /// <summary>
+    ///     Id услуги ПУ
+    /// </summary>
+    /// <value>Id услуги ПУ</value>
+    [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
+    public string Id { get; set; }
+
+    /// <summary>
+    ///     Наименование услуги поставщика
+    /// </summary>
+    /// <value>Наименование услуги поставщика</value>
+    [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = true)]
+    public string Name { get; set; }
+
+    /// <summary>
+    ///     Список Id категорий, в которых доступна услуга ПУ
+    /// </summary>
+    /// <value>Список Id категорий, в которых доступна услуга ПУ</value>
+    [DataMember(Name = "categoryIds", IsRequired = true, EmitDefaultValue = true)]
+    public List<string> CategoryIds { get; set; }
+
+    /// <summary>
+    ///     Returns true if ProviderServiceDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of ProviderServiceDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(ProviderServiceDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Id == input.Id ||
+                (Id != null &&
+                 Id.Equals(input.Id))
+            ) &&
+            (
+                Name == input.Name ||
+                (Name != null &&
+                 Name.Equals(input.Name))
+            ) &&
+            (
+                Type == input.Type ||
+                Type.Equals(input.Type)
+            ) &&
+            SubTypes == input.SubTypes &&
+            (
+                CategoryIds == input.CategoryIds ||
+                (CategoryIds != null &&
+                 input.CategoryIds != null &&
+                 CategoryIds.SequenceEqual(input.CategoryIds))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Id (string) maxLength
+        if (Id != null && Id.Length > 255) yield return new ValidationResult("Invalid value for Id, length must be less than 255.", new[] { "Id" });
+
+        // Name (string) maxLength
+        if (Name != null && Name.Length > 255) yield return new ValidationResult("Invalid value for Name, length must be less than 255.", new[] { "Name" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class ProviderServiceDtoRs {\n");
+        sb.Append("  Id: ").Append(Id).Append("\n");
+        sb.Append("  Name: ").Append(Name).Append("\n");
+        sb.Append("  Type: ").Append(Type).Append("\n");
+        sb.Append("  SubTypes: ").Append(SubTypes).Append("\n");
+        sb.Append("  CategoryIds: ").Append(CategoryIds).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as ProviderServiceDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Id != null) hashCode = hashCode * 59 + Id.GetHashCode();
+            if (Name != null) hashCode = hashCode * 59 + Name.GetHashCode();
+            hashCode = hashCode * 59 + Type.GetHashCode();
+            hashCode = hashCode * 59 + SubTypes.GetHashCode();
+            if (CategoryIds != null) hashCode = hashCode * 59 + CategoryIds.GetHashCode();
+            return hashCode;
+        }
+    }
 }

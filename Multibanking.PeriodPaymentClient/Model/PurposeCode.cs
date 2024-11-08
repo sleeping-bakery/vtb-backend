@@ -8,48 +8,37 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Указывается код вида дохода цифрой лицами, выплачивающими гражданину заработную плату и (или) иные доходы: «1» – при переводе денежных средств, являющихся заработной платой и
+///     (или) иными доходами; «2» – при переводе денежных средств, являющихся доходами, на которые не может быть обращено взыскание; «3» – при переводе денежных средств, являющихся
+///     доходами, к которым ограничения по обращению взыскания не применяются.
+/// </summary>
+/// <value>
+///     Указывается код вида дохода цифрой лицами, выплачивающими гражданину заработную плату и (или) иные доходы: «1» – при переводе денежных средств, являющихся заработной платой
+///     и (или) иными доходами; «2» – при переводе денежных средств, являющихся доходами, на которые не может быть обращено взыскание; «3» – при переводе денежных средств, являющихся
+///     доходами, к которым ограничения по обращению взыскания не применяются.
+/// </value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum PurposeCode
 {
     /// <summary>
-    /// Указывается код вида дохода цифрой лицами, выплачивающими гражданину заработную плату и (или) иные доходы: «1» – при переводе денежных средств, являющихся заработной платой и (или) иными доходами; «2» – при переводе денежных средств, являющихся доходами, на которые не может быть обращено взыскание; «3» – при переводе денежных средств, являющихся доходами, к которым ограничения по обращению взыскания не применяются.
+    ///     Enum _1 for value: 1
     /// </summary>
-    /// <value>Указывается код вида дохода цифрой лицами, выплачивающими гражданину заработную плату и (или) иные доходы: «1» – при переводе денежных средств, являющихся заработной платой и (или) иными доходами; «2» – при переводе денежных средств, являющихся доходами, на которые не может быть обращено взыскание; «3» – при переводе денежных средств, являющихся доходами, к которым ограничения по обращению взыскания не применяются.</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum PurposeCode
-    {
-        /// <summary>
-        /// Enum _1 for value: 1
-        /// </summary>
-        [EnumMember(Value = "1")]
-        _1 = 1,
+    [EnumMember(Value = "1")] _1 = 1,
 
-        /// <summary>
-        /// Enum _2 for value: 2
-        /// </summary>
-        [EnumMember(Value = "2")]
-        _2 = 2,
+    /// <summary>
+    ///     Enum _2 for value: 2
+    /// </summary>
+    [EnumMember(Value = "2")] _2 = 2,
 
-        /// <summary>
-        /// Enum _3 for value: 3
-        /// </summary>
-        [EnumMember(Value = "3")]
-        _3 = 3
-
-    }
-
+    /// <summary>
+    ///     Enum _3 for value: 3
+    /// </summary>
+    [EnumMember(Value = "3")] _3 = 3
 }

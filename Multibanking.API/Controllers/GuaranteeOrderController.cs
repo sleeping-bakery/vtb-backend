@@ -17,7 +17,7 @@ public class GuaranteeOrderController(IGuaranteeOrderService guaranteeOrderServi
     }
 
     /// <summary>
-    ///     Удалить заявку. orderId - брать из ResponseInit 
+    ///     Удалить заявку. orderId - брать из ResponseInit
     /// </summary>
     /// <param name="declineOrderDto"></param>
     /// <param name="orderId"></param>
@@ -35,8 +35,14 @@ public class GuaranteeOrderController(IGuaranteeOrderService guaranteeOrderServi
     /// <param name="orderId"></param>
     /// <returns></returns>
     [HttpGet("OrderId")]
-    public ActionResult<OrderStatus> Get(string orderId) => guaranteeOrderService.GetOrder(orderId);
+    public ActionResult<OrderStatus> Get(string orderId)
+    {
+        return guaranteeOrderService.GetOrder(orderId);
+    }
 
     [HttpGet]
-    public List<ReadGuaranteeOrderDto> Get() => guaranteeService.GetOrdersForUser();
+    public List<ReadGuaranteeOrderDto> Get()
+    {
+        return guaranteeService.GetOrdersForUser();
+    }
 }

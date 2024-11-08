@@ -9,276 +9,231 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.BonusPointClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.BonusPointClient.Model
+namespace Multibanking.BonusPointClient.Model;
+
+/// <summary>
+///     CatalogV2
+/// </summary>
+[DataContract(Name = "CatalogV2")]
+public class CatalogV2 : IEquatable<CatalogV2>, IValidatableObject
 {
     /// <summary>
-    /// CatalogV2
+    ///     Initializes a new instance of the <see cref="CatalogV2" /> class.
     /// </summary>
-    [DataContract(Name = "CatalogV2")]
-    public partial class CatalogV2 : IEquatable<CatalogV2>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected CatalogV2()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CatalogV2" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected CatalogV2() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CatalogV2" /> class.
-        /// </summary>
-        /// <param name="catalogId">Для каталога настроен уникальный идентификатор. (required).</param>
-        /// <param name="catalogType">Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT. (required).</param>
-        /// <param name="conversionRate">Обозначает рублевую стоимость вознаграждений (example: 1 point &#x3D; 1 р.). (required).</param>
-        /// <param name="description">Краткое описание каталога..</param>
-        /// <param name="minRedeemPoints">Минимальный баланс вознаграждений, необходимый для использования данного каталога. (required).</param>
-        /// <param name="maxRedeemPoints">Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений. (required).</param>
-        public CatalogV2(string catalogId = default(string), string catalogType = default(string), decimal conversionRate = default(decimal), string description = default(string), decimal minRedeemPoints = default(decimal), decimal maxRedeemPoints = default(decimal))
-        {
-            // to ensure "catalogId" is required (not null)
-            if (catalogId == null)
-            {
-                throw new ArgumentNullException("catalogId is a required property for CatalogV2 and cannot be null");
-            }
-            this.CatalogId = catalogId;
-            // to ensure "catalogType" is required (not null)
-            if (catalogType == null)
-            {
-                throw new ArgumentNullException("catalogType is a required property for CatalogV2 and cannot be null");
-            }
-            this.CatalogType = catalogType;
-            this.ConversionRate = conversionRate;
-            this.MinRedeemPoints = minRedeemPoints;
-            this.MaxRedeemPoints = maxRedeemPoints;
-            this.Description = description;
-        }
-
-        /// <summary>
-        /// Для каталога настроен уникальный идентификатор.
-        /// </summary>
-        /// <value>Для каталога настроен уникальный идентификатор.</value>
-        [DataMember(Name = "catalogId", IsRequired = true, EmitDefaultValue = true)]
-        public string CatalogId { get; set; }
-
-        /// <summary>
-        /// Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT.
-        /// </summary>
-        /// <value>Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT.</value>
-        [DataMember(Name = "catalogType", IsRequired = true, EmitDefaultValue = true)]
-        public string CatalogType { get; set; }
-
-        /// <summary>
-        /// Обозначает рублевую стоимость вознаграждений (example: 1 point &#x3D; 1 р.).
-        /// </summary>
-        /// <value>Обозначает рублевую стоимость вознаграждений (example: 1 point &#x3D; 1 р.).</value>
-        [DataMember(Name = "conversionRate", IsRequired = true, EmitDefaultValue = true)]
-        public decimal ConversionRate { get; set; }
-
-        /// <summary>
-        /// Краткое описание каталога.
-        /// </summary>
-        /// <value>Краткое описание каталога.</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Минимальный баланс вознаграждений, необходимый для использования данного каталога.
-        /// </summary>
-        /// <value>Минимальный баланс вознаграждений, необходимый для использования данного каталога.</value>
-        [DataMember(Name = "minRedeemPoints", IsRequired = true, EmitDefaultValue = true)]
-        public decimal MinRedeemPoints { get; set; }
-
-        /// <summary>
-        /// Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений.
-        /// </summary>
-        /// <value>Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений.</value>
-        [DataMember(Name = "maxRedeemPoints", IsRequired = true, EmitDefaultValue = true)]
-        public decimal MaxRedeemPoints { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class CatalogV2 {\n");
-            sb.Append("  CatalogId: ").Append(CatalogId).Append("\n");
-            sb.Append("  CatalogType: ").Append(CatalogType).Append("\n");
-            sb.Append("  ConversionRate: ").Append(ConversionRate).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  MinRedeemPoints: ").Append(MinRedeemPoints).Append("\n");
-            sb.Append("  MaxRedeemPoints: ").Append(MaxRedeemPoints).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as CatalogV2);
-        }
-
-        /// <summary>
-        /// Returns true if CatalogV2 instances are equal
-        /// </summary>
-        /// <param name="input">Instance of CatalogV2 to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(CatalogV2 input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.CatalogId == input.CatalogId ||
-                    (this.CatalogId != null &&
-                    this.CatalogId.Equals(input.CatalogId))
-                ) && 
-                (
-                    this.CatalogType == input.CatalogType ||
-                    (this.CatalogType != null &&
-                    this.CatalogType.Equals(input.CatalogType))
-                ) && 
-                (
-                    this.ConversionRate == input.ConversionRate ||
-                    this.ConversionRate.Equals(input.ConversionRate)
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && 
-                (
-                    this.MinRedeemPoints == input.MinRedeemPoints ||
-                    this.MinRedeemPoints.Equals(input.MinRedeemPoints)
-                ) && 
-                (
-                    this.MaxRedeemPoints == input.MaxRedeemPoints ||
-                    this.MaxRedeemPoints.Equals(input.MaxRedeemPoints)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.CatalogId != null)
-                {
-                    hashCode = (hashCode * 59) + this.CatalogId.GetHashCode();
-                }
-                if (this.CatalogType != null)
-                {
-                    hashCode = (hashCode * 59) + this.CatalogType.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.ConversionRate.GetHashCode();
-                if (this.Description != null)
-                {
-                    hashCode = (hashCode * 59) + this.Description.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.MinRedeemPoints.GetHashCode();
-                hashCode = (hashCode * 59) + this.MaxRedeemPoints.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // CatalogId (string) maxLength
-            if (this.CatalogId != null && this.CatalogId.Length > 10)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CatalogId, length must be less than 10.", new [] { "CatalogId" });
-            }
-
-            // CatalogId (string) minLength
-            if (this.CatalogId != null && this.CatalogId.Length < 10)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CatalogId, length must be greater than 10.", new [] { "CatalogId" });
-            }
-
-            // CatalogId (string) pattern
-            Regex regexCatalogId = new Regex(@"^[0-9a-zA-Z]{10}$", RegexOptions.CultureInvariant);
-            if (false == regexCatalogId.Match(this.CatalogId).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CatalogId, must match a pattern of " + regexCatalogId, new [] { "CatalogId" });
-            }
-
-            // CatalogType (string) maxLength
-            if (this.CatalogType != null && this.CatalogType.Length > 32)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CatalogType, length must be less than 32.", new [] { "CatalogType" });
-            }
-
-            // CatalogType (string) minLength
-            if (this.CatalogType != null && this.CatalogType.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CatalogType, length must be greater than 1.", new [] { "CatalogType" });
-            }
-
-            // CatalogType (string) pattern
-            Regex regexCatalogType = new Regex(@"^[a-zA-Z]{1,32}$", RegexOptions.CultureInvariant);
-            if (false == regexCatalogType.Match(this.CatalogType).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CatalogType, must match a pattern of " + regexCatalogType, new [] { "CatalogType" });
-            }
-
-            // Description (string) maxLength
-            if (this.Description != null && this.Description.Length > 256)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 256.", new [] { "Description" });
-            }
-
-            // Description (string) minLength
-            if (this.Description != null && this.Description.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be greater than 1.", new [] { "Description" });
-            }
-
-            // Description (string) pattern
-            Regex regexDescription = new Regex(@"^[a-zA-Z\\s\"",.']{1,256}$", RegexOptions.CultureInvariant);
-            if (false == regexDescription.Match(this.Description).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, must match a pattern of " + regexDescription, new [] { "Description" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="CatalogV2" /> class.
+    /// </summary>
+    /// <param name="catalogId">Для каталога настроен уникальный идентификатор. (required).</param>
+    /// <param name="catalogType">Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT. (required).</param>
+    /// <param name="conversionRate">Обозначает рублевую стоимость вознаграждений (example: 1 point &#x3D; 1 р.). (required).</param>
+    /// <param name="description">Краткое описание каталога..</param>
+    /// <param name="minRedeemPoints">Минимальный баланс вознаграждений, необходимый для использования данного каталога. (required).</param>
+    /// <param name="maxRedeemPoints">Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений. (required).</param>
+    public CatalogV2(string catalogId = default, string catalogType = default, decimal conversionRate = default, string description = default, decimal minRedeemPoints = default,
+        decimal maxRedeemPoints = default)
+    {
+        // to ensure "catalogId" is required (not null)
+        if (catalogId == null) throw new ArgumentNullException("catalogId is a required property for CatalogV2 and cannot be null");
+        CatalogId = catalogId;
+        // to ensure "catalogType" is required (not null)
+        if (catalogType == null) throw new ArgumentNullException("catalogType is a required property for CatalogV2 and cannot be null");
+        CatalogType = catalogType;
+        ConversionRate = conversionRate;
+        MinRedeemPoints = minRedeemPoints;
+        MaxRedeemPoints = maxRedeemPoints;
+        Description = description;
+    }
+
+    /// <summary>
+    ///     Для каталога настроен уникальный идентификатор.
+    /// </summary>
+    /// <value>Для каталога настроен уникальный идентификатор.</value>
+    [DataMember(Name = "catalogId", IsRequired = true, EmitDefaultValue = true)]
+    public string CatalogId { get; set; }
+
+    /// <summary>
+    ///     Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT.
+    /// </summary>
+    /// <value>Определяет тип выкупа - STMTCR, ACH, SWEEP, PWP, EGIFT, PGIFT.</value>
+    [DataMember(Name = "catalogType", IsRequired = true, EmitDefaultValue = true)]
+    public string CatalogType { get; set; }
+
+    /// <summary>
+    ///     Обозначает рублевую стоимость вознаграждений (example: 1 point &#x3D; 1 р.).
+    /// </summary>
+    /// <value>Обозначает рублевую стоимость вознаграждений (example: 1 point &#x3D; 1 р.).</value>
+    [DataMember(Name = "conversionRate", IsRequired = true, EmitDefaultValue = true)]
+    public decimal ConversionRate { get; set; }
+
+    /// <summary>
+    ///     Краткое описание каталога.
+    /// </summary>
+    /// <value>Краткое описание каталога.</value>
+    [DataMember(Name = "description", EmitDefaultValue = false)]
+    public string Description { get; set; }
+
+    /// <summary>
+    ///     Минимальный баланс вознаграждений, необходимый для использования данного каталога.
+    /// </summary>
+    /// <value>Минимальный баланс вознаграждений, необходимый для использования данного каталога.</value>
+    [DataMember(Name = "minRedeemPoints", IsRequired = true, EmitDefaultValue = true)]
+    public decimal MinRedeemPoints { get; set; }
+
+    /// <summary>
+    ///     Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений.
+    /// </summary>
+    /// <value>Максимальные награды, которые можно обменять на данный каталог. Если пусто, клиент может обменять до текущего баланса вознаграждений.</value>
+    [DataMember(Name = "maxRedeemPoints", IsRequired = true, EmitDefaultValue = true)]
+    public decimal MaxRedeemPoints { get; set; }
+
+    /// <summary>
+    ///     Returns true if CatalogV2 instances are equal
+    /// </summary>
+    /// <param name="input">Instance of CatalogV2 to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(CatalogV2 input)
+    {
+        if (input == null) return false;
+        return
+            (
+                CatalogId == input.CatalogId ||
+                (CatalogId != null &&
+                 CatalogId.Equals(input.CatalogId))
+            ) &&
+            (
+                CatalogType == input.CatalogType ||
+                (CatalogType != null &&
+                 CatalogType.Equals(input.CatalogType))
+            ) &&
+            (
+                ConversionRate == input.ConversionRate ||
+                ConversionRate.Equals(input.ConversionRate)
+            ) &&
+            (
+                Description == input.Description ||
+                (Description != null &&
+                 Description.Equals(input.Description))
+            ) &&
+            (
+                MinRedeemPoints == input.MinRedeemPoints ||
+                MinRedeemPoints.Equals(input.MinRedeemPoints)
+            ) &&
+            (
+                MaxRedeemPoints == input.MaxRedeemPoints ||
+                MaxRedeemPoints.Equals(input.MaxRedeemPoints)
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // CatalogId (string) maxLength
+        if (CatalogId != null && CatalogId.Length > 10) yield return new ValidationResult("Invalid value for CatalogId, length must be less than 10.", new[] { "CatalogId" });
+
+        // CatalogId (string) minLength
+        if (CatalogId != null && CatalogId.Length < 10) yield return new ValidationResult("Invalid value for CatalogId, length must be greater than 10.", new[] { "CatalogId" });
+
+        // CatalogId (string) pattern
+        var regexCatalogId = new Regex(@"^[0-9a-zA-Z]{10}$", RegexOptions.CultureInvariant);
+        if (false == regexCatalogId.Match(CatalogId).Success)
+            yield return new ValidationResult("Invalid value for CatalogId, must match a pattern of " + regexCatalogId, new[] { "CatalogId" });
+
+        // CatalogType (string) maxLength
+        if (CatalogType != null && CatalogType.Length > 32)
+            yield return new ValidationResult("Invalid value for CatalogType, length must be less than 32.", new[] { "CatalogType" });
+
+        // CatalogType (string) minLength
+        if (CatalogType != null && CatalogType.Length < 1)
+            yield return new ValidationResult("Invalid value for CatalogType, length must be greater than 1.", new[] { "CatalogType" });
+
+        // CatalogType (string) pattern
+        var regexCatalogType = new Regex(@"^[a-zA-Z]{1,32}$", RegexOptions.CultureInvariant);
+        if (false == regexCatalogType.Match(CatalogType).Success)
+            yield return new ValidationResult("Invalid value for CatalogType, must match a pattern of " + regexCatalogType, new[] { "CatalogType" });
+
+        // Description (string) maxLength
+        if (Description != null && Description.Length > 256)
+            yield return new ValidationResult("Invalid value for Description, length must be less than 256.", new[] { "Description" });
+
+        // Description (string) minLength
+        if (Description != null && Description.Length < 1)
+            yield return new ValidationResult("Invalid value for Description, length must be greater than 1.", new[] { "Description" });
+
+        // Description (string) pattern
+        var regexDescription = new Regex(@"^[a-zA-Z\\s\"",.']{1,256}$", RegexOptions.CultureInvariant);
+        if (false == regexDescription.Match(Description).Success)
+            yield return new ValidationResult("Invalid value for Description, must match a pattern of " + regexDescription, new[] { "Description" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class CatalogV2 {\n");
+        sb.Append("  CatalogId: ").Append(CatalogId).Append("\n");
+        sb.Append("  CatalogType: ").Append(CatalogType).Append("\n");
+        sb.Append("  ConversionRate: ").Append(ConversionRate).Append("\n");
+        sb.Append("  Description: ").Append(Description).Append("\n");
+        sb.Append("  MinRedeemPoints: ").Append(MinRedeemPoints).Append("\n");
+        sb.Append("  MaxRedeemPoints: ").Append(MaxRedeemPoints).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as CatalogV2);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (CatalogId != null) hashCode = hashCode * 59 + CatalogId.GetHashCode();
+            if (CatalogType != null) hashCode = hashCode * 59 + CatalogType.GetHashCode();
+            hashCode = hashCode * 59 + ConversionRate.GetHashCode();
+            if (Description != null) hashCode = hashCode * 59 + Description.GetHashCode();
+            hashCode = hashCode * 59 + MinRedeemPoints.GetHashCode();
+            hashCode = hashCode * 59 + MaxRedeemPoints.GetHashCode();
+            return hashCode;
+        }
+    }
 }

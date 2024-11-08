@@ -8,66 +8,50 @@
  */
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Очередность платежа. Поле может принимать значение в диапазоне 0-5. Значение поля должно быть равно 0, если в соответствии с нормативными актами Банка России очередность
+///     платежа не применяется
+/// </summary>
+/// <value>
+///     Очередность платежа. Поле может принимать значение в диапазоне 0-5. Значение поля должно быть равно 0, если в соответствии с нормативными актами Банка России очередность
+///     платежа не применяется
+/// </value>
+[JsonConverter(typeof(StringEnumConverter))]
+public enum CBRFCategoryPurpose1
 {
     /// <summary>
-    /// Очередность платежа. Поле может принимать значение в диапазоне 0-5. Значение поля должно быть равно 0, если в соответствии с нормативными актами Банка России очередность платежа не применяется
+    ///     Enum _0 for value: 0
     /// </summary>
-    /// <value>Очередность платежа. Поле может принимать значение в диапазоне 0-5. Значение поля должно быть равно 0, если в соответствии с нормативными актами Банка России очередность платежа не применяется</value>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum CBRFCategoryPurpose1
-    {
-        /// <summary>
-        /// Enum _0 for value: 0
-        /// </summary>
-        [EnumMember(Value = "0")]
-        _0 = 1,
+    [EnumMember(Value = "0")] _0 = 1,
 
-        /// <summary>
-        /// Enum _1 for value: 1
-        /// </summary>
-        [EnumMember(Value = "1")]
-        _1 = 2,
+    /// <summary>
+    ///     Enum _1 for value: 1
+    /// </summary>
+    [EnumMember(Value = "1")] _1 = 2,
 
-        /// <summary>
-        /// Enum _2 for value: 2
-        /// </summary>
-        [EnumMember(Value = "2")]
-        _2 = 3,
+    /// <summary>
+    ///     Enum _2 for value: 2
+    /// </summary>
+    [EnumMember(Value = "2")] _2 = 3,
 
-        /// <summary>
-        /// Enum _3 for value: 3
-        /// </summary>
-        [EnumMember(Value = "3")]
-        _3 = 4,
+    /// <summary>
+    ///     Enum _3 for value: 3
+    /// </summary>
+    [EnumMember(Value = "3")] _3 = 4,
 
-        /// <summary>
-        /// Enum _4 for value: 4
-        /// </summary>
-        [EnumMember(Value = "4")]
-        _4 = 5,
+    /// <summary>
+    ///     Enum _4 for value: 4
+    /// </summary>
+    [EnumMember(Value = "4")] _4 = 5,
 
-        /// <summary>
-        /// Enum _5 for value: 5
-        /// </summary>
-        [EnumMember(Value = "5")]
-        _5 = 6
-
-    }
-
+    /// <summary>
+    ///     Enum _5 for value: 5
+    /// </summary>
+    [EnumMember(Value = "5")] _5 = 6
 }

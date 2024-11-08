@@ -9,173 +9,148 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Назначение платежа. Предоставляемая информация, позволяющая сопоставить запись с позициями, для которых предназначен перевод
+/// </summary>
+[DataContract(Name = "RemittanceInformation")]
+public class RemittanceInformation : IEquatable<RemittanceInformation>, IValidatableObject
 {
     /// <summary>
-    /// Назначение платежа. Предоставляемая информация, позволяющая сопоставить запись с позициями, для которых предназначен перевод
+    ///     Initializes a new instance of the <see cref="RemittanceInformation" /> class.
     /// </summary>
-    [DataContract(Name = "RemittanceInformation")]
-    public partial class RemittanceInformation : IEquatable<RemittanceInformation>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected RemittanceInformation()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RemittanceInformation" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected RemittanceInformation() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RemittanceInformation" /> class.
-        /// </summary>
-        /// <param name="unstructured">Текстовое назначение платежа (required).</param>
-        /// <param name="creditorReferenceInformation">creditorReferenceInformation.</param>
-        /// <param name="taxRemittance">taxRemittance.</param>
-        public RemittanceInformation(string unstructured = default(string), RemittanceInformationCreditorReferenceInformation creditorReferenceInformation = default(RemittanceInformationCreditorReferenceInformation), RemittanceInformationTaxRemittance taxRemittance = default(RemittanceInformationTaxRemittance))
-        {
-            // to ensure "unstructured" is required (not null)
-            if (unstructured == null)
-            {
-                throw new ArgumentNullException("unstructured is a required property for RemittanceInformation and cannot be null");
-            }
-            this.Unstructured = unstructured;
-            this.CreditorReferenceInformation = creditorReferenceInformation;
-            this.TaxRemittance = taxRemittance;
-        }
-
-        /// <summary>
-        /// Текстовое назначение платежа
-        /// </summary>
-        /// <value>Текстовое назначение платежа</value>
-        [DataMember(Name = "unstructured", IsRequired = true, EmitDefaultValue = true)]
-        public string Unstructured { get; set; }
-
-        /// <summary>
-        /// Gets or Sets CreditorReferenceInformation
-        /// </summary>
-        [DataMember(Name = "CreditorReferenceInformation", EmitDefaultValue = false)]
-        public RemittanceInformationCreditorReferenceInformation CreditorReferenceInformation { get; set; }
-
-        /// <summary>
-        /// Gets or Sets TaxRemittance
-        /// </summary>
-        [DataMember(Name = "TaxRemittance", EmitDefaultValue = false)]
-        public RemittanceInformationTaxRemittance TaxRemittance { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RemittanceInformation {\n");
-            sb.Append("  Unstructured: ").Append(Unstructured).Append("\n");
-            sb.Append("  CreditorReferenceInformation: ").Append(CreditorReferenceInformation).Append("\n");
-            sb.Append("  TaxRemittance: ").Append(TaxRemittance).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RemittanceInformation);
-        }
-
-        /// <summary>
-        /// Returns true if RemittanceInformation instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RemittanceInformation to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RemittanceInformation input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Unstructured == input.Unstructured ||
-                    (this.Unstructured != null &&
-                    this.Unstructured.Equals(input.Unstructured))
-                ) && 
-                (
-                    this.CreditorReferenceInformation == input.CreditorReferenceInformation ||
-                    (this.CreditorReferenceInformation != null &&
-                    this.CreditorReferenceInformation.Equals(input.CreditorReferenceInformation))
-                ) && 
-                (
-                    this.TaxRemittance == input.TaxRemittance ||
-                    (this.TaxRemittance != null &&
-                    this.TaxRemittance.Equals(input.TaxRemittance))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Unstructured != null)
-                {
-                    hashCode = (hashCode * 59) + this.Unstructured.GetHashCode();
-                }
-                if (this.CreditorReferenceInformation != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreditorReferenceInformation.GetHashCode();
-                }
-                if (this.TaxRemittance != null)
-                {
-                    hashCode = (hashCode * 59) + this.TaxRemittance.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Unstructured (string) maxLength
-            if (this.Unstructured != null && this.Unstructured.Length > 140)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Unstructured, length must be less than 140.", new [] { "Unstructured" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="RemittanceInformation" /> class.
+    /// </summary>
+    /// <param name="unstructured">Текстовое назначение платежа (required).</param>
+    /// <param name="creditorReferenceInformation">creditorReferenceInformation.</param>
+    /// <param name="taxRemittance">taxRemittance.</param>
+    public RemittanceInformation(string unstructured = default, RemittanceInformationCreditorReferenceInformation creditorReferenceInformation = default,
+        RemittanceInformationTaxRemittance taxRemittance = default)
+    {
+        // to ensure "unstructured" is required (not null)
+        if (unstructured == null) throw new ArgumentNullException("unstructured is a required property for RemittanceInformation and cannot be null");
+        Unstructured = unstructured;
+        CreditorReferenceInformation = creditorReferenceInformation;
+        TaxRemittance = taxRemittance;
+    }
+
+    /// <summary>
+    ///     Текстовое назначение платежа
+    /// </summary>
+    /// <value>Текстовое назначение платежа</value>
+    [DataMember(Name = "unstructured", IsRequired = true, EmitDefaultValue = true)]
+    public string Unstructured { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets CreditorReferenceInformation
+    /// </summary>
+    [DataMember(Name = "CreditorReferenceInformation", EmitDefaultValue = false)]
+    public RemittanceInformationCreditorReferenceInformation CreditorReferenceInformation { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets TaxRemittance
+    /// </summary>
+    [DataMember(Name = "TaxRemittance", EmitDefaultValue = false)]
+    public RemittanceInformationTaxRemittance TaxRemittance { get; set; }
+
+    /// <summary>
+    ///     Returns true if RemittanceInformation instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RemittanceInformation to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RemittanceInformation input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Unstructured == input.Unstructured ||
+                (Unstructured != null &&
+                 Unstructured.Equals(input.Unstructured))
+            ) &&
+            (
+                CreditorReferenceInformation == input.CreditorReferenceInformation ||
+                (CreditorReferenceInformation != null &&
+                 CreditorReferenceInformation.Equals(input.CreditorReferenceInformation))
+            ) &&
+            (
+                TaxRemittance == input.TaxRemittance ||
+                (TaxRemittance != null &&
+                 TaxRemittance.Equals(input.TaxRemittance))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Unstructured (string) maxLength
+        if (Unstructured != null && Unstructured.Length > 140)
+            yield return new ValidationResult("Invalid value for Unstructured, length must be less than 140.", new[] { "Unstructured" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RemittanceInformation {\n");
+        sb.Append("  Unstructured: ").Append(Unstructured).Append("\n");
+        sb.Append("  CreditorReferenceInformation: ").Append(CreditorReferenceInformation).Append("\n");
+        sb.Append("  TaxRemittance: ").Append(TaxRemittance).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RemittanceInformation);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Unstructured != null) hashCode = hashCode * 59 + Unstructured.GetHashCode();
+            if (CreditorReferenceInformation != null) hashCode = hashCode * 59 + CreditorReferenceInformation.GetHashCode();
+            if (TaxRemittance != null) hashCode = hashCode * 59 + TaxRemittance.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -22,5 +22,8 @@ public class LoanCalculatorService(IBankInterestRateClient bankInterestRateClien
         };
     }
 
-    public List<BankInterestRate> GetBankInterestRate() => bankInterestRateClient.GetAvailableInterestRates();
+    public List<BankInterestRate> GetBankInterestRate()
+    {
+        return bankInterestRateClient.GetAvailableInterestRates();
+    }
 }

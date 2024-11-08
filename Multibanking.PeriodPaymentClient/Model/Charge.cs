@@ -9,134 +9,118 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Набор элементов, используемый для предоставления деталей о комиссии за инициацию платежа
+/// </summary>
+[DataContract(Name = "Charge")]
+public class Charge : IEquatable<Charge>, IValidatableObject
 {
     /// <summary>
-    /// Набор элементов, используемый для предоставления деталей о комиссии за инициацию платежа
+    ///     Initializes a new instance of the <see cref="Charge" /> class.
     /// </summary>
-    [DataContract(Name = "Charge")]
-    public partial class Charge : IEquatable<Charge>, IValidatableObject
+    /// <param name="chargeBearer">chargeBearer.</param>
+    /// <param name="amount">amount.</param>
+    public Charge(ChargeBearerTypeCode? chargeBearer = default, ChargeAmount amount = default)
     {
-
-        /// <summary>
-        /// Gets or Sets ChargeBearer
-        /// </summary>
-        [DataMember(Name = "chargeBearer", EmitDefaultValue = false)]
-        public ChargeBearerTypeCode? ChargeBearer { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Charge" /> class.
-        /// </summary>
-        /// <param name="chargeBearer">chargeBearer.</param>
-        /// <param name="amount">amount.</param>
-        public Charge(ChargeBearerTypeCode? chargeBearer = default(ChargeBearerTypeCode?), ChargeAmount amount = default(ChargeAmount))
-        {
-            this.ChargeBearer = chargeBearer;
-            this.Amount = amount;
-        }
-
-        /// <summary>
-        /// Gets or Sets Amount
-        /// </summary>
-        [DataMember(Name = "Amount", EmitDefaultValue = false)]
-        public ChargeAmount Amount { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class Charge {\n");
-            sb.Append("  ChargeBearer: ").Append(ChargeBearer).Append("\n");
-            sb.Append("  Amount: ").Append(Amount).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as Charge);
-        }
-
-        /// <summary>
-        /// Returns true if Charge instances are equal
-        /// </summary>
-        /// <param name="input">Instance of Charge to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(Charge input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.ChargeBearer == input.ChargeBearer ||
-                    this.ChargeBearer.Equals(input.ChargeBearer)
-                ) && 
-                (
-                    this.Amount == input.Amount ||
-                    (this.Amount != null &&
-                    this.Amount.Equals(input.Amount))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.ChargeBearer.GetHashCode();
-                if (this.Amount != null)
-                {
-                    hashCode = (hashCode * 59) + this.Amount.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        ChargeBearer = chargeBearer;
+        Amount = amount;
     }
 
+    /// <summary>
+    ///     Gets or Sets ChargeBearer
+    /// </summary>
+    [DataMember(Name = "chargeBearer", EmitDefaultValue = false)]
+    public ChargeBearerTypeCode? ChargeBearer { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Amount
+    /// </summary>
+    [DataMember(Name = "Amount", EmitDefaultValue = false)]
+    public ChargeAmount Amount { get; set; }
+
+    /// <summary>
+    ///     Returns true if Charge instances are equal
+    /// </summary>
+    /// <param name="input">Instance of Charge to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(Charge input)
+    {
+        if (input == null) return false;
+        return
+            (
+                ChargeBearer == input.ChargeBearer ||
+                ChargeBearer.Equals(input.ChargeBearer)
+            ) &&
+            (
+                Amount == input.Amount ||
+                (Amount != null &&
+                 Amount.Equals(input.Amount))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class Charge {\n");
+        sb.Append("  ChargeBearer: ").Append(ChargeBearer).Append("\n");
+        sb.Append("  Amount: ").Append(Amount).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as Charge);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + ChargeBearer.GetHashCode();
+            if (Amount != null) hashCode = hashCode * 59 + Amount.GetHashCode();
+            return hashCode;
+        }
+    }
 }

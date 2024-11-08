@@ -9,140 +9,121 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Информация о НДС
+/// </summary>
+[DataContract(Name = "TaxAmount")]
+public class TaxAmount : IEquatable<TaxAmount>, IValidatableObject
 {
     /// <summary>
-    /// Информация о НДС 
+    ///     Initializes a new instance of the <see cref="TaxAmount" /> class.
     /// </summary>
-    [DataContract(Name = "TaxAmount")]
-    public partial class TaxAmount : IEquatable<TaxAmount>, IValidatableObject
+    /// <param name="rate">Ставка НДС (Номер реквизита 14.3).</param>
+    /// <param name="totalAmount">Сумма НДС (Номер реквизита 14.4).</param>
+    public TaxAmount(string rate = default, string totalAmount = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaxAmount" /> class.
-        /// </summary>
-        /// <param name="rate">Ставка НДС (Номер реквизита 14.3).</param>
-        /// <param name="totalAmount">Сумма НДС (Номер реквизита 14.4).</param>
-        public TaxAmount(string rate = default(string), string totalAmount = default(string))
-        {
-            this.Rate = rate;
-            this.TotalAmount = totalAmount;
-        }
-
-        /// <summary>
-        /// Ставка НДС (Номер реквизита 14.3)
-        /// </summary>
-        /// <value>Ставка НДС (Номер реквизита 14.3)</value>
-        [DataMember(Name = "rate", EmitDefaultValue = false)]
-        public string Rate { get; set; }
-
-        /// <summary>
-        /// Сумма НДС (Номер реквизита 14.4)
-        /// </summary>
-        /// <value>Сумма НДС (Номер реквизита 14.4)</value>
-        [DataMember(Name = "totalAmount", EmitDefaultValue = false)]
-        public string TotalAmount { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class TaxAmount {\n");
-            sb.Append("  Rate: ").Append(Rate).Append("\n");
-            sb.Append("  TotalAmount: ").Append(TotalAmount).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as TaxAmount);
-        }
-
-        /// <summary>
-        /// Returns true if TaxAmount instances are equal
-        /// </summary>
-        /// <param name="input">Instance of TaxAmount to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(TaxAmount input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Rate == input.Rate ||
-                    (this.Rate != null &&
-                    this.Rate.Equals(input.Rate))
-                ) && 
-                (
-                    this.TotalAmount == input.TotalAmount ||
-                    (this.TotalAmount != null &&
-                    this.TotalAmount.Equals(input.TotalAmount))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Rate != null)
-                {
-                    hashCode = (hashCode * 59) + this.Rate.GetHashCode();
-                }
-                if (this.TotalAmount != null)
-                {
-                    hashCode = (hashCode * 59) + this.TotalAmount.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        Rate = rate;
+        TotalAmount = totalAmount;
     }
 
+    /// <summary>
+    ///     Ставка НДС (Номер реквизита 14.3)
+    /// </summary>
+    /// <value>Ставка НДС (Номер реквизита 14.3)</value>
+    [DataMember(Name = "rate", EmitDefaultValue = false)]
+    public string Rate { get; set; }
+
+    /// <summary>
+    ///     Сумма НДС (Номер реквизита 14.4)
+    /// </summary>
+    /// <value>Сумма НДС (Номер реквизита 14.4)</value>
+    [DataMember(Name = "totalAmount", EmitDefaultValue = false)]
+    public string TotalAmount { get; set; }
+
+    /// <summary>
+    ///     Returns true if TaxAmount instances are equal
+    /// </summary>
+    /// <param name="input">Instance of TaxAmount to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(TaxAmount input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Rate == input.Rate ||
+                (Rate != null &&
+                 Rate.Equals(input.Rate))
+            ) &&
+            (
+                TotalAmount == input.TotalAmount ||
+                (TotalAmount != null &&
+                 TotalAmount.Equals(input.TotalAmount))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class TaxAmount {\n");
+        sb.Append("  Rate: ").Append(Rate).Append("\n");
+        sb.Append("  TotalAmount: ").Append(TotalAmount).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as TaxAmount);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Rate != null) hashCode = hashCode * 59 + Rate.GetHashCode();
+            if (TotalAmount != null) hashCode = hashCode * 59 + TotalAmount.GetHashCode();
+            return hashCode;
+        }
+    }
 }

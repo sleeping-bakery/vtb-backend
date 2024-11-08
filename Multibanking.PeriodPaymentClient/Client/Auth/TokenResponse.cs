@@ -10,13 +10,11 @@
 
 using Newtonsoft.Json;
 
-namespace Multibanking.PeriodPaymentClient.Client.Auth
+namespace Multibanking.PeriodPaymentClient.Client.Auth;
+
+internal class TokenResponse
 {
-    class TokenResponse
-    {
-        [JsonProperty("token_type")]
-        public string TokenType { get; set; }
-        [JsonProperty("access_token")]
-        public string AccessToken { get; set; }
-    }
+    [JsonProperty("token_type")] public string TokenType { get; set; }
+
+    [JsonProperty("access_token")] public string AccessToken { get; set; }
 }

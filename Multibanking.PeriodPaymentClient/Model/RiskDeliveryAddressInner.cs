@@ -9,281 +9,234 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     RiskDeliveryAddressInner
+/// </summary>
+[DataContract(Name = "Risk_DeliveryAddress_inner")]
+public class RiskDeliveryAddressInner : IEquatable<RiskDeliveryAddressInner>, IValidatableObject
 {
     /// <summary>
-    /// RiskDeliveryAddressInner
+    ///     Initializes a new instance of the <see cref="RiskDeliveryAddressInner" /> class.
     /// </summary>
-    [DataContract(Name = "Risk_DeliveryAddress_inner")]
-    public partial class RiskDeliveryAddressInner : IEquatable<RiskDeliveryAddressInner>, IValidatableObject
+    /// <param name="addressType">Тип адреса.</param>
+    /// <param name="addressLine">Строка адреса.</param>
+    /// <param name="streetName">Наименование улицы или проспекта.</param>
+    /// <param name="buildingNumber">Номер, который определяет положение здания на улице.</param>
+    /// <param name="postCode">Почтовый индекс.</param>
+    /// <param name="townName">Наименование населённого пункта или территории, находящейся вне границ поселений.</param>
+    /// <param name="countrySubDivision">Наименование и тип субъекта Российской Федерации.</param>
+    /// <param name="country">Название страны в кодированной форме.</param>
+    public RiskDeliveryAddressInner(AddressTypeCode? addressType = default, List<string> addressLine = default, string streetName = default, string buildingNumber = default,
+        string postCode = default, string townName = default, string countrySubDivision = default, string country = default)
     {
-
-        /// <summary>
-        /// Тип адреса
-        /// </summary>
-        /// <value>Тип адреса</value>
-        [DataMember(Name = "addressType", EmitDefaultValue = false)]
-        public AddressTypeCode? AddressType { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RiskDeliveryAddressInner" /> class.
-        /// </summary>
-        /// <param name="addressType">Тип адреса.</param>
-        /// <param name="addressLine">Строка адреса.</param>
-        /// <param name="streetName">Наименование улицы или проспекта.</param>
-        /// <param name="buildingNumber">Номер, который определяет положение здания на улице.</param>
-        /// <param name="postCode">Почтовый индекс.</param>
-        /// <param name="townName">Наименование населённого пункта или территории, находящейся вне границ поселений.</param>
-        /// <param name="countrySubDivision">Наименование и тип субъекта Российской Федерации.</param>
-        /// <param name="country">Название страны в кодированной форме.</param>
-        public RiskDeliveryAddressInner(AddressTypeCode? addressType = default(AddressTypeCode?), List<string> addressLine = default(List<string>), string streetName = default(string), string buildingNumber = default(string), string postCode = default(string), string townName = default(string), string countrySubDivision = default(string), string country = default(string))
-        {
-            this.AddressType = addressType;
-            this.AddressLine = addressLine;
-            this.StreetName = streetName;
-            this.BuildingNumber = buildingNumber;
-            this.PostCode = postCode;
-            this.TownName = townName;
-            this.CountrySubDivision = countrySubDivision;
-            this.Country = country;
-        }
-
-        /// <summary>
-        /// Строка адреса
-        /// </summary>
-        /// <value>Строка адреса</value>
-        [DataMember(Name = "addressLine", EmitDefaultValue = false)]
-        public List<string> AddressLine { get; set; }
-
-        /// <summary>
-        /// Наименование улицы или проспекта
-        /// </summary>
-        /// <value>Наименование улицы или проспекта</value>
-        [DataMember(Name = "streetName", EmitDefaultValue = false)]
-        public string StreetName { get; set; }
-
-        /// <summary>
-        /// Номер, который определяет положение здания на улице
-        /// </summary>
-        /// <value>Номер, который определяет положение здания на улице</value>
-        [DataMember(Name = "buildingNumber", EmitDefaultValue = false)]
-        public string BuildingNumber { get; set; }
-
-        /// <summary>
-        /// Почтовый индекс
-        /// </summary>
-        /// <value>Почтовый индекс</value>
-        [DataMember(Name = "postCode", EmitDefaultValue = false)]
-        public string PostCode { get; set; }
-
-        /// <summary>
-        /// Наименование населённого пункта или территории, находящейся вне границ поселений
-        /// </summary>
-        /// <value>Наименование населённого пункта или территории, находящейся вне границ поселений</value>
-        [DataMember(Name = "townName", EmitDefaultValue = false)]
-        public string TownName { get; set; }
-
-        /// <summary>
-        /// Наименование и тип субъекта Российской Федерации
-        /// </summary>
-        /// <value>Наименование и тип субъекта Российской Федерации</value>
-        [DataMember(Name = "countrySubDivision", EmitDefaultValue = false)]
-        public string CountrySubDivision { get; set; }
-
-        /// <summary>
-        /// Название страны в кодированной форме
-        /// </summary>
-        /// <value>Название страны в кодированной форме</value>
-        [DataMember(Name = "country", EmitDefaultValue = false)]
-        public string Country { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class RiskDeliveryAddressInner {\n");
-            sb.Append("  AddressType: ").Append(AddressType).Append("\n");
-            sb.Append("  AddressLine: ").Append(AddressLine).Append("\n");
-            sb.Append("  StreetName: ").Append(StreetName).Append("\n");
-            sb.Append("  BuildingNumber: ").Append(BuildingNumber).Append("\n");
-            sb.Append("  PostCode: ").Append(PostCode).Append("\n");
-            sb.Append("  TownName: ").Append(TownName).Append("\n");
-            sb.Append("  CountrySubDivision: ").Append(CountrySubDivision).Append("\n");
-            sb.Append("  Country: ").Append(Country).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as RiskDeliveryAddressInner);
-        }
-
-        /// <summary>
-        /// Returns true if RiskDeliveryAddressInner instances are equal
-        /// </summary>
-        /// <param name="input">Instance of RiskDeliveryAddressInner to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(RiskDeliveryAddressInner input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.AddressType == input.AddressType ||
-                    this.AddressType.Equals(input.AddressType)
-                ) && 
-                (
-                    this.AddressLine == input.AddressLine ||
-                    this.AddressLine != null &&
-                    input.AddressLine != null &&
-                    this.AddressLine.SequenceEqual(input.AddressLine)
-                ) && 
-                (
-                    this.StreetName == input.StreetName ||
-                    (this.StreetName != null &&
-                    this.StreetName.Equals(input.StreetName))
-                ) && 
-                (
-                    this.BuildingNumber == input.BuildingNumber ||
-                    (this.BuildingNumber != null &&
-                    this.BuildingNumber.Equals(input.BuildingNumber))
-                ) && 
-                (
-                    this.PostCode == input.PostCode ||
-                    (this.PostCode != null &&
-                    this.PostCode.Equals(input.PostCode))
-                ) && 
-                (
-                    this.TownName == input.TownName ||
-                    (this.TownName != null &&
-                    this.TownName.Equals(input.TownName))
-                ) && 
-                (
-                    this.CountrySubDivision == input.CountrySubDivision ||
-                    (this.CountrySubDivision != null &&
-                    this.CountrySubDivision.Equals(input.CountrySubDivision))
-                ) && 
-                (
-                    this.Country == input.Country ||
-                    (this.Country != null &&
-                    this.Country.Equals(input.Country))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.AddressType.GetHashCode();
-                if (this.AddressLine != null)
-                {
-                    hashCode = (hashCode * 59) + this.AddressLine.GetHashCode();
-                }
-                if (this.StreetName != null)
-                {
-                    hashCode = (hashCode * 59) + this.StreetName.GetHashCode();
-                }
-                if (this.BuildingNumber != null)
-                {
-                    hashCode = (hashCode * 59) + this.BuildingNumber.GetHashCode();
-                }
-                if (this.PostCode != null)
-                {
-                    hashCode = (hashCode * 59) + this.PostCode.GetHashCode();
-                }
-                if (this.TownName != null)
-                {
-                    hashCode = (hashCode * 59) + this.TownName.GetHashCode();
-                }
-                if (this.CountrySubDivision != null)
-                {
-                    hashCode = (hashCode * 59) + this.CountrySubDivision.GetHashCode();
-                }
-                if (this.Country != null)
-                {
-                    hashCode = (hashCode * 59) + this.Country.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // StreetName (string) maxLength
-            if (this.StreetName != null && this.StreetName.Length > 70)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for StreetName, length must be less than 70.", new [] { "StreetName" });
-            }
-
-            // BuildingNumber (string) maxLength
-            if (this.BuildingNumber != null && this.BuildingNumber.Length > 16)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for BuildingNumber, length must be less than 16.", new [] { "BuildingNumber" });
-            }
-
-            // PostCode (string) maxLength
-            if (this.PostCode != null && this.PostCode.Length > 16)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PostCode, length must be less than 16.", new [] { "PostCode" });
-            }
-
-            // TownName (string) maxLength
-            if (this.TownName != null && this.TownName.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for TownName, length must be less than 35.", new [] { "TownName" });
-            }
-
-            // CountrySubDivision (string) maxLength
-            if (this.CountrySubDivision != null && this.CountrySubDivision.Length > 35)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CountrySubDivision, length must be less than 35.", new [] { "CountrySubDivision" });
-            }
-
-            yield break;
-        }
+        AddressType = addressType;
+        AddressLine = addressLine;
+        StreetName = streetName;
+        BuildingNumber = buildingNumber;
+        PostCode = postCode;
+        TownName = townName;
+        CountrySubDivision = countrySubDivision;
+        Country = country;
     }
 
+    /// <summary>
+    ///     Тип адреса
+    /// </summary>
+    /// <value>Тип адреса</value>
+    [DataMember(Name = "addressType", EmitDefaultValue = false)]
+    public AddressTypeCode? AddressType { get; set; }
+
+    /// <summary>
+    ///     Строка адреса
+    /// </summary>
+    /// <value>Строка адреса</value>
+    [DataMember(Name = "addressLine", EmitDefaultValue = false)]
+    public List<string> AddressLine { get; set; }
+
+    /// <summary>
+    ///     Наименование улицы или проспекта
+    /// </summary>
+    /// <value>Наименование улицы или проспекта</value>
+    [DataMember(Name = "streetName", EmitDefaultValue = false)]
+    public string StreetName { get; set; }
+
+    /// <summary>
+    ///     Номер, который определяет положение здания на улице
+    /// </summary>
+    /// <value>Номер, который определяет положение здания на улице</value>
+    [DataMember(Name = "buildingNumber", EmitDefaultValue = false)]
+    public string BuildingNumber { get; set; }
+
+    /// <summary>
+    ///     Почтовый индекс
+    /// </summary>
+    /// <value>Почтовый индекс</value>
+    [DataMember(Name = "postCode", EmitDefaultValue = false)]
+    public string PostCode { get; set; }
+
+    /// <summary>
+    ///     Наименование населённого пункта или территории, находящейся вне границ поселений
+    /// </summary>
+    /// <value>Наименование населённого пункта или территории, находящейся вне границ поселений</value>
+    [DataMember(Name = "townName", EmitDefaultValue = false)]
+    public string TownName { get; set; }
+
+    /// <summary>
+    ///     Наименование и тип субъекта Российской Федерации
+    /// </summary>
+    /// <value>Наименование и тип субъекта Российской Федерации</value>
+    [DataMember(Name = "countrySubDivision", EmitDefaultValue = false)]
+    public string CountrySubDivision { get; set; }
+
+    /// <summary>
+    ///     Название страны в кодированной форме
+    /// </summary>
+    /// <value>Название страны в кодированной форме</value>
+    [DataMember(Name = "country", EmitDefaultValue = false)]
+    public string Country { get; set; }
+
+    /// <summary>
+    ///     Returns true if RiskDeliveryAddressInner instances are equal
+    /// </summary>
+    /// <param name="input">Instance of RiskDeliveryAddressInner to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(RiskDeliveryAddressInner input)
+    {
+        if (input == null) return false;
+        return
+            (
+                AddressType == input.AddressType ||
+                AddressType.Equals(input.AddressType)
+            ) &&
+            (
+                AddressLine == input.AddressLine ||
+                (AddressLine != null &&
+                 input.AddressLine != null &&
+                 AddressLine.SequenceEqual(input.AddressLine))
+            ) &&
+            (
+                StreetName == input.StreetName ||
+                (StreetName != null &&
+                 StreetName.Equals(input.StreetName))
+            ) &&
+            (
+                BuildingNumber == input.BuildingNumber ||
+                (BuildingNumber != null &&
+                 BuildingNumber.Equals(input.BuildingNumber))
+            ) &&
+            (
+                PostCode == input.PostCode ||
+                (PostCode != null &&
+                 PostCode.Equals(input.PostCode))
+            ) &&
+            (
+                TownName == input.TownName ||
+                (TownName != null &&
+                 TownName.Equals(input.TownName))
+            ) &&
+            (
+                CountrySubDivision == input.CountrySubDivision ||
+                (CountrySubDivision != null &&
+                 CountrySubDivision.Equals(input.CountrySubDivision))
+            ) &&
+            (
+                Country == input.Country ||
+                (Country != null &&
+                 Country.Equals(input.Country))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // StreetName (string) maxLength
+        if (StreetName != null && StreetName.Length > 70) yield return new ValidationResult("Invalid value for StreetName, length must be less than 70.", new[] { "StreetName" });
+
+        // BuildingNumber (string) maxLength
+        if (BuildingNumber != null && BuildingNumber.Length > 16)
+            yield return new ValidationResult("Invalid value for BuildingNumber, length must be less than 16.", new[] { "BuildingNumber" });
+
+        // PostCode (string) maxLength
+        if (PostCode != null && PostCode.Length > 16) yield return new ValidationResult("Invalid value for PostCode, length must be less than 16.", new[] { "PostCode" });
+
+        // TownName (string) maxLength
+        if (TownName != null && TownName.Length > 35) yield return new ValidationResult("Invalid value for TownName, length must be less than 35.", new[] { "TownName" });
+
+        // CountrySubDivision (string) maxLength
+        if (CountrySubDivision != null && CountrySubDivision.Length > 35)
+            yield return new ValidationResult("Invalid value for CountrySubDivision, length must be less than 35.", new[] { "CountrySubDivision" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class RiskDeliveryAddressInner {\n");
+        sb.Append("  AddressType: ").Append(AddressType).Append("\n");
+        sb.Append("  AddressLine: ").Append(AddressLine).Append("\n");
+        sb.Append("  StreetName: ").Append(StreetName).Append("\n");
+        sb.Append("  BuildingNumber: ").Append(BuildingNumber).Append("\n");
+        sb.Append("  PostCode: ").Append(PostCode).Append("\n");
+        sb.Append("  TownName: ").Append(TownName).Append("\n");
+        sb.Append("  CountrySubDivision: ").Append(CountrySubDivision).Append("\n");
+        sb.Append("  Country: ").Append(Country).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as RiskDeliveryAddressInner);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + AddressType.GetHashCode();
+            if (AddressLine != null) hashCode = hashCode * 59 + AddressLine.GetHashCode();
+            if (StreetName != null) hashCode = hashCode * 59 + StreetName.GetHashCode();
+            if (BuildingNumber != null) hashCode = hashCode * 59 + BuildingNumber.GetHashCode();
+            if (PostCode != null) hashCode = hashCode * 59 + PostCode.GetHashCode();
+            if (TownName != null) hashCode = hashCode * 59 + TownName.GetHashCode();
+            if (CountrySubDivision != null) hashCode = hashCode * 59 + CountrySubDivision.GetHashCode();
+            if (Country != null) hashCode = hashCode * 59 + Country.GetHashCode();
+            return hashCode;
+        }
+    }
 }

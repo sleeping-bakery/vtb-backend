@@ -9,409 +9,322 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.UniversalPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.UniversalPaymentClient.Model
+namespace Multibanking.UniversalPaymentClient.Model;
+
+/// <summary>
+///     Платеж
+/// </summary>
+[DataContract(Name = "PaymentDtoRs")]
+public class PaymentDtoRs : IEquatable<PaymentDtoRs>, IValidatableObject
 {
     /// <summary>
-    /// Платеж
+    ///     Initializes a new instance of the <see cref="PaymentDtoRs" /> class.
     /// </summary>
-    [DataContract(Name = "PaymentDtoRs")]
-    public partial class PaymentDtoRs : IEquatable<PaymentDtoRs>, IValidatableObject
+    [JsonConstructorAttribute]
+    protected PaymentDtoRs()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDtoRs" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected PaymentDtoRs() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDtoRs" /> class.
-        /// </summary>
-        /// <param name="id">Id платежа (required).</param>
-        /// <param name="documentId">Номер платежа (required).</param>
-        /// <param name="createdAt">Время создания платежа (required).</param>
-        /// <param name="providerService">providerService (required).</param>
-        /// <param name="clientProduct">clientProduct (required).</param>
-        /// <param name="fields">Набор полей платежа (required).</param>
-        /// <param name="paySum">paySum (required).</param>
-        /// <param name="commissionSum">commissionSum (required).</param>
-        /// <param name="totalSum">totalSum (required).</param>
-        /// <param name="description">Назначение платежа (required).</param>
-        /// <param name="status">status (required).</param>
-        /// <param name="actions">actions (required).</param>
-        public PaymentDtoRs(string id = default(string), string documentId = default(string), DateTime createdAt = default(DateTime), ProviderServiceDtoRs providerService = default(ProviderServiceDtoRs), ClientProductDtoRs clientProduct = default(ClientProductDtoRs), List<PaymentFieldDtoRs> fields = default(List<PaymentFieldDtoRs>), MoneyDto paySum = default(MoneyDto), MoneyDto commissionSum = default(MoneyDto), MoneyDto totalSum = default(MoneyDto), string description = default(string), PaymentStatusDtoRs status = default(PaymentStatusDtoRs), PaymentActionDtoRs actions = default(PaymentActionDtoRs))
-        {
-            // to ensure "id" is required (not null)
-            if (id == null)
-            {
-                throw new ArgumentNullException("id is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.Id = id;
-            // to ensure "documentId" is required (not null)
-            if (documentId == null)
-            {
-                throw new ArgumentNullException("documentId is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.DocumentId = documentId;
-            this.CreatedAt = createdAt;
-            // to ensure "providerService" is required (not null)
-            if (providerService == null)
-            {
-                throw new ArgumentNullException("providerService is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.ProviderService = providerService;
-            // to ensure "clientProduct" is required (not null)
-            if (clientProduct == null)
-            {
-                throw new ArgumentNullException("clientProduct is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.ClientProduct = clientProduct;
-            // to ensure "fields" is required (not null)
-            if (fields == null)
-            {
-                throw new ArgumentNullException("fields is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.Fields = fields;
-            // to ensure "paySum" is required (not null)
-            if (paySum == null)
-            {
-                throw new ArgumentNullException("paySum is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.PaySum = paySum;
-            // to ensure "commissionSum" is required (not null)
-            if (commissionSum == null)
-            {
-                throw new ArgumentNullException("commissionSum is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.CommissionSum = commissionSum;
-            // to ensure "totalSum" is required (not null)
-            if (totalSum == null)
-            {
-                throw new ArgumentNullException("totalSum is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.TotalSum = totalSum;
-            // to ensure "description" is required (not null)
-            if (description == null)
-            {
-                throw new ArgumentNullException("description is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.Description = description;
-            // to ensure "status" is required (not null)
-            if (status == null)
-            {
-                throw new ArgumentNullException("status is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.Status = status;
-            // to ensure "actions" is required (not null)
-            if (actions == null)
-            {
-                throw new ArgumentNullException("actions is a required property for PaymentDtoRs and cannot be null");
-            }
-            this.Actions = actions;
-        }
-
-        /// <summary>
-        /// Id платежа
-        /// </summary>
-        /// <value>Id платежа</value>
-        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Номер платежа
-        /// </summary>
-        /// <value>Номер платежа</value>
-        [DataMember(Name = "documentId", IsRequired = true, EmitDefaultValue = true)]
-        public string DocumentId { get; set; }
-
-        /// <summary>
-        /// Время создания платежа
-        /// </summary>
-        /// <value>Время создания платежа</value>
-        [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// Gets or Sets ProviderService
-        /// </summary>
-        [DataMember(Name = "providerService", IsRequired = true, EmitDefaultValue = true)]
-        public ProviderServiceDtoRs ProviderService { get; set; }
-
-        /// <summary>
-        /// Gets or Sets ClientProduct
-        /// </summary>
-        [DataMember(Name = "clientProduct", IsRequired = true, EmitDefaultValue = true)]
-        public ClientProductDtoRs ClientProduct { get; set; }
-
-        /// <summary>
-        /// Набор полей платежа
-        /// </summary>
-        /// <value>Набор полей платежа</value>
-        [DataMember(Name = "fields", IsRequired = true, EmitDefaultValue = true)]
-        public List<PaymentFieldDtoRs> Fields { get; set; }
-
-        /// <summary>
-        /// Gets or Sets PaySum
-        /// </summary>
-        [DataMember(Name = "paySum", IsRequired = true, EmitDefaultValue = true)]
-        public MoneyDto PaySum { get; set; }
-
-        /// <summary>
-        /// Gets or Sets CommissionSum
-        /// </summary>
-        [DataMember(Name = "commissionSum", IsRequired = true, EmitDefaultValue = true)]
-        public MoneyDto CommissionSum { get; set; }
-
-        /// <summary>
-        /// Gets or Sets TotalSum
-        /// </summary>
-        [DataMember(Name = "totalSum", IsRequired = true, EmitDefaultValue = true)]
-        public MoneyDto TotalSum { get; set; }
-
-        /// <summary>
-        /// Назначение платежа
-        /// </summary>
-        /// <value>Назначение платежа</value>
-        [DataMember(Name = "description", IsRequired = true, EmitDefaultValue = true)]
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Status
-        /// </summary>
-        [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentStatusDtoRs Status { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Actions
-        /// </summary>
-        [DataMember(Name = "actions", IsRequired = true, EmitDefaultValue = true)]
-        public PaymentActionDtoRs Actions { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PaymentDtoRs {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  DocumentId: ").Append(DocumentId).Append("\n");
-            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
-            sb.Append("  ProviderService: ").Append(ProviderService).Append("\n");
-            sb.Append("  ClientProduct: ").Append(ClientProduct).Append("\n");
-            sb.Append("  Fields: ").Append(Fields).Append("\n");
-            sb.Append("  PaySum: ").Append(PaySum).Append("\n");
-            sb.Append("  CommissionSum: ").Append(CommissionSum).Append("\n");
-            sb.Append("  TotalSum: ").Append(TotalSum).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
-            sb.Append("  Status: ").Append(Status).Append("\n");
-            sb.Append("  Actions: ").Append(Actions).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentDtoRs);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentDtoRs instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentDtoRs to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentDtoRs input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.DocumentId == input.DocumentId ||
-                    (this.DocumentId != null &&
-                    this.DocumentId.Equals(input.DocumentId))
-                ) && 
-                (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
-                ) && 
-                (
-                    this.ProviderService == input.ProviderService ||
-                    (this.ProviderService != null &&
-                    this.ProviderService.Equals(input.ProviderService))
-                ) && 
-                (
-                    this.ClientProduct == input.ClientProduct ||
-                    (this.ClientProduct != null &&
-                    this.ClientProduct.Equals(input.ClientProduct))
-                ) && 
-                (
-                    this.Fields == input.Fields ||
-                    this.Fields != null &&
-                    input.Fields != null &&
-                    this.Fields.SequenceEqual(input.Fields)
-                ) && 
-                (
-                    this.PaySum == input.PaySum ||
-                    (this.PaySum != null &&
-                    this.PaySum.Equals(input.PaySum))
-                ) && 
-                (
-                    this.CommissionSum == input.CommissionSum ||
-                    (this.CommissionSum != null &&
-                    this.CommissionSum.Equals(input.CommissionSum))
-                ) && 
-                (
-                    this.TotalSum == input.TotalSum ||
-                    (this.TotalSum != null &&
-                    this.TotalSum.Equals(input.TotalSum))
-                ) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && 
-                (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
-                ) && 
-                (
-                    this.Actions == input.Actions ||
-                    (this.Actions != null &&
-                    this.Actions.Equals(input.Actions))
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.Id != null)
-                {
-                    hashCode = (hashCode * 59) + this.Id.GetHashCode();
-                }
-                if (this.DocumentId != null)
-                {
-                    hashCode = (hashCode * 59) + this.DocumentId.GetHashCode();
-                }
-                if (this.CreatedAt != null)
-                {
-                    hashCode = (hashCode * 59) + this.CreatedAt.GetHashCode();
-                }
-                if (this.ProviderService != null)
-                {
-                    hashCode = (hashCode * 59) + this.ProviderService.GetHashCode();
-                }
-                if (this.ClientProduct != null)
-                {
-                    hashCode = (hashCode * 59) + this.ClientProduct.GetHashCode();
-                }
-                if (this.Fields != null)
-                {
-                    hashCode = (hashCode * 59) + this.Fields.GetHashCode();
-                }
-                if (this.PaySum != null)
-                {
-                    hashCode = (hashCode * 59) + this.PaySum.GetHashCode();
-                }
-                if (this.CommissionSum != null)
-                {
-                    hashCode = (hashCode * 59) + this.CommissionSum.GetHashCode();
-                }
-                if (this.TotalSum != null)
-                {
-                    hashCode = (hashCode * 59) + this.TotalSum.GetHashCode();
-                }
-                if (this.Description != null)
-                {
-                    hashCode = (hashCode * 59) + this.Description.GetHashCode();
-                }
-                if (this.Status != null)
-                {
-                    hashCode = (hashCode * 59) + this.Status.GetHashCode();
-                }
-                if (this.Actions != null)
-                {
-                    hashCode = (hashCode * 59) + this.Actions.GetHashCode();
-                }
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Id (string) maxLength
-            if (this.Id != null && this.Id.Length > 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Id, length must be less than 36.", new [] { "Id" });
-            }
-
-            // DocumentId (string) maxLength
-            if (this.DocumentId != null && this.DocumentId.Length > 36)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DocumentId, length must be less than 36.", new [] { "DocumentId" });
-            }
-
-            // CreatedAt (DateTime) pattern
-            Regex regexCreatedAt = new Regex(@"yyyy-MM-ddTHH-mm-ss.zzzzzz", RegexOptions.CultureInvariant);
-            if (false == regexCreatedAt.Match(this.CreatedAt.ToString()).Success)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for CreatedAt, must match a pattern of " + regexCreatedAt, new [] { "CreatedAt" });
-            }
-
-            // Description (string) maxLength
-            if (this.Description != null && this.Description.Length > 255)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 255.", new [] { "Description" });
-            }
-
-            yield break;
-        }
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PaymentDtoRs" /> class.
+    /// </summary>
+    /// <param name="id">Id платежа (required).</param>
+    /// <param name="documentId">Номер платежа (required).</param>
+    /// <param name="createdAt">Время создания платежа (required).</param>
+    /// <param name="providerService">providerService (required).</param>
+    /// <param name="clientProduct">clientProduct (required).</param>
+    /// <param name="fields">Набор полей платежа (required).</param>
+    /// <param name="paySum">paySum (required).</param>
+    /// <param name="commissionSum">commissionSum (required).</param>
+    /// <param name="totalSum">totalSum (required).</param>
+    /// <param name="description">Назначение платежа (required).</param>
+    /// <param name="status">status (required).</param>
+    /// <param name="actions">actions (required).</param>
+    public PaymentDtoRs(string id = default, string documentId = default, DateTime createdAt = default, ProviderServiceDtoRs providerService = default,
+        ClientProductDtoRs clientProduct = default, List<PaymentFieldDtoRs> fields = default, MoneyDto paySum = default, MoneyDto commissionSum = default,
+        MoneyDto totalSum = default, string description = default, PaymentStatusDtoRs status = default, PaymentActionDtoRs actions = default)
+    {
+        // to ensure "id" is required (not null)
+        if (id == null) throw new ArgumentNullException("id is a required property for PaymentDtoRs and cannot be null");
+        Id = id;
+        // to ensure "documentId" is required (not null)
+        if (documentId == null) throw new ArgumentNullException("documentId is a required property for PaymentDtoRs and cannot be null");
+        DocumentId = documentId;
+        CreatedAt = createdAt;
+        // to ensure "providerService" is required (not null)
+        if (providerService == null) throw new ArgumentNullException("providerService is a required property for PaymentDtoRs and cannot be null");
+        ProviderService = providerService;
+        // to ensure "clientProduct" is required (not null)
+        if (clientProduct == null) throw new ArgumentNullException("clientProduct is a required property for PaymentDtoRs and cannot be null");
+        ClientProduct = clientProduct;
+        // to ensure "fields" is required (not null)
+        if (fields == null) throw new ArgumentNullException("fields is a required property for PaymentDtoRs and cannot be null");
+        Fields = fields;
+        // to ensure "paySum" is required (not null)
+        if (paySum == null) throw new ArgumentNullException("paySum is a required property for PaymentDtoRs and cannot be null");
+        PaySum = paySum;
+        // to ensure "commissionSum" is required (not null)
+        if (commissionSum == null) throw new ArgumentNullException("commissionSum is a required property for PaymentDtoRs and cannot be null");
+        CommissionSum = commissionSum;
+        // to ensure "totalSum" is required (not null)
+        if (totalSum == null) throw new ArgumentNullException("totalSum is a required property for PaymentDtoRs and cannot be null");
+        TotalSum = totalSum;
+        // to ensure "description" is required (not null)
+        if (description == null) throw new ArgumentNullException("description is a required property for PaymentDtoRs and cannot be null");
+        Description = description;
+        // to ensure "status" is required (not null)
+        if (status == null) throw new ArgumentNullException("status is a required property for PaymentDtoRs and cannot be null");
+        Status = status;
+        // to ensure "actions" is required (not null)
+        if (actions == null) throw new ArgumentNullException("actions is a required property for PaymentDtoRs and cannot be null");
+        Actions = actions;
+    }
+
+    /// <summary>
+    ///     Id платежа
+    /// </summary>
+    /// <value>Id платежа</value>
+    [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
+    public string Id { get; set; }
+
+    /// <summary>
+    ///     Номер платежа
+    /// </summary>
+    /// <value>Номер платежа</value>
+    [DataMember(Name = "documentId", IsRequired = true, EmitDefaultValue = true)]
+    public string DocumentId { get; set; }
+
+    /// <summary>
+    ///     Время создания платежа
+    /// </summary>
+    /// <value>Время создания платежа</value>
+    [DataMember(Name = "createdAt", IsRequired = true, EmitDefaultValue = true)]
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets ProviderService
+    /// </summary>
+    [DataMember(Name = "providerService", IsRequired = true, EmitDefaultValue = true)]
+    public ProviderServiceDtoRs ProviderService { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets ClientProduct
+    /// </summary>
+    [DataMember(Name = "clientProduct", IsRequired = true, EmitDefaultValue = true)]
+    public ClientProductDtoRs ClientProduct { get; set; }
+
+    /// <summary>
+    ///     Набор полей платежа
+    /// </summary>
+    /// <value>Набор полей платежа</value>
+    [DataMember(Name = "fields", IsRequired = true, EmitDefaultValue = true)]
+    public List<PaymentFieldDtoRs> Fields { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets PaySum
+    /// </summary>
+    [DataMember(Name = "paySum", IsRequired = true, EmitDefaultValue = true)]
+    public MoneyDto PaySum { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets CommissionSum
+    /// </summary>
+    [DataMember(Name = "commissionSum", IsRequired = true, EmitDefaultValue = true)]
+    public MoneyDto CommissionSum { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets TotalSum
+    /// </summary>
+    [DataMember(Name = "totalSum", IsRequired = true, EmitDefaultValue = true)]
+    public MoneyDto TotalSum { get; set; }
+
+    /// <summary>
+    ///     Назначение платежа
+    /// </summary>
+    /// <value>Назначение платежа</value>
+    [DataMember(Name = "description", IsRequired = true, EmitDefaultValue = true)]
+    public string Description { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Status
+    /// </summary>
+    [DataMember(Name = "status", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentStatusDtoRs Status { get; set; }
+
+    /// <summary>
+    ///     Gets or Sets Actions
+    /// </summary>
+    [DataMember(Name = "actions", IsRequired = true, EmitDefaultValue = true)]
+    public PaymentActionDtoRs Actions { get; set; }
+
+    /// <summary>
+    ///     Returns true if PaymentDtoRs instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PaymentDtoRs to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PaymentDtoRs input)
+    {
+        if (input == null) return false;
+        return
+            (
+                Id == input.Id ||
+                (Id != null &&
+                 Id.Equals(input.Id))
+            ) &&
+            (
+                DocumentId == input.DocumentId ||
+                (DocumentId != null &&
+                 DocumentId.Equals(input.DocumentId))
+            ) &&
+            (
+                CreatedAt == input.CreatedAt ||
+                (CreatedAt != null &&
+                 CreatedAt.Equals(input.CreatedAt))
+            ) &&
+            (
+                ProviderService == input.ProviderService ||
+                (ProviderService != null &&
+                 ProviderService.Equals(input.ProviderService))
+            ) &&
+            (
+                ClientProduct == input.ClientProduct ||
+                (ClientProduct != null &&
+                 ClientProduct.Equals(input.ClientProduct))
+            ) &&
+            (
+                Fields == input.Fields ||
+                (Fields != null &&
+                 input.Fields != null &&
+                 Fields.SequenceEqual(input.Fields))
+            ) &&
+            (
+                PaySum == input.PaySum ||
+                (PaySum != null &&
+                 PaySum.Equals(input.PaySum))
+            ) &&
+            (
+                CommissionSum == input.CommissionSum ||
+                (CommissionSum != null &&
+                 CommissionSum.Equals(input.CommissionSum))
+            ) &&
+            (
+                TotalSum == input.TotalSum ||
+                (TotalSum != null &&
+                 TotalSum.Equals(input.TotalSum))
+            ) &&
+            (
+                Description == input.Description ||
+                (Description != null &&
+                 Description.Equals(input.Description))
+            ) &&
+            (
+                Status == input.Status ||
+                (Status != null &&
+                 Status.Equals(input.Status))
+            ) &&
+            (
+                Actions == input.Actions ||
+                (Actions != null &&
+                 Actions.Equals(input.Actions))
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        // Id (string) maxLength
+        if (Id != null && Id.Length > 36) yield return new ValidationResult("Invalid value for Id, length must be less than 36.", new[] { "Id" });
+
+        // DocumentId (string) maxLength
+        if (DocumentId != null && DocumentId.Length > 36) yield return new ValidationResult("Invalid value for DocumentId, length must be less than 36.", new[] { "DocumentId" });
+
+        // CreatedAt (DateTime) pattern
+        var regexCreatedAt = new Regex(@"yyyy-MM-ddTHH-mm-ss.zzzzzz", RegexOptions.CultureInvariant);
+        if (false == regexCreatedAt.Match(CreatedAt.ToString()).Success)
+            yield return new ValidationResult("Invalid value for CreatedAt, must match a pattern of " + regexCreatedAt, new[] { "CreatedAt" });
+
+        // Description (string) maxLength
+        if (Description != null && Description.Length > 255)
+            yield return new ValidationResult("Invalid value for Description, length must be less than 255.", new[] { "Description" });
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PaymentDtoRs {\n");
+        sb.Append("  Id: ").Append(Id).Append("\n");
+        sb.Append("  DocumentId: ").Append(DocumentId).Append("\n");
+        sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+        sb.Append("  ProviderService: ").Append(ProviderService).Append("\n");
+        sb.Append("  ClientProduct: ").Append(ClientProduct).Append("\n");
+        sb.Append("  Fields: ").Append(Fields).Append("\n");
+        sb.Append("  PaySum: ").Append(PaySum).Append("\n");
+        sb.Append("  CommissionSum: ").Append(CommissionSum).Append("\n");
+        sb.Append("  TotalSum: ").Append(TotalSum).Append("\n");
+        sb.Append("  Description: ").Append(Description).Append("\n");
+        sb.Append("  Status: ").Append(Status).Append("\n");
+        sb.Append("  Actions: ").Append(Actions).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PaymentDtoRs);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (Id != null) hashCode = hashCode * 59 + Id.GetHashCode();
+            if (DocumentId != null) hashCode = hashCode * 59 + DocumentId.GetHashCode();
+            if (CreatedAt != null) hashCode = hashCode * 59 + CreatedAt.GetHashCode();
+            if (ProviderService != null) hashCode = hashCode * 59 + ProviderService.GetHashCode();
+            if (ClientProduct != null) hashCode = hashCode * 59 + ClientProduct.GetHashCode();
+            if (Fields != null) hashCode = hashCode * 59 + Fields.GetHashCode();
+            if (PaySum != null) hashCode = hashCode * 59 + PaySum.GetHashCode();
+            if (CommissionSum != null) hashCode = hashCode * 59 + CommissionSum.GetHashCode();
+            if (TotalSum != null) hashCode = hashCode * 59 + TotalSum.GetHashCode();
+            if (Description != null) hashCode = hashCode * 59 + Description.GetHashCode();
+            if (Status != null) hashCode = hashCode * 59 + Status.GetHashCode();
+            if (Actions != null) hashCode = hashCode * 59 + Actions.GetHashCode();
+            return hashCode;
+        }
+    }
 }

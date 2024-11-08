@@ -3,7 +3,7 @@ using Multibanking.GuaranteeClient.Model;
 
 namespace Multibanking.Services.Guarantees.Implementations;
 
-public class GuaranteeCommissionService(IGuaranteeCommissionClient guaranteeCommissionClient) : IGuaranteeCommissionService 
+public class GuaranteeCommissionService(IGuaranteeCommissionClient guaranteeCommissionClient) : IGuaranteeCommissionService
 {
     public CommissionResponseDto AdvancedCalculationCommission(CommissionRequest commissionRequest)
     {
@@ -12,6 +12,5 @@ public class GuaranteeCommissionService(IGuaranteeCommissionClient guaranteeComm
             throw new Exception("Со стороны банкинга не пришло ответа");
 
         return precalculateResult;
-    }     
-    
+    }
 }

@@ -10,58 +10,58 @@
 
 using System.Collections.Generic;
 
-namespace Multibanking.BonusPointClient.Client
+namespace Multibanking.BonusPointClient.Client;
+
+/// <summary>
+///     <see cref="GlobalConfiguration" /> provides a compile-time extension point for globally configuring
+///     API Clients.
+/// </summary>
+/// <remarks>
+///     A customized implementation via partial class may reside in another file and may
+///     be excluded from automatic generation via a .openapi-generator-ignore file.
+/// </remarks>
+public class GlobalConfiguration : Configuration
 {
     /// <summary>
-    /// <see cref="GlobalConfiguration"/> provides a compile-time extension point for globally configuring
-    /// API Clients.
+    ///     Gets or sets the default Configuration.
     /// </summary>
-    /// <remarks>
-    /// A customized implementation via partial class may reside in another file and may
-    /// be excluded from automatic generation via a .openapi-generator-ignore file.
-    /// </remarks>
-    public partial class GlobalConfiguration : Configuration
+    /// <value>Configuration.</value>
+    public static IReadableConfiguration Instance
     {
-        #region Private Members
-
-        private static readonly object GlobalConfigSync = new { };
-        private static IReadableConfiguration _globalConfiguration;
-
-        #endregion Private Members
-
-        #region Constructors
-
-        /// <inheritdoc />
-        private GlobalConfiguration()
+        get => _globalConfiguration;
+        set
         {
-        }
-
-        /// <inheritdoc />
-        public GlobalConfiguration(IDictionary<string, string> defaultHeader, IDictionary<string, string> apiKey, IDictionary<string, string> apiKeyPrefix, string basePath = "http://localhost:3000/api") : base(defaultHeader, apiKey, apiKeyPrefix, basePath)
-        {
-        }
-
-        static GlobalConfiguration()
-        {
-            Instance = new GlobalConfiguration();
-        }
-
-        #endregion Constructors
-
-        /// <summary>
-        /// Gets or sets the default Configuration.
-        /// </summary>
-        /// <value>Configuration.</value>
-        public static IReadableConfiguration Instance
-        {
-            get { return _globalConfiguration; }
-            set
+            lock (GlobalConfigSync)
             {
-                lock (GlobalConfigSync)
-                {
-                    _globalConfiguration = value;
-                }
+                _globalConfiguration = value;
             }
         }
     }
+
+    #region Private Members
+
+    private static readonly object GlobalConfigSync = new { };
+    private static IReadableConfiguration _globalConfiguration;
+
+    #endregion Private Members
+
+    #region Constructors
+
+    /// <inheritdoc />
+    private GlobalConfiguration()
+    {
+    }
+
+    /// <inheritdoc />
+    public GlobalConfiguration(IDictionary<string, string> defaultHeader, IDictionary<string, string> apiKey, IDictionary<string, string> apiKeyPrefix,
+        string basePath = "http://localhost:3000/api") : base(defaultHeader, apiKey, apiKeyPrefix, basePath)
+    {
+    }
+
+    static GlobalConfiguration()
+    {
+        Instance = new GlobalConfiguration();
+    }
+
+    #endregion Constructors
 }

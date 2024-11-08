@@ -50,7 +50,8 @@ public class Party : IEquatable<Party>, IValidatableObject
     ///     допускается использовать сокращения,  позволяющие определенно установить данную информацию .
     /// </param>
     public Party(string name = default, string mobileNumber = default, string countryOfResidence = default, string countryOfBirth = default, string provinceOfBirth = default,
-        string cityOfBirth = default, DateTime birthDate = default, List<PeriodPaymentPartyIdentification> partyIdentification = default, List<PostalAddressComplexType> postalAddress = default)
+        string cityOfBirth = default, DateTime birthDate = default, List<PeriodPaymentPartyIdentification> partyIdentification = default,
+        List<PostalAddressComplexType> postalAddress = default)
     {
         // to ensure "name" is required (not null)
         if (name == null) throw new ArgumentNullException("name is a required property for Party and cannot be null");

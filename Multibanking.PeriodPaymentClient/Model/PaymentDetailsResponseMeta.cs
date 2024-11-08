@@ -9,117 +9,102 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Раздел метаданных
+/// </summary>
+[DataContract(Name = "PaymentDetailsResponse_Meta")]
+public class PaymentDetailsResponseMeta : IEquatable<PaymentDetailsResponseMeta>, IValidatableObject
 {
     /// <summary>
-    /// Раздел метаданных
+    ///     Initializes a new instance of the <see cref="PaymentDetailsResponseMeta" /> class.
     /// </summary>
-    [DataContract(Name = "PaymentDetailsResponse_Meta")]
-    public partial class PaymentDetailsResponseMeta : IEquatable<PaymentDetailsResponseMeta>, IValidatableObject
+    /// <param name="totalPages">Указывает на количество передаваемых страниц.</param>
+    public PaymentDetailsResponseMeta(int totalPages = default)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PaymentDetailsResponseMeta" /> class.
-        /// </summary>
-        /// <param name="totalPages">Указывает на количество передаваемых страниц.</param>
-        public PaymentDetailsResponseMeta(int totalPages = default(int))
-        {
-            this.TotalPages = totalPages;
-        }
-
-        /// <summary>
-        /// Указывает на количество передаваемых страниц
-        /// </summary>
-        /// <value>Указывает на количество передаваемых страниц</value>
-        [DataMember(Name = "totalPages", EmitDefaultValue = false)]
-        public int TotalPages { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class PaymentDetailsResponseMeta {\n");
-            sb.Append("  TotalPages: ").Append(TotalPages).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as PaymentDetailsResponseMeta);
-        }
-
-        /// <summary>
-        /// Returns true if PaymentDetailsResponseMeta instances are equal
-        /// </summary>
-        /// <param name="input">Instance of PaymentDetailsResponseMeta to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(PaymentDetailsResponseMeta input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.TotalPages == input.TotalPages ||
-                    this.TotalPages.Equals(input.TotalPages)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                hashCode = (hashCode * 59) + this.TotalPages.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        TotalPages = totalPages;
     }
 
+    /// <summary>
+    ///     Указывает на количество передаваемых страниц
+    /// </summary>
+    /// <value>Указывает на количество передаваемых страниц</value>
+    [DataMember(Name = "totalPages", EmitDefaultValue = false)]
+    public int TotalPages { get; set; }
+
+    /// <summary>
+    ///     Returns true if PaymentDetailsResponseMeta instances are equal
+    /// </summary>
+    /// <param name="input">Instance of PaymentDetailsResponseMeta to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(PaymentDetailsResponseMeta input)
+    {
+        if (input == null) return false;
+        return
+            TotalPages == input.TotalPages ||
+            TotalPages.Equals(input.TotalPages);
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class PaymentDetailsResponseMeta {\n");
+        sb.Append("  TotalPages: ").Append(TotalPages).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as PaymentDetailsResponseMeta);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            hashCode = hashCode * 59 + TotalPages.GetHashCode();
+            return hashCode;
+        }
+    }
 }

@@ -9,1048 +9,843 @@
 
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
+using System.Threading;
+using System.Threading.Tasks;
 using Multibanking.PeriodPaymentClient.Client;
-using Multibanking.PeriodPaymentClient.Client.Auth;
 using Multibanking.PeriodPaymentClient.Model;
 
-namespace Multibanking.PeriodPaymentClient.Api
+namespace Multibanking.PeriodPaymentClient.Api;
+
+/// <summary>
+///     Represents a collection of functions to interact with the API endpoints
+/// </summary>
+public class PeriodPaymentConsentApi : IPeriodPaymentConsentApi
 {
+    private ExceptionFactory _exceptionFactory = (name, response) => null;
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="PeriodPaymentConsentApi" /> class.
     /// </summary>
-    public interface IVRPConsentApiSync : IApiAccessor
+    /// <returns></returns>
+    public PeriodPaymentConsentApi() : this((string)null)
     {
-        #region Synchronous Operations
-        /// <summary>
-        /// Создание Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>VRPConsentResponse</returns>
-        VRPConsentResponse CreateVRPConsent(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-
-        /// <summary>
-        /// Создание Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of VRPConsentResponse</returns>
-        ApiResponse<VRPConsentResponse> CreateVRPConsentWithHttpInfo(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-        /// <summary>
-        /// Отзыв Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        void DeleteVRPConsentsConsentId(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-
-        /// <summary>
-        /// Отзыв Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeleteVRPConsentsConsentIdWithHttpInfo(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>VRPConsentResponse</returns>
-        VRPConsentResponse GetVRPConsentConsentId(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of VRPConsentResponse</returns>
-        ApiResponse<VRPConsentResponse> GetVRPConsentConsentIdWithHttpInfo(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0);
-        #endregion Synchronous Operations
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="PeriodPaymentConsentApi" /> class.
     /// </summary>
-    public interface IVRPConsentApiAsync : IApiAccessor
+    /// <returns></returns>
+    public PeriodPaymentConsentApi(string basePath)
     {
-        #region Asynchronous Operations
-        /// <summary>
-        /// Создание Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of VRPConsentResponse</returns>
-        System.Threading.Tasks.Task<VRPConsentResponse> CreateVRPConsentAsync(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Создание Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (VRPConsentResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<VRPConsentResponse>> CreateVRPConsentWithHttpInfoAsync(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Отзыв Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeleteVRPConsentsConsentIdAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Отзыв Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteVRPConsentsConsentIdWithHttpInfoAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of VRPConsentResponse</returns>
-        System.Threading.Tasks.Task<VRPConsentResponse> GetVRPConsentConsentIdAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование
-        /// </summary>
-        /// <remarks>
-        /// Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </remarks>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (VRPConsentResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<VRPConsentResponse>> GetVRPConsentConsentIdWithHttpInfoAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        #endregion Asynchronous Operations
+        Configuration = PeriodPaymentClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            new Configuration { BasePath = basePath }
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="PeriodPaymentConsentApi" /> class
+    ///     using Configuration object
     /// </summary>
-    public interface IPeriodPaymentConsentApi : IVRPConsentApiSync, IVRPConsentApiAsync
+    /// <param name="configuration">An instance of Configuration</param>
+    /// <returns></returns>
+    public PeriodPaymentConsentApi(Configuration configuration)
     {
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
+        Configuration = PeriodPaymentClient.Client.Configuration.MergeConfigurations(
+            GlobalConfiguration.Instance,
+            configuration
+        );
+        Client = new ApiClient(Configuration.BasePath);
+        AsynchronousClient = new ApiClient(Configuration.BasePath);
+        ExceptionFactory = PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
     }
 
     /// <summary>
-    /// Represents a collection of functions to interact with the API endpoints
+    ///     Initializes a new instance of the <see cref="PeriodPaymentConsentApi" /> class
+    ///     using a Configuration object and client instance.
     /// </summary>
-    public partial class PeriodPaymentConsentApi : IPeriodPaymentConsentApi
+    /// <param name="client">The client interface for synchronous API access.</param>
+    /// <param name="asyncClient">The client interface for asynchronous API access.</param>
+    /// <param name="configuration">The configuration object.</param>
+    public PeriodPaymentConsentApi(ISynchronousClient client, IAsynchronousClient asyncClient, IReadableConfiguration configuration)
     {
-        private Multibanking.PeriodPaymentClient.Client.ExceptionFactory _exceptionFactory = (name, response) => null;
+        if (client == null) throw new ArgumentNullException("client");
+        if (asyncClient == null) throw new ArgumentNullException("asyncClient");
+        if (configuration == null) throw new ArgumentNullException("configuration");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PeriodPaymentConsentApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public PeriodPaymentConsentApi() : this((string)null)
+        Client = client;
+        AsynchronousClient = asyncClient;
+        Configuration = configuration;
+        ExceptionFactory = PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+    }
+
+    /// <summary>
+    ///     The client for accessing this underlying API asynchronously.
+    /// </summary>
+    public IAsynchronousClient AsynchronousClient { get; set; }
+
+    /// <summary>
+    ///     The client for accessing this underlying API synchronously.
+    /// </summary>
+    public ISynchronousClient Client { get; set; }
+
+    /// <summary>
+    ///     Gets the base path of the API client.
+    /// </summary>
+    /// <value>The base path</value>
+    public string GetBasePath()
+    {
+        return Configuration.BasePath;
+    }
+
+    /// <summary>
+    ///     Gets or sets the configuration object
+    /// </summary>
+    /// <value>An instance of the Configuration</value>
+    public IReadableConfiguration Configuration { get; set; }
+
+    /// <summary>
+    ///     Provides a factory method hook for the creation of exceptions.
+    /// </summary>
+    public ExceptionFactory ExceptionFactory
+    {
+        get
         {
+            if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
+                throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
+            return _exceptionFactory;
+        }
+        set => _exceptionFactory = value;
+    }
+
+    /// <summary>
+    ///     Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xIdempotencyKey">
+    ///     Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам
+    ///     идемпотентного ресурса. Для других запросов не указывается. (optional)
+    /// </param>
+    /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>VRPConsentResponse</returns>
+    public VRPConsentResponse CreateVRPConsent(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xIdempotencyKey = default, string xJwsSignature = default, string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        var localVarResponse = CreateVRPConsentWithHttpInfo(vRPConsentRequest, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xIdempotencyKey, xJwsSignature,
+            xCustomerUserAgent);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xIdempotencyKey">
+    ///     Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам
+    ///     идемпотентного ресурса. Для других запросов не указывается. (optional)
+    /// </param>
+    /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of VRPConsentResponse</returns>
+    public ApiResponse<VRPConsentResponse> CreateVRPConsentWithHttpInfo(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default,
+        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default, string xIdempotencyKey = default, string xJwsSignature = default,
+        string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        // verify the required parameter 'vRPConsentRequest' is set
+        if (vRPConsentRequest == null) throw new ApiException(400, "Missing required parameter 'vRPConsentRequest' when calling PeriodPaymentConsentApi->CreateVRPConsent");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+            "application/json"
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xIdempotencyKey != null) localVarRequestOptions.HeaderParameters.Add("x-idempotency-key", ClientUtils.ParameterToString(xIdempotencyKey)); // header parameter
+        if (xJwsSignature != null) localVarRequestOptions.HeaderParameters.Add("x-jws-signature", ClientUtils.ParameterToString(xJwsSignature)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+        localVarRequestOptions.Data = vRPConsentRequest;
+
+        localVarRequestOptions.Operation = "PeriodPaymentConsentApi.CreateVRPConsent";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PeriodPaymentConsentApi"/> class.
-        /// </summary>
-        /// <returns></returns>
-        public PeriodPaymentConsentApi(string basePath)
+        // make the HTTP request
+        var localVarResponse = Client.Post<VRPConsentResponse>("/vrp-consents", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
         {
-            this.Configuration = Multibanking.PeriodPaymentClient.Client.Configuration.MergeConfigurations(
-                Multibanking.PeriodPaymentClient.Client.GlobalConfiguration.Instance,
-                new Multibanking.PeriodPaymentClient.Client.Configuration { BasePath = basePath }
-            );
-            this.Client = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            this.ExceptionFactory = Multibanking.PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+            var _exception = ExceptionFactory("CreateVRPConsent", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PeriodPaymentConsentApi"/> class
-        /// using Configuration object
-        /// </summary>
-        /// <param name="configuration">An instance of Configuration</param>
-        /// <returns></returns>
-        public PeriodPaymentConsentApi(Multibanking.PeriodPaymentClient.Client.Configuration configuration)
-        {
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        return localVarResponse;
+    }
 
-            this.Configuration = Multibanking.PeriodPaymentClient.Client.Configuration.MergeConfigurations(
-                Multibanking.PeriodPaymentClient.Client.GlobalConfiguration.Instance,
-                configuration
-            );
-            this.Client = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            this.AsynchronousClient = new Multibanking.PeriodPaymentClient.Client.ApiClient(this.Configuration.BasePath);
-            ExceptionFactory = Multibanking.PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+    /// <summary>
+    ///     Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xIdempotencyKey">
+    ///     Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам
+    ///     идемпотентного ресурса. Для других запросов не указывается. (optional)
+    /// </param>
+    /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of VRPConsentResponse</returns>
+    public async Task<VRPConsentResponse> CreateVRPConsentAsync(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xIdempotencyKey = default, string xJwsSignature = default, string xCustomerUserAgent = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        var localVarResponse = await CreateVRPConsentWithHttpInfoAsync(vRPConsentRequest, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xIdempotencyKey, xJwsSignature,
+            xCustomerUserAgent, operationIndex, cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xIdempotencyKey">
+    ///     Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам
+    ///     идемпотентного ресурса. Для других запросов не указывается. (optional)
+    /// </param>
+    /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (VRPConsentResponse)</returns>
+    public async Task<ApiResponse<VRPConsentResponse>> CreateVRPConsentWithHttpInfoAsync(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default,
+        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default, string xIdempotencyKey = default, string xJwsSignature = default,
+        string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'vRPConsentRequest' is set
+        if (vRPConsentRequest == null) throw new ApiException(400, "Missing required parameter 'vRPConsentRequest' when calling PeriodPaymentConsentApi->CreateVRPConsent");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
+        {
+            "application/json"
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xIdempotencyKey != null) localVarRequestOptions.HeaderParameters.Add("x-idempotency-key", ClientUtils.ParameterToString(xIdempotencyKey)); // header parameter
+        if (xJwsSignature != null) localVarRequestOptions.HeaderParameters.Add("x-jws-signature", ClientUtils.ParameterToString(xJwsSignature)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+        localVarRequestOptions.Data = vRPConsentRequest;
+
+        localVarRequestOptions.Operation = "PeriodPaymentConsentApi.CreateVRPConsent";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PeriodPaymentConsentApi"/> class
-        /// using a Configuration object and client instance.
-        /// </summary>
-        /// <param name="client">The client interface for synchronous API access.</param>
-        /// <param name="asyncClient">The client interface for asynchronous API access.</param>
-        /// <param name="configuration">The configuration object.</param>
-        public PeriodPaymentConsentApi(Multibanking.PeriodPaymentClient.Client.ISynchronousClient client, Multibanking.PeriodPaymentClient.Client.IAsynchronousClient asyncClient, Multibanking.PeriodPaymentClient.Client.IReadableConfiguration configuration)
-        {
-            if (client == null) throw new ArgumentNullException("client");
-            if (asyncClient == null) throw new ArgumentNullException("asyncClient");
-            if (configuration == null) throw new ArgumentNullException("configuration");
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.PostAsync<VRPConsentResponse>("/vrp-consents", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
 
-            this.Client = client;
-            this.AsynchronousClient = asyncClient;
-            this.Configuration = configuration;
-            this.ExceptionFactory = Multibanking.PeriodPaymentClient.Client.Configuration.DefaultExceptionFactory;
+        if (ExceptionFactory != null)
+        {
+            var _exception = ExceptionFactory("CreateVRPConsent", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// The client for accessing this underlying API asynchronously.
-        /// </summary>
-        public Multibanking.PeriodPaymentClient.Client.IAsynchronousClient AsynchronousClient { get; set; }
+        return localVarResponse;
+    }
 
-        /// <summary>
-        /// The client for accessing this underlying API synchronously.
-        /// </summary>
-        public Multibanking.PeriodPaymentClient.Client.ISynchronousClient Client { get; set; }
+    /// <summary>
+    ///     Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns></returns>
+    public void DeleteVRPConsentsConsentId(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
+        string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        DeleteVRPConsentsConsentIdWithHttpInfo(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
+    }
 
-        /// <summary>
-        /// Gets the base path of the API client.
-        /// </summary>
-        /// <value>The base path</value>
-        public string GetBasePath()
+    /// <summary>
+    ///     Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of Object(void)</returns>
+    public ApiResponse<object> DeleteVRPConsentsConsentIdWithHttpInfo(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        // verify the required parameter 'consentId' is set
+        if (consentId == null) throw new ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->DeleteVRPConsentsConsentId");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            return this.Configuration.BasePath;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("consentId", ClientUtils.ParameterToString(consentId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+
+        localVarRequestOptions.Operation = "PeriodPaymentConsentApi.DeleteVRPConsentsConsentId";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Gets or sets the configuration object
-        /// </summary>
-        /// <value>An instance of the Configuration</value>
-        public Multibanking.PeriodPaymentClient.Client.IReadableConfiguration Configuration { get; set; }
-
-        /// <summary>
-        /// Provides a factory method hook for the creation of exceptions.
-        /// </summary>
-        public Multibanking.PeriodPaymentClient.Client.ExceptionFactory ExceptionFactory
+        // make the HTTP request
+        var localVarResponse = Client.Delete<object>("/vrp-consents/{consentId}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
         {
-            get
-            {
-                if (_exceptionFactory != null && _exceptionFactory.GetInvocationList().Length > 1)
-                {
-                    throw new InvalidOperationException("Multicast delegate for ExceptionFactory is unsupported.");
-                }
-                return _exceptionFactory;
-            }
-            set { _exceptionFactory = value; }
+            var _exception = ExceptionFactory("DeleteVRPConsentsConsentId", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>VRPConsentResponse</returns>
-        public VRPConsentResponse CreateVRPConsent(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of void</returns>
+    public async Task DeleteVRPConsentsConsentIdAsync(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        await DeleteVRPConsentsConsentIdWithHttpInfoAsync(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex,
+            cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    ///     Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse</returns>
+    public async Task<ApiResponse<object>> DeleteVRPConsentsConsentIdWithHttpInfoAsync(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'consentId' is set
+        if (consentId == null) throw new ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->DeleteVRPConsentsConsentId");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse> localVarResponse = CreateVRPConsentWithHttpInfo(vRPConsentRequest, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xIdempotencyKey, xJwsSignature, xCustomerUserAgent);
-            return localVarResponse.Data;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("consentId", ClientUtils.ParameterToString(consentId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+
+        localVarRequestOptions.Operation = "PeriodPaymentConsentApi.DeleteVRPConsentsConsentId";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of VRPConsentResponse</returns>
-        public Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse> CreateVRPConsentWithHttpInfo(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.DeleteAsync<object>("/vrp-consents/{consentId}", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
         {
-            // verify the required parameter 'vRPConsentRequest' is set
-            if (vRPConsentRequest == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'vRPConsentRequest' when calling PeriodPaymentConsentApi->CreateVRPConsent");
-            }
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xIdempotencyKey != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-idempotency-key", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xIdempotencyKey)); // header parameter
-            }
-            if (xJwsSignature != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-jws-signature", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xJwsSignature)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-            localVarRequestOptions.Data = vRPConsentRequest;
-
-            localVarRequestOptions.Operation = "PeriodPaymentConsentApi.CreateVRPConsent";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Post<VRPConsentResponse>("/vrp-consents", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("CreateVRPConsent", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
+            var _exception = ExceptionFactory("DeleteVRPConsentsConsentId", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of VRPConsentResponse</returns>
-        public async System.Threading.Tasks.Task<VRPConsentResponse> CreateVRPConsentAsync(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>VRPConsentResponse</returns>
+    public VRPConsentResponse GetVRPConsentConsentId(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default, string xFapiInteractionId = default,
+        string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        var localVarResponse = GetVRPConsentConsentIdWithHttpInfo(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <returns>ApiResponse of VRPConsentResponse</returns>
+    public ApiResponse<VRPConsentResponse> GetVRPConsentConsentIdWithHttpInfo(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0)
+    {
+        // verify the required parameter 'consentId' is set
+        if (consentId == null) throw new ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->GetVRPConsentConsentId");
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse> localVarResponse = await CreateVRPConsentWithHttpInfoAsync(vRPConsentRequest, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xIdempotencyKey, xJwsSignature, xCustomerUserAgent, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("consentId", ClientUtils.ParameterToString(consentId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+
+        localVarRequestOptions.Operation = "PeriodPaymentConsentApi.GetVRPConsentConsentId";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Создание Согласия на инициирование Создание и установка Согласия на инициирование с требуемыми параметрами контроля и повторяющимися реквизитами платежного распоряжения
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="vRPConsentRequest">Запрос создания ресурса Согласия на инициирование</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xIdempotencyKey">Не стандартный HTTP заголовок. Уникальный идентификатор запроса для поддержки идемпотентности. Обязательно для запросов POST к конечным точкам идемпотентного ресурса. Для других запросов не указывается. (optional)</param>
-        /// <param name="xJwsSignature">Отделяемая подпись полезной нагрузки в формате JWS (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (VRPConsentResponse)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse>> CreateVRPConsentWithHttpInfoAsync(VRPConsentRequest vRPConsentRequest, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xIdempotencyKey = default(string), string xJwsSignature = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        // make the HTTP request
+        var localVarResponse = Client.Get<VRPConsentResponse>("/vrp-consents/{consentId}", localVarRequestOptions, Configuration);
+        if (ExceptionFactory != null)
         {
-            // verify the required parameter 'vRPConsentRequest' is set
-            if (vRPConsentRequest == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'vRPConsentRequest' when calling PeriodPaymentConsentApi->CreateVRPConsent");
-            }
-
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xIdempotencyKey != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-idempotency-key", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xIdempotencyKey)); // header parameter
-            }
-            if (xJwsSignature != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-jws-signature", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xJwsSignature)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-            localVarRequestOptions.Data = vRPConsentRequest;
-
-            localVarRequestOptions.Operation = "PeriodPaymentConsentApi.CreateVRPConsent";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.PostAsync<VRPConsentResponse>("/vrp-consents", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("CreateVRPConsent", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
+            var _exception = ExceptionFactory("GetVRPConsentConsentId", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns></returns>
-        public void DeleteVRPConsentsConsentId(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
+        return localVarResponse;
+    }
+
+    /// <summary>
+    ///     Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of VRPConsentResponse</returns>
+    public async Task<VRPConsentResponse> GetVRPConsentConsentIdAsync(string consentId, string xFapiAuthDate = default, string xFapiCustomerIpAddress = default,
+        string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0, CancellationToken cancellationToken = default)
+    {
+        var localVarResponse =
+            await GetVRPConsentConsentIdWithHttpInfoAsync(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex,
+                cancellationToken).ConfigureAwait(false);
+        return localVarResponse.Data;
+    }
+
+    /// <summary>
+    ///     Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
+    /// </summary>
+    /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
+    /// <param name="consentId">Идентификатор ресурса согласия</param>
+    /// <param name="xFapiAuthDate">
+    ///     Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например,
+    ///     x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)
+    /// </param>
+    /// <param name="xFapiCustomerIpAddress">
+    ///     IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика).
+    ///     (optional)
+    /// </param>
+    /// <param name="xFapiInteractionId">
+    ///     RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в
+    ///     заголовке ответа x-fapi-interaction-id. (optional)
+    /// </param>
+    /// <param name="xCustomerUserAgent">
+    ///     В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа
+    ///     устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа
+    ///     устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)
+    /// </param>
+    /// <param name="operationIndex">Index associated with the operation.</param>
+    /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+    /// <returns>Task of ApiResponse (VRPConsentResponse)</returns>
+    public async Task<ApiResponse<VRPConsentResponse>> GetVRPConsentConsentIdWithHttpInfoAsync(string consentId, string xFapiAuthDate = default,
+        string xFapiCustomerIpAddress = default, string xFapiInteractionId = default, string xCustomerUserAgent = default, int operationIndex = 0,
+        CancellationToken cancellationToken = default)
+    {
+        // verify the required parameter 'consentId' is set
+        if (consentId == null) throw new ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->GetVRPConsentConsentId");
+
+
+        var localVarRequestOptions = new RequestOptions();
+
+        string[] _contentTypes =
         {
-            DeleteVRPConsentsConsentIdWithHttpInfo(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
+        };
+
+        // to determine the Accept header
+        string[] _accepts =
+        {
+            "application/json"
+        };
+
+        var localVarContentType = ClientUtils.SelectHeaderContentType(_contentTypes);
+        if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+        var localVarAccept = ClientUtils.SelectHeaderAccept(_accepts);
+        if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+        localVarRequestOptions.PathParameters.Add("consentId", ClientUtils.ParameterToString(consentId)); // path parameter
+        if (xFapiAuthDate != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
+        if (xFapiCustomerIpAddress != null)
+            localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
+        if (xFapiInteractionId != null) localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
+        if (xCustomerUserAgent != null) localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
+
+        localVarRequestOptions.Operation = "PeriodPaymentConsentApi.GetVRPConsentConsentId";
+        localVarRequestOptions.OperationIndex = operationIndex;
+
+        // authentication (TPPPaymentOAuth2Security) required
+        // oauth required
+        if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+        {
+            if (!string.IsNullOrEmpty(Configuration.AccessToken))
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + Configuration.AccessToken);
+            else if (!string.IsNullOrEmpty(Configuration.OAuthTokenUrl) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientId) &&
+                     !string.IsNullOrEmpty(Configuration.OAuthClientSecret) &&
+                     Configuration.OAuthFlow != null)
+                localVarRequestOptions.OAuth = true;
         }
 
-        /// <summary>
-        /// Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public Multibanking.PeriodPaymentClient.Client.ApiResponse<Object> DeleteVRPConsentsConsentIdWithHttpInfo(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
+        // make the HTTP request
+        var localVarResponse = await AsynchronousClient.GetAsync<VRPConsentResponse>("/vrp-consents/{consentId}", localVarRequestOptions, Configuration, cancellationToken)
+            .ConfigureAwait(false);
+
+        if (ExceptionFactory != null)
         {
-            // verify the required parameter 'consentId' is set
-            if (consentId == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->DeleteVRPConsentsConsentId");
-            }
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("consentId", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(consentId)); // path parameter
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "PeriodPaymentConsentApi.DeleteVRPConsentsConsentId";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/vrp-consents/{consentId}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("DeleteVRPConsentsConsentId", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
+            var _exception = ExceptionFactory("GetVRPConsentConsentId", localVarResponse);
+            if (_exception != null) throw _exception;
         }
 
-        /// <summary>
-        /// Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeleteVRPConsentsConsentIdAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            await DeleteVRPConsentsConsentIdWithHttpInfoAsync(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Отзыв Согласия на инициирование Конечная точка позволяет СППУ удалять ресурс Согласия на инициирование
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<Multibanking.PeriodPaymentClient.Client.ApiResponse<Object>> DeleteVRPConsentsConsentIdWithHttpInfoAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'consentId' is set
-            if (consentId == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->DeleteVRPConsentsConsentId");
-            }
-
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("consentId", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(consentId)); // path parameter
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "PeriodPaymentConsentApi.DeleteVRPConsentsConsentId";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/vrp-consents/{consentId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("DeleteVRPConsentsConsentId", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>VRPConsentResponse</returns>
-        public VRPConsentResponse GetVRPConsentConsentId(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
-        {
-            Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse> localVarResponse = GetVRPConsentConsentIdWithHttpInfo(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of VRPConsentResponse</returns>
-        public Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse> GetVRPConsentConsentIdWithHttpInfo(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0)
-        {
-            // verify the required parameter 'consentId' is set
-            if (consentId == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->GetVRPConsentConsentId");
-            }
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("consentId", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(consentId)); // path parameter
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "PeriodPaymentConsentApi.GetVRPConsentConsentId";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Get<VRPConsentResponse>("/vrp-consents/{consentId}", localVarRequestOptions, this.Configuration);
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetVRPConsentConsentId", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of VRPConsentResponse</returns>
-        public async System.Threading.Tasks.Task<VRPConsentResponse> GetVRPConsentConsentIdAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse> localVarResponse = await GetVRPConsentConsentIdWithHttpInfoAsync(consentId, xFapiAuthDate, xFapiCustomerIpAddress, xFapiInteractionId, xCustomerUserAgent, operationIndex, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Получение ресурса Согласия на инициирование Получение информации о состоянии Согласия на инициирование по его идентификатору
-        /// </summary>
-        /// <exception cref="Multibanking.PeriodPaymentClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="consentId">Идентификатор ресурса согласия</param>
-        /// <param name="xFapiAuthDate">Время последнего входа Пользователя в систему с TPP. Значение предоставляется в виде HTTP-date, как в разделе 7.1.1.1 [RFC7231]. Например, x-fapi-auth-date: Mon, 26 Aug 2019 12:23:11 GMT (optional)</param>
-        /// <param name="xFapiCustomerIpAddress">IP-адрес Пользователя, если Пользователь в данный момент подключен к Стороннему Поставщику (залогинен в приложении Стороннего Поставщика). (optional)</param>
-        /// <param name="xFapiInteractionId">RFC4122 UID, используемый в качестве идентификатора корреляции. Если необходимо, то ППИУ передает обратно значение идентификатора корреляции в заголовке ответа x-fapi-interaction-id. (optional)</param>
-        /// <param name="xCustomerUserAgent">В заголовке указывается тип устройства (user-agent), который использует Пользователь. Сторонний Поставщик может заполнить это поле значением типа устройства (user-agent), указанным Пользователем. Если Пользователь использует мобильное приложение Стороннего Поставщика, Сторонний Поставщик проверяет, что строка типа устройства (user-agent) отличается от строки типа устройства (user-agent) на основе браузера. (optional)</param>
-        /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (VRPConsentResponse)</returns>
-        public async System.Threading.Tasks.Task<Multibanking.PeriodPaymentClient.Client.ApiResponse<VRPConsentResponse>> GetVRPConsentConsentIdWithHttpInfoAsync(string consentId, string xFapiAuthDate = default(string), string xFapiCustomerIpAddress = default(string), string xFapiInteractionId = default(string), string xCustomerUserAgent = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'consentId' is set
-            if (consentId == null)
-            {
-                throw new Multibanking.PeriodPaymentClient.Client.ApiException(400, "Missing required parameter 'consentId' when calling PeriodPaymentConsentApi->GetVRPConsentConsentId");
-            }
-
-
-            Multibanking.PeriodPaymentClient.Client.RequestOptions localVarRequestOptions = new Multibanking.PeriodPaymentClient.Client.RequestOptions();
-
-            string[] _contentTypes = new string[] {
-            };
-
-            // to determine the Accept header
-            string[] _accepts = new string[] {
-                "application/json"
-            };
-
-            var localVarContentType = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-            }
-
-            var localVarAccept = Multibanking.PeriodPaymentClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-            }
-
-            localVarRequestOptions.PathParameters.Add("consentId", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(consentId)); // path parameter
-            if (xFapiAuthDate != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-auth-date", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiAuthDate)); // header parameter
-            }
-            if (xFapiCustomerIpAddress != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-customer-ip-address", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiCustomerIpAddress)); // header parameter
-            }
-            if (xFapiInteractionId != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-fapi-interaction-id", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xFapiInteractionId)); // header parameter
-            }
-            if (xCustomerUserAgent != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("x-customer-user-agent", Multibanking.PeriodPaymentClient.Client.ClientUtils.ParameterToString(xCustomerUserAgent)); // header parameter
-            }
-
-            localVarRequestOptions.Operation = "PeriodPaymentConsentApi.GetVRPConsentConsentId";
-            localVarRequestOptions.OperationIndex = operationIndex;
-
-            // authentication (TPPPaymentOAuth2Security) required
-            // oauth required
-            if (!localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
-            {
-                if (!string.IsNullOrEmpty(this.Configuration.AccessToken))
-                {
-                    localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-                }
-                else if (!string.IsNullOrEmpty(this.Configuration.OAuthTokenUrl) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientId) &&
-                         !string.IsNullOrEmpty(this.Configuration.OAuthClientSecret) &&
-                         this.Configuration.OAuthFlow != null)
-                {
-                    localVarRequestOptions.OAuth = true;
-                }
-            }
-
-            // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.GetAsync<VRPConsentResponse>("/vrp-consents/{consentId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("GetVRPConsentConsentId", localVarResponse);
-                if (_exception != null)
-                {
-                    throw _exception;
-                }
-            }
-
-            return localVarResponse;
-        }
-
+        return localVarResponse;
     }
 }

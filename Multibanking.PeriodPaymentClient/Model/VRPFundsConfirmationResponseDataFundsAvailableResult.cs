@@ -9,168 +9,154 @@
 
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.IO;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.ComponentModel.DataAnnotations;
-using OpenAPIDateConverter = Multibanking.PeriodPaymentClient.Client.OpenAPIDateConverter;
 
-namespace Multibanking.PeriodPaymentClient.Model
+namespace Multibanking.PeriodPaymentClient.Model;
+
+/// <summary>
+///     Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе
+/// </summary>
+[DataContract(Name = "VRPFundsConfirmationResponse_Data_FundsAvailableResult")]
+public class VRPFundsConfirmationResponseDataFundsAvailableResult : IEquatable<VRPFundsConfirmationResponseDataFundsAvailableResult>, IValidatableObject
 {
     /// <summary>
-    /// Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе
+    ///     Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе
     /// </summary>
-    [DataContract(Name = "VRPFundsConfirmationResponse_Data_FundsAvailableResult")]
-    public partial class VRPFundsConfirmationResponseDataFundsAvailableResult : IEquatable<VRPFundsConfirmationResponseDataFundsAvailableResult>, IValidatableObject
+    /// <value>Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе</value>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum FundsAvailableEnum
     {
         /// <summary>
-        /// Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе
+        ///     Enum Available for value: Available
         /// </summary>
-        /// <value>Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum FundsAvailableEnum
-        {
-            /// <summary>
-            /// Enum Available for value: Available
-            /// </summary>
-            [EnumMember(Value = "Available")]
-            Available = 1,
-
-            /// <summary>
-            /// Enum AvailablaWithOverdraft for value: AvailablaWithOverdraft
-            /// </summary>
-            [EnumMember(Value = "AvailablaWithOverdraft")]
-            AvailablaWithOverdraft = 2,
-
-            /// <summary>
-            /// Enum NotAvailable for value: NotAvailable
-            /// </summary>
-            [EnumMember(Value = "NotAvailable")]
-            NotAvailable = 3
-
-        }
-
+        [EnumMember(Value = "Available")] Available = 1,
 
         /// <summary>
-        /// Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе
+        ///     Enum AvailablaWithOverdraft for value: AvailablaWithOverdraft
         /// </summary>
-        /// <value>Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе</value>
-        [DataMember(Name = "fundsAvailable", IsRequired = true, EmitDefaultValue = true)]
-        public FundsAvailableEnum FundsAvailable { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPFundsConfirmationResponseDataFundsAvailableResult" /> class.
-        /// </summary>
-        [JsonConstructorAttribute]
-        protected VRPFundsConfirmationResponseDataFundsAvailableResult() { }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="VRPFundsConfirmationResponseDataFundsAvailableResult" /> class.
-        /// </summary>
-        /// <param name="fundsAvailableDateTime">Дата и время проведение проверки наличия средств (required).</param>
-        /// <param name="fundsAvailable">Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе (required).</param>
-        public VRPFundsConfirmationResponseDataFundsAvailableResult(DateTime fundsAvailableDateTime = default(DateTime), FundsAvailableEnum fundsAvailable = default(FundsAvailableEnum))
-        {
-            this.FundsAvailableDateTime = fundsAvailableDateTime;
-            this.FundsAvailable = fundsAvailable;
-        }
+        [EnumMember(Value = "AvailablaWithOverdraft")]
+        AvailablaWithOverdraft = 2,
 
         /// <summary>
-        /// Дата и время проведение проверки наличия средств
+        ///     Enum NotAvailable for value: NotAvailable
         /// </summary>
-        /// <value>Дата и время проведение проверки наличия средств</value>
-        [DataMember(Name = "fundsAvailableDateTime", IsRequired = true, EmitDefaultValue = true)]
-        public DateTime FundsAvailableDateTime { get; set; }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("class VRPFundsConfirmationResponseDataFundsAvailableResult {\n");
-            sb.Append("  FundsAvailableDateTime: ").Append(FundsAvailableDateTime).Append("\n");
-            sb.Append("  FundsAvailable: ").Append(FundsAvailable).Append("\n");
-            sb.Append("}\n");
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Returns the JSON string presentation of the object
-        /// </summary>
-        /// <returns>JSON string presentation of the object</returns>
-        public virtual string ToJson()
-        {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-        }
-
-        /// <summary>
-        /// Returns true if objects are equal
-        /// </summary>
-        /// <param name="input">Object to be compared</param>
-        /// <returns>Boolean</returns>
-        public override bool Equals(object input)
-        {
-            return this.Equals(input as VRPFundsConfirmationResponseDataFundsAvailableResult);
-        }
-
-        /// <summary>
-        /// Returns true if VRPFundsConfirmationResponseDataFundsAvailableResult instances are equal
-        /// </summary>
-        /// <param name="input">Instance of VRPFundsConfirmationResponseDataFundsAvailableResult to be compared</param>
-        /// <returns>Boolean</returns>
-        public bool Equals(VRPFundsConfirmationResponseDataFundsAvailableResult input)
-        {
-            if (input == null)
-            {
-                return false;
-            }
-            return 
-                (
-                    this.FundsAvailableDateTime == input.FundsAvailableDateTime ||
-                    (this.FundsAvailableDateTime != null &&
-                    this.FundsAvailableDateTime.Equals(input.FundsAvailableDateTime))
-                ) && 
-                (
-                    this.FundsAvailable == input.FundsAvailable ||
-                    this.FundsAvailable.Equals(input.FundsAvailable)
-                );
-        }
-
-        /// <summary>
-        /// Gets the hash code
-        /// </summary>
-        /// <returns>Hash code</returns>
-        public override int GetHashCode()
-        {
-            unchecked // Overflow is fine, just wrap
-            {
-                int hashCode = 41;
-                if (this.FundsAvailableDateTime != null)
-                {
-                    hashCode = (hashCode * 59) + this.FundsAvailableDateTime.GetHashCode();
-                }
-                hashCode = (hashCode * 59) + this.FundsAvailable.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Validate(ValidationContext validationContext)
-        {
-            yield break;
-        }
+        [EnumMember(Value = "NotAvailable")] NotAvailable = 3
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="VRPFundsConfirmationResponseDataFundsAvailableResult" /> class.
+    /// </summary>
+    [JsonConstructorAttribute]
+    protected VRPFundsConfirmationResponseDataFundsAvailableResult()
+    {
+    }
+
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="VRPFundsConfirmationResponseDataFundsAvailableResult" /> class.
+    /// </summary>
+    /// <param name="fundsAvailableDateTime">Дата и время проведение проверки наличия средств (required).</param>
+    /// <param name="fundsAvailable">Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе (required).</param>
+    public VRPFundsConfirmationResponseDataFundsAvailableResult(DateTime fundsAvailableDateTime = default, FundsAvailableEnum fundsAvailable = default)
+    {
+        FundsAvailableDateTime = fundsAvailableDateTime;
+        FundsAvailable = fundsAvailable;
+    }
+
+
+    /// <summary>
+    ///     Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе
+    /// </summary>
+    /// <value>Результат доступности, четко указывающий на наличие средств на сумму, указанную в запросе</value>
+    [DataMember(Name = "fundsAvailable", IsRequired = true, EmitDefaultValue = true)]
+    public FundsAvailableEnum FundsAvailable { get; set; }
+
+    /// <summary>
+    ///     Дата и время проведение проверки наличия средств
+    /// </summary>
+    /// <value>Дата и время проведение проверки наличия средств</value>
+    [DataMember(Name = "fundsAvailableDateTime", IsRequired = true, EmitDefaultValue = true)]
+    public DateTime FundsAvailableDateTime { get; set; }
+
+    /// <summary>
+    ///     Returns true if VRPFundsConfirmationResponseDataFundsAvailableResult instances are equal
+    /// </summary>
+    /// <param name="input">Instance of VRPFundsConfirmationResponseDataFundsAvailableResult to be compared</param>
+    /// <returns>Boolean</returns>
+    public bool Equals(VRPFundsConfirmationResponseDataFundsAvailableResult input)
+    {
+        if (input == null) return false;
+        return
+            (
+                FundsAvailableDateTime == input.FundsAvailableDateTime ||
+                (FundsAvailableDateTime != null &&
+                 FundsAvailableDateTime.Equals(input.FundsAvailableDateTime))
+            ) &&
+            (
+                FundsAvailable == input.FundsAvailable ||
+                FundsAvailable.Equals(input.FundsAvailable)
+            );
+    }
+
+    /// <summary>
+    ///     To validate all properties of the instance
+    /// </summary>
+    /// <param name="validationContext">Validation context</param>
+    /// <returns>Validation Result</returns>
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        yield break;
+    }
+
+    /// <summary>
+    ///     Returns the string presentation of the object
+    /// </summary>
+    /// <returns>String presentation of the object</returns>
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append("class VRPFundsConfirmationResponseDataFundsAvailableResult {\n");
+        sb.Append("  FundsAvailableDateTime: ").Append(FundsAvailableDateTime).Append("\n");
+        sb.Append("  FundsAvailable: ").Append(FundsAvailable).Append("\n");
+        sb.Append("}\n");
+        return sb.ToString();
+    }
+
+    /// <summary>
+    ///     Returns the JSON string presentation of the object
+    /// </summary>
+    /// <returns>JSON string presentation of the object</returns>
+    public virtual string ToJson()
+    {
+        return JsonConvert.SerializeObject(this, Formatting.Indented);
+    }
+
+    /// <summary>
+    ///     Returns true if objects are equal
+    /// </summary>
+    /// <param name="input">Object to be compared</param>
+    /// <returns>Boolean</returns>
+    public override bool Equals(object input)
+    {
+        return Equals(input as VRPFundsConfirmationResponseDataFundsAvailableResult);
+    }
+
+    /// <summary>
+    ///     Gets the hash code
+    /// </summary>
+    /// <returns>Hash code</returns>
+    public override int GetHashCode()
+    {
+        unchecked // Overflow is fine, just wrap
+        {
+            var hashCode = 41;
+            if (FundsAvailableDateTime != null) hashCode = hashCode * 59 + FundsAvailableDateTime.GetHashCode();
+            hashCode = hashCode * 59 + FundsAvailable.GetHashCode();
+            return hashCode;
+        }
+    }
 }
