@@ -1,7 +1,7 @@
 using Multibanking.Contracts.Loan;
 using Multibanking.Data.OpenAPIBankClients.LoanClient;
 
-namespace Multibanking.Services.Loans;
+namespace Multibanking.Services.Loans.Implementations;
 
 public class LoanCalculatorService(IBankInterestRateClient bankInterestRateClient) : ILoanCalculatorService
 {

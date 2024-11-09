@@ -39,7 +39,8 @@ public static class DataServiceCollectionExtensions
             .AddScoped<ICardRepository, CardRepository>()
             .AddScoped<IPeriodPaymentConsentRepository, PeriodPaymentConsentRepository>()
             .AddScoped<IGuaranteeOrderRepository, GuaranteeOrderRepository>()
-            .AddScoped<IBankInterestRateClient>(_ => LoanClientMock.MockedBankInterestRateClient().Object);
+            .AddScoped<IBankInterestRateClient>(_ => LoanClientMock.MockedBankInterestRateClient().Object)
+            .AddScoped<IInstallmentPlanClient>(_ => LoanClientMock.MockedInstallmentPlanClient().Object);
     }
 
     private static IServiceCollection AddOpenApiBankClients(this IServiceCollection serviceCollection,

@@ -9,6 +9,7 @@ using Multibanking.Services.Guarantees;
 using Multibanking.Services.Guarantees.Implementations;
 using Multibanking.Services.Guarantees.MappingProfiles;
 using Multibanking.Services.Loans;
+using Multibanking.Services.Loans.Implementations;
 using Multibanking.Services.PeriodPayments;
 using Multibanking.Services.PeriodPayments.Implementations;
 using Multibanking.Services.PeriodPayments.MappingProfiles;
@@ -63,6 +64,7 @@ public static class BusinessLogicServiceCollectionExtensions
             .AddScoped<IGuaranteeCommissionService, GuaranteeCommissionService>()
             .AddScoped<IGuaranteeOrderService, GuaranteeOrderService>()
             .AddScoped<ILoanCalculatorService, LoanCalculatorService>()
+            .AddScoped<IInstallmentPlanService, InstallmentPlanService>()
             .AddScoped<IGuaranteePaglService, GuaranteePaglService>();
     }
 

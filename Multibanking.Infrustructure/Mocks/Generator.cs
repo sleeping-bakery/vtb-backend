@@ -1,3 +1,4 @@
+using Multibanking.Contracts.Loan;
 using Multibanking.GuaranteeClient.Model;
 
 namespace Multibanking.Infrustructure.Mocks;
@@ -97,12 +98,10 @@ public static class Generator
         );
     }
 
-
     private static string GenerateRandomOrderNumber()
     {
         return $"Order-{Random.Next(10000, 99999)}";
     }
-
 
     private static string GenerateRandomLegalNumber()
     {
@@ -123,4 +122,14 @@ public static class Generator
     {
         return Math.Round((decimal)(new Random().NextDouble() * (double)(max - min) + (double)min), decimalPlaces);
     }
+    
+    public static readonly List<BankOffer> BankOffers =
+    [
+        new BankOffer { BankName = "ВТБ", Id = Guid.NewGuid(), QuantityMonths = 4 },
+        new BankOffer { BankName = "ВТБ", Id = Guid.NewGuid(), QuantityMonths = 5 },
+        new BankOffer { BankName = "ВТБ", Id = Guid.NewGuid(), QuantityMonths = 6 },
+        new BankOffer { BankName = "ВТБ", Id = Guid.NewGuid(), QuantityMonths = 2 },
+        new BankOffer { BankName = "Банк Освоение", Id = Guid.NewGuid(), QuantityMonths = 2 },
+        new BankOffer { BankName = "Кредит банк", Id = Guid.NewGuid(), QuantityMonths = 3 }
+    ];
 }
