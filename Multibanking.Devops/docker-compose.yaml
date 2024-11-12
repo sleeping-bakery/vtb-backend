@@ -46,7 +46,7 @@ services:
       DB_DATABASE: keycloak_db
       DB_USER: keycloak_user
       DB_PASSWORD: keycloak_password
-      KC_PROXY=edge
+      KC_PROXY: edge
     ports:
       - 8080:8080
     networks:
