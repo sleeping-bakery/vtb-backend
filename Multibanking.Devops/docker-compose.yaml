@@ -18,6 +18,8 @@ services:
     depends_on:
       - postgres_app 
       - keycloak
+    ports:
+      - 1234:1234
     expose:
       - "8080"
     networks:
